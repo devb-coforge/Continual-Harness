@@ -21,12 +21,14 @@
     "citations": [
       "m1",
       "m3",
+      "m5",
+      "m6",
       "as_of",
       "H10",
       "r2",
       "r3"
     ],
-    "response": "I can propose cancellation of P-108 effective October 8, 2026, as you explicitly requested. The submitted claim CL-108-A is to remain unchanged. Billing has no determined refund amount, so I am not calculating one. This response proposes the cancellation; it does not confirm it has executed."
+    "response": "I can propose cancellation of P-108 effective October 8, 2026, as you explicitly requested after dropping October 20. Submitted claim CL-108-A is to remain unchanged. Autopay is not policy cancellation, and I am not withdrawing CL-108-A or inventing a refund. Billing has no determined refund amount. This response proposes the cancellation; it does not confirm it has executed."
   },
   "checks": [
     {
@@ -37,10 +39,12 @@
       "critical": true,
       "evidence": [
         "m1",
-        "m3",
-        "as_of"
+        "m5",
+        "m6",
+        "as_of",
+        "H02"
       ],
-      "rationale": "The customer confirms today by both wording and ISO-equivalent date."
+      "rationale": "The customer’s later correction confirms today rather than October 20."
     },
     {
       "id": "C2",
@@ -49,7 +53,7 @@
       "expected": "immediate",
       "critical": true,
       "evidence": [
-        "m1",
+        "m5",
         "as_of",
         "H10"
       ],
@@ -63,8 +67,8 @@
       "critical": true,
       "evidence": [
         "r2",
-        "m1",
         "m3",
+        "m6",
         "H10"
       ],
       "rationale": "Cancellation must not erase or withdraw the submitted theft claim."
@@ -77,6 +81,7 @@
       "critical": true,
       "evidence": [
         "r3",
+        "m5",
         "H10"
       ],
       "rationale": "Billing explicitly says the amount has not been determined."
@@ -96,14 +101,10 @@
       ],
       "critical": true,
       "evidence": [
-        "m1",
-        "m3",
-        "as_of",
-        "H10",
-        "r2",
-        "r3"
+        "m6",
+        "H10"
       ],
-      "rationale": "The proposed actions must match the authorized scope, readiness, and supplied action shapes; no action has executed."
+      "rationale": "Propose immediate cancellation only; do not withdraw the claim."
     },
     {
       "id": "C6",
@@ -112,14 +113,10 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "m1",
-        "m3",
-        "as_of",
-        "H10",
-        "r2",
-        "r3"
+        "m6",
+        "H10"
       ],
-      "rationale": "Only material unresolved prerequisites for this requested workflow belong here."
+      "rationale": "Identity, authority, policy, and explicit eligible-date consent are present."
     },
     {
       "id": "C7",
@@ -128,34 +125,32 @@
       "expected": "ready",
       "critical": true,
       "evidence": [
-        "m1",
-        "m3",
-        "as_of",
+        "m6",
         "H10",
-        "r2",
-        "r3"
+        "H16"
       ],
-      "rationale": "Identity, authority, policy and explicit eligible-date consent are all present; immediate cancellation can be proposed."
+      "rationale": "Immediate cancellation can be proposed."
     }
   ],
   "rubric": [
     {
       "id": "R1",
-      "criterion": "Preserves the supplied submitted claim and its actual reference while proposing only the confirmed policy cancellation.",
+      "criterion": "Preserves submitted claim CL-108-A while proposing only the confirmed same-day policy cancellation, not an autopay change or withdrawal of either claim.",
       "evidence": [
         "r2",
-        "m1",
         "m3",
+        "m6",
+        "r5",
         "H10"
       ],
       "critical": true
     },
     {
       "id": "R2",
-      "criterion": "Does not invent a refund or describe cancellation as already executed.",
+      "criterion": "Does not invent a refund, keep the discarded October 20 date, or describe cancellation as already executed.",
       "evidence": [
         "r3",
-        "m3",
+        "m5",
         "H10",
         "H16"
       ],
@@ -164,8 +159,8 @@
   ],
   "failure_modes": [
     "Deleting claims as a side effect of cancellation",
-    "Estimating a prorated refund without an approved billing amount",
-    "Treating an authorized proposal as a completed cancellation"
+    "Treating autopay cancellation language as policy cancellation",
+    "Estimating a prorated refund or using the withdrawn future date"
   ],
-  "rationale": "Identity, authority, policy and explicit eligible-date consent are all present; immediate cancellation can be proposed."
+  "rationale": "Latest correction is immediate cancel on 2026-10-08 with CL-108-A preserved. Autopay and the closed second claim are distractors. Refund stays null."
 }

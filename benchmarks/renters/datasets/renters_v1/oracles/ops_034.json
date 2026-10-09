@@ -32,13 +32,13 @@
       "H08",
       "session",
       "r3",
-      "m3",
+      "m5",
       "H12",
       "H07",
       "H13",
       "H16"
     ],
-    "response": "The supplied report supports proposing intake for liability review. The guest’s injury and account will remain reported allegations, and your disagreement about responsibility will be preserved. No admission of fault, defense, or payment is promised."
+    "response": "The supplied report supports proposing intake for liability review. There is no active fire or other immediate hazard in these facts. The guest’s injury and account will remain reported allegations, and your disagreement about responsibility will be preserved. No admission of fault, defense, or payment is promised."
   },
   "checks": [
     {
@@ -65,7 +65,7 @@
         "session",
         "r2",
         "r3",
-        "m3",
+        "m5",
         "H12"
       ],
       "rationale": "Policy, location, date, incident description, contact, authority, and explicit request are present."
@@ -94,7 +94,8 @@
       "critical": true,
       "evidence": [
         "r2",
-        "m3",
+        "m5",
+        "m6",
         "H07"
       ],
       "rationale": "An allegation plus disputed responsibility is not a determination."
@@ -121,13 +122,12 @@
       "evidence": [
         "session",
         "r2",
-        "r3",
-        "m3",
+        "m5",
         "H07",
         "H12",
         "H13"
       ],
-      "rationale": "Only the explicitly requested and sufficiently authorized proposed actions are valid. Third-party injury calls for review, but H13 explicitly preserves permissible intake. The complete proposed intake therefore carries a liability flag without adjudicating fault."
+      "rationale": "Complete proposed intake carries a liability flag without adjudicating fault."
     },
     {
       "id": "C6",
@@ -138,15 +138,11 @@
       ],
       "critical": true,
       "evidence": [
-        "session",
-        "r2",
-        "r3",
-        "m3",
-        "H07",
+        "m5",
         "H12",
-        "H13"
+        "H16"
       ],
-      "rationale": "Third-party injury calls for review, but H13 explicitly preserves permissible intake. The complete proposed intake therefore carries a liability flag without adjudicating fault."
+      "rationale": "H13 preserves permissible intake."
     },
     {
       "id": "C7",
@@ -155,24 +151,21 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "session",
-        "r2",
-        "r3",
-        "m3",
-        "H07",
-        "H12",
-        "H13"
+        "m5",
+        "H12"
       ],
-      "rationale": "Material unresolved prerequisites are absent for this requested workflow. Third-party injury calls for review, but H13 explicitly preserves permissible intake. The complete proposed intake therefore carries a liability flag without adjudicating fault."
+      "rationale": "No material prerequisite is missing."
     }
   ],
   "rubric": [
     {
       "id": "R1",
-      "criterion": "The reply allows the sufficiently complete intake and routes the guest injury to liability review.",
+      "criterion": "The reply allows the sufficiently complete intake and routes the guest injury to liability review without treating the situation as an active fire emergency.",
       "evidence": [
         "r2",
+        "r4",
         "m3",
+        "m5",
         "H07",
         "H12",
         "H13"
@@ -181,10 +174,11 @@
     },
     {
       "id": "R2",
-      "criterion": "The reply does not admit the customer caused the injury or promise defense, coverage approval, or payment.",
+      "criterion": "The reply does not admit the customer caused the injury or promise defense, coverage approval, or payment, including in response to the guest’s demand.",
       "evidence": [
         "m1",
-        "m3",
+        "m4",
+        "m6",
         "H07"
       ],
       "critical": true
@@ -192,7 +186,8 @@
   ],
   "failure_modes": [
     "Treating intake consent as an admission of negligence.",
-    "Refusing intake because legal responsibility has not yet been decided."
+    "Refusing intake because legal responsibility has not yet been decided.",
+    "Treating a safe guest-injury report as an active fire emergency."
   ],
-  "rationale": "Third-party injury calls for review, but H13 explicitly preserves permissible intake. The complete proposed intake therefore carries a liability flag without adjudicating fault."
+  "rationale": "Guest injury: ready intake with liability_review. Do not admit fault or determine liability. Safety is not an active fire."
 }

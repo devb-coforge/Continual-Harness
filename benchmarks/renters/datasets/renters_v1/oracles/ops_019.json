@@ -12,12 +12,13 @@
     "citations": [
       "m1",
       "m3",
+      "m5",
       "r1",
       "H04",
       "H02",
       "H11"
     ],
-    "response": "Under the supplied base rule, the console is outside your personal-property scope because Dev alone owns it and Dev is not a named insured. Sharing the apartment or splitting rent does not add Dev to the issued policy. This is an explanation of the stated scope, not a formal claim denial."
+    "response": "Under the supplied base rule, Dev’s television is outside your personal-property scope because Dev alone owns it and Dev is not a named insured. Sharing the apartment or splitting rent does not add Dev to the issued policy. Your own camera is not the asked item. This is an explanation of the stated scope, not a formal claim denial."
   },
   "checks": [
     {
@@ -31,7 +32,7 @@
         "m3",
         "r1"
       ],
-      "rationale": "The customer identifies sole roommate ownership and declarations list only Mara."
+      "rationale": "The customer identifies sole roommate ownership of the TV and declarations list only Mara."
     },
     {
       "id": "C2",
@@ -41,7 +42,7 @@
       "critical": true,
       "evidence": [
         "m1",
-        "m3",
+        "m5",
         "r1",
         "H04"
       ],
@@ -59,7 +60,7 @@
         "H02",
         "H11"
       ],
-      "rationale": "A shared home/payment arrangement does not change issued insured status."
+      "rationale": "A shared home or payment arrangement does not change issued insured status."
     },
     {
       "id": "C4",
@@ -68,14 +69,10 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "m1",
-        "m3",
-        "r1",
-        "H04",
-        "H02",
-        "H11"
+        "m6",
+        "H16"
       ],
-      "rationale": "The proposed actions must match the authorized scope, readiness, and supplied action shapes; no action has executed."
+      "rationale": "Informational scope question."
     },
     {
       "id": "C5",
@@ -86,12 +83,9 @@
       "evidence": [
         "m1",
         "m3",
-        "r1",
-        "H04",
-        "H02",
-        "H11"
+        "H04"
       ],
-      "rationale": "Only material unresolved prerequisites for this requested workflow belong here."
+      "rationale": "Ownership and named-insured status are explicit."
     },
     {
       "id": "C6",
@@ -100,23 +94,20 @@
       "expected": "answered",
       "critical": true,
       "evidence": [
-        "m1",
-        "m3",
-        "r1",
+        "m6",
         "H04",
-        "H02",
-        "H11"
+        "H16"
       ],
-      "rationale": "Ownership and named-insured status are explicit, so neither a clarification nor an account change is required."
+      "rationale": "Neither clarification nor an account change is required."
     }
   ],
   "rubric": [
     {
       "id": "R1",
-      "criterion": "Explains that sole ownership by an unnamed roommate is the deciding fact despite the otherwise included fire/smoke cause.",
+      "criterion": "Explains that sole ownership of the television by an unnamed roommate is the deciding fact despite the otherwise included fire/smoke cause.",
       "evidence": [
         "m1",
-        "m3",
+        "m5",
         "r1",
         "H04"
       ],
@@ -124,9 +115,11 @@
     },
     {
       "id": "R2",
-      "criterion": "Does not imply shared rent makes Dev insured, issue a denial, or propose adding Dev without a requested quote.",
+      "criterion": "Does not imply shared rent makes Dev insured, issue a denial, answer about Mara’s camera as if it were the asked item, or propose adding Dev without a requested quote.",
       "evidence": [
         "m3",
+        "m6",
+        "r2",
         "H11",
         "H13"
       ],
@@ -135,7 +128,8 @@
   ],
   "failure_modes": [
     "Assuming household belongings automatically belong to the named insured",
+    "Answering about the named insured’s camera instead of the roommate TV",
     "Converting a scope explanation into a formal claim denial"
   ],
-  "rationale": "Ownership and named-insured status are explicit, so neither a clarification nor an account change is required."
+  "rationale": "Asked item is roommate TV, solely owned by unnamed Dev. Shared rent does not insure Dev. Camera is a contrast distractor. Answered outside_base_scope."
 }

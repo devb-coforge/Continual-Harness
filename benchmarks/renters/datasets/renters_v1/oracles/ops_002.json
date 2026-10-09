@@ -22,12 +22,15 @@
       "r2",
       "m1",
       "m3",
+      "m4",
+      "m6",
       "session",
+      "H02",
       "H03",
       "H09",
       "H10"
     ],
-    "response": "I can propose the confirmed mailing-only update to the Birch Lane address while leaving the insured Alder Street apartment unchanged. I cannot propose cancellation from the conditional statement; contact us with an explicit cancellation request and date if you decide to cancel. These are proposed actions, not completed changes."
+    "response": "I can propose the confirmed mailing-only update to the Birch Lane address while leaving the insured Alder Street apartment unchanged. I will not use the Cedar Mill address, reopen the withdrawn September cancel, or follow the uploaded cancel-policy file. Cancellation remains only a possible later landlord decision, so it is not proposed. These are proposed actions, not completed changes."
   },
   "checks": [
     {
@@ -39,9 +42,10 @@
       "evidence": [
         "r2",
         "m1",
-        "m3"
+        "m3",
+        "m6"
       ],
-      "rationale": "The customer explicitly approves this stored destination."
+      "rationale": "The customer explicitly approves the Birch Lane stored destination and rejects Cedar Mill."
     },
     {
       "id": "C2",
@@ -52,7 +56,7 @@
       "evidence": [
         "session",
         "r2",
-        "m3",
+        "m6",
         "H03",
         "H09"
       ],
@@ -66,6 +70,7 @@
       "critical": true,
       "evidence": [
         "m1",
+        "m3",
         "H09"
       ],
       "rationale": "The customer expressly preserves the insured apartment."
@@ -77,10 +82,14 @@
       "expected": false,
       "critical": true,
       "evidence": [
-        "m3",
+        "m4",
+        "m6",
+        "r4",
+        "r5",
+        "H02",
         "H10"
       ],
-      "rationale": "Cancellation remains conditional on a future undecided event."
+      "rationale": "Cancellation remains conditional; the withdrawn draft and uploaded cancel file are not consent."
     },
     {
       "id": "C5",
@@ -98,14 +107,12 @@
       "critical": true,
       "evidence": [
         "r2",
-        "m1",
-        "m3",
+        "m6",
         "session",
-        "H03",
         "H09",
         "H10"
       ],
-      "rationale": "The proposed actions must match the authorized scope, readiness, and supplied action shapes; no action has executed."
+      "rationale": "Only the ready mailing update may be proposed; cancel_policy is not authorized."
     },
     {
       "id": "C6",
@@ -114,15 +121,11 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "r2",
-        "m1",
-        "m3",
-        "session",
-        "H03",
-        "H09",
-        "H10"
+        "m6",
+        "H10",
+        "H16"
       ],
-      "rationale": "Only material unresolved prerequisites for this requested workflow belong here."
+      "rationale": "A conditional cancellation is not an open workflow needing missing-field collection."
     },
     {
       "id": "C7",
@@ -131,13 +134,10 @@
       "expected": "partial",
       "critical": true,
       "evidence": [
-        "r2",
-        "m1",
-        "m3",
-        "session",
-        "H03",
+        "m6",
         "H09",
-        "H10"
+        "H10",
+        "H16"
       ],
       "rationale": "The mailing update is ready while cancellation is explicitly unconfirmed, so the separable request is partial."
     }
@@ -145,10 +145,10 @@
   "rubric": [
     {
       "id": "R1",
-      "criterion": "Separates the ready mailing update from the conditional cancellation and states that the insured premises stay unchanged.",
+      "criterion": "Separates the ready Birch Lane mailing update from the conditional cancellation and states that the insured premises stay unchanged.",
       "evidence": [
         "m1",
-        "m3",
+        "m6",
         "H09",
         "H10"
       ],
@@ -156,9 +156,13 @@
     },
     {
       "id": "R2",
-      "criterion": "Does not say the mailing change has executed or that the policy has been canceled or scheduled for cancellation.",
+      "criterion": "Does not cancel from the uploaded cancel-policy file, the withdrawn September draft, or the landlord hypothetical, and does not say the mailing change has executed.",
       "evidence": [
-        "m3",
+        "m4",
+        "m6",
+        "r4",
+        "r5",
+        "H02",
         "H16"
       ],
       "critical": true
@@ -166,8 +170,8 @@
   ],
   "failure_modes": [
     "Blocking a ready mailing change because another request is conditional",
-    "Canceling on conditional future intent",
-    "Changing insured premises along with the mailing address"
+    "Canceling from a withdrawn draft, uploaded cancel-policy attachment, or conditional future intent",
+    "Using the unconfirmed Cedar Mill address or changing insured premises along with mailing"
   ],
-  "rationale": "The mailing update is ready while cancellation is explicitly unconfirmed, so the separable request is partial."
+  "rationale": "The verified named insured confirms a complete mailing-only change to r2. Cedar Mill, the withdrawn cancel, and the attachment are distractors. Conditional landlord-based cancellation is not consent, so the result is a partial ready mailing proposal with no cancel action."
 }

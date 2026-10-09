@@ -11,13 +11,17 @@
     "actions": [],
     "missing_fields": [],
     "citations": [
-      "m3",
       "m1",
+      "m3",
+      "m4",
+      "m6",
       "r1",
+      "r2",
+      "H01",
       "H04",
       "H08"
     ],
-    "response": "Your own camera can fall within the policy’s theft scope while temporarily away from home, and October 6 is within the supplied policy interval. Leaving the apartment does not by itself disqualify it. Limits and the deductible still apply; this is not claim approval or a payment promise. I have not proposed a claim because you asked only for an explanation."
+    "response": "Your own camera can fall within this policy’s theft scope while temporarily away from home, and 2026-10-06 is inside the issued interval. Leaving the apartment does not by itself disqualify it. The marketing flyer does not override the issued declarations, and this answer is not about Jordan’s camera, the employer laptop, or the December 2025 trip. Limits and the deductible still apply; this is not claim approval. No claim is proposed because you asked only for an explanation."
   },
   "checks": [
     {
@@ -27,9 +31,11 @@
       "expected": "2026-10-06",
       "critical": true,
       "evidence": [
-        "m3"
+        "m3",
+        "m4",
+        "H08"
       ],
-      "rationale": "The customer gives an explicit event date."
+      "rationale": "The spoken sixth of October is later confirmed as the ISO date 2026-10-06, superseding the pre-inception trip."
     },
     {
       "id": "C2",
@@ -39,7 +45,7 @@
       "critical": true,
       "evidence": [
         "m1",
-        "m3",
+        "m4",
         "r1",
         "H04",
         "H08"
@@ -54,9 +60,12 @@
       "critical": true,
       "evidence": [
         "m1",
+        "m6",
+        "r2",
+        "H01",
         "H04"
       ],
-      "rationale": "Temporary off-premises belongings are included."
+      "rationale": "Temporary off-premises belongings are included; an advertisement cannot exclude them."
     },
     {
       "id": "C4",
@@ -65,9 +74,10 @@
       "expected": false,
       "critical": true,
       "evidence": [
-        "m3"
+        "m4",
+        "m6"
       ],
-      "rationale": "The customer explicitly seeks explanation only."
+      "rationale": "The customer explicitly seeks explanation only and declines intake."
     },
     {
       "id": "C5",
@@ -76,13 +86,10 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "m3",
-        "m1",
-        "r1",
-        "H04",
-        "H08"
+        "m6",
+        "H16"
       ],
-      "rationale": "The proposed actions must match the authorized scope, readiness, and supplied action shapes; no action has executed."
+      "rationale": "An informational question with no requested transaction has an empty actions array."
     },
     {
       "id": "C6",
@@ -91,13 +98,12 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "m3",
         "m1",
+        "m4",
         "r1",
-        "H04",
-        "H08"
+        "H04"
       ],
-      "rationale": "Only material unresolved prerequisites for this requested workflow belong here."
+      "rationale": "Ownership, date, and informational scope are sufficiently supplied."
     },
     {
       "id": "C7",
@@ -106,31 +112,37 @@
       "expected": "answered",
       "critical": true,
       "evidence": [
-        "m3",
-        "m1",
+        "m6",
         "r1",
         "H04",
-        "H08"
+        "H16"
       ],
-      "rationale": "The question has enough facts to explain scope and expressly declines intake; an informational answer is appropriate."
+      "rationale": "The question has enough facts to explain scope and expressly declines intake."
     }
   ],
   "rubric": [
     {
       "id": "R1",
-      "criterion": "Explains that temporary travel does not itself remove theft protection for the named insured’s own camera.",
+      "criterion": "Explains that temporary travel does not itself remove theft protection for the named insured’s own camera, despite the flyer’s off-premises exclusion language.",
       "evidence": [
         "m1",
+        "m6",
         "r1",
+        "r2",
+        "H01",
         "H04"
       ],
       "critical": true
     },
     {
       "id": "R2",
-      "criterion": "Does not claim to have opened a claim or guarantee reimbursement, and distinguishes scope from claim approval.",
+      "criterion": "Does not open a claim, guarantee reimbursement, or treat the roommate camera, employer laptop, or December 2025 trip as the asked event.",
       "evidence": [
-        "m3",
+        "m1",
+        "m6",
+        "r3",
+        "r4",
+        "r5",
         "H04",
         "H16"
       ],
@@ -138,8 +150,9 @@
     }
   ],
   "failure_modes": [
-    "Treating off-premises property as automatically excluded",
-    "Opening a claim after an informational-only request"
+    "Treating off-premises property as automatically excluded because of marketing copy",
+    "Opening a claim after an informational-only request",
+    "Answering about the roommate camera, employer laptop, or pre-inception trip instead of the named insured’s October 6 camera"
   ],
-  "rationale": "The question has enough facts to explain scope and expressly declines intake; an informational answer is appropriate."
+  "rationale": "Multi-hop ownership, interval, and travel facts place Nina’s own camera within base theft scope on 2026-10-06. Issued terms outrank the flyer. Roommate, employer, and pre-start incidents are distractors. The customer declined intake, so the answer is informational only."
 }

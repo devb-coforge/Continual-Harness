@@ -15,17 +15,16 @@
     "actions": [],
     "missing_fields": [],
     "citations": [
-      "H02",
       "H07",
       "H13",
       "H15",
       "H16",
-      "m1",
       "m3",
       "m5",
-      "m7"
+      "m7",
+      "m9"
     ],
-    "response": "The handoff requests liability review of the October 6 injury allegation and disputed pot ownership. The roughly $600 clinic amount is an unverified estimate, with no finding of fault. Staff should contact you at imani.reed@post.example; this does not promise payment or authorize contacting the neighbor."
+    "response": "The handoff requests liability review of the October 6 injury allegation and disputed pot ownership. The roughly $600 clinic amount is an unverified estimate. Do not admit fault or promise payment. Contact you at imani.reed@post.example only; the building fire rumor is not this case."
   },
   "checks": [
     {
@@ -35,20 +34,22 @@
       "expected": "2026-10-06",
       "critical": true,
       "evidence": [
-        "m1"
+        "m1",
+        "H08"
       ],
-      "rationale": "The neighbor allegation identifies October 6."
+      "rationale": "The alleged incident date is October 6, 2026."
     },
     {
       "id": "C2",
       "path": "/fields/incident_location",
-      "operator": "eq",
+      "operator": "text_eq",
       "expected": "18 Harbor Steps, Morrow, US",
       "critical": true,
       "evidence": [
-        "m3"
+        "m3",
+        "H12"
       ],
-      "rationale": "The photo is described as showing this location."
+      "rationale": "The described location is 18 Harbor Steps, Morrow, US."
     },
     {
       "id": "C3",
@@ -58,9 +59,10 @@
       "critical": true,
       "evidence": [
         "m1",
+        "m5",
         "H07"
       ],
-      "rationale": "The customer reports the neighbor alleged an arm injury."
+      "rationale": "The neighbor's arm injury is an allegation, not a finding."
     },
     {
       "id": "C4",
@@ -70,9 +72,10 @@
       "critical": true,
       "evidence": [
         "m3",
-        "H13"
+        "m9",
+        "H02"
       ],
-      "rationale": "The customer expressly contests the ownership implication."
+      "rationale": "The customer disputes that the pot was theirs."
     },
     {
       "id": "C5",
@@ -84,7 +87,7 @@
         "m7",
         "H15"
       ],
-      "rationale": "The $600 figure is relayed as an unverified neighbor estimate."
+      "rationale": "The $600 clinic figure is an unverified neighbor estimate."
     },
     {
       "id": "C6",
@@ -96,7 +99,7 @@
         "m7",
         "H15"
       ],
-      "rationale": "The customer has not seen a bill."
+      "rationale": "The customer has not seen a bill, so the amount is not verified."
     },
     {
       "id": "C7",
@@ -105,9 +108,10 @@
       "expected": "imani.reed@post.example",
       "critical": true,
       "evidence": [
-        "m5"
+        "m5",
+        "H12"
       ],
-      "rationale": "Only the customer contact is authorized."
+      "rationale": "Staff should use imani.reed@post.example."
     },
     {
       "id": "C8",
@@ -117,9 +121,10 @@
       "critical": true,
       "evidence": [
         "m5",
-        "H02"
+        "m9",
+        "H07"
       ],
-      "rationale": "The customer specifically says not to contact the neighbor yet."
+      "rationale": "The customer forbids contacting the neighbor directly."
     },
     {
       "id": "C9",
@@ -128,17 +133,9 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "H02",
-        "H07",
-        "H13",
-        "H15",
-        "H16",
-        "m1",
-        "m3",
-        "m5",
-        "m7"
+        "H16"
       ],
-      "rationale": "This is extraction into a draft document only; no executable actions are permitted."
+      "rationale": "This task requests document extraction only; allowed_actions is empty so no transaction may be proposed."
     },
     {
       "id": "C10",
@@ -147,17 +144,12 @@
       "expected": "escalate",
       "critical": true,
       "evidence": [
-        "H02",
         "H07",
-        "H13",
-        "H15",
         "H16",
-        "m1",
-        "m3",
-        "m5",
-        "m7"
+        "m7",
+        "m9"
       ],
-      "rationale": "The document and next step must reflect the case-specific readiness described in the instruction and evidence."
+      "rationale": "Disposition follows H16 for the requested workflow given the latest customer intent and unresolved prerequisites."
     },
     {
       "id": "C11",
@@ -166,45 +158,41 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "H02",
-        "H07",
-        "H13",
-        "H15",
         "H16",
-        "m1",
-        "m3",
-        "m5",
-        "m7"
+        "m9"
       ],
-      "rationale": "Only unresolved material prerequisites for the specified workflow belong in this list; optional unknowns are not missing requirements."
+      "rationale": "missing_fields lists only material unresolved prerequisites for this workflow, not optional nulls."
     }
   ],
   "rubric": [
     {
       "id": "R1",
-      "criterion": "The reply presents injury, ownership, and medical amount with their allegation/dispute/estimate status intact.",
+      "criterion": "The reply presents injury, ownership, and medical amount with their allegation, dispute, and estimate status intact and routes the matter to liability review.",
       "evidence": [
-        "m1",
-        "m3",
+        "m5",
         "m7",
-        "H15"
+        "m9",
+        "H07"
       ],
       "critical": true
     },
     {
       "id": "R2",
-      "criterion": "The reply routes liability to staff without admitting fault, promising payment, or authorizing neighbor contact.",
+      "criterion": "The reply does not admit fault, promise payment, authorize neighbor contact, or treat the unrelated fire rumor as this incident.",
       "evidence": [
+        "m1",
         "m5",
-        "m7",
+        "m9",
+        "r1",
         "H07"
       ],
       "critical": true
     }
   ],
   "failure_modes": [
-    "Turning an alleged injury into an established liability finding.",
-    "Treating an approximate clinic amount as an approved reimbursement."
+    "Turning an alleged injury into an established liability finding or admission of fault.",
+    "Treating an approximate clinic amount as an approved reimbursement.",
+    "Opening or mixing an unrelated building-fire rumor with this pot-injury review."
   ],
-  "rationale": "The neighbor allegation identifies October 6. The photo is described as showing this location. The customer reports the neighbor alleged an arm injury. The customer expressly contests the ownership implication. The $600 figure is relayed as an unverified neighbor estimate. The customer has not seen a bill. Only the customer contact is authorized. The customer specifically says not to contact the neighbor yet."
+  "rationale": "Injury is alleged and ownership disputed. $600 is an unverified estimate. Neighbor contact is forbidden. An active-fire distractor is not this case. Staff liability review is required without payment promises."
 }

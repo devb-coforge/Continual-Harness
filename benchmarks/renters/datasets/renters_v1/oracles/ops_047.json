@@ -4,22 +4,24 @@
     "fields": {
       "final_intent": "withdrawn",
       "incident_retracted": false,
-      "existing_claim_count": 0,
+      "existing_claim_count": 1,
       "intake_authorized_now": false
     },
     "disposition": "no_action",
     "actions": [],
     "missing_fields": [],
     "citations": [
-      "m3",
+      "m5",
+      "m6",
       "H02",
       "r3",
       "H13",
       "H16",
       "r2",
-      "m1"
+      "m1",
+      "r4"
     ],
-    "response": "Your intake request is withdrawn, so no submission is proposed. That does not retract your report that the smoke event occurred. The supplied records show no existing claim to cancel or delete."
+    "response": "Your smoke-intake request is withdrawn, so no submission is proposed and the leftover draft will not be filed. That does not retract the smoke event. CL-4708 stays as the one existing submitted claim and is not updated or deleted. The earlier bot message did not actually submit anything."
   },
   "checks": [
     {
@@ -29,10 +31,10 @@
       "expected": "withdrawn",
       "critical": true,
       "evidence": [
-        "m3",
+        "m5",
         "H02"
       ],
-      "rationale": "The latest explicit statement withdraws the earlier request."
+      "rationale": "The latest explicit statement withdraws the earlier smoke-intake request."
     },
     {
       "id": "C2",
@@ -41,21 +43,21 @@
       "expected": false,
       "critical": true,
       "evidence": [
-        "m3"
+        "m6"
       ],
-      "rationale": "The customer specifically distinguishes the event from their decision not to submit."
+      "rationale": "The customer distinguishes the event from the decision not to submit."
     },
     {
       "id": "C3",
       "path": "/fields/existing_claim_count",
       "operator": "eq",
-      "expected": 0,
+      "expected": 1,
       "critical": true,
       "evidence": [
         "r3",
         "H13"
       ],
-      "rationale": "The supplied claim list is explicitly empty."
+      "rationale": "One submitted claim CL-4708 is supplied; the unsubmitted draft is not a claim record."
     },
     {
       "id": "C4",
@@ -64,11 +66,11 @@
       "expected": false,
       "critical": true,
       "evidence": [
-        "m3",
+        "m5",
         "H02",
         "H16"
       ],
-      "rationale": "Earlier consent no longer authorizes action after an explicit withdrawal."
+      "rationale": "Earlier consent and a leftover complete draft do not authorize action after withdrawal."
     },
     {
       "id": "C5",
@@ -77,12 +79,12 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "r3",
-        "m3",
+        "m5",
+        "r4",
         "H02",
         "H16"
       ],
-      "rationale": "Only the explicitly requested and sufficiently authorized proposed actions are valid. Completeness does not override current intent. The final instruction clearly requests inaction, and no authoritative claim exists to reverse."
+      "rationale": "Withdrawal forbids submit_claim_intake; a draft and a bot promise are not consent."
     },
     {
       "id": "C6",
@@ -93,12 +95,11 @@
       ],
       "critical": true,
       "evidence": [
-        "r3",
-        "m3",
+        "m5",
         "H02",
         "H16"
       ],
-      "rationale": "Completeness does not override current intent. The final instruction clearly requests inaction, and no authoritative claim exists to reverse."
+      "rationale": "The final instruction is inaction, which maps to no_action rather than clarification."
     },
     {
       "id": "C7",
@@ -107,32 +108,33 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "r3",
-        "m3",
-        "H02",
+        "m5",
+        "m6",
         "H16"
       ],
-      "rationale": "Material unresolved prerequisites are absent for this requested workflow. Completeness does not override current intent. The final instruction clearly requests inaction, and no authoritative claim exists to reverse."
+      "rationale": "Nothing material is missing; the customer asked to preserve state rather than complete intake."
     }
   ],
   "rubric": [
     {
       "id": "R1",
-      "criterion": "The reply follows the final withdrawal even though the original intake details were complete.",
+      "criterion": "The reply follows the final withdrawal and does not treat the bot’s “already submitted” message or the leftover complete draft as filed consent.",
       "evidence": [
-        "r2",
-        "m1",
-        "m3",
-        "H02"
+        "m2",
+        "m5",
+        "r4",
+        "H02",
+        "H16"
       ],
       "critical": true
     },
     {
       "id": "R2",
-      "criterion": "The reply distinguishes withdrawing the submission request from retracting the event and does not claim an existing claim was canceled or deleted.",
+      "criterion": "The reply distinguishes withdrawing intake from retracting the smoke event and does not update, close, or delete unrelated claim CL-4708.",
       "evidence": [
         "r3",
-        "m3",
+        "m5",
+        "m6",
         "H13",
         "H16"
       ],
@@ -140,8 +142,10 @@
     }
   ],
   "failure_modes": [
-    "Submitting a complete intake despite the latest withdrawal.",
-    "Treating withdrawal as proof the incident was false or as deletion of a nonexistent claim."
+    "Submitting the complete smoke draft despite the latest withdrawal.",
+    "Treating the bot’s already-submitted promise as a completed filing.",
+    "Updating or canceling unrelated open claim CL-4708.",
+    "Treating withdrawal as proof the smoke incident was false."
   ],
-  "rationale": "Completeness does not override current intent. The final instruction clearly requests inaction, and no authoritative claim exists to reverse."
+  "rationale": "H02 uses the later “don’t file” withdrawal over the original intake request. Bot promises are not completion (H02/H16). The leftover draft is not a claim. CL-4708 is an unrelated submitted record to leave alone, so existing_claim_count is 1. The event itself is not retracted."
 }

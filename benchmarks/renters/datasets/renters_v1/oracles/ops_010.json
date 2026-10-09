@@ -11,10 +11,12 @@
     "missing_fields": [],
     "citations": [
       "r2",
-      "H05",
-      "m3"
+      "m3",
+      "m6",
+      "H02",
+      "H05"
     ],
-    "response": "The supplied report describes a sudden split in an internal supply pipe, which is an included base cause under this handbook. Water damage is not excluded as a whole. Your own table and the October 7 date also fit the supplied ownership and policy timing facts, but that is not approval of a claim or a payment amount. No claim action is proposed."
+    "response": "The plumber’s report describes a sudden split in an internal supply pipe, which is an included base cause. A wet photograph labeled flood, your first gradual-stain guess, and an unused backup-endorsement quote do not change that finding. Water damage is not excluded as a whole. This is not claim approval or a payment amount, and no claim action is proposed."
   },
   "checks": [
     {
@@ -24,9 +26,11 @@
       "expected": "sudden_internal_supply_escape",
       "critical": true,
       "evidence": [
-        "r2"
+        "r2",
+        "m3",
+        "H02"
       ],
-      "rationale": "The attached report specifically identifies sudden escape from an internal supply pipe."
+      "rationale": "The attached report and later customer acceptance identify sudden escape from an internal supply pipe."
     },
     {
       "id": "C2",
@@ -47,7 +51,7 @@
       "expected": false,
       "critical": true,
       "evidence": [
-        "m3"
+        "m6"
       ],
       "rationale": "The request is informational only."
     },
@@ -58,11 +62,10 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "r2",
-        "H05",
-        "m3"
+        "m6",
+        "H16"
       ],
-      "rationale": "The proposed actions must match the authorized scope, readiness, and supplied action shapes; no action has executed."
+      "rationale": "Explanation-only; no actions."
     },
     {
       "id": "C5",
@@ -72,10 +75,9 @@
       "critical": true,
       "evidence": [
         "r2",
-        "H05",
-        "m3"
+        "H05"
       ],
-      "rationale": "Only material unresolved prerequisites for this requested workflow belong here."
+      "rationale": "The supplied cause evidence removes cause ambiguity."
     },
     {
       "id": "C6",
@@ -85,28 +87,34 @@
       "critical": true,
       "evidence": [
         "r2",
+        "m6",
         "H05",
-        "m3"
+        "H16"
       ],
-      "rationale": "The supplied cause evidence removes cause ambiguity, so no additional causation question is necessary."
+      "rationale": "Cause is resolved without intake."
     }
   ],
   "rubric": [
     {
       "id": "R1",
-      "criterion": "Uses the plumber’s specific internal-supply finding rather than the broad label water or the friend’s blanket exclusion.",
+      "criterion": "Uses the plumber’s specific internal-supply finding rather than the photo label flood, the friend’s blanket exclusion, or the unused backup quote.",
       "evidence": [
         "m1",
+        "m3",
         "r2",
+        "r3",
+        "r4",
         "H05"
       ],
       "critical": true
     },
     {
       "id": "R2",
-      "criterion": "Does not promise payment or pretend a claim was opened for this explanation-only request.",
+      "criterion": "Does not promise payment or pretend a claim was opened for this explanation-only request, and does not keep the withdrawn gradual-stain theory as the cause.",
       "evidence": [
         "m3",
+        "m6",
+        "H02",
         "H04",
         "H16"
       ],
@@ -115,7 +123,8 @@
   ],
   "failure_modes": [
     "Blanket rejection of every water-related incident",
-    "Ignoring a supplied specific cause report in favor of a casual assertion"
+    "Treating a photo labeled flood or an unused backup endorsement as the cause",
+    "Keeping the first gradual-stain guess after the plumber correction"
   ],
-  "rationale": "The supplied cause evidence removes cause ambiguity, so no additional causation question is necessary."
+  "rationale": "Later plumber finding plus customer acceptance establish sudden internal supply escape within base scope. Photo, unused endorsement, and withdrawn stain theory are distractors. No claim requested."
 }

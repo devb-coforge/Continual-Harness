@@ -4,7 +4,7 @@
     "fields": {
       "destination_ref": "r2",
       "unit": null,
-      "effective_date": "2026-10-20",
+      "effective_date": "2026-10-22",
       "ready_to_schedule": false
     },
     "disposition": "needs_clarification",
@@ -14,14 +14,16 @@
     ],
     "citations": [
       "r2",
-      "m1",
       "m3",
+      "m5",
+      "m6",
       "H09",
       "H08",
+      "H02",
       "H16",
       "r1"
     ],
-    "response": "The October 20 date and new building are clear, but the assigned apartment unit is still needed before a move can be proposed. Please provide it once assigned. Your current insured address stays unchanged; I will not copy Unit 4 into the new address."
+    "response": "October 22 and 280 Heron Court are clear, but the assigned apartment unit is still needed before a move can be proposed. I will not copy Unit 2B from mailing, Unit 4 from Kestrel Street, or your sister’s 41 Wicker Lane house. Cancellation stays withdrawn. Today’s insured address is unchanged."
   },
   "checks": [
     {
@@ -32,9 +34,10 @@
       "critical": true,
       "evidence": [
         "r2",
-        "m1"
+        "m3",
+        "m5"
       ],
-      "rationale": "The building record matches the confirmed request."
+      "rationale": "The confirmed move target is the Heron Court multiunit record, not the sister’s house."
     },
     {
       "id": "C2",
@@ -44,22 +47,24 @@
       "critical": true,
       "evidence": [
         "r2",
-        "m3",
+        "m5",
         "H09"
       ],
-      "rationale": "The unit is explicitly unassigned and must not be copied from the old dwelling."
+      "rationale": "The destination unit is unassigned; mailing Unit 2B and current Unit 4 must not be copied."
     },
     {
       "id": "C3",
       "path": "/fields/effective_date",
       "operator": "eq",
-      "expected": "2026-10-20",
+      "expected": "2026-10-22",
       "critical": true,
       "evidence": [
-        "m1",
-        "H08"
+        "m3",
+        "m6",
+        "H08",
+        "H02"
       ],
-      "rationale": "October 20, 2026 is unambiguous and future."
+      "rationale": "The later correction replaces October 15 with unambiguous future date October 22, 2026."
     },
     {
       "id": "C4",
@@ -69,10 +74,10 @@
       "critical": true,
       "evidence": [
         "r2",
-        "m3",
+        "m5",
         "H09"
       ],
-      "rationale": "The complete destination including applicable unit remains missing."
+      "rationale": "A multiunit destination without a unit is not a complete approved address under H09."
     },
     {
       "id": "C5",
@@ -82,11 +87,11 @@
       "critical": true,
       "evidence": [
         "r2",
-        "m1",
         "m3",
+        "m5",
         "H09"
       ],
-      "rationale": "Only the explicitly requested and sufficiently authorized proposed actions are valid. The destination is explicitly multiunit, so the missing unit is material. Other move facts are sufficient and need not be re-collected."
+      "rationale": "schedule_move cannot be proposed without the unit; cancellation was withdrawn and is not an allowed action."
     },
     {
       "id": "C6",
@@ -98,11 +103,11 @@
       "critical": true,
       "evidence": [
         "r2",
-        "m1",
-        "m3",
-        "H09"
+        "m5",
+        "H09",
+        "H16"
       ],
-      "rationale": "The destination is explicitly multiunit, so the missing unit is material. Other move facts are sufficient and need not be re-collected."
+      "rationale": "The missing unit is a material destination prerequisite, not a reason to drop the confirmed date or building."
     },
     {
       "id": "C7",
@@ -114,30 +119,34 @@
       "critical": true,
       "evidence": [
         "r2",
-        "m1",
-        "m3",
+        "m5",
         "H09"
       ],
-      "rationale": "Material unresolved prerequisites are unit. The destination is explicitly multiunit, so the missing unit is material. Other move facts are sufficient and need not be re-collected."
+      "rationale": "Only the unassigned destination unit remains unresolved for the move workflow."
     }
   ],
   "rubric": [
     {
       "id": "R1",
-      "criterion": "The reply asks specifically for the destination unit while retaining the confirmed move date and building.",
+      "criterion": "The reply asks for the Heron Court unit while keeping the corrected October 22 date and r2 building, and does not treat 41 Wicker Lane as the move target.",
       "evidence": [
-        "m1",
         "m3",
+        "m5",
+        "r2",
+        "r3",
         "H09"
       ],
       "critical": true
     },
     {
       "id": "R2",
-      "criterion": "The reply does not reuse the old Unit 4, schedule the incomplete destination, or cancel existing coverage.",
+      "criterion": "The reply does not copy Unit 2B or Unit 4, does not schedule the incomplete destination, and does not proceed with the withdrawn cancellation.",
       "evidence": [
         "r1",
+        "m1",
         "m3",
+        "m5",
+        "H02",
         "H09",
         "H16"
       ],
@@ -145,8 +154,10 @@
     }
   ],
   "failure_modes": [
-    "Copying the current apartment number into an incompletely specified new address.",
-    "Treating date consent as sufficient for a move to an incomplete destination."
+    "Filling the destination unit from mailing Unit 2B or current Unit 4.",
+    "Scheduling a move to the sister’s complete single-family address that was never confirmed as the target.",
+    "Using the withdrawn October 15 date or reviving the withdrawn cancellation.",
+    "Treating date-and-building consent as enough for a multiunit destination with no unit."
   ],
-  "rationale": "The destination is explicitly multiunit, so the missing unit is material. Other move facts are sufficient and need not be re-collected."
+  "rationale": "H02 takes the later October 22 date and the withdrawn cancel. H09 requires a complete destination including unit for a multiunit building. The mailing address and 41 Wicker Lane are complete but are not the confirmed move target. r2 remains the destination record with a null unit."
 }

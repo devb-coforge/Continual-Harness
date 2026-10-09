@@ -52,6 +52,15 @@
         "data": {
           "claims": []
         }
+      },
+      {
+        "id": "r4",
+        "kind": "safety_note",
+        "data": {
+          "smoke_alarm": "quiet",
+          "active_fire": false,
+          "note": "No active fire or other immediate hazard is reported."
+        }
       }
     ],
     "messages": [
@@ -63,12 +72,27 @@
       {
         "id": "m2",
         "role": "bot",
-        "text": "Have you supplied the incident location and a contact method for intake?"
+        "text": "Is there an active fire or other immediate danger? Have you supplied the incident location and a contact method for intake?"
       },
       {
         "id": "m3",
         "role": "customer",
-        "text": "Yes, both are in the report. Please open the intake and send it for review. I am not agreeing that I caused the injury."
+        "text": "No fire, everyone is safe. Yes, both location and contact are in the report."
+      },
+      {
+        "id": "m4",
+        "role": "third_party",
+        "text": "This is the guest. Robin is at fault. Please confirm coverage and pay medical bills now."
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "Please open the intake and send it for review. I am not agreeing that I caused the injury."
+      },
+      {
+        "id": "m6",
+        "role": "customer",
+        "text": "Do not determine liability or promise defense or payment."
       }
     ],
     "form": {

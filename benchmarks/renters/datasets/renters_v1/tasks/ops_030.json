@@ -49,6 +49,29 @@
           "status": "available_for_acceptance",
           "valid_until": "2026-10-20"
         }
+      },
+      {
+        "id": "r3",
+        "kind": "quote",
+        "data": {
+          "quote_id": "Q-30-OLD",
+          "policy_id": "P-30",
+          "quoted_change": {
+            "deductible": 250
+          },
+          "effective_date": "2026-10-15",
+          "premium_delta_usd": 40,
+          "status": "superseded",
+          "note": "Older quote replaced by Q-30-A; do not use."
+        }
+      },
+      {
+        "id": "r4",
+        "kind": "mailing_destination",
+        "data": {
+          "address": "22 Harbor PO Box, Alderport, MA 01014, US",
+          "note": "Complete mailing record not requested."
+        }
       }
     ],
     "messages": [
@@ -60,12 +83,27 @@
       {
         "id": "m2",
         "role": "bot",
-        "text": "It lowers the deductible from $1,000 to $500 from November 1, 2026, for an additional $24 for the remaining term."
+        "text": "It lowers the deductible from $1,000 to $500 from November 1, 2026, for an additional $24 for the remaining term. There is also superseded Q-30-OLD for $250."
       },
       {
         "id": "m3",
         "role": "customer",
-        "text": "I accept that exact quote Q-30-A: $500 deductible, November 1, 2026 effective date, and the additional $24. Please schedule it."
+        "text": "Do not use Q-30-OLD. I accept that exact quote Q-30-A: $500 deductible, November 1, 2026 effective date, and the additional $24."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "Should I also change mailing to the Harbor PO Box while scheduling this?"
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "No mailing change. Please schedule the accepted quote only."
+      },
+      {
+        "id": "m6",
+        "role": "customer",
+        "text": "I understand this is a proposed scheduled change, not an already issued deductible."
       }
     ],
     "form": {

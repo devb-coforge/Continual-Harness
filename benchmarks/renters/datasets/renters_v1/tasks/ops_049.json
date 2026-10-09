@@ -4,7 +4,7 @@
   "family": "account_changes",
   "split": "test",
   "scenario_group": "superseding_quote_not_accepted_by_prior_consent",
-  "difficulty": "challenging",
+  "difficulty": "adversarial",
   "input": {
     "as_of": "2026-10-08",
     "instruction": "Assess the current limit-change request across quote revisions. request_quote_acceptance targets r1 with value {\"quote_ref\":\"r3\"}; it requests acceptance of the current available quote and does not issue coverage. apply_accepted_quote, if justified, would target r1 with value {\"quote_ref\":record ID,\"effective_date\":ISO date,\"premium_delta_usd\":integer}. Record the accepted historical quote separately from any currently accepted quote.",
@@ -24,10 +24,10 @@
           "starts_on": "2026-01-01",
           "ends_on": "2027-01-01",
           "named_insureds": [
-            "Robin Vale"
+            "Rowan Gale"
           ],
-          "insured_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
-          "mailing_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "insured_address": "11 Ivy Cut, Unit 2, Otterford, MA 01922, US",
+          "mailing_address": "11 Ivy Cut, Unit 2, Otterford, MA 01922, US",
           "personal_property_limit": 15000,
           "liability_limit": 100000,
           "deductible": 500,
@@ -75,12 +75,27 @@
       {
         "id": "m2",
         "role": "bot",
-        "text": "That quote was superseded. Q-49-B keeps the same limit and date but adds $31 for the remaining term."
+        "text": "That change is already issued. Your limit is $30,000 now."
       },
       {
         "id": "m3",
         "role": "customer",
-        "text": "I still want the higher limit, but I have not accepted $31. Please ask for the new quote acceptance before any change; my earlier yes was only for $18."
+        "text": "I still want the higher limit. I accept the cheaper one."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "Q-49-A at $18 was superseded. Q-49-B keeps the same limit and November 1 date but adds $31. Issued limit remains $15,000."
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "I accept the cheaper one, not a $31 increase. I have not named Q-49-B’s premium or date as accepted."
+      },
+      {
+        "id": "m6",
+        "role": "customer",
+        "text": "Please ask for acceptance of the current available quote before any change. My earlier yes was only for $18. Do not treat the bot message as proof it already issued."
       }
     ],
     "form": {

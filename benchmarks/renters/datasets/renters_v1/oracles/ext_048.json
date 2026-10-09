@@ -11,21 +11,27 @@
       "liability_limit": 300000,
       "deductible": 250,
       "consent_to_submit": true,
-      "other_occupants": []
+      "other_occupants": [
+        "Nia Cole"
+      ]
     },
     "disposition": "ready",
     "actions": [],
     "missing_fields": [],
     "citations": [
       "H02",
+      "H14",
       "H15",
       "H16",
       "m1",
+      "m10",
       "m3",
       "m5",
-      "m7"
+      "m7",
+      "m8",
+      "r1"
     ],
-    "response": "The draft is complete with October 31 occupancy and an October 29 requested insurance start. It records no other occupants and your submission consent; the guest visit has not been used as occupancy."
+    "response": "The draft is complete for applicant Freya Stone with occupancy October 31, an October 29 requested insurance start, and Nia Cole listed only as another occupant. Nia is not a co-applicant, her September 28 box drop-off is not occupancy, and the leftover draft that named her as applicant is discarded. Your submission consent is recorded; no policy has been issued."
   },
   "checks": [
     {
@@ -35,9 +41,11 @@
       "expected": "Freya Stone",
       "critical": true,
       "evidence": [
-        "m1"
+        "m1",
+        "m5",
+        "H14"
       ],
-      "rationale": "The cited source establishes applicant_name; preserve the stated value and uncertainty under H15."
+      "rationale": "The legal name Freya Stone is the applicant; nickname Faye is not the form name."
     },
     {
       "id": "C2",
@@ -46,9 +54,11 @@
       "expected": "freya.stone@example.test",
       "critical": true,
       "evidence": [
-        "m1"
+        "m1",
+        "m5",
+        "H14"
       ],
-      "rationale": "The cited source establishes contact_email; preserve the stated value and uncertainty under H15."
+      "rationale": "Applicant contact is Freya's email, not Nia's."
     },
     {
       "id": "C3",
@@ -59,7 +69,7 @@
       "evidence": [
         "m1"
       ],
-      "rationale": "The cited source establishes insured_address; preserve the stated value and uncertainty under H15."
+      "rationale": "The dwelling address including unit is stated in full."
     },
     {
       "id": "C4",
@@ -69,9 +79,10 @@
       "critical": true,
       "evidence": [
         "m3",
-        "m7"
+        "m7",
+        "H02"
       ],
-      "rationale": "The cited source establishes occupancy_start; preserve the stated value and uncertainty under H15."
+      "rationale": "Occupancy is the applicant's October 31 start, not Nia's September 28 box drop-off."
     },
     {
       "id": "C5",
@@ -81,9 +92,10 @@
       "critical": true,
       "evidence": [
         "m3",
-        "m7"
+        "m7",
+        "H08"
       ],
-      "rationale": "The cited source establishes requested_start; preserve the stated value and uncertainty under H15."
+      "rationale": "Requested insurance start remains October 29, separate from occupancy."
     },
     {
       "id": "C6",
@@ -94,7 +106,7 @@
       "evidence": [
         "m5"
       ],
-      "rationale": "The cited source establishes personal_property_limit; preserve the stated value and uncertainty under H15."
+      "rationale": "The applicant selects $50,000 personal property."
     },
     {
       "id": "C7",
@@ -105,7 +117,7 @@
       "evidence": [
         "m5"
       ],
-      "rationale": "The cited source establishes liability_limit; preserve the stated value and uncertainty under H15."
+      "rationale": "The applicant selects $300,000 liability."
     },
     {
       "id": "C8",
@@ -116,7 +128,7 @@
       "evidence": [
         "m5"
       ],
-      "rationale": "The cited source establishes deductible; preserve the stated value and uncertainty under H15."
+      "rationale": "The applicant selects a $250 deductible."
     },
     {
       "id": "C9",
@@ -125,21 +137,27 @@
       "expected": true,
       "critical": true,
       "evidence": [
-        "m7"
+        "m7",
+        "m8",
+        "H14"
       ],
-      "rationale": "The cited source establishes consent_to_submit; preserve the stated value and uncertainty under H15."
+      "rationale": "Consent is for the single-applicant packet after declining to add Nia as co-applicant."
     },
     {
       "id": "C10",
       "path": "/fields/other_occupants",
       "operator": "set_eq",
-      "expected": [],
+      "expected": [
+        "Nia Cole"
+      ],
       "critical": true,
       "evidence": [
+        "m3",
         "m5",
-        "H02"
+        "m8",
+        "H14"
       ],
-      "rationale": "The cited source establishes other_occupants; preserve the stated value and uncertainty under H15."
+      "rationale": "Nia is an other occupant, not an applicant; weekend visitors are excluded."
     },
     {
       "id": "C11",
@@ -150,7 +168,7 @@
       "evidence": [
         "H16"
       ],
-      "rationale": "This task requests document extraction only; no transaction is authorized by the task."
+      "rationale": "This extraction-only task does not authorize executable transactions."
     },
     {
       "id": "C12",
@@ -161,10 +179,12 @@
       ],
       "critical": true,
       "evidence": [
-        "H15",
+        "m7",
+        "m8",
+        "H14",
         "H16"
       ],
-      "rationale": "The earlier guest visit is not occupancy, and the visiting sister is explicitly not an occupant. Final dates and submission consent are explicit."
+      "rationale": "Required application fields, occupant listing, and submission consent are complete."
     },
     {
       "id": "C13",
@@ -173,46 +193,48 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "H15",
+        "m8",
         "H16"
       ],
-      "rationale": "Only these unresolved fields block the requested document workflow: none; optional uncertainty is preserved in the document."
+      "rationale": "No required application field remains unresolved."
     }
   ],
   "rubric": [
     {
       "id": "R1",
-      "criterion": "The reply describes a complete draft with the final October dates, explicit absence of other occupants, and recorded submission consent without claiming a policy was issued.",
+      "criterion": "The reply names Freya Stone as the sole applicant, uses occupancy October 31 and insurance October 29, and lists Nia Cole only as another occupant.",
       "evidence": [
-        "H11",
-        "H14",
-        "H15",
-        "m1",
         "m3",
         "m5",
-        "m7"
+        "m8",
+        "H14",
+        "H15"
       ],
       "critical": true
     },
     {
       "id": "R2",
-      "criterion": "The reply does not treat the prior overnight visit as occupancy or the visiting sister as another resident.",
+      "criterion": "The reply does not use nickname Faye as the legal applicant name, does not treat Nia's September 28 date or email as application fields, and does not accept the bot's co-applicant suggestion or the leftover draft that lists Nia as applicant.",
       "evidence": [
-        "H02",
-        "H14",
-        "H15",
         "m1",
-        "m3",
+        "m2",
         "m5",
-        "m7"
+        "m6",
+        "m9",
+        "m10",
+        "r1",
+        "H02",
+        "H15"
       ],
       "critical": true
     }
   ],
   "failure_modes": [
-    "Using the earlier guest overnight visit as the applicant’s occupancy start.",
-    "Listing the visiting sister as a resident despite the explicit statement that nobody else will live there.",
-    "Merging the October 31 occupancy date with the requested October 29 insurance start."
+    "Using Nia's September 28 box drop-off as the applicant occupancy date.",
+    "Adding Nia Cole as a co-applicant after the customer declines.",
+    "Using nickname Faye or Nia's email as applicant identity or contact.",
+    "Omitting Nia from other_occupants after she is explicitly a resident.",
+    "Submitting the leftover draft that names Nia Cole as applicant with September 28 occupancy."
   ],
-  "rationale": "The earlier guest visit is not occupancy, and the visiting sister is explicitly not an occupant. Final dates and submission consent are explicit."
+  "rationale": "H14 distinguishes applicant, other occupants, and contact. Freya's legal name, email, and October 31 occupancy control the application. Nia is an occupant, not an applicant, and her earlier date, email, and leftover draft are distractors. The bot's co-applicant suggestion is declined. Consent applies to that single-applicant draft."
 }

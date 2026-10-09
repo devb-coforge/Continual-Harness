@@ -26,10 +26,11 @@
       "m3",
       "m5",
       "m7",
+      "m8",
       "r1",
       "r2"
     ],
-    "response": "The draft preserves Q-WB49: $5,000 backup limit, $35 total monthly premium, starting October 20. Those future terms do not apply to the October 2 drain-backup loss, and the supplied policy had no active backup endorsement then. Your condition is not unconditional acceptance; please decide whether to accept the future-only quote. Nothing has been issued or backdated."
+    "response": "The draft preserves Q-WB49: $5,000 backup limit, $35 total monthly premium, starting October 20. Those future terms do not apply to the October 2 drain-backup loss, and the issued policy had no backup endorsement then. Your condition is not unconditional acceptance, and the bot marking it accepted does not make it so. Please decide whether to accept the future-only quote. Nothing has been issued or backdated."
   },
   "checks": [
     {
@@ -40,9 +41,10 @@
       "critical": true,
       "evidence": [
         "m1",
+        "m5",
         "r2"
       ],
-      "rationale": "The customer is considering Q-WB49."
+      "rationale": "The customer is considering Q-WB49 and tells the bot not to use Q-WB50."
     },
     {
       "id": "C2",
@@ -54,7 +56,7 @@
         "m1",
         "r2"
       ],
-      "rationale": "The quoted limit is $5,000."
+      "rationale": "Q-WB49 quotes a $5,000 water-backup limit."
     },
     {
       "id": "C3",
@@ -66,7 +68,7 @@
         "m1",
         "r2"
       ],
-      "rationale": "The $35 is explicitly the total monthly premium."
+      "rationale": "The $35 is the quoted total monthly premium for Q-WB49."
     },
     {
       "id": "C4",
@@ -76,9 +78,10 @@
       "critical": true,
       "evidence": [
         "m1",
-        "r2"
+        "r2",
+        "H08"
       ],
-      "rationale": "The quote starts October 20."
+      "rationale": "Q-WB49 starts October 20, after the prior loss."
     },
     {
       "id": "C5",
@@ -89,7 +92,7 @@
       "evidence": [
         "m3"
       ],
-      "rationale": "The condition concerns a loss on October 2."
+      "rationale": "The acceptance condition concerns the October 2 drain backup, not the gradual leak stain."
     },
     {
       "id": "C6",
@@ -100,10 +103,11 @@
       "evidence": [
         "m3",
         "m5",
+        "m8",
         "H02",
         "H11"
       ],
-      "rationale": "The customer expressly conditions consent and rejects unconditional acceptance."
+      "rationale": "Consent remains conditional; the bot's accepted flag is not customer acceptance."
     },
     {
       "id": "C7",
@@ -118,7 +122,7 @@
         "H05",
         "H08"
       ],
-      "rationale": "There was no active backup endorsement on October 2; the prospective quote cannot backdate coverage."
+      "rationale": "A future unissued endorsement cannot cover an earlier event, and none was in force on October 2."
     },
     {
       "id": "C8",
@@ -127,19 +131,9 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "H02",
-        "H05",
-        "H08",
-        "H11",
-        "H15",
-        "H16",
-        "m1",
-        "m3",
-        "m5",
-        "r1",
-        "r2"
+        "H16"
       ],
-      "rationale": "This is extraction into a draft document only; no executable actions are permitted."
+      "rationale": "This extraction-only task does not authorize executable transactions."
     },
     {
       "id": "C9",
@@ -148,19 +142,12 @@
       "expected": "needs_clarification",
       "critical": true,
       "evidence": [
-        "H02",
-        "H05",
-        "H08",
-        "H11",
-        "H15",
-        "H16",
-        "m1",
-        "m3",
         "m5",
-        "r1",
-        "r2"
+        "m8",
+        "H11",
+        "H16"
       ],
-      "rationale": "The document and next step must reflect the case-specific readiness described in the instruction and evidence."
+      "rationale": "Issue cannot proceed while unconditional acceptance of the future-only quote is missing."
     },
     {
       "id": "C10",
@@ -171,51 +158,48 @@
       ],
       "critical": true,
       "evidence": [
-        "H02",
-        "H05",
-        "H08",
+        "m8",
         "H11",
-        "H15",
-        "H16",
-        "m1",
-        "m3",
-        "m5",
-        "r1",
-        "r2"
+        "H16"
       ],
-      "rationale": "Only unresolved material prerequisites for the specified workflow belong in this list; optional unknowns are not missing requirements."
+      "rationale": "Unconditional quote acceptance is the unresolved prerequisite named by the task."
     }
   ],
   "rubric": [
     {
       "id": "R1",
-      "criterion": "The reply explains the prospective endorsement date versus the earlier loss without offering backdated coverage or treating a quote as an issued endorsement.",
+      "criterion": "The reply explains that Q-WB49's October 20 start cannot cover the October 2 drain backup and does not treat a quote or bot 'accepted' flag as an issued endorsement.",
       "evidence": [
+        "m2",
         "m3",
         "m7",
         "r1",
         "r2",
         "H05",
-        "H08"
+        "H08",
+        "H11"
       ],
       "critical": true
     },
     {
       "id": "R2",
-      "criterion": "The reply preserves conditional consent and asks for a fresh decision on future-only terms without claiming issue or acceptance.",
+      "criterion": "The reply preserves conditional consent, does not switch to Q-WB50, and does not treat the gradual leak stain as the conditioned prior loss or as already covered.",
       "evidence": [
         "m3",
         "m5",
-        "m7",
+        "m8",
+        "r3",
         "H02",
-        "H11"
+        "H05"
       ],
       "critical": true
     }
   ],
   "failure_modes": [
-    "Converting conditional agreement into unconditional quote acceptance.",
-    "Retroactively covering an earlier loss with a future unissued endorsement."
+    "Treating the bot's 'marked accepted' statement as unconditional quote acceptance.",
+    "Covering the October 2 loss with a future unissued water-backup endorsement.",
+    "Using distractor quote Q-WB50 instead of Q-WB49.",
+    "Substituting the gradual leak stain for the drain-backup condition."
   ],
-  "rationale": "The customer is considering Q-WB49. The quoted limit is $5,000. The $35 is explicitly the total monthly premium. The quote starts October 20. The condition concerns a loss on October 2. The customer expressly conditions consent and rejects unconditional acceptance. There was no active backup endorsement on October 2; the prospective quote cannot backdate coverage."
+  "rationale": "H11 requires explicit acceptance of the exact quote, date, and premium. The customer conditions Q-WB49 on covering an earlier backup, which a future endorsement cannot do. The bot's accepted flag is not consent. Q-WB50 and gradual-leak trivia are distractors. Unconditional acceptance remains missing."
 }

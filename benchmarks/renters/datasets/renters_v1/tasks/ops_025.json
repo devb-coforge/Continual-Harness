@@ -30,23 +30,47 @@
           "deductible": 500,
           "valuation_basis": "actual_cash_value"
         }
+      },
+      {
+        "id": "r2",
+        "kind": "landlord_repair_estimate",
+        "data": {
+          "item": "kitchen_cabinets",
+          "amount_usd": 4100,
+          "note": "Building repair estimate; not a liability demand against Jules."
+        }
       }
     ],
     "messages": [
       {
         "id": "m1",
         "role": "customer",
-        "text": "An accidental fire on October 6 damaged my sofa and the apartment’s built-in kitchen cabinets. I own the sofa. The cabinets are part of the landlord’s building. Can I put both under my belongings coverage?"
+        "text": "An accidental fire on October 6 damaged my sofa and the apartment’s built-in kitchen cabinets. I own the sofa. The cabinets are part of the landlord’s building."
       },
       {
         "id": "m2",
         "role": "bot",
-        "text": "Has anyone said you caused the fire or asked you to pay for the cabinets?"
+        "text": "A repair estimate for the cabinets is attached. Has anyone said you caused the fire or asked you to pay for the cabinets?"
       },
       {
         "id": "m3",
         "role": "customer",
-        "text": "No allegation against me and no demand. I only want to know which category belongs under my personal-property coverage."
+        "text": "No allegation against me and no demand. The estimate is just what the building might cost to repair."
+      },
+      {
+        "id": "m4",
+        "role": "customer",
+        "text": "Can I put both the sofa and the cabinets under my belongings coverage?"
+      },
+      {
+        "id": "m5",
+        "role": "bot",
+        "text": "Should I open a liability claim so the cabinets can be paid?"
+      },
+      {
+        "id": "m6",
+        "role": "customer",
+        "text": "No. I only want to know which category belongs under my personal-property coverage. Do not invent a liability allegation."
       }
     ],
     "form": {

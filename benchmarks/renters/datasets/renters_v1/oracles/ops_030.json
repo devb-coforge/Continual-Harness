@@ -31,7 +31,7 @@
       "session",
       "H16"
     ],
-    "response": "Your exact acceptance supports proposing the $500 deductible change for November 1 with the quoted additional $24. The currently issued deductible remains $1,000 until the change is effective; this response does not confirm issuance."
+    "response": "Your exact acceptance supports proposing the $500 deductible change for November 1 with the quoted additional $24. The currently issued deductible remains $1,000 until the change is effective; I am not using the superseded older quote or changing mailing. This response does not confirm issuance."
   },
   "checks": [
     {
@@ -120,7 +120,7 @@
         "H11",
         "H16"
       ],
-      "rationale": "Only the explicitly requested and sufficiently authorized proposed actions are valid. The verified named insured explicitly accepts all quoted terms and requests scheduling; no additional acceptance is missing."
+      "rationale": "The verified named insured explicitly accepts all quoted terms and requests scheduling."
     },
     {
       "id": "C7",
@@ -131,14 +131,11 @@
       ],
       "critical": true,
       "evidence": [
-        "session",
-        "r1",
-        "r2",
-        "m3",
+        "m5",
         "H11",
         "H16"
       ],
-      "rationale": "The verified named insured explicitly accepts all quoted terms and requests scheduling; no additional acceptance is missing."
+      "rationale": "No additional acceptance is missing."
     },
     {
       "id": "C8",
@@ -147,23 +144,20 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "session",
-        "r1",
-        "r2",
-        "m3",
-        "H11",
-        "H16"
+        "m5",
+        "H11"
       ],
-      "rationale": "Material unresolved prerequisites are absent for this requested workflow. The verified named insured explicitly accepts all quoted terms and requests scheduling; no additional acceptance is missing."
+      "rationale": "The accepted quote workflow is complete."
     }
   ],
   "rubric": [
     {
       "id": "R1",
-      "criterion": "The reply distinguishes the currently issued deductible from the accepted future change.",
+      "criterion": "The reply distinguishes the currently issued deductible from the accepted future change and uses Q-30-A rather than the superseded older quote.",
       "evidence": [
         "r1",
         "r2",
+        "r3",
         "m3",
         "H01",
         "H11"
@@ -172,9 +166,11 @@
     },
     {
       "id": "R2",
-      "criterion": "The reply recognizes complete quote/date/premium acceptance without asking for it again or falsely claiming the change executed.",
+      "criterion": "The reply recognizes complete quote/date/premium acceptance without asking for it again, changing mailing, or falsely claiming the change executed.",
       "evidence": [
-        "m3",
+        "m5",
+        "m6",
+        "r4",
         "H11",
         "H16"
       ],
@@ -183,7 +179,8 @@
   ],
   "failure_modes": [
     "Deferring a fully accepted exact quote as though no consent exists.",
-    "Applying a future deductible to current coverage immediately."
+    "Applying a future deductible to current coverage immediately.",
+    "Using the superseded older quote or adding an unrequested mailing change."
   ],
-  "rationale": "The verified named insured explicitly accepts all quoted terms and requests scheduling; no additional acceptance is missing."
+  "rationale": "Standard-ish success: exact acceptance of Q-30-A is ready. Superseded quote and mailing distractor must be ignored. Current deductible stays 1000."
 }

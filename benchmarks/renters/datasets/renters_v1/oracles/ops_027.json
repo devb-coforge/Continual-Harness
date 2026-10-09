@@ -84,11 +84,11 @@
       "expected": false,
       "critical": true,
       "evidence": [
-        "m3",
+        "m5",
         "r3",
         "H09"
       ],
-      "rationale": "Outside-US moves require staff review; the customer additionally asks to preserve current insurance."
+      "rationale": "Outside-US moves require staff review; current insurance is preserved."
     },
     {
       "id": "C5",
@@ -116,13 +116,13 @@
       "evidence": [
         "session",
         "m1",
-        "m3",
+        "m6",
         "r2",
         "r3",
         "H09",
         "H16"
       ],
-      "rationale": "Only the explicitly requested and sufficiently authorized proposed actions are valid. Authority is established, the mailing change is explicit, and the outside-US move has a complete date/address but needs staff rather than more customer address data."
+      "rationale": "Mailing proceeds; foreign move is referred, not executed."
     },
     {
       "id": "C6",
@@ -133,15 +133,11 @@
       ],
       "critical": true,
       "evidence": [
-        "session",
-        "m1",
-        "m3",
-        "r2",
-        "r3",
+        "m6",
         "H09",
         "H16"
       ],
-      "rationale": "Authority is established, the mailing change is explicit, and the outside-US move has a complete date/address but needs staff rather than more customer address data."
+      "rationale": "Separable portions have different readiness."
     },
     {
       "id": "C7",
@@ -150,15 +146,10 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "session",
-        "m1",
-        "m3",
-        "r2",
-        "r3",
-        "H09",
-        "H16"
+        "m6",
+        "H09"
       ],
-      "rationale": "Material unresolved prerequisites are absent for this requested workflow. Authority is established, the mailing change is explicit, and the outside-US move has a complete date/address but needs staff rather than more customer address data."
+      "rationale": "No additional customer address data is required."
     }
   ],
   "rubric": [
@@ -176,9 +167,10 @@
     },
     {
       "id": "R2",
-      "criterion": "The reply does not claim coverage has moved to Canada or cancel the current policy.",
+      "criterion": "The reply does not claim coverage has moved to Canada, cancel the current policy, or use the withdrawn Pine Hollow address.",
       "evidence": [
-        "m3",
+        "m5",
+        "r4",
         "H09",
         "H16"
       ],
@@ -187,7 +179,8 @@
   ],
   "failure_modes": [
     "Rejecting an independent mailing update because the insured move is unsupported.",
-    "Moving or canceling the policy automatically when a foreign destination is requested."
+    "Moving or canceling the policy automatically when a foreign destination is requested.",
+    "Using the withdrawn US destination instead of the confirmed mailing record."
   ],
-  "rationale": "Authority is established, the mailing change is explicit, and the outside-US move has a complete date/address but needs staff rather than more customer address data."
+  "rationale": "Independent US mailing to r2 is ready. Canadian move needs staff outside_us review. Do not infer cancel. Partial."
 }

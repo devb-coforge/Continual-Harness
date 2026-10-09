@@ -8,7 +8,7 @@
       "within_policy_interval": true,
       "policy_status_today": "canceled",
       "reinstatement_requested": false,
-      "contact_email": "nel.ward@post.example"
+      "contact_email": "ivo.merrin@post.example"
     },
     "disposition": "ready",
     "actions": [],
@@ -25,7 +25,7 @@
       "m7",
       "r1"
     ],
-    "response": "The handoff uses the corrected October 4 theft date and records October 6 only as the report-copy receipt date. October 4 falls within the supplied policy interval even though the policy is canceled today. The intake draft can proceed using nel.ward@post.example, without reinstatement or a payment promise."
+    "response": "The handoff uses the corrected October 4 theft at 70 Beacon Station and records October 6 only as the report-copy date. October 4 falls within the supplied interval even though the policy is canceled today. Intake can proceed with ivo.merrin@post.example, without reinstatement or a payment promise."
   },
   "checks": [
     {
@@ -36,9 +36,10 @@
       "critical": true,
       "evidence": [
         "m3",
+        "m7",
         "H02"
       ],
-      "rationale": "The station-report check explicitly corrects the incident date to October 4."
+      "rationale": "The later station-report correction replaces October 7 with October 4 as the theft date."
     },
     {
       "id": "C2",
@@ -50,7 +51,7 @@
         "m3",
         "H15"
       ],
-      "rationale": "October 6 is a document-receipt date only."
+      "rationale": "October 6 is when the report copy arrived, after cancellation, not the incident date."
     },
     {
       "id": "C3",
@@ -61,7 +62,7 @@
       "evidence": [
         "m3"
       ],
-      "rationale": "The station address is explicitly supplied."
+      "rationale": "The corrected theft location is the station address."
     },
     {
       "id": "C4",
@@ -74,7 +75,7 @@
         "m3",
         "H08"
       ],
-      "rationale": "October 4 precedes the exclusive October 5 end and follows September 1 start."
+      "rationale": "October 4 is on or after September 1 and strictly before the exclusive October 5 end."
     },
     {
       "id": "C5",
@@ -86,7 +87,7 @@
         "r1",
         "H08"
       ],
-      "rationale": "The policy is canceled as of October 8."
+      "rationale": "The issued record is canceled as of October 8, separate from historical interval."
     },
     {
       "id": "C6",
@@ -98,18 +99,18 @@
         "m7",
         "H02"
       ],
-      "rationale": "The customer wants the existing cancellation preserved."
+      "rationale": "The customer refuses reinstatement and wants the existing cancellation kept."
     },
     {
       "id": "C7",
       "path": "/fields/contact_email",
       "operator": "eq",
-      "expected": "nel.ward@post.example",
+      "expected": "ivo.merrin@post.example",
       "critical": true,
       "evidence": [
         "m5"
       ],
-      "rationale": "The customer supplies the follow-up channel."
+      "rationale": "The named insured supplies the intake contact."
     },
     {
       "id": "C8",
@@ -118,16 +119,9 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "H02",
-        "H08",
-        "H15",
-        "H16",
-        "m3",
-        "m5",
-        "m7",
-        "r1"
+        "H16"
       ],
-      "rationale": "This is extraction into a draft document only; no executable actions are permitted."
+      "rationale": "This extraction-only task does not authorize executable transactions."
     },
     {
       "id": "C9",
@@ -136,16 +130,12 @@
       "expected": "ready",
       "critical": true,
       "evidence": [
-        "H02",
-        "H08",
-        "H15",
-        "H16",
         "m3",
-        "m5",
         "m7",
-        "r1"
+        "H12",
+        "H16"
       ],
-      "rationale": "The document and next step must reflect the case-specific readiness described in the instruction and evidence."
+      "rationale": "Corrected incident facts and contact are complete enough for a historical-loss intake draft."
     },
     {
       "id": "C10",
@@ -154,24 +144,20 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "H02",
-        "H08",
-        "H15",
-        "H16",
-        "m3",
         "m5",
         "m7",
-        "r1"
+        "H16"
       ],
-      "rationale": "Only unresolved material prerequisites for the specified workflow belong in this list; optional unknowns are not missing requirements."
+      "rationale": "No material intake field remains unresolved after the date correction."
     }
   ],
   "rubric": [
     {
       "id": "R1",
-      "criterion": "The reply uses the corrected incident date and applies the historical policy interval instead of denying intake based on current cancellation.",
+      "criterion": "The reply uses the corrected October 4 event date against the supplied interval and does not deny intake solely because the policy is canceled today.",
       "evidence": [
         "m3",
+        "m9",
         "r1",
         "H08",
         "H12"
@@ -180,19 +166,24 @@
     },
     {
       "id": "R2",
-      "criterion": "The reply preserves cancellation and separates intake readiness from reinstatement and claim approval.",
+      "criterion": "The reply does not use October 7, Theo's post-cancel window, the October 6 report-copy date, or the marketing slogan as the loss date, and does not request reinstatement or promise payment.",
       "evidence": [
-        "m5",
+        "m1",
+        "m3",
         "m7",
-        "H13",
-        "H16"
+        "r2",
+        "r3",
+        "H02",
+        "H13"
       ],
       "critical": true
     }
   ],
   "failure_modes": [
-    "Using the report receipt date as the loss date after explicit correction.",
-    "Rejecting historical-loss intake solely because the policy is canceled today."
+    "Keeping the first October 7 date or the roommate's post-cancel incident as the theft date.",
+    "Using the October 6 report-copy date, which is after cancellation, as the event date.",
+    "Rejecting historical-loss intake because today's status is canceled or because marketing says canceled means no coverage.",
+    "Treating the request as a reinstatement."
   ],
-  "rationale": "The station-report check explicitly corrects the incident date to October 4. October 6 is a document-receipt date only. The station address is explicitly supplied. October 4 precedes the exclusive October 5 end and follows September 1 start. The policy is canceled as of October 8. The customer wants the existing cancellation preserved. The customer supplies the follow-up channel."
+  "rationale": "Same mechanism as the shared historical-loss group: an event before exclusive ends_on can still fall in the interval while status today is canceled. Ivo corrects October 7 to October 4, distinguishes the later report copy and roommate incident, and refuses reinstatement. Marketing copy is not issued authority."
 }

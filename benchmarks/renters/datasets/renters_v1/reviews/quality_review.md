@@ -2,6 +2,8 @@
 
 Review scope: all 100 task inputs and private answer keys, the common handbook, split grouping, and outcome coverage. This is a content and offline-verifier audit, not evidence that a model improves on these tasks. No live model evaluation or pilot is part of this review.
 
+A 2026-10-09 hardness pass rewrote all 100 public inputs and private oracles while keeping IDs, families, splits, and scenario groups. The 2026-10-08 case ledgers below still describe the preserved gold mechanisms; they do not enumerate every later distractor. Re-run offline `validate` after that pass; they are not a substitute for a fresh independent content review of the hardened transcripts.
+
 ## Review method
 
 For each case, read the customer conversation and supplied records against the handbook, then verify the expected fields, action proposals, missing prerequisites, disposition, and semantic rubric. Check that the supplied evidence supports the expected answer and that the public form explains any required normalization. Inspect scenario mechanisms across splits rather than treating different names or IDs as independent scenarios.

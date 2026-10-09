@@ -13,11 +13,13 @@
     ],
     "citations": [
       "m1",
-      "m3",
+      "m4",
+      "m6",
+      "r2",
       "H02",
       "H04"
     ],
-    "response": "Fire is a base covered cause, but I cannot determine whether this projector is your covered property from its location or the payment alone. Please clarify whether you own it, jointly own it, or it belongs solely to your roommate. I am not treating the shared living room as proof of ownership."
+    "response": "Fire is a base covered cause, but I cannot determine whether this living-room projector is your covered property from shared use, Pri’s unverified note, or the unlabeled $80 transfer. I am not treating the landlord’s lobby projector as this item. Please clarify whether you own the film-night projector, jointly own it, or it belongs solely to Pri. I am not treating the shared living room as proof of ownership."
   },
   "checks": [
     {
@@ -38,11 +40,13 @@
       "expected": null,
       "critical": true,
       "evidence": [
-        "m3",
+        "m4",
+        "m6",
+        "r2",
         "H02",
         "H04"
       ],
-      "rationale": "Neither joint use nor an unexplained transfer establishes ownership."
+      "rationale": "Neither joint use, Pri’s note, nor an unexplained transfer establishes ownership."
     },
     {
       "id": "C3",
@@ -52,7 +56,7 @@
       "critical": true,
       "evidence": [
         "m1",
-        "m3",
+        "m6",
         "H04"
       ],
       "rationale": "A covered cause does not resolve the ownership prerequisite."
@@ -64,12 +68,10 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "m1",
-        "m3",
-        "H02",
-        "H04"
+        "m6",
+        "H16"
       ],
-      "rationale": "The proposed actions must match the authorized scope, readiness, and supplied action shapes; no action has executed."
+      "rationale": "This remains an informational clarification with no transaction."
     },
     {
       "id": "C5",
@@ -80,12 +82,10 @@
       ],
       "critical": true,
       "evidence": [
-        "m1",
-        "m3",
-        "H02",
+        "m6",
         "H04"
       ],
-      "rationale": "Only material unresolved prerequisites for this requested workflow belong here."
+      "rationale": "Named-insured ownership of the film-night projector is the material unresolved prerequisite."
     },
     {
       "id": "C6",
@@ -94,10 +94,10 @@
       "expected": "needs_clarification",
       "critical": true,
       "evidence": [
-        "m1",
-        "m3",
+        "m6",
         "H02",
-        "H04"
+        "H04",
+        "H16"
       ],
       "rationale": "Ownership is a material unresolved prerequisite for the property-scope question."
     }
@@ -105,9 +105,12 @@
   "rubric": [
     {
       "id": "R1",
-      "criterion": "Asks a targeted ownership question and explains why shared use/location does not establish named-insured ownership.",
+      "criterion": "Asks a targeted ownership question and explains why shared use, Pri’s note, or the unlabeled payment do not establish named-insured ownership.",
       "evidence": [
-        "m3",
+        "m4",
+        "m6",
+        "r2",
+        "r4",
         "H02",
         "H04"
       ],
@@ -115,9 +118,11 @@
     },
     {
       "id": "R2",
-      "criterion": "Does not declare the projector covered or excluded solely because a roommate obtained it, and does not infer the purpose of the payment.",
+      "criterion": "Does not declare the projector covered or excluded, does not treat the landlord lobby unit as the asked item, and does not infer the purpose of the payment.",
       "evidence": [
         "m3",
+        "m6",
+        "r3",
         "H04"
       ],
       "critical": true
@@ -125,7 +130,8 @@
   ],
   "failure_modes": [
     "Assuming shared-use property is jointly owned",
+    "Accepting the roommate note or landlord inventory as conclusive ownership of the film-night projector",
     "Rejecting property solely because a roommate arranged the purchase"
   ],
-  "rationale": "Ownership is a material unresolved prerequisite for the property-scope question."
+  "rationale": "Three candidate owners appear (named insured, roommate, landlord lobby unit). The customer’s latest statement leaves living-room projector ownership unknown. Scope stays unresolved and missing_fields is property_ownership."
 }

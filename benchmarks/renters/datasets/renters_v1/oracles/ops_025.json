@@ -19,9 +19,10 @@
       "H04",
       "H08",
       "m3",
+      "m6",
       "H07"
     ],
-    "response": "Your own sofa fits the stated personal-property scope for this fire, subject to the policy terms. The built-in cabinets are part of the landlord’s building and do not belong under your personal-property coverage. You have not described a liability allegation, so I would not invent one or promise that liability coverage pays for the cabinets. This is not a claim approval."
+    "response": "Your own sofa fits the stated personal-property scope for this fire, subject to the policy terms. The built-in cabinets are part of the landlord’s building and do not belong under your personal-property coverage. You have not described a liability allegation, so I would not invent one or promise that liability coverage pays for the cabinets from the repair estimate. This is not a claim approval."
   },
   "checks": [
     {
@@ -52,7 +53,7 @@
         "m1",
         "H04"
       ],
-      "rationale": "The cabinets belong to the landlord’s building, which personal-property coverage does not cover."
+      "rationale": "The cabinets belong to the landlord’s building."
     },
     {
       "id": "C3",
@@ -62,6 +63,7 @@
       "critical": true,
       "evidence": [
         "m3",
+        "m6",
         "H07"
       ],
       "rationale": "The customer explicitly says there is no allegation or demand."
@@ -73,14 +75,10 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "m1",
-        "r1",
-        "H04",
-        "H08",
-        "m3",
-        "H07"
+        "m6",
+        "H16"
       ],
-      "rationale": "The proposed actions must match the authorized scope, readiness, and supplied action shapes; no action has executed."
+      "rationale": "Informational classification only."
     },
     {
       "id": "C5",
@@ -90,13 +88,9 @@
       "critical": true,
       "evidence": [
         "m1",
-        "r1",
-        "H04",
-        "H08",
-        "m3",
-        "H07"
+        "H04"
       ],
-      "rationale": "Only material unresolved prerequisites for this requested workflow belong here."
+      "rationale": "The two ownership categories are explicit."
     },
     {
       "id": "C6",
@@ -105,14 +99,11 @@
       "expected": "answered",
       "critical": true,
       "evidence": [
-        "m1",
-        "r1",
+        "m6",
         "H04",
-        "H08",
-        "m3",
-        "H07"
+        "H16"
       ],
-      "rationale": "The two ownership categories are explicit; an informational separation is sufficient."
+      "rationale": "An informational separation is sufficient."
     }
   ],
   "rubric": [
@@ -127,9 +118,11 @@
     },
     {
       "id": "R2",
-      "criterion": "Does not invent fault or a liability claim/payment route where the customer expressly reports no allegation.",
+      "criterion": "Does not invent fault or a liability claim/payment route from the repair estimate where the customer expressly reports no allegation.",
       "evidence": [
         "m3",
+        "m6",
+        "r2",
         "H07",
         "H13"
       ],
@@ -140,5 +133,5 @@
     "Treating built-in building fixtures as the tenant’s personal property",
     "Inventing a liability allegation to cover building repairs"
   ],
-  "rationale": "The two ownership categories are explicit; an informational separation is sufficient."
+  "rationale": "Sofa in, cabinets out. Repair estimate is not a liability allegation. Informational answer only."
 }

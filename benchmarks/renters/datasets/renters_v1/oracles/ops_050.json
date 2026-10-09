@@ -27,14 +27,15 @@
       "r1",
       "H03",
       "r2",
-      "m3",
+      "m4",
+      "m6",
       "r3",
       "H12",
       "H16",
       "r4",
       "H11"
     ],
-    "response": "The verified session authorizes you to act for P-50, so I can propose intake for Inez Rowan’s reported computer theft using case.reply@rowan.example. Being her representative does not add you as an insured, and no such change is proposed."
+    "response": "The verified session authorizes you on P-50, so I can propose intake for Inez Rowan’s reported computer theft using case.reply@rowan.example from the incident record. Calling yourself a roommate does not remove that authority, and it does not add you as an insured. P-50B and the landlord email are not used."
   },
   "checks": [
     {
@@ -48,19 +49,19 @@
         "r1",
         "H03"
       ],
-      "rationale": "Session verification and explicit authorized_policy_ids include P-50."
+      "rationale": "Session verification and authorized_policy_ids include P-50 regardless of the roommate self-description."
     },
     {
       "id": "C2",
       "path": "/fields/named_insured_owner",
-      "operator": "eq",
+      "operator": "text_eq",
       "expected": "Inez Rowan",
       "critical": true,
       "evidence": [
         "r1",
         "r2"
       ],
-      "rationale": "The supplied report establishes ownership by the named insured Inez, not by her representative."
+      "rationale": "The report establishes ownership by named insured Inez Rowan, not by the representative."
     },
     {
       "id": "C3",
@@ -70,9 +71,9 @@
       "critical": true,
       "evidence": [
         "r2",
-        "m3"
+        "m6"
       ],
-      "rationale": "The customer specifically confirms the report contact, not a guessed personal email."
+      "rationale": "Chat omits the address; H12 contact is resolvable from the incident record, not the landlord."
     },
     {
       "id": "C4",
@@ -81,9 +82,9 @@
       "expected": false,
       "critical": true,
       "evidence": [
-        "m3"
+        "m4"
       ],
-      "rationale": "The caller explicitly rejects the bot suggestion to become insured."
+      "rationale": "The caller explicitly rejects being added as an insured."
     },
     {
       "id": "C5",
@@ -95,10 +96,10 @@
         "session",
         "r2",
         "r3",
-        "m3",
+        "m6",
         "H12"
       ],
-      "rationale": "All H12 incident facts are supplied and the authorized representative has policy-specific authority."
+      "rationale": "All H12 facts are on r2 and the representative has policy-specific authority for P-50."
     },
     {
       "id": "C6",
@@ -122,12 +123,12 @@
         "r1",
         "r2",
         "r3",
-        "m3",
+        "m6",
         "H03",
         "H12",
         "H16"
       ],
-      "rationale": "Only the explicitly requested and sufficiently authorized proposed actions are valid. The supplied session independently verifies Sam and authorizes P-50; the declaration names Inez as owner. The bot suggestion is explicitly rejected, leaving only the complete authorized intake request."
+      "rationale": "Propose P-50 intake from r2 with the record contact and empty review_reasons; do not target P-50B."
     },
     {
       "id": "C7",
@@ -139,15 +140,12 @@
       "critical": true,
       "evidence": [
         "session",
-        "r1",
         "r2",
-        "r3",
-        "m3",
+        "m6",
         "H03",
-        "H12",
-        "H16"
+        "H12"
       ],
-      "rationale": "The supplied session independently verifies Sam and authorizes P-50; the declaration names Inez as owner. The bot suggestion is explicitly rejected, leaving only the complete authorized intake request."
+      "rationale": "Authorization and complete incident facts make intake ready without adding an insured."
     },
     {
       "id": "C8",
@@ -156,46 +154,48 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "session",
-        "r1",
         "r2",
-        "r3",
-        "m3",
-        "H03",
-        "H12",
-        "H16"
+        "m6",
+        "H12"
       ],
-      "rationale": "Material unresolved prerequisites are absent for this requested workflow. The supplied session independently verifies Sam and authorizes P-50; the declaration names Inez as owner. The bot suggestion is explicitly rejected, leaving only the complete authorized intake request."
+      "rationale": "Contact missing in chat is present on r2, so it is not an unresolved prerequisite."
     }
   ],
   "rubric": [
     {
       "id": "R1",
-      "criterion": "The reply accepts policy-specific authorization from the session despite the caller not being a named insured, rather than relying only on their self-assertion.",
+      "criterion": "The reply accepts policy-specific session authorization for P-50 despite the caller saying they are a roommate and not being a named insured, and does not extend that authority to P-50B.",
       "evidence": [
         "session",
         "r1",
         "r4",
-        "m3",
+        "r5",
+        "m1",
+        "m6",
         "H03"
       ],
       "critical": true
     },
     {
       "id": "R2",
-      "criterion": "The reply keeps Inez as the reported property owner, uses the authorized contact, and does not add Sam as an insured or claim the intake executed.",
+      "criterion": "The reply keeps Inez as owner, uses the incident-record contact rather than the landlord email, does not add Bryn as an insured, and does not claim the intake already executed.",
       "evidence": [
         "r2",
         "m3",
+        "m4",
+        "m6",
         "H11",
+        "H12",
         "H16"
       ],
       "critical": true
     }
   ],
   "failure_modes": [
-    "Blocking a verified authorized representative solely because their name is absent from declarations.",
-    "Promoting the representative to named insured status or treating their claim of authority as sufficient without session evidence."
+    "Blocking intake because the caller called themselves a roommate or is absent from declarations.",
+    "Using the landlord email, or inventing a contact, instead of the address already on the incident record.",
+    "Adding the representative as a named insured or filing against unauthorized policy P-50B.",
+    "Treating a proposed intake as already submitted."
   ],
-  "rationale": "The supplied session independently verifies Sam and authorizes P-50; the declaration names Inez as owner. The bot suggestion is explicitly rejected, leaving only the complete authorized intake request."
+  "rationale": "H03 lets the session, not the roommate self-description, establish authorized_representative status for P-50 only. H12 contact is on r2 even though chat never repeats it. Landlord email and P-50B are unauthorized distractors. The caller refused being added as insured. Intake remains a proposal."
 }

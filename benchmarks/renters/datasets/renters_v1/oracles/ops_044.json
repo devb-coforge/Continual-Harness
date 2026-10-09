@@ -15,11 +15,13 @@
       "r2",
       "r3",
       "m3",
+      "m5",
       "H13",
-      "m2",
-      "H16"
+      "m4",
+      "H16",
+      "r4"
     ],
-    "response": "CL-4401 may concern the same sofa smoke damage, but the date difference is unresolved. Please confirm whether there was one event or two and whether October 3 was only discovery. I will not propose a new intake or an update until that is clear."
+    "response": "CL-4401 may be the same apartment laptop theft, but October 3 versus October 4 is unresolved and you are not sure whether the 4th was only discovery. CL-4402 is a same-day bicycle at a different place and is not this report. I will not propose a new intake or an update until laptop identity is clear."
   },
   "checks": [
     {
@@ -31,10 +33,10 @@
       "evidence": [
         "r2",
         "r3",
-        "m3",
+        "m5",
         "H13"
       ],
-      "rationale": "Matching cause and property suggest duplication but conflicting dates and customer uncertainty prevent a clear match."
+      "rationale": "Same policy, overlapping laptop theft at the apartment, and customer uncertainty make a possible duplicate."
     },
     {
       "id": "C2",
@@ -44,9 +46,9 @@
       "critical": true,
       "evidence": [
         "r3",
-        "m2"
+        "m4"
       ],
-      "rationale": "CL-4401 is the supplied candidate, not a newly invented reference."
+      "rationale": "The overlapping-window same-property candidate is CL-4401, not the station bicycle CL-4402."
     },
     {
       "id": "C3",
@@ -55,10 +57,10 @@
       "expected": false,
       "critical": true,
       "evidence": [
-        "m3",
+        "m5",
         "H13"
       ],
-      "rationale": "The customer expressly cannot distinguish event date from discovery date or confirm event count."
+      "rationale": "The customer cannot tell event date from discovery date or confirm one versus two laptop events."
     },
     {
       "id": "C4",
@@ -69,10 +71,11 @@
       "evidence": [
         "r2",
         "r3",
-        "m3",
+        "m5",
+        "m6",
         "H13"
       ],
-      "rationale": "Only the explicitly requested and sufficiently authorized proposed actions are valid. This is explicitly an uncertain duplicate, not a confirmed different incident. The missing information is the identity relationship between the two reports, not already supplied location or contact."
+      "rationale": "Neither new intake nor update_claim is allowed while laptop identity is unresolved."
     },
     {
       "id": "C5",
@@ -85,10 +88,11 @@
       "evidence": [
         "r2",
         "r3",
-        "m3",
-        "H13"
+        "m5",
+        "H13",
+        "H16"
       ],
-      "rationale": "This is explicitly an uncertain duplicate, not a confirmed different incident. The missing information is the identity relationship between the two reports, not already supplied location or contact."
+      "rationale": "The missing decision is incident identity, not contact or location."
     },
     {
       "id": "C6",
@@ -101,30 +105,33 @@
       "evidence": [
         "r2",
         "r3",
-        "m3",
+        "m5",
         "H13"
       ],
-      "rationale": "Material unresolved prerequisites are incident_identity. This is explicitly an uncertain duplicate, not a confirmed different incident. The missing information is the identity relationship between the two reports, not already supplied location or contact."
+      "rationale": "Incident identity between r2 and CL-4401 is the material unresolved prerequisite."
     }
   ],
   "rubric": [
     {
       "id": "R1",
-      "criterion": "The reply names the supplied possible duplicate and asks for incident identity/date clarification without deciding that there were one or two events.",
+      "criterion": "The reply names CL-4401 as the possible laptop duplicate and asks for identity/date clarification without deciding there were one or two laptop events.",
       "evidence": [
         "r2",
         "r3",
-        "m3",
+        "m5",
         "H13"
       ],
       "critical": true
     },
     {
       "id": "R2",
-      "criterion": "The reply does not submit a duplicate, overwrite the existing incident date, or invent another claim reference.",
+      "criterion": "The reply does not file a new laptop claim, overwrite CL-4401, treat the first “bike” wording as the current request, or treat same-day bicycle CL-4402 as the match.",
       "evidence": [
-        "r3",
+        "r4",
+        "m1",
         "m3",
+        "m6",
+        "H02",
         "H13",
         "H16"
       ],
@@ -132,8 +139,9 @@
     }
   ],
   "failure_modes": [
-    "Creating a second claim whenever reported dates differ.",
-    "Merging reports solely because the cause and general property description match."
+    "Creating a second laptop claim because the reported dates differ by one day.",
+    "Updating CL-4401 silently, or matching to CL-4402 only because it shares October 4.",
+    "Keeping the withdrawn bicycle wording as the intake subject after the laptop correction."
   ],
-  "rationale": "This is explicitly an uncertain duplicate, not a confirmed different incident. The missing information is the identity relationship between the two reports, not already supplied location or contact."
+  "rationale": "H02 takes the later laptop request over the first bicycle wording. H13 treats CL-4401 as a possible but uncertain duplicate (near dates, same property and place). CL-4402 is a different item and location even on the same calendar day. No submit or update while identity is unresolved."
 }

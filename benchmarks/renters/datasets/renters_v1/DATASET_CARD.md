@@ -35,13 +35,15 @@ A test task contributes 1/30 (about 3.33 percentage points) to the overall test 
 
 ## Labels and evaluation
 
+Difficulty labels after the 2026-10-09 hardness pass: 10 standard / 66 challenging / 24 adversarial. Test has no standard cases (15 challenging / 15 adversarial). Labels describe authored complexity (distributed facts, distractors, exception stacks), not measured model error. A minority of optimization/validation cases remain standard so blanket deferral is not a winning strategy.
+
 Objective fields encode facts and decisions rather than exact free-form prose. Unknown null differs from explicitly absent/declined false or an empty list. Exact identifiers/dates/amounts stay exact; selected copied text has limited, documented formatting tolerance. Unordered collections use set equality and reject extra items. Each task's public form defines field meaning and any closed vocabulary; public instructions define action payloads.
 
 Semantic rubrics cover supported explanation, uncertainty, source use, and false completion claims. A fully correct case requires a valid response, all objective checks, and all semantic criteria. There is no default perfect score for missing judge results. See EVALUATION.md for judge handling and scoring limits.
 
 ## Construction and evidence limits
 
-Task authors and content reviewers were separate AI-agent roles. All people, organizations, accounts, properties, policies and conversations are synthetic; emails use reserved example/test domains. No customer data or copied insurer forms are included. Public insurance resources supplied topic/terminology inspiration, not legal rules or answer keys.
+Task authors and content reviewers were separate AI-agent roles. A later 2026-10-09 hardness pass rewrote conversations and records in place without changing the handbook, response contract, ID inventory, family/split allocation, or scenario-group assignments. All people, organizations, accounts, properties, policies and conversations are synthetic; emails use reserved example/test domains. No customer data or copied insurer forms are included. Public insurance resources supplied topic/terminology inspiration, not legal rules or answer keys.
 
 Offline validation can establish artifact integrity, answer/check consistency and rejection of known mutations. Content review adds a separate reading of the source evidence and rules. Neither is human adjudication, measured inter-annotator agreement, proof of headroom for a specific model, or evidence that prompt optimization succeeds. A future experiment may find a ceiling, regressions, or no improvement. No model performance or cost results are fabricated here.
 

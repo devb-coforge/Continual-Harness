@@ -41,6 +41,14 @@
           "effective_date": "2026-11-10",
           "status": "draft"
         }
+      },
+      {
+        "id": "r3",
+        "kind": "destination_record",
+        "data": {
+          "id_note": "Would be used only if the move were still authorized.",
+          "address": "210 Brook Way, Unit 7, Ashford, MA 01018, US"
+        }
       }
     ],
     "messages": [
@@ -52,12 +60,27 @@
       {
         "id": "m2",
         "role": "bot",
-        "text": "Great, I will arrange that move and send a confirmation."
+        "text": "Great, I will arrange that move and send a confirmation. Treat the draft as submitted."
       },
       {
         "id": "m3",
         "role": "customer",
-        "text": "Stop: the lease fell through. I withdraw the move request completely. Keep my existing insured apartment, and do not schedule anything. There was never a final approval from me."
+        "text": "Wait, I still wanted to think. Do not schedule yet."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "The draft is still sitting in records as unsent. Confirm if you want it scheduled."
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "Stop: the lease fell through. I withdraw the move request completely. Keep my existing insured apartment, and do not schedule anything."
+      },
+      {
+        "id": "m6",
+        "role": "customer",
+        "text": "There was never a final approval from me. Do not cancel the policy because the lease failed, and do not invent a reverse transaction."
       }
     ],
     "form": {

@@ -13,42 +13,73 @@
       "role": "visitor",
       "policy_id": null
     },
-    "records": [],
+    "records": [
+      {
+        "id": "r1",
+        "kind": "leftover_application_draft",
+        "data": {
+          "authority": "abandoned_draft",
+          "applicant_name": "Nia Cole",
+          "contact_email": "nia.cole@example.test",
+          "occupancy_start": "2026-09-28",
+          "requested_start": "2026-09-28",
+          "other_applicants": [
+            "Nia Cole"
+          ],
+          "note": "Prior chat auto-saved Nia as applicant using the box-drop date. Not customer-approved."
+        }
+      }
+    ],
     "messages": [
       {
         "id": "m1",
         "role": "customer",
-        "text": "I am Freya Stone, freya.stone@example.test, applying for 39 Hazel Wharf, Unit 4, Silver Brook. I visited and stayed overnight there September 28, 2026."
+        "text": "I go by Faye, but my legal name is Freya Stone, freya.stone@example.test. I am applying for 39 Hazel Wharf, Unit 4, Silver Brook. My cousin Nia Cole moved boxes in on September 28, 2026. Her email is nia.cole@example.test."
       },
       {
         "id": "m2",
         "role": "bot",
-        "text": "Should September 28 be your occupancy start?"
+        "text": "Should September 28 be occupancy, and should I add Nia Cole as a co-applicant using her email?"
       },
       {
         "id": "m3",
         "role": "customer",
-        "text": "No. That was a guest visit to the previous tenant. My own tenancy and occupancy begin October 31, 2026; requested insurance start is October 29."
+        "text": "No. September 28 was Nia's box drop-off; that is not my occupancy. My own tenancy and occupancy begin October 31, 2026; requested insurance start is October 29, 2026. Do not add Nia as a co-applicant. She will live with me as another occupant, not as an applicant."
       },
       {
         "id": "m4",
         "role": "bot",
-        "text": "Please confirm your chosen limits and deductible, and whether anyone else will live there."
+        "text": "Please confirm your chosen limits and deductible. I can still list Nia as a second applicant because she will live there."
       },
       {
         "id": "m5",
         "role": "customer",
-        "text": "Choose $50,000 property, $300,000 liability and $250 deductible. Nobody else will live with me. My sister only visits on weekends."
+        "text": "Choose $50,000 property, $300,000 liability and $250 deductible. Nia Cole is an other occupant, not an applicant. Use my legal name Freya Stone, not Faye. Do not use Nia's email as the contact."
       },
       {
         "id": "m6",
         "role": "bot",
-        "text": "May I submit the application with the October dates?"
+        "text": "May I submit the application with Nia as co-applicant anyway, occupancy September 28?"
       },
       {
         "id": "m7",
         "role": "customer",
-        "text": "Yes, submit it with October 31 for occupancy and October 29, 2026 for insurance requested."
+        "text": "No. Submit with me as the only applicant, occupancy October 31, and insurance October 29, 2026. Nia remains an occupant only."
+      },
+      {
+        "id": "m8",
+        "role": "customer",
+        "text": "Weekend visitors are not occupants. Nia Cole is the only other occupant. Yes, submit that packet."
+      },
+      {
+        "id": "m9",
+        "role": "bot",
+        "text": "A leftover draft already lists Nia Cole as applicant with occupancy September 28. Should I submit that file?"
+      },
+      {
+        "id": "m10",
+        "role": "customer",
+        "text": "Delete that leftover. Submit only my Freya Stone packet: occupancy October 31, insurance October 29, Nia as occupant not applicant."
       }
     ],
     "form": {

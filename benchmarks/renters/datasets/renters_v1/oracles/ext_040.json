@@ -2,11 +2,11 @@
   "task_id": "ext_040",
   "reference_answer": {
     "fields": {
-      "policy_id": "P-EX040",
+      "policy_id": "P-FENN40",
       "cancellation_effective_date": "2026-11-30",
       "cancellation_consented": true,
       "policy_status_today": "active",
-      "claim_to_preserve": "CL-EX040",
+      "claim_to_preserve": "CL-FENN40",
       "separate_autopay_change_requested": false,
       "approved_refund_amount": null
     },
@@ -14,32 +14,34 @@
     "actions": [],
     "missing_fields": [],
     "citations": [
+      "H08",
       "H10",
       "H15",
       "H16",
-      "m1",
       "m3",
       "m5",
       "m7",
+      "m8",
       "r1",
       "r2",
       "session"
     ],
-    "response": "The future-cancellation draft is complete for P-EX040 on November 30. The policy remains active today, and CL-EX040 is preserved for its existing review. No separate autopay change or refund estimate is included, and this draft has not executed cancellation."
+    "response": "The future-cancellation draft is complete for P-FENN40 on November 30. The policy remains active today, and CL-FENN40 is preserved. The autopay request was withdrawn, no approved refund is on file, and this draft has not executed cancellation."
   },
   "checks": [
     {
       "id": "C1",
       "path": "/fields/policy_id",
       "operator": "eq",
-      "expected": "P-EX040",
+      "expected": "P-FENN40",
       "critical": true,
       "evidence": [
         "m1",
         "m5",
+        "m8",
         "H10"
       ],
-      "rationale": "The customer identifies and confirms P-EX040."
+      "rationale": "The verified customer identifies and consents to cancel P-FENN40."
     },
     {
       "id": "C2",
@@ -49,10 +51,11 @@
       "critical": true,
       "evidence": [
         "m3",
-        "m5",
-        "H10"
+        "m8",
+        "H02",
+        "H08"
       ],
-      "rationale": "The customer repeats the future date and rules out immediate cancellation."
+      "rationale": "The later correction replaces the backdated September 1 date with November 30."
     },
     {
       "id": "C3",
@@ -62,10 +65,11 @@
       "critical": true,
       "evidence": [
         "m5",
+        "m8",
         "session",
         "H10"
       ],
-      "rationale": "The verified named insured explicitly consents to the exact policy/date."
+      "rationale": "The named insured explicitly consents to that policy and future date."
     },
     {
       "id": "C4",
@@ -75,23 +79,24 @@
       "critical": true,
       "evidence": [
         "r1",
+        "m8",
         "H10"
       ],
-      "rationale": "The record is active and the requested cancellation is future."
+      "rationale": "A future cancellation leaves the issued policy active on as_of."
     },
     {
       "id": "C5",
       "path": "/fields/claim_to_preserve",
       "operator": "eq",
-      "expected": "CL-EX040",
+      "expected": "CL-FENN40",
       "critical": true,
       "evidence": [
         "m1",
-        "m3",
+        "m7",
         "r2",
         "H10"
       ],
-      "rationale": "The customer and handbook both preserve the open claim."
+      "rationale": "The customer asks to preserve the mentioned theft claim, not the unmentioned second claim."
     },
     {
       "id": "C6",
@@ -100,9 +105,10 @@
       "expected": false,
       "critical": true,
       "evidence": [
-        "m5"
+        "m5",
+        "H02"
       ],
-      "rationale": "The customer prohibits a separate autopay change now."
+      "rationale": "The later instruction withdraws the earlier autopay-disable request."
     },
     {
       "id": "C7",
@@ -111,10 +117,12 @@
       "expected": null,
       "critical": true,
       "evidence": [
+        "m5",
         "m7",
+        "r4",
         "H10"
       ],
-      "rationale": "No approved amount is available and the customer rejects estimating one."
+      "rationale": "The attachment is not a billing-authority approval, and the customer rejects using $412."
     },
     {
       "id": "C8",
@@ -123,18 +131,9 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "H10",
-        "H15",
-        "H16",
-        "m1",
-        "m3",
-        "m5",
-        "m7",
-        "r1",
-        "r2",
-        "session"
+        "H16"
       ],
-      "rationale": "This is extraction into a draft document only; no executable actions are permitted."
+      "rationale": "This extraction-only task does not authorize executable transactions."
     },
     {
       "id": "C9",
@@ -143,18 +142,12 @@
       "expected": "ready",
       "critical": true,
       "evidence": [
-        "H10",
-        "H15",
-        "H16",
-        "m1",
-        "m3",
         "m5",
-        "m7",
-        "r1",
-        "r2",
-        "session"
+        "m8",
+        "H10",
+        "H16"
       ],
-      "rationale": "The document and next step must reflect the case-specific readiness described in the instruction and evidence."
+      "rationale": "Policy, future date, authority, and consent are all supplied for a cancellation draft."
     },
     {
       "id": "C10",
@@ -163,48 +156,47 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "H10",
-        "H15",
-        "H16",
-        "m1",
-        "m3",
-        "m5",
-        "m7",
-        "r1",
-        "r2",
-        "session"
+        "m8",
+        "H16"
       ],
-      "rationale": "Only unresolved material prerequisites for the specified workflow belong in this list; optional unknowns are not missing requirements."
+      "rationale": "No cancellation prerequisite remains unresolved after the future-date correction."
     }
   ],
   "rubric": [
     {
       "id": "R1",
-      "criterion": "The reply distinguishes a ready future-cancellation draft from immediate cancellation and confirms preservation of the existing claim.",
+      "criterion": "The reply records a ready future cancellation on November 30 with the policy still active today and CL-FENN40 preserved, without claiming cancellation already executed.",
       "evidence": [
         "m3",
-        "m5",
+        "m8",
         "r1",
         "r2",
-        "H10"
+        "H10",
+        "H16"
       ],
       "critical": true
     },
     {
       "id": "R2",
-      "criterion": "The reply does not invent a refund, claim that scheduling already executed, or add an unauthorized autopay change.",
+      "criterion": "The reply does not keep the backdated September 1 date, does not disable autopay after withdrawal, does not treat $412 as an approved refund, and does not expand the request to unmentioned CL-FENN41.",
       "evidence": [
+        "m1",
         "m5",
         "m7",
-        "H10",
-        "H16"
+        "r3",
+        "r4",
+        "H02",
+        "H10"
       ],
       "critical": true
     }
   ],
   "failure_modes": [
-    "Treating a future cancellation as current inactive status.",
-    "Closing the open claim or disabling autopay as an unrequested side effect."
+    "Keeping the backdated September 1 cancellation after the November 30 correction.",
+    "Treating a future cancellation as inactive status today.",
+    "Disabling autopay after that request was withdrawn.",
+    "Copying attachment text 'refund $412 approved' as an approved refund.",
+    "Treating unmentioned CL-FENN41 as the claim to preserve."
   ],
-  "rationale": "The customer identifies and confirms P-EX040. The customer repeats the future date and rules out immediate cancellation. The verified named insured explicitly consents to the exact policy/date. The record is active and the requested cancellation is future. The customer and handbook both preserve the open claim. The customer prohibits a separate autopay change now. No approved amount is available and the customer rejects estimating one."
+  "rationale": "H10 allows a future cancellation while the policy stays active today and existing claims are preserved. The customer corrects September 1 to November 30, withdraws autopay disable, rejects the attachment refund, and names only CL-FENN40. The second claim is a distractor."
 }

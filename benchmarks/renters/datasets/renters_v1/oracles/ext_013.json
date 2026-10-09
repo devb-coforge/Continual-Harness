@@ -19,27 +19,29 @@
       "insured_address"
     ],
     "citations": [
-      "H02",
+      "H09",
+      "H14",
       "H15",
       "H16",
-      "m1",
       "m3",
       "m5",
-      "m7"
+      "m7",
+      "m9"
     ],
-    "response": "The application remains a draft while you confirm the Harbor Street unit. Your parents mailing address is recorded separately, and I have not selected a provisional unit."
+    "response": "The application remains a draft while you confirm the Harbor Street unit. Your parents' mailing address is recorded separately and is not the insured home. I have not selected Unit 8 or Unit 11. Other dates and limits are kept."
   },
   "checks": [
     {
       "id": "C1",
       "path": "/fields/applicant_name",
-      "operator": "eq",
+      "operator": "text_eq",
       "expected": "Erin Vale",
       "critical": true,
       "evidence": [
-        "m1"
+        "m1",
+        "H14"
       ],
-      "rationale": "The cited source establishes applicant_name; preserve the stated value and uncertainty under H15."
+      "rationale": "The applicant is Erin Vale."
     },
     {
       "id": "C2",
@@ -48,9 +50,10 @@
       "expected": "erin.vale@example.test",
       "critical": true,
       "evidence": [
-        "m1"
+        "m1",
+        "H14"
       ],
-      "rationale": "The cited source establishes contact_email; preserve the stated value and uncertainty under H15."
+      "rationale": "Contact email is erin.vale@example.test."
     },
     {
       "id": "C3",
@@ -59,12 +62,12 @@
       "expected": null,
       "critical": true,
       "evidence": [
-        "m1",
         "m3",
         "m7",
-        "H02"
+        "m9",
+        "H09"
       ],
-      "rationale": "The cited source establishes insured_address; preserve the stated value and uncertainty under H15."
+      "rationale": "Harbor Street unit is unresolved; mailing cannot substitute a complete insured dwelling."
     },
     {
       "id": "C4",
@@ -73,9 +76,11 @@
       "expected": "2026-10-30",
       "critical": true,
       "evidence": [
-        "m5"
+        "m5",
+        "m10",
+        "H08"
       ],
-      "rationale": "The cited source establishes occupancy_start; preserve the stated value and uncertainty under H15."
+      "rationale": "Occupancy is October 30, 2026 and remains known despite the missing unit."
     },
     {
       "id": "C5",
@@ -84,9 +89,11 @@
       "expected": "2026-10-10",
       "critical": true,
       "evidence": [
-        "m5"
+        "m5",
+        "m10",
+        "H08"
       ],
-      "rationale": "The cited source establishes requested_start; preserve the stated value and uncertainty under H15."
+      "rationale": "Requested insurance start is October 10, 2026."
     },
     {
       "id": "C6",
@@ -95,9 +102,10 @@
       "expected": 15000,
       "critical": true,
       "evidence": [
-        "m5"
+        "m5",
+        "H14"
       ],
-      "rationale": "The cited source establishes personal_property_limit; preserve the stated value and uncertainty under H15."
+      "rationale": "The applicant selects $15,000 personal property."
     },
     {
       "id": "C7",
@@ -106,9 +114,10 @@
       "expected": 100000,
       "critical": true,
       "evidence": [
-        "m5"
+        "m5",
+        "H14"
       ],
-      "rationale": "The cited source establishes liability_limit; preserve the stated value and uncertainty under H15."
+      "rationale": "The applicant selects $100,000 liability."
     },
     {
       "id": "C8",
@@ -117,9 +126,10 @@
       "expected": 500,
       "critical": true,
       "evidence": [
-        "m5"
+        "m5",
+        "H14"
       ],
-      "rationale": "The cited source establishes deductible; preserve the stated value and uncertainty under H15."
+      "rationale": "The applicant selects a $500 deductible."
     },
     {
       "id": "C9",
@@ -128,9 +138,11 @@
       "expected": false,
       "critical": true,
       "evidence": [
-        "m7"
+        "m7",
+        "m9",
+        "H14"
       ],
-      "rationale": "The cited source establishes consent_to_submit; preserve the stated value and uncertainty under H15."
+      "rationale": "Submission is explicitly declined until the unit is confirmed."
     },
     {
       "id": "C10",
@@ -139,9 +151,11 @@
       "expected": "5 Orchard Road, Myrrow",
       "critical": true,
       "evidence": [
-        "m1"
+        "m1",
+        "m7",
+        "H09"
       ],
-      "rationale": "The cited source establishes mailing_address; preserve the stated value and uncertainty under H15."
+      "rationale": "Parents' mailing address is recorded separately as 5 Orchard Road, Myrrow."
     },
     {
       "id": "C11",
@@ -152,7 +166,7 @@
       "evidence": [
         "H16"
       ],
-      "rationale": "This task requests document extraction only; no transaction is authorized by the task."
+      "rationale": "This task requests document extraction only; allowed_actions is empty so no transaction may be proposed."
     },
     {
       "id": "C12",
@@ -163,10 +177,11 @@
       ],
       "critical": true,
       "evidence": [
-        "H15",
-        "H16"
+        "H14",
+        "H16",
+        "m9"
       ],
-      "rationale": "The insured building is known but a single complete dwelling address is unresolved. Contact mailing address cannot supply that missing field; all other required application facts are supplied."
+      "rationale": "Disposition follows H16 for the requested workflow given the latest customer intent and unresolved prerequisites."
     },
     {
       "id": "C13",
@@ -177,46 +192,42 @@
       ],
       "critical": true,
       "evidence": [
-        "H15",
-        "H16"
+        "H14",
+        "H09",
+        "m9"
       ],
-      "rationale": "Only these unresolved fields block the requested document workflow: insured_address"
+      "rationale": "missing_fields lists only material unresolved prerequisites for this workflow, not optional nulls."
     }
   ],
   "rubric": [
     {
       "id": "R1",
-      "criterion": "The reply describes the application as an incomplete draft awaiting the actual insured unit and does not treat the declined submission as an executed or approved application.",
+      "criterion": "The reply leaves insured_address unresolved and identifies it as the outstanding required field while keeping mailing address separate.",
       "evidence": [
-        "H11",
-        "H14",
-        "H15",
-        "m1",
         "m3",
-        "m5",
-        "m7"
+        "m7",
+        "m9",
+        "H09"
       ],
       "critical": true
     },
     {
       "id": "R2",
-      "criterion": "The reply identifies the insured unit as unresolved and does not use the parents address or choose between Units 8 and 11.",
+      "criterion": "The reply does not copy the complete mailing address into the insured unit, choose Unit 8 or 11, or drop the separately supplied occupancy and start dates.",
       "evidence": [
-        "H02",
-        "H14",
-        "H15",
-        "m1",
-        "m3",
         "m5",
-        "m7"
+        "m9",
+        "m10",
+        "r1",
+        "H14"
       ],
       "critical": true
     }
   ],
   "failure_modes": [
     "Choosing provisional Unit 8 despite the applicant explicitly refusing a provisional unit.",
-    "Substituting the parents’ mailing address for the unresolved insured home.",
-    "Discarding the separately supplied occupancy and requested insurance dates because the unit is unknown."
+    "Substituting the parents' mailing address for the unresolved insured home.",
+    "Discarding occupancy and requested insurance dates because the unit is unknown."
   ],
-  "rationale": "The insured building is known but a single complete dwelling address is unresolved. Contact mailing address cannot supply that missing field; all other required application facts are supplied."
+  "rationale": "Mailing is complete but is not the insured dwelling. Unit 8 vs 11 remains unresolved, so insured_address is null and clarification is required. Other application facts stay filled. Submission is declined."
 }

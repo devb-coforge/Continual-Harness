@@ -14,18 +14,17 @@
     "actions": [],
     "missing_fields": [],
     "citations": [
-      "H02",
       "H10",
       "H13",
       "H15",
       "H16",
-      "m1",
       "m3",
       "m5",
       "m7",
+      "m9",
       "r1"
     ],
-    "response": "The handoff asks billing to review your $120 expectation against the recorded $89.40 approved refund. Payment is still pending with no recorded payment date. Your cancellation should remain in place; this draft does not issue a refund or request reinstatement."
+    "response": "The handoff asks billing to review your $120 expectation against the recorded $89.40 approved refund. Payment is still pending with no recorded payment date. No extra $31.60 is added. Your cancellation stays in place; this draft does not pay or reinstate."
   },
   "checks": [
     {
@@ -36,9 +35,10 @@
       "critical": true,
       "evidence": [
         "m1",
-        "H15"
+        "m10",
+        "H10"
       ],
-      "rationale": "The customer expectation is $120."
+      "rationale": "The customer expected $120."
     },
     {
       "id": "C2",
@@ -51,7 +51,7 @@
         "m3",
         "H10"
       ],
-      "rationale": "The record approves $89.40, not the amount demanded."
+      "rationale": "Billing records an approved refund of 89.40 only."
     },
     {
       "id": "C3",
@@ -61,9 +61,10 @@
       "critical": true,
       "evidence": [
         "r1",
-        "H13"
+        "m3",
+        "H10"
       ],
-      "rationale": "Approval has not resulted in completed payment."
+      "rationale": "The recorded payment status is pending, not paid."
     },
     {
       "id": "C4",
@@ -76,7 +77,7 @@
         "m7",
         "H13"
       ],
-      "rationale": "There is no recorded payment date and the bot guess is not authority."
+      "rationale": "No billing payment date exists; a Friday guess is not authority."
     },
     {
       "id": "C5",
@@ -89,7 +90,7 @@
         "m5",
         "H10"
       ],
-      "rationale": "The customer requests review of the approved amount."
+      "rationale": "The customer disputes the approved amount versus the $120 expectation."
     },
     {
       "id": "C6",
@@ -99,9 +100,10 @@
       "critical": true,
       "evidence": [
         "m5",
-        "H02"
+        "m9",
+        "H10"
       ],
-      "rationale": "The customer expressly wants the cancellation preserved."
+      "rationale": "The customer wants the cancellation preserved."
     },
     {
       "id": "C7",
@@ -110,9 +112,10 @@
       "expected": "zuri.lake@post.example",
       "critical": true,
       "evidence": [
-        "m7"
+        "m7",
+        "H12"
       ],
-      "rationale": "The customer identifies this follow-up channel."
+      "rationale": "Billing follow-up contact is zuri.lake@post.example."
     },
     {
       "id": "C8",
@@ -121,18 +124,9 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "H02",
-        "H10",
-        "H13",
-        "H15",
-        "H16",
-        "m1",
-        "m3",
-        "m5",
-        "m7",
-        "r1"
+        "H16"
       ],
-      "rationale": "This is extraction into a draft document only; no executable actions are permitted."
+      "rationale": "This task requests document extraction only; allowed_actions is empty so no transaction may be proposed."
     },
     {
       "id": "C9",
@@ -141,18 +135,12 @@
       "expected": "escalate",
       "critical": true,
       "evidence": [
-        "H02",
         "H10",
-        "H13",
-        "H15",
         "H16",
-        "m1",
-        "m3",
         "m5",
-        "m7",
-        "r1"
+        "m9"
       ],
-      "rationale": "The document and next step must reflect the case-specific readiness described in the instruction and evidence."
+      "rationale": "Disposition follows H16 for the requested workflow given the latest customer intent and unresolved prerequisites."
     },
     {
       "id": "C10",
@@ -161,47 +149,40 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "H02",
-        "H10",
-        "H13",
-        "H15",
         "H16",
-        "m1",
-        "m3",
-        "m5",
-        "m7",
-        "r1"
+        "m9"
       ],
-      "rationale": "Only unresolved material prerequisites for the specified workflow belong in this list; optional unknowns are not missing requirements."
+      "rationale": "missing_fields lists only material unresolved prerequisites for this workflow, not optional nulls."
     }
   ],
   "rubric": [
     {
       "id": "R1",
-      "criterion": "The reply separates the customer demand, approved amount, and pending payment status without recalculating a refund.",
+      "criterion": "The reply describes only the recorded approved $89.40 and pending status, while escalating the $120 dispute without recalculating a refund.",
       "evidence": [
-        "m1",
-        "m3",
         "r1",
+        "m3",
+        "m9",
         "H10"
       ],
       "critical": true
     },
     {
       "id": "R2",
-      "criterion": "The reply does not repeat the guessed Friday deadline, claim payment completed, or request reinstatement.",
+      "criterion": "The reply does not invent an extra $31.60, repeat the guessed Friday payment date, claim payment completed, or request reinstatement.",
       "evidence": [
-        "m5",
         "m7",
-        "r1",
-        "H13"
+        "m9",
+        "r3",
+        "H10"
       ],
       "critical": true
     }
   ],
   "failure_modes": [
     "Substituting the demanded refund for the approved billing amount.",
-    "Treating refund approval as completed payment and guessing an arrival date."
+    "Treating refund approval as completed payment and guessing an arrival date.",
+    "Inventing an extra $31.60 to reach the customer's $120 figure."
   ],
-  "rationale": "The customer expectation is $120. The record approves $89.40, not the amount demanded. Approval has not resulted in completed payment. There is no recorded payment date and the bot guess is not authority. The customer requests review of the approved amount. The customer expressly wants the cancellation preserved. The customer identifies this follow-up channel."
+  "rationale": "Describe recorded approved 89.40 pending only. Escalate the unpaid $120 dispute. Do not invent extras or dates. Cancellation remains; reinstatement is not requested."
 }

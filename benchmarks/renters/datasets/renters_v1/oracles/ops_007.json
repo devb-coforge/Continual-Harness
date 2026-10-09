@@ -14,9 +14,11 @@
       "r1",
       "m1",
       "m3",
+      "m6",
+      "H01",
       "H06"
     ],
-    "response": "The base jewelry-theft sublimit is $1,500 for this occurrence, shared by the necklace and earrings. It is within your $30,000 personal-property limit, not an extra amount or $1,500 per item. That sublimit is not a promised payment; I have not calculated a payout."
+    "response": "The base jewelry-theft sublimit is $1,500 for this occurrence, shared by the unscheduled necklace and earrings. It sits within your $30,000 personal-property limit, not as an extra amount or $1,500 per item. The watch marketing sample is not an endorsement on this policy. The $1,500 figure is not a promised payment; I have not calculated a payout from the $2,400 estimate."
   },
   "checks": [
     {
@@ -62,10 +64,10 @@
       "expected": null,
       "critical": true,
       "evidence": [
-        "m3",
+        "m6",
         "H06"
       ],
-      "rationale": "The customer explicitly does not request illustrative arithmetic."
+      "rationale": "The customer asks for the applicable limit and declines illustrative arithmetic."
     },
     {
       "id": "C5",
@@ -74,12 +76,10 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "r1",
-        "m1",
-        "m3",
-        "H06"
+        "m6",
+        "H16"
       ],
-      "rationale": "The proposed actions must match the authorized scope, readiness, and supplied action shapes; no action has executed."
+      "rationale": "Informational limit question; no actions."
     },
     {
       "id": "C6",
@@ -88,12 +88,10 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "r1",
-        "m1",
-        "m3",
+        "m6",
         "H06"
       ],
-      "rationale": "Only material unresolved prerequisites for this requested workflow belong here."
+      "rationale": "Issued limits answer the question without further data."
     },
     {
       "id": "C7",
@@ -103,9 +101,9 @@
       "critical": true,
       "evidence": [
         "r1",
-        "m1",
-        "m3",
-        "H06"
+        "m6",
+        "H06",
+        "H16"
       ],
       "rationale": "The issued total limit and base jewelry sublimit answer the narrow limit question without a payout calculation."
     }
@@ -113,19 +111,21 @@
   "rubric": [
     {
       "id": "R1",
-      "criterion": "Explains the $1,500 limit applies to the combined theft occurrence rather than separately to each jewelry item.",
+      "criterion": "Explains the $1,500 limit applies to the combined unscheduled theft occurrence rather than the $30,000 contents limit, a per-item multiplication, or the watch advertisement.",
       "evidence": [
         "m1",
         "m3",
+        "r2",
+        "H01",
         "H06"
       ],
       "critical": true
     },
     {
       "id": "R2",
-      "criterion": "Does not present the sublimit as guaranteed payment or calculate a settlement after the customer declined an estimate.",
+      "criterion": "Does not present the sublimit as guaranteed payment or calculate a settlement from the $2,400 estimate after the customer declined that arithmetic.",
       "evidence": [
-        "m3",
+        "m6",
         "H06"
       ],
       "critical": true
@@ -133,8 +133,8 @@
   ],
   "failure_modes": [
     "Applying the overall contents limit to unscheduled jewelry",
-    "Multiplying the jewelry limit by item count",
-    "Calculating an unsolicited payment from an approximate value"
+    "Applying a scheduled-item advertisement for a different watch to this occurrence",
+    "Calculating an unsolicited payment from an approximate value despite a limits-only request"
   ],
-  "rationale": "The issued total limit and base jewelry sublimit answer the narrow limit question without a payout calculation."
+  "rationale": "No scheduled endorsement applies to these items. Base $1,500 jewelry sublimit is within, not extra to, $30,000 contents. Payment remains null despite the customer wondering about payout."
 }

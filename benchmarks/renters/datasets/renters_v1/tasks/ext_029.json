@@ -23,32 +23,47 @@
       {
         "id": "m2",
         "role": "bot",
-        "text": "When do you start living there?"
+        "text": "When do you start living there? Relative dates are always too vague, so I will leave dates blank."
       },
       {
         "id": "m3",
         "role": "customer",
-        "text": "Tomorrow, October 9. Start the requested insurance today, October 8, 2026."
+        "text": "Tomorrow, October 9, is occupancy. Start the requested insurance today, October 8, 2026. Those relative words are anchored to today."
       },
       {
         "id": "m4",
         "role": "bot",
-        "text": "What amounts have you selected?"
+        "text": "What amounts have you selected? I will use tomorrow for both dates to keep them equal."
       },
       {
         "id": "m5",
         "role": "customer",
-        "text": "Property $15,000, liability $100,000, deductible $250. There are no other occupants."
+        "text": "Property $15,000, liability $100,000, deductible $250. There are no other occupants. Do not copy occupancy onto requested start. Today vs tomorrow are different."
       },
       {
         "id": "m6",
         "role": "bot",
-        "text": "May I submit this application with those dates?"
+        "text": "May I submit this application with those dates? Occupancy might be today if you are already on site."
       },
       {
         "id": "m7",
         "role": "customer",
-        "text": "Yes, submit it. Today for requested insurance, tomorrow for occupancy, just as above."
+        "text": "Yes, submit it. Today for requested insurance, tomorrow for occupancy, just as above. I am not occupying today."
+      },
+      {
+        "id": "m8",
+        "role": "bot",
+        "text": "Saved with both dates October 8 and a null occupant list meaning unknown occupants."
+      },
+      {
+        "id": "m9",
+        "role": "customer",
+        "text": "Correct: occupancy 2026-10-09 from tomorrow plus as_of. Requested start 2026-10-08 from today plus as_of. other_occupants is an empty list, not unknown. Consent true."
+      },
+      {
+        "id": "m10",
+        "role": "customer",
+        "text": "Cite the as_of date rather than treating the relative words as unresolved."
       }
     ],
     "form": {

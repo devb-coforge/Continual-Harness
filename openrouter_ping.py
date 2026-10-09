@@ -7,7 +7,7 @@ response = requests.post(
     "Authorization": f"Bearer {os.getenv('OPENROUTER_API_KEY')}",
   },
   data=json.dumps({
-    "model": "meta/muse-spark-1.3-contributor",
+    "model": "~deepseek/deepseek-v4-flash-latest",
     "messages": [
       {
         "role": "user",

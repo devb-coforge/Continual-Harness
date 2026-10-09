@@ -16,16 +16,13 @@
     "citations": [
       "H05",
       "H12",
-      "H13",
       "H15",
       "H16",
-      "m1",
-      "m3",
       "m5",
       "m7",
-      "session"
+      "m9"
     ],
-    "response": "The handoff can support a sofa-damage intake for October 7 at Fern Walk, with cause explicitly unknown and photos pending. Staff should review the cause; neither flood exclusion nor pipe coverage can be determined from the current report. Intake has not been submitted by this extraction."
+    "response": "The intake is ready with unknown cause for review. The wet photo and the city-drain guess do not establish flood or a burst pipe. Your sofa at 23 Fern Walk, Unit 5 is recorded for October 7, photos are still pending, and no coverage decision is made."
   },
   "checks": [
     {
@@ -35,20 +32,22 @@
       "expected": "2026-10-07",
       "critical": true,
       "evidence": [
-        "m5"
+        "m5",
+        "H08"
       ],
-      "rationale": "The customer explicitly confirms the date."
+      "rationale": "The customer dates the damage October 7, 2026."
     },
     {
       "id": "C2",
       "path": "/fields/event_location",
-      "operator": "eq",
+      "operator": "text_eq",
       "expected": "23 Fern Walk, Unit 5, Morrow, US",
       "critical": true,
       "evidence": [
-        "m5"
+        "m5",
+        "H12"
       ],
-      "rationale": "The location is explicitly supplied."
+      "rationale": "The incident address is 23 Fern Walk, Unit 5, Morrow, US."
     },
     {
       "id": "C3",
@@ -57,11 +56,12 @@
       "expected": "unknown",
       "critical": true,
       "evidence": [
-        "m3",
+        "m5",
         "m7",
+        "m9",
         "H05"
       ],
-      "rationale": "The initial flood label is corrected to unknown; the manager has not inspected."
+      "rationale": "The customer replaces flood/drain/pipe labels with unknown and forbids inference from the wet photo."
     },
     {
       "id": "C4",
@@ -71,9 +71,10 @@
       "critical": true,
       "evidence": [
         "m5",
-        "H15"
+        "m7",
+        "H04"
       ],
-      "rationale": "The customer reports ownership without independent verification."
+      "rationale": "The customer claims sole ownership of the sofa."
     },
     {
       "id": "C5",
@@ -82,9 +83,10 @@
       "expected": "omar.hill@post.example",
       "critical": true,
       "evidence": [
-        "m5"
+        "m5",
+        "H12"
       ],
-      "rationale": "The customer directly supplies the contact channel."
+      "rationale": "The intake contact is omar.hill@post.example."
     },
     {
       "id": "C6",
@@ -94,9 +96,9 @@
       "critical": true,
       "evidence": [
         "m7",
-        "H15"
+        "H12"
       ],
-      "rationale": "The photos are promised but not sent."
+      "rationale": "Photos have not been sent; a wet image is not received cause evidence."
     },
     {
       "id": "C7",
@@ -105,12 +107,10 @@
       "expected": "ready_with_cause_review",
       "critical": true,
       "evidence": [
-        "session",
-        "m5",
-        "m7",
+        "m9",
         "H12"
       ],
-      "rationale": "Policy, date, location, sofa description and contact are supplied; unknown cause is permissible."
+      "rationale": "Core H12 facts exist with unknown cause flagged for review."
     },
     {
       "id": "C8",
@@ -119,16 +119,9 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "H05",
-        "H12",
-        "H15",
-        "H16",
-        "m3",
-        "m5",
-        "m7",
-        "session"
+        "H16"
       ],
-      "rationale": "This is extraction into a draft document only; no executable actions are permitted."
+      "rationale": "This task requests document extraction only; allowed_actions is empty so no transaction may be proposed."
     },
     {
       "id": "C9",
@@ -137,16 +130,11 @@
       "expected": "ready",
       "critical": true,
       "evidence": [
-        "H05",
         "H12",
-        "H15",
         "H16",
-        "m3",
-        "m5",
-        "m7",
-        "session"
+        "m9"
       ],
-      "rationale": "The document and next step must reflect the case-specific readiness described in the instruction and evidence."
+      "rationale": "Disposition follows H16 for the requested workflow given the latest customer intent and unresolved prerequisites."
     },
     {
       "id": "C10",
@@ -155,45 +143,42 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "H05",
         "H12",
-        "H15",
         "H16",
-        "m3",
-        "m5",
-        "m7",
-        "session"
+        "m9"
       ],
-      "rationale": "Only unresolved material prerequisites for the specified workflow belong in this list; optional unknowns are not missing requirements."
+      "rationale": "missing_fields lists only material unresolved prerequisites for this workflow, not optional nulls."
     }
   ],
   "rubric": [
     {
       "id": "R1",
-      "criterion": "The reply preserves cause uncertainty and does not infer either flood or pipe coverage from the label or manager speculation.",
+      "criterion": "The reply records unknown cause and ready-with-review intake without converting the wet photo or city-drain guess into flood or internal-pipe cause.",
       "evidence": [
-        "m1",
-        "m3",
+        "m5",
         "m7",
+        "m9",
+        "r1",
         "H05"
       ],
       "critical": true
     },
     {
       "id": "R2",
-      "criterion": "The reply allows otherwise complete intake with an unknown cause and does not claim photos were received or payment approved.",
+      "criterion": "The reply does not refuse intake because flood was typed initially, treat photos as received, or assign ownership to a roommate.",
       "evidence": [
-        "m5",
+        "m1",
         "m7",
-        "H12",
-        "H13"
+        "m9",
+        "H12"
       ],
       "critical": true
     }
   ],
   "failure_modes": [
-    "Rejecting intake solely because the customer initially typed flood.",
-    "Treating a possible pipe explanation as established cause."
+    "Inferring flood from a wet photograph or the original web-form label.",
+    "Treating 'probably the city drain' or a manager's pipe comment as established cause.",
+    "Blocking intake solely because cause is unknown or photos are pending."
   ],
-  "rationale": "The customer explicitly confirms the date. The location is explicitly supplied. The initial flood label is corrected to unknown; the manager has not inspected. The customer reports ownership without independent verification. The customer directly supplies the contact channel. The photos are promised but not sent. Policy, date, location, sofa description and contact are supplied; unknown cause is permissible."
+  "rationale": "Cause remains unknown after the customer retracts flood and forbids drain/pipe inference. The wet photo is not a cause finding and photos stay pending. Core intake facts are complete for review."
 }

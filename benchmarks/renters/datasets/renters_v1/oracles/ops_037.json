@@ -2,7 +2,7 @@
   "task_id": "ops_037",
   "reference_answer": {
     "fields": {
-      "requested_date_text": "11/12/2026",
+      "requested_date_text": "3/4/2027",
       "effective_date": null,
       "cancel_intent": true,
       "ready_to_schedule": false
@@ -14,25 +14,27 @@
     ],
     "citations": [
       "m1",
-      "m3",
+      "m5",
+      "m6",
       "H08",
       "H10",
       "session",
+      "H02",
       "H16"
     ],
-    "response": "The intended date is still ambiguous: November 12 or December 11, 2026. Please confirm which one you want. Your intent to cancel is recorded, but I cannot propose scheduling it until the effective date is clear."
+    "response": "You still want to cancel P-37, but 3/4/2027 remains March 4 or April 3. I will not use the November 15 billing date, your roommate’s April 3 guess, or a locale inferred from the address. Please send one ISO calendar date. The mailing change is withdrawn, and no cancellation is scheduled."
   },
   "checks": [
     {
       "id": "C1",
       "path": "/fields/requested_date_text",
       "operator": "eq",
-      "expected": "11/12/2026",
+      "expected": "3/4/2027",
       "critical": true,
       "evidence": [
         "m1"
       ],
-      "rationale": "Retain the exact date string so the ambiguity is visible."
+      "rationale": "Retain the exact numeric string so the MDY versus DMY ambiguity stays visible."
     },
     {
       "id": "C2",
@@ -42,10 +44,10 @@
       "critical": true,
       "evidence": [
         "m1",
-        "m3",
+        "m5",
         "H08"
       ],
-      "rationale": "Two future dates are plausible and the customer has not selected one."
+      "rationale": "The customer reaffirms 3/4 without choosing March 4 or April 3, so the ISO date stays unknown."
     },
     {
       "id": "C3",
@@ -55,9 +57,10 @@
       "critical": true,
       "evidence": [
         "m1",
-        "m3"
+        "m5",
+        "m6"
       ],
-      "rationale": "The customer wants cancellation but not a guessed date."
+      "rationale": "Insurance cancellation intent remains after the mailing request is withdrawn."
     },
     {
       "id": "C4",
@@ -66,10 +69,11 @@
       "expected": false,
       "critical": true,
       "evidence": [
-        "m3",
+        "m5",
+        "m6",
         "H10"
       ],
-      "rationale": "H10 requires an explicit confirmed date as well as general intent."
+      "rationale": "H10 requires an explicit confirmed date; intent plus an unresolved numeric string is not enough."
     },
     {
       "id": "C5",
@@ -79,12 +83,12 @@
       "critical": true,
       "evidence": [
         "session",
-        "m1",
-        "m3",
+        "m5",
+        "m6",
         "H08",
         "H10"
       ],
-      "rationale": "Only the explicitly requested and sufficiently authorized proposed actions are valid. Identity and policy selection are established, but the two valid future date interpretations remain unresolved. The missing prerequisite is effective_date alone."
+      "rationale": "No schedule_cancellation action is allowed while the date is unresolved; mailing is withdrawn and not an allowed action."
     },
     {
       "id": "C6",
@@ -95,13 +99,12 @@
       ],
       "critical": true,
       "evidence": [
-        "session",
-        "m1",
-        "m3",
+        "m5",
         "H08",
-        "H10"
+        "H10",
+        "H16"
       ],
-      "rationale": "Identity and policy selection are established, but the two valid future date interpretations remain unresolved. The missing prerequisite is effective_date alone."
+      "rationale": "The remaining prerequisite is a single confirmed cancellation date, not identity or policy selection."
     },
     {
       "id": "C7",
@@ -112,32 +115,35 @@
       ],
       "critical": true,
       "evidence": [
-        "session",
         "m1",
-        "m3",
+        "m5",
         "H08",
         "H10"
       ],
-      "rationale": "Material unresolved prerequisites are effective_date. Identity and policy selection are established, but the two valid future date interpretations remain unresolved. The missing prerequisite is effective_date alone."
+      "rationale": "Only the unresolved ISO cancellation date is a material missing prerequisite."
     }
   ],
   "rubric": [
     {
       "id": "R1",
-      "criterion": "The reply asks for the intended cancellation date without choosing either interpretation from the policy address or locale.",
+      "criterion": "The reply keeps 3/4/2027 unresolved and does not adopt the roommate’s April 3 guess, the 2026-11-15 billing date, or a locale inferred from the Otterford address.",
       "evidence": [
-        "m1",
         "m3",
+        "m5",
+        "m6",
+        "r2",
         "H08",
-        "H10"
+        "H02"
       ],
       "critical": true
     },
     {
       "id": "R2",
-      "criterion": "The reply preserves the distinction between cancellation intent and authorization to schedule a specific date.",
+      "criterion": "The reply preserves cancellation intent without scheduling, and does not revive the withdrawn mailing change to 8 Pike Mews.",
       "evidence": [
-        "m3",
+        "m1",
+        "m6",
+        "r3",
         "H10",
         "H16"
       ],
@@ -145,8 +151,9 @@
     }
   ],
   "failure_modes": [
-    "Interpreting an ambiguous date using an unstated locale rule.",
-    "Treating general cancellation intent as consent to either possible date."
+    "Resolving 3/4/2027 from a roommate guess, a billing ISO date, or an inferred locale.",
+    "Scheduling cancellation from intent alone while the numeric date still has two readings.",
+    "Proposing the withdrawn mailing-address change."
   ],
-  "rationale": "Identity and policy selection are established, but the two valid future date interpretations remain unresolved. The missing prerequisite is effective_date alone."
+  "rationale": "H08 leaves ambiguous numeric dates unresolved. The customer’s latest statement keeps 3/4/2027 and rejects both the billing date and the roommate’s April 3 guess. Cancel intent is still present, but H10 blocks scheduling. The mailing request is withdrawn under H02, and it is not an allowed action."
 }

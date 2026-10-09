@@ -18,29 +18,29 @@
       "deductible"
     ],
     "citations": [
-      "H02",
       "H14",
       "H15",
       "H16",
       "m1",
       "m3",
-      "m4",
       "m5",
-      "m7"
+      "m7",
+      "m9"
     ],
-    "response": "The draft records your selected limits and October 20 dates. The deductible is still unselected, and you have declined submission for now."
+    "response": "The draft has your name, address, dates, $15,000 property, and $100,000 liability. Deductible is still blank because comparing $250 and $1,000, and rejecting the $500 suggestion, is not a selection. Submission is declined until you choose."
   },
   "checks": [
     {
       "id": "C1",
       "path": "/fields/applicant_name",
-      "operator": "eq",
+      "operator": "text_eq",
       "expected": "Oscar Reed",
       "critical": true,
       "evidence": [
-        "m1"
+        "m1",
+        "H14"
       ],
-      "rationale": "The cited source establishes applicant_name; preserve the stated value and uncertainty under H15."
+      "rationale": "The applicant states the name Oscar Reed."
     },
     {
       "id": "C2",
@@ -49,9 +49,10 @@
       "expected": "oscar.reed@example.test",
       "critical": true,
       "evidence": [
-        "m1"
+        "m1",
+        "H14"
       ],
-      "rationale": "The cited source establishes contact_email; preserve the stated value and uncertainty under H15."
+      "rationale": "The applicant contact email is oscar.reed@example.test."
     },
     {
       "id": "C3",
@@ -60,9 +61,10 @@
       "expected": "82 Mill Street, Apartment 2, Alder Cove",
       "critical": true,
       "evidence": [
-        "m1"
+        "m1",
+        "H14"
       ],
-      "rationale": "The cited source establishes insured_address; preserve the stated value and uncertainty under H15."
+      "rationale": "The complete dwelling address is 82 Mill Street, Apartment 2, Alder Cove."
     },
     {
       "id": "C4",
@@ -71,9 +73,11 @@
       "expected": "2026-10-20",
       "critical": true,
       "evidence": [
-        "m3"
+        "m3",
+        "m9",
+        "H08"
       ],
-      "rationale": "The cited source establishes occupancy_start; preserve the stated value and uncertainty under H15."
+      "rationale": "Occupancy is explicitly October 20, 2026."
     },
     {
       "id": "C5",
@@ -82,9 +86,11 @@
       "expected": "2026-10-20",
       "critical": true,
       "evidence": [
-        "m3"
+        "m3",
+        "m9",
+        "H08"
       ],
-      "rationale": "The cited source establishes requested_start; preserve the stated value and uncertainty under H15."
+      "rationale": "Requested insurance start is the same explicit October 20, 2026 date."
     },
     {
       "id": "C6",
@@ -93,9 +99,10 @@
       "expected": 15000,
       "critical": true,
       "evidence": [
-        "m3"
+        "m3",
+        "H14"
       ],
-      "rationale": "The cited source establishes personal_property_limit; preserve the stated value and uncertainty under H15."
+      "rationale": "The applicant selects $15,000 personal property."
     },
     {
       "id": "C7",
@@ -104,9 +111,10 @@
       "expected": 100000,
       "critical": true,
       "evidence": [
-        "m3"
+        "m3",
+        "H14"
       ],
-      "rationale": "The cited source establishes liability_limit; preserve the stated value and uncertainty under H15."
+      "rationale": "The applicant selects $100,000 liability."
     },
     {
       "id": "C8",
@@ -115,11 +123,12 @@
       "expected": null,
       "critical": true,
       "evidence": [
-        "m4",
         "m5",
-        "H02"
+        "m7",
+        "H14",
+        "H15"
       ],
-      "rationale": "The cited source establishes deductible; preserve the stated value and uncertainty under H15."
+      "rationale": "Comparing $250 and $1,000 and rejecting the bot's $500 does not select a deductible."
     },
     {
       "id": "C9",
@@ -129,9 +138,10 @@
       "critical": true,
       "evidence": [
         "m7",
+        "m9",
         "H14"
       ],
-      "rationale": "The cited source establishes consent_to_submit; preserve the stated value and uncertainty under H15."
+      "rationale": "The applicant explicitly declines submission until a deductible is chosen."
     },
     {
       "id": "C10",
@@ -142,7 +152,7 @@
       "evidence": [
         "H16"
       ],
-      "rationale": "This task requests document extraction only; no transaction is authorized by the task."
+      "rationale": "This task requests document extraction only; allowed_actions is empty so no transaction may be proposed."
     },
     {
       "id": "C11",
@@ -153,10 +163,12 @@
       ],
       "critical": true,
       "evidence": [
-        "H15",
-        "H16"
+        "H14",
+        "H16",
+        "m5",
+        "m9"
       ],
-      "rationale": "The customer expressly declines the suggested default and application submission. False submission consent is a resolved fact, while the deductible remains a required unknown."
+      "rationale": "Disposition follows H16 for the requested workflow given the latest customer intent and unresolved prerequisites."
     },
     {
       "id": "C12",
@@ -167,48 +179,41 @@
       ],
       "critical": true,
       "evidence": [
-        "H15",
-        "H16"
+        "H14",
+        "H16",
+        "m5"
       ],
-      "rationale": "Only these unresolved fields block the requested document workflow: deductible"
+      "rationale": "missing_fields lists only material unresolved prerequisites for this workflow, not optional nulls."
     }
   ],
   "rubric": [
     {
       "id": "R1",
-      "criterion": "The reply identifies an incomplete draft because the deductible remains unselected and does not fill it with the suggested $500 default or either comparison option.",
+      "criterion": "The reply leaves deductible unset and identifies it as the outstanding required field, while recording explicit declined submission consent.",
       "evidence": [
-        "H11",
-        "H14",
-        "H15",
-        "m1",
-        "m3",
-        "m4",
         "m5",
-        "m7"
+        "m7",
+        "m9",
+        "H14"
       ],
       "critical": true
     },
     {
       "id": "R2",
-      "criterion": "The reply identifies deductible selection as outstanding, without treating explicit declined submission consent as missing information.",
+      "criterion": "The reply does not adopt the bot's $500 placeholder, treat a comparison as a selection, or convert declined consent into unknown or true.",
       "evidence": [
-        "H02",
-        "H14",
-        "H15",
-        "m1",
-        "m3",
         "m4",
         "m5",
-        "m7"
+        "m10",
+        "H15"
       ],
       "critical": true
     }
   ],
   "failure_modes": [
     "Treating a comparison of $250 and $1,000 deductibles as selecting one.",
-    "Adopting the bot’s suggested $500 deductible despite the applicant’s rejection.",
+    "Adopting the bot's suggested $500 deductible despite the applicant's rejection.",
     "Converting explicit declined submission consent to unknown or requiring consent clarification."
   ],
-  "rationale": "The customer expressly declines the suggested default and application submission. False submission consent is a resolved fact, while the deductible remains a required unknown."
+  "rationale": "Property and liability are selected. Deductible remains null because comparison and a rejected $500 suggestion are not a choice. Submission is explicitly declined, so consent is false and the missing prerequisite is deductible only."
 }

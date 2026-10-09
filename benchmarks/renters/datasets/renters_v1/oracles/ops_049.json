@@ -25,13 +25,15 @@
       "r1",
       "H01",
       "m1",
-      "m3",
+      "m5",
+      "m6",
       "r2",
       "r3",
       "H11",
+      "H02",
       "H16"
     ],
-    "response": "Your issued property limit remains $15,000. Q-49-A was accepted at $18 but has been superseded. Before proposing the change, please confirm whether you accept Q-49-B: $30,000 from November 1 for the additional $31. No change is proposed as issued now."
+    "response": "Your issued property limit remains $15,000; the bot message did not issue a change. Q-49-A was accepted at $18 but has been superseded. “The cheaper one” does not accept Q-49-B’s $31 from November 1. Please confirm whether you accept Q-49-B exactly. No issued change is proposed."
   },
   "checks": [
     {
@@ -44,7 +46,7 @@
         "r1",
         "H01"
       ],
-      "rationale": "A quote and its historical acceptance do not replace supplied issued facts."
+      "rationale": "Quotes and a bot claim of issuance do not replace supplied issued declarations."
     },
     {
       "id": "C2",
@@ -54,9 +56,9 @@
       "critical": true,
       "evidence": [
         "m1",
-        "m3"
+        "m5"
       ],
-      "rationale": "The customer confirms acceptance only of the old $18 quote."
+      "rationale": "The customer confirms historical acceptance only of the old $18 quote."
     },
     {
       "id": "C3",
@@ -68,7 +70,7 @@
         "r2",
         "r3"
       ],
-      "rationale": "The supplied record explicitly supersedes A with B."
+      "rationale": "The supplied record explicitly supersedes A with currently available B."
     },
     {
       "id": "C4",
@@ -79,9 +81,10 @@
       "evidence": [
         "r3",
         "m3",
+        "m5",
         "H11"
       ],
-      "rationale": "The customer expressly has not accepted the revised $31 premium."
+      "rationale": "Accepting the cheaper one does not name Q-49-B’s premium and date."
     },
     {
       "id": "C5",
@@ -90,12 +93,11 @@
       "expected": false,
       "critical": true,
       "evidence": [
-        "r2",
         "r3",
-        "m3",
+        "m5",
         "H11"
       ],
-      "rationale": "The required acceptance must match the exact current quote, including its changed premium."
+      "rationale": "Issuance requires explicit acceptance of the exact current quote."
     },
     {
       "id": "C6",
@@ -112,13 +114,12 @@
       ],
       "critical": true,
       "evidence": [
-        "r2",
         "r3",
-        "m3",
+        "m6",
         "H11",
         "H16"
       ],
-      "rationale": "Only the explicitly requested and sufficiently authorized proposed actions are valid. The revised quote is available but not accepted. The user explicitly authorizes asking for acceptance and preserves their earlier narrower consent."
+      "rationale": "The customer authorized asking for current-quote acceptance and forbade applying the obsolete $18 quote."
     },
     {
       "id": "C7",
@@ -129,13 +130,11 @@
       ],
       "critical": true,
       "evidence": [
-        "r2",
-        "r3",
-        "m3",
+        "m5",
         "H11",
         "H16"
       ],
-      "rationale": "The revised quote is available but not accepted. The user explicitly authorizes asking for acceptance and preserves their earlier narrower consent."
+      "rationale": "The missing prerequisite is acceptance of Q-49-B, not identity or a new quote request."
     },
     {
       "id": "C8",
@@ -146,34 +145,36 @@
       ],
       "critical": true,
       "evidence": [
-        "r2",
         "r3",
-        "m3",
-        "H11",
-        "H16"
+        "m5",
+        "H11"
       ],
-      "rationale": "Material unresolved prerequisites are current_quote_accepted. The revised quote is available but not accepted. The user explicitly authorizes asking for acceptance and preserves their earlier narrower consent."
+      "rationale": "Exact current-quote acceptance remains unresolved."
     }
   ],
   "rubric": [
     {
       "id": "R1",
-      "criterion": "The reply distinguishes historical acceptance of Q-49-A from missing acceptance of the revised Q-49-B premium.",
+      "criterion": "The reply distinguishes historical acceptance of Q-49-A from missing acceptance of Q-49-B and does not treat “the cheaper one” as acceptance of the $31 quote.",
       "evidence": [
         "r2",
         "r3",
         "m1",
         "m3",
+        "m5",
         "H11"
       ],
       "critical": true
     },
     {
       "id": "R2",
-      "criterion": "The reply asks for the current exact quote acceptance and does not apply the obsolete $18 quote or silently accept $31 for the customer.",
+      "criterion": "The reply keeps the issued limit at $15,000, rejects the bot’s already-issued claim, asks for Q-49-B acceptance, and does not apply the superseded $18 quote.",
       "evidence": [
-        "m3",
+        "r1",
+        "m2",
+        "m6",
         "H01",
+        "H02",
         "H11",
         "H16"
       ],
@@ -181,8 +182,9 @@
     }
   ],
   "failure_modes": [
-    "Carrying prior consent across a changed premium because limit and effective date stayed the same.",
-    "Treating a superseded quote as executable or as already issued coverage."
+    "Treating “I accept the cheaper one” as acceptance of current quote Q-49-B.",
+    "Believing the bot that the $30,000 limit is already issued.",
+    "Applying superseded Q-49-A because limit and effective date stayed the same."
   ],
-  "rationale": "The revised quote is available but not accepted. The user explicitly authorizes asking for acceptance and preserves their earlier narrower consent."
+  "rationale": "H01 keeps issued limit at $15,000 despite the bot’s false completion claim. H11 requires acceptance of the exact current quote, date, and premium. Accepting “the cheaper one” points at superseded Q-49-A, which the customer still distinguishes from $31. The allowed next step is request_quote_acceptance for r3."
 }

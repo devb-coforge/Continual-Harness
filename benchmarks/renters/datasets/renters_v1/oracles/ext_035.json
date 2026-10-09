@@ -18,28 +18,28 @@
       "personal_property_limit"
     ],
     "citations": [
-      "H08",
       "H14",
       "H15",
       "H16",
-      "m1",
       "m3",
       "m5",
-      "m7"
+      "m7",
+      "m9"
     ],
-    "response": "The draft keeps the property limit unselected while you separate the inventory. The $30,000 estimate has not been turned into a coverage selection; submission remains declined."
+    "response": "The draft keeps the property limit unselected while you separate the inventory. The $28,000 estimate has not been rounded or turned into a $30,000 coverage selection; submission remains declined."
   },
   "checks": [
     {
       "id": "C1",
       "path": "/fields/applicant_name",
-      "operator": "eq",
+      "operator": "text_eq",
       "expected": "Mateo Quinn",
       "critical": true,
       "evidence": [
-        "m1"
+        "m1",
+        "H14"
       ],
-      "rationale": "The cited source establishes applicant_name; preserve the stated value and uncertainty under H15."
+      "rationale": "The applicant is Mateo Quinn."
     },
     {
       "id": "C2",
@@ -48,9 +48,10 @@
       "expected": "mateo.quinn@example.test",
       "critical": true,
       "evidence": [
-        "m1"
+        "m1",
+        "H14"
       ],
-      "rationale": "The cited source establishes contact_email; preserve the stated value and uncertainty under H15."
+      "rationale": "Contact email is mateo.quinn@example.test."
     },
     {
       "id": "C3",
@@ -59,9 +60,10 @@
       "expected": "115 Fern Row, Unit 1, Larch Bay",
       "critical": true,
       "evidence": [
-        "m1"
+        "m1",
+        "H14"
       ],
-      "rationale": "The cited source establishes insured_address; preserve the stated value and uncertainty under H15."
+      "rationale": "The dwelling is 115 Fern Row, Unit 1, Larch Bay."
     },
     {
       "id": "C4",
@@ -70,9 +72,10 @@
       "expected": "2026-10-28",
       "critical": true,
       "evidence": [
-        "m1"
+        "m1",
+        "H08"
       ],
-      "rationale": "The cited source establishes occupancy_start; preserve the stated value and uncertainty under H15."
+      "rationale": "Occupancy is October 28, 2026."
     },
     {
       "id": "C5",
@@ -84,7 +87,7 @@
         "m1",
         "H08"
       ],
-      "rationale": "The cited source establishes requested_start; preserve the stated value and uncertainty under H15."
+      "rationale": "Requested start is October 27, 2026."
     },
     {
       "id": "C6",
@@ -95,9 +98,10 @@
       "evidence": [
         "m3",
         "m5",
+        "m9",
         "H14"
       ],
-      "rationale": "The cited source establishes personal_property_limit; preserve the stated value and uncertainty under H15."
+      "rationale": "A $28,000 mixed inventory estimate is not an explicit $30,000 limit selection."
     },
     {
       "id": "C7",
@@ -106,9 +110,10 @@
       "expected": 100000,
       "critical": true,
       "evidence": [
-        "m5"
+        "m5",
+        "H14"
       ],
-      "rationale": "The cited source establishes liability_limit; preserve the stated value and uncertainty under H15."
+      "rationale": "The applicant selects $100,000 liability."
     },
     {
       "id": "C8",
@@ -117,9 +122,10 @@
       "expected": 500,
       "critical": true,
       "evidence": [
-        "m5"
+        "m5",
+        "H14"
       ],
-      "rationale": "The cited source establishes deductible; preserve the stated value and uncertainty under H15."
+      "rationale": "The applicant selects a $500 deductible."
     },
     {
       "id": "C9",
@@ -128,9 +134,11 @@
       "expected": false,
       "critical": true,
       "evidence": [
-        "m7"
+        "m7",
+        "m9",
+        "H14"
       ],
-      "rationale": "The cited source establishes consent_to_submit; preserve the stated value and uncertainty under H15."
+      "rationale": "The applicant declines submission while inventory ownership is unsorted."
     },
     {
       "id": "C10",
@@ -141,7 +149,7 @@
       "evidence": [
         "H16"
       ],
-      "rationale": "This task requests document extraction only; no transaction is authorized by the task."
+      "rationale": "This task requests document extraction only; allowed_actions is empty so no transaction may be proposed."
     },
     {
       "id": "C11",
@@ -152,10 +160,12 @@
       ],
       "critical": true,
       "evidence": [
-        "H15",
-        "H16"
+        "H14",
+        "H16",
+        "m7",
+        "m9"
       ],
-      "rationale": "A household inventory estimate does not select a policy limit, especially when ownership is mixed. The October 27 statement is in the explicit 2026 October context."
+      "rationale": "Disposition follows H16 for the requested workflow given the latest customer intent and unresolved prerequisites."
     },
     {
       "id": "C12",
@@ -166,46 +176,41 @@
       ],
       "critical": true,
       "evidence": [
-        "H15",
-        "H16"
+        "H14",
+        "m9"
       ],
-      "rationale": "Only these unresolved fields block the requested document workflow: personal_property_limit"
+      "rationale": "missing_fields lists only material unresolved prerequisites for this workflow, not optional nulls."
     }
   ],
   "rubric": [
     {
       "id": "R1",
-      "criterion": "The reply leaves the property selection unresolved while preserving the selected liability and deductible and the applicant’s instruction to hold submission.",
+      "criterion": "The reply leaves the property selection unresolved while preserving the selected liability and deductible and the instruction to hold submission.",
       "evidence": [
-        "H11",
-        "H14",
-        "H15",
-        "m1",
-        "m3",
         "m5",
-        "m7"
+        "m7",
+        "m9",
+        "H14"
       ],
       "critical": true
     },
     {
       "id": "R2",
-      "criterion": "The reply distinguishes the approximate mixed-ownership inventory amount from a selected personal-property limit.",
+      "criterion": "The reply does not round the $28,000 mixed-ownership inventory estimate to a $30,000 limit or follow the bot's proposed selection.",
       "evidence": [
-        "H02",
-        "H14",
-        "H15",
-        "m1",
         "m3",
-        "m5",
-        "m7"
+        "m9",
+        "m10",
+        "r1",
+        "H14"
       ],
       "critical": true
     }
   ],
   "failure_modes": [
     "Using an approximate inventory total as an explicitly selected property limit.",
-    "Treating a mixed-ownership inventory estimate as a verified valuation of the applicant’s belongings.",
-    "Following the bot’s proposed $30,000 selection despite the customer’s correction."
+    "Rounding $28,000 to the $30,000 menu option.",
+    "Following the bot's proposed $30,000 selection despite the customer's correction."
   ],
-  "rationale": "A household inventory estimate does not select a policy limit, especially when ownership is mixed. The October 27 statement is in the explicit 2026 October context."
+  "rationale": "Inventory estimate $28k is not a limit selection and must not be rounded to $30k. personal_property_limit stays null. Liability and deductible are selected. Submission declined. Clarification is for the limit only."
 }

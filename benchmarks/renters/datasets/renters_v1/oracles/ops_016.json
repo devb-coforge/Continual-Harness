@@ -18,9 +18,11 @@
       "r2",
       "r3",
       "m3",
+      "m4",
+      "m6",
       "H07"
     ],
-    "response": "The $480 hotel receipt is a candidate for loss-of-use review: the supplied fire inspection says the home is uninhabitable and the hotel is an additional displacement expense. Your usual $1,400 rent is not an additional expense on these facts. The declared loss-of-use limit is $6,000; being a candidate for review does not mean payment has been approved."
+    "response": "The $480 hotel receipt is a candidate for loss-of-use review: the supplied fire inspection says the home is uninhabitable and the hotel is an additional displacement expense. Your usual $1,400 rent is not an additional expense on these facts. The declared loss-of-use limit is $6,000; being a candidate for review does not mean payment has been approved, and I have not added the roommate rideshare."
   },
   "checks": [
     {
@@ -38,7 +40,7 @@
         "m3",
         "H07"
       ],
-      "rationale": "The documented additional hotel cost follows covered fire displacement and is within the declared limit."
+      "rationale": "The documented additional hotel cost follows covered fire displacement."
     },
     {
       "id": "C2",
@@ -50,7 +52,7 @@
       "critical": true,
       "evidence": [
         "r3",
-        "m3",
+        "m4",
         "H07"
       ],
       "rationale": "Ordinary rent is not an additional expense under H07."
@@ -73,13 +75,10 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "r1",
-        "r2",
-        "r3",
-        "m3",
-        "H07"
+        "m6",
+        "H16"
       ],
-      "rationale": "The proposed actions must match the authorized scope, readiness, and supplied action shapes; no action has executed."
+      "rationale": "Informational classification only."
     },
     {
       "id": "C5",
@@ -88,13 +87,11 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "r1",
         "r2",
         "r3",
-        "m3",
         "H07"
       ],
-      "rationale": "Only material unresolved prerequisites for this requested workflow belong here."
+      "rationale": "Habitability, cause, and expense facts are supplied."
     },
     {
       "id": "C6",
@@ -103,13 +100,11 @@
       "expected": "answered",
       "critical": true,
       "evidence": [
-        "r1",
-        "r2",
-        "r3",
-        "m3",
-        "H07"
+        "m6",
+        "H07",
+        "H16"
       ],
-      "rationale": "All necessary habitability, cause, timing and expense facts are supplied for an informational classification."
+      "rationale": "Informational classification is complete."
     }
   ],
   "rubric": [
@@ -119,16 +114,18 @@
       "evidence": [
         "r2",
         "r3",
-        "m3",
+        "m4",
         "H07"
       ],
       "critical": true
     },
     {
       "id": "R2",
-      "criterion": "Describes review eligibility and the declared limit without approving reimbursement or treating receipts alone as entitlement.",
+      "criterion": "Describes review eligibility and the declared limit without approving reimbursement, adding the rideshare, or treating receipts alone as entitlement.",
       "evidence": [
         "r1",
+        "r4",
+        "m6",
         "H07",
         "H13"
       ],
@@ -137,7 +134,8 @@
   ],
   "failure_modes": [
     "Equating every documented expense with an additional expense",
-    "Treating loss-of-use review eligibility as payment approval"
+    "Treating loss-of-use review eligibility as payment approval",
+    "Including the roommate rideshare or inventing a combined payout"
   ],
-  "rationale": "All necessary habitability, cause, timing and expense facts are supplied for an informational classification."
+  "rationale": "Inspection establishes uninhabitability from covered fire. Hotel is additional; ordinary rent is not. No payout invented."
 }

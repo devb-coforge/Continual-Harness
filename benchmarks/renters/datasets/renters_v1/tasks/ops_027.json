@@ -48,6 +48,15 @@
         "data": {
           "address": "41 Maple Quay, Unit 9, Harborwick, ON A1A 1A1, Canada"
         }
+      },
+      {
+        "id": "r4",
+        "kind": "address",
+        "data": {
+          "label": "withdrawn_us_move",
+          "address": "90 Pine Hollow, Unit 1, Alderport, MA 01014, US",
+          "note": "Earlier US destination considered and withdrawn."
+        }
       }
     ],
     "messages": [
@@ -59,12 +68,27 @@
       {
         "id": "m2",
         "role": "bot",
-        "text": "Should the mailing address move to Canada as well?"
+        "text": "Should the mailing address move to Canada as well? There is also a Pine Hollow US address."
       },
       {
         "id": "m3",
         "role": "customer",
-        "text": "No. Change only my mail to the US address in r2 today; I confirm that separately. Keep my current insurance until the relocation is reviewed."
+        "text": "No. Change only my mail to the US address in r2 today; I confirm that separately. Pine Hollow is withdrawn."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "Moving abroad often means we should cancel the current policy automatically."
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "Keep my current insurance until the relocation is reviewed. Do not infer cancellation."
+      },
+      {
+        "id": "m6",
+        "role": "customer",
+        "text": "The Canadian move still needs staff because it is outside the US. The mailing change can proceed on its own."
       }
     ],
     "form": {

@@ -22,10 +22,12 @@
       "r2",
       "m1",
       "m3",
+      "m4",
+      "m6",
       "H13",
       "r3"
     ],
-    "response": "This is the same submitted bicycle-theft claim, CL-109-Q. I can propose adding the attached receipt to that existing claim without opening a second intake or changing the reported incident facts. The receipt has not been attached by this response, and I am not treating its $680 purchase price as an approved payment."
+    "response": "This is the same submitted bicycle-theft claim, CL-109-Q. I can propose adding the attached receipt to that existing claim without opening a second intake, using the PDF’s invented ID, or changing the August lock claim. The receipt has not been attached by this response, and I am not treating its $680 purchase price as an approved payment."
   },
   "checks": [
     {
@@ -36,8 +38,8 @@
       "critical": true,
       "evidence": [
         "r2",
-        "m1",
         "m3",
+        "m4",
         "H13"
       ],
       "rationale": "Policy, date, cause and property match, and the customer confirms the same incident."
@@ -61,9 +63,10 @@
       "critical": true,
       "evidence": [
         "r3",
-        "m3"
+        "m4",
+        "m6"
       ],
-      "rationale": "The customer requests adding the attached receipt."
+      "rationale": "The customer requests adding the attached bicycle receipt."
     },
     {
       "id": "C4",
@@ -94,12 +97,10 @@
       "critical": true,
       "evidence": [
         "r2",
-        "m1",
-        "m3",
-        "H13",
-        "r3"
+        "m6",
+        "H13"
       ],
-      "rationale": "The proposed actions must match the authorized scope, readiness, and supplied action shapes; no action has executed."
+      "rationale": "Propose evidence update on the matching claim only."
     },
     {
       "id": "C6",
@@ -108,13 +109,10 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "r2",
-        "m1",
-        "m3",
-        "H13",
-        "r3"
+        "m6",
+        "H13"
       ],
-      "rationale": "Only material unresolved prerequisites for this requested workflow belong here."
+      "rationale": "The update request is complete."
     },
     {
       "id": "C7",
@@ -123,21 +121,21 @@
       "expected": "ready",
       "critical": true,
       "evidence": [
-        "r2",
-        "m1",
-        "m3",
+        "m6",
         "H13",
-        "r3"
+        "H16"
       ],
-      "rationale": "The customer and authoritative record establish a clear duplicate; a narrow evidence update is ready."
+      "rationale": "A narrow evidence update is ready."
     }
   ],
   "rubric": [
     {
       "id": "R1",
-      "criterion": "Uses the existing matching submitted claim rather than treating the initial phrase open a claim as a request for a duplicate after the customer corrected it.",
+      "criterion": "Uses existing matching submitted claim CL-109-Q rather than treating the initial phrase open a claim, the August lock theft, or the invented PDF ID as a new case.",
       "evidence": [
         "r2",
+        "r4",
+        "r5",
         "m3",
         "H02",
         "H13"
@@ -149,6 +147,7 @@
       "criterion": "Does not claim the receipt has already been added or use its historical purchase amount as an approved settlement.",
       "evidence": [
         "r3",
+        "m6",
         "H06",
         "H16"
       ],
@@ -157,8 +156,8 @@
   ],
   "failure_modes": [
     "Opening duplicate intake despite a confirmed exact incident match",
-    "Ignoring explicit final correction to add evidence only",
+    "Using an invented PDF claim ID or updating the near-duplicate lock theft",
     "Treating purchase receipt as an approved loss valuation"
   ],
-  "rationale": "The customer and authoritative record establish a clear duplicate; a narrow evidence update is ready."
+  "rationale": "Exact match on policy, date, cause, and bicycle. Customer correction converts open-a-claim language into an evidence update on CL-109-Q. Near-duplicate and invented ID are distractors."
 }

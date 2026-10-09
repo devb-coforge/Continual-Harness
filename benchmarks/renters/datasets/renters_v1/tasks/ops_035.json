@@ -54,6 +54,17 @@
           "additional_to_normal_expenses": true,
           "status": "receipt_supplied"
         }
+      },
+      {
+        "id": "r4",
+        "kind": "expense",
+        "data": {
+          "category": "rent",
+          "expense_id": "ordinary_rent",
+          "amount_usd": 1450,
+          "additional_to_normal_expenses": false,
+          "note": "Usual monthly rent; not established as additional displacement cost."
+        }
       }
     ],
     "messages": [
@@ -65,12 +76,27 @@
       {
         "id": "m2",
         "role": "bot",
-        "text": "Has anyone established that the apartment is uninhabitable?"
+        "text": "Has anyone established that the apartment is uninhabitable? There is also an ordinary-rent receipt."
       },
       {
         "id": "m3",
         "role": "customer",
-        "text": "I do not know yet. The inspector has not decided. Does having the hotel receipt mean my loss-of-use payment is certain?"
+        "text": "I do not know yet. The inspector has not decided. The rent is my usual rent, not an extra charge."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "Does having the hotel receipt mean your loss-of-use payment is certain? I can approve $260 now."
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "That is my question. Does the hotel receipt make reimbursement certain even without a habitability finding?"
+      },
+      {
+        "id": "m6",
+        "role": "customer",
+        "text": "Do not approve reimbursement from the receipt alone, and do not treat ordinary rent as additional."
       }
     ],
     "form": {

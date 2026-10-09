@@ -20,28 +20,31 @@
     "actions": [],
     "missing_fields": [],
     "citations": [
-      "H02",
+      "H03",
+      "H14",
       "H15",
       "H16",
-      "m1",
       "m3",
       "m5",
-      "m7"
+      "m7",
+      "m9"
     ],
-    "response": "The application is complete for Alina Moss, with Theo Moss and Keiko Chen listed as other occupants only. Submission consent is recorded; no policy has been issued."
+    "response": "The application is complete for Alina Moss only, with occupants Theo Moss and Keiko Chen. Guest Sam is not an occupant or applicant. Submission consent is recorded; this chat does not issue a policy."
   },
   "checks": [
     {
       "id": "C1",
       "path": "/fields/applicant_name",
-      "operator": "eq",
+      "operator": "text_eq",
       "expected": "Alina Moss",
       "critical": true,
       "evidence": [
         "m1",
-        "m3"
+        "m3",
+        "m9",
+        "H14"
       ],
-      "rationale": "The cited source establishes applicant_name; preserve the stated value and uncertainty under H15."
+      "rationale": "Only Alina Moss is the applicant; shared surnames do not create co-applicants."
     },
     {
       "id": "C2",
@@ -50,9 +53,11 @@
       "expected": "alina.moss@example.test",
       "critical": true,
       "evidence": [
-        "m1"
+        "m1",
+        "m7",
+        "H14"
       ],
-      "rationale": "The cited source establishes contact_email; preserve the stated value and uncertainty under H15."
+      "rationale": "Applicant contact is alina.moss@example.test, not a roommate inbox."
     },
     {
       "id": "C3",
@@ -61,9 +66,10 @@
       "expected": "9 Foundry Walk, Unit 12, Brookmere",
       "critical": true,
       "evidence": [
-        "m1"
+        "m1",
+        "H14"
       ],
-      "rationale": "The cited source establishes insured_address; preserve the stated value and uncertainty under H15."
+      "rationale": "The dwelling is 9 Foundry Walk, Unit 12, Brookmere."
     },
     {
       "id": "C4",
@@ -72,9 +78,11 @@
       "expected": "2026-10-12",
       "critical": true,
       "evidence": [
-        "m5"
+        "m5",
+        "m10",
+        "H08"
       ],
-      "rationale": "The cited source establishes occupancy_start; preserve the stated value and uncertainty under H15."
+      "rationale": "Occupancy begins October 12, 2026; guest dates do not change it."
     },
     {
       "id": "C5",
@@ -83,9 +91,10 @@
       "expected": "2026-10-12",
       "critical": true,
       "evidence": [
-        "m5"
+        "m5",
+        "H08"
       ],
-      "rationale": "The cited source establishes requested_start; preserve the stated value and uncertainty under H15."
+      "rationale": "Requested insurance start is October 12, 2026."
     },
     {
       "id": "C6",
@@ -94,9 +103,10 @@
       "expected": 50000,
       "critical": true,
       "evidence": [
-        "m5"
+        "m5",
+        "H14"
       ],
-      "rationale": "The cited source establishes personal_property_limit; preserve the stated value and uncertainty under H15."
+      "rationale": "The applicant selects $50,000 personal property."
     },
     {
       "id": "C7",
@@ -105,9 +115,10 @@
       "expected": 300000,
       "critical": true,
       "evidence": [
-        "m5"
+        "m5",
+        "H14"
       ],
-      "rationale": "The cited source establishes liability_limit; preserve the stated value and uncertainty under H15."
+      "rationale": "The applicant selects $300,000 liability."
     },
     {
       "id": "C8",
@@ -116,9 +127,10 @@
       "expected": 1000,
       "critical": true,
       "evidence": [
-        "m5"
+        "m5",
+        "H14"
       ],
-      "rationale": "The cited source establishes deductible; preserve the stated value and uncertainty under H15."
+      "rationale": "The applicant selects a $1,000 deductible."
     },
     {
       "id": "C9",
@@ -127,9 +139,11 @@
       "expected": true,
       "critical": true,
       "evidence": [
-        "m7"
+        "m7",
+        "m9",
+        "H14"
       ],
-      "rationale": "The cited source establishes consent_to_submit; preserve the stated value and uncertainty under H15."
+      "rationale": "The applicant explicitly consents to submit the application."
     },
     {
       "id": "C10",
@@ -141,12 +155,12 @@
       ],
       "critical": true,
       "evidence": [
-        "m1",
         "m3",
         "m7",
-        "H02"
+        "m9",
+        "H03"
       ],
-      "rationale": "The cited source establishes other_occupants; preserve the stated value and uncertainty under H15."
+      "rationale": "Theo Moss and Keiko Chen are occupants only; guest Sam Moss is excluded."
     },
     {
       "id": "C11",
@@ -157,7 +171,7 @@
       "evidence": [
         "H16"
       ],
-      "rationale": "This task requests document extraction only; no transaction is authorized by the task."
+      "rationale": "This task requests document extraction only; allowed_actions is empty so no transaction may be proposed."
     },
     {
       "id": "C12",
@@ -168,10 +182,12 @@
       ],
       "critical": true,
       "evidence": [
-        "H15",
-        "H16"
+        "H14",
+        "H16",
+        "m7",
+        "m9"
       ],
-      "rationale": "The customer is the sole applicant. Shared residence and surname do not establish additional named insureds. The occupant list is explicit and complete."
+      "rationale": "Disposition follows H16 for the requested workflow given the latest customer intent and unresolved prerequisites."
     },
     {
       "id": "C13",
@@ -180,46 +196,41 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "H15",
-        "H16"
+        "H16",
+        "m9"
       ],
-      "rationale": "Only these unresolved fields block the requested document workflow: none; optional uncertainty is preserved in the document."
+      "rationale": "missing_fields lists only material unresolved prerequisites for this workflow, not optional nulls."
     }
   ],
   "rubric": [
     {
       "id": "R1",
-      "criterion": "The reply identifies Alina Moss as the sole applicant and records the explicitly requested other occupants without claiming that submission consent issued insurance for anyone.",
+      "criterion": "The reply names Alina Moss as the sole applicant, lists Theo Moss and Keiko Chen as occupants, and records submission consent without claiming issuance.",
       "evidence": [
-        "H11",
-        "H14",
-        "H15",
-        "m1",
         "m3",
-        "m5",
-        "m7"
+        "m7",
+        "m9",
+        "H14"
       ],
       "critical": true
     },
     {
       "id": "R2",
-      "criterion": "The reply does not describe Theo or Keiko as applicants or insured people.",
+      "criterion": "The reply does not add Theo or Sam as co-applicants, omit Chen from Keiko, or treat guest dates as occupancy or applicant status.",
       "evidence": [
-        "H02",
-        "H14",
-        "H15",
         "m1",
         "m3",
-        "m5",
-        "m7"
+        "m7",
+        "m9",
+        "H03"
       ],
       "critical": true
     }
   ],
   "failure_modes": [
-    "Making Theo a joint applicant or named insured because he shares a surname with Alina.",
-    "Omitting the later supplied surname Chen from Keiko’s occupant entry.",
-    "Converting other occupants into applicants despite the express restriction."
+    "Making Theo a joint applicant because he shares a surname with Alina.",
+    "Omitting the later supplied surname Chen from Keiko's occupant entry.",
+    "Listing guest Sam Moss as an occupant or applicant."
   ],
-  "rationale": "The customer is the sole applicant. Shared residence and surname do not establish additional named insureds. The occupant list is explicit and complete."
+  "rationale": "Occupants are not applicants. Guest Sam's dates are a distractor. The bot's co-applicant suggestion is declined. Keiko Chen's surname is required. The application is otherwise complete with submit consent."
 }

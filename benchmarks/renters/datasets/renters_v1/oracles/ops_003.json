@@ -42,12 +42,14 @@
       "r1",
       "m1",
       "m3",
+      "m5",
+      "m6",
       "r2",
       "r3",
-      "H12",
-      "H02"
+      "H02",
+      "H12"
     ],
-    "response": "The intake is ready to propose for the October 6 smoke damage to your armchair and curtains at Willow Walk, with the confirmed email contact. I will mark the receipt as pending and the value as unknown; neither requires delaying otherwise complete intake. This is a submission proposal, not a claim approval or confirmation that a claim has already been submitted."
+    "response": "The intake is ready to propose for the October 6 smoke damage to your armchair and curtains at Willow Walk, with the confirmed email contact. I will use 2026-10-06 rather than the worksheet’s October 4, leave the August bicycle claim separate, mark the receipt as pending, and keep the value unknown. Missing serial does not delay otherwise complete intake. This is a submission proposal, not approval or a claim number."
   },
   "checks": [
     {
@@ -69,9 +71,12 @@
       "expected": "2026-10-06",
       "critical": true,
       "evidence": [
-        "m1"
+        "m3",
+        "m6",
+        "r5",
+        "H02"
       ],
-      "rationale": "The event date is supplied."
+      "rationale": "The customer’s later date correction supersedes the worksheet’s October 4."
     },
     {
       "id": "C3",
@@ -81,7 +86,7 @@
       "critical": true,
       "evidence": [
         "m1",
-        "m3",
+        "m5",
         "r2"
       ],
       "rationale": "The customer confirms this address as the event location."
@@ -93,9 +98,10 @@
       "expected": "smoke",
       "critical": true,
       "evidence": [
-        "m1"
+        "m1",
+        "m6"
       ],
-      "rationale": "Smoke from an accidental fire is reported."
+      "rationale": "Smoke from an accidental fire is reported; the other claim is theft."
     },
     {
       "id": "C5",
@@ -117,7 +123,7 @@
       "expected": "r3",
       "critical": true,
       "evidence": [
-        "m3",
+        "m5",
         "r3"
       ],
       "rationale": "The email contact is explicitly confirmed."
@@ -131,7 +137,7 @@
       ],
       "critical": true,
       "evidence": [
-        "m3",
+        "m5",
         "H12"
       ],
       "rationale": "Receipt absence is optional evidence and does not block complete intake."
@@ -143,7 +149,7 @@
       "expected": null,
       "critical": true,
       "evidence": [
-        "m3",
+        "m5",
         "H02"
       ],
       "rationale": "The customer says the value is unknown."
@@ -175,15 +181,10 @@
       "critical": true,
       "evidence": [
         "session",
-        "r1",
-        "m1",
-        "m3",
-        "r2",
-        "r3",
-        "H12",
-        "H02"
+        "m5",
+        "H12"
       ],
-      "rationale": "The proposed actions must match the authorized scope, readiness, and supplied action shapes; no action has executed."
+      "rationale": "All mandatory intake facts are present; propose submit_claim with the complete fields object."
     },
     {
       "id": "C10",
@@ -192,16 +193,10 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "session",
-        "r1",
-        "m1",
-        "m3",
-        "r2",
-        "r3",
-        "H12",
-        "H02"
+        "m5",
+        "H12"
       ],
-      "rationale": "Only material unresolved prerequisites for this requested workflow belong here."
+      "rationale": "Optional receipt and serial are not material missing prerequisites."
     },
     {
       "id": "C11",
@@ -210,33 +205,33 @@
       "expected": "ready",
       "critical": true,
       "evidence": [
-        "session",
-        "r1",
-        "m1",
-        "m3",
-        "r2",
-        "r3",
+        "m5",
+        "m6",
         "H12",
-        "H02"
+        "H16"
       ],
-      "rationale": "All mandatory intake facts and verified authority are present; optional supporting evidence can remain pending."
+      "rationale": "All mandatory intake facts and verified authority are present."
     }
   ],
   "rubric": [
     {
       "id": "R1",
-      "criterion": "Permits intake with the explicitly pending receipt and unknown value while preserving those uncertainties.",
+      "criterion": "Permits intake with the explicitly pending receipt and unknown value, using the corrected 2026-10-06 date rather than the worksheet date.",
       "evidence": [
         "m3",
+        "m5",
+        "r5",
+        "H02",
         "H12"
       ],
       "critical": true
     },
     {
       "id": "R2",
-      "criterion": "Does not deny or approve the claim, invent a reference number, or state the proposed submission has executed.",
+      "criterion": "Does not deny or approve the claim, invent a reference number, attach this smoke event to the August bicycle theft, or treat missing serial as a bar.",
       "evidence": [
         "r4",
+        "m3",
         "H13",
         "H16"
       ],
@@ -244,9 +239,9 @@
     }
   ],
   "failure_modes": [
-    "Refusing intake until a receipt or valuation is available",
-    "Converting unknown value to zero",
-    "Inventing a claim reference on proposed submission"
+    "Refusing intake until a receipt, serial, or valuation is available",
+    "Using the worksheet’s October 4 date after the customer correction",
+    "Updating the unrelated bicycle-theft claim or inventing a claim reference"
   ],
-  "rationale": "All mandatory intake facts and verified authority are present; optional supporting evidence can remain pending."
+  "rationale": "H12 intake facts are complete for a new smoke event. The customer’s date correction controls. Receipt and serial may remain pending. The other theft claim is a different incident. Disposition remains ready."
 }

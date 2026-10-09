@@ -18,27 +18,28 @@
       "liability_limit"
     ],
     "citations": [
-      "H02",
+      "H14",
       "H15",
       "H16",
-      "m1",
       "m3",
       "m5",
-      "m7"
+      "m7",
+      "m9"
     ],
-    "response": "The draft uses $15,000 property and a $500 deductible. Liability is still unselected; your old policy amount has not been carried over, and submission is on hold at your request."
+    "response": "The draft uses $15,000 property and a $500 deductible. Liability is still unselected; old-insurer $300,000, $50,000, and $250 amounts were not carried over. Submission stays on hold."
   },
   "checks": [
     {
       "id": "C1",
       "path": "/fields/applicant_name",
-      "operator": "eq",
+      "operator": "text_eq",
       "expected": "Hugo Lin",
       "critical": true,
       "evidence": [
-        "m1"
+        "m1",
+        "H14"
       ],
-      "rationale": "The cited source establishes applicant_name; preserve the stated value and uncertainty under H15."
+      "rationale": "The applicant is Hugo Lin."
     },
     {
       "id": "C2",
@@ -47,9 +48,10 @@
       "expected": "hugo.lin@example.test",
       "critical": true,
       "evidence": [
-        "m1"
+        "m1",
+        "H14"
       ],
-      "rationale": "The cited source establishes contact_email; preserve the stated value and uncertainty under H15."
+      "rationale": "Contact email is hugo.lin@example.test."
     },
     {
       "id": "C3",
@@ -58,9 +60,10 @@
       "expected": "75 Finch Terrace, Apartment 9, Fernport",
       "critical": true,
       "evidence": [
-        "m3"
+        "m3",
+        "H14"
       ],
-      "rationale": "The cited source establishes insured_address; preserve the stated value and uncertainty under H15."
+      "rationale": "The dwelling is 75 Finch Terrace, Apartment 9, Fernport."
     },
     {
       "id": "C4",
@@ -69,9 +72,10 @@
       "expected": "2026-10-25",
       "critical": true,
       "evidence": [
-        "m5"
+        "m5",
+        "H08"
       ],
-      "rationale": "The cited source establishes occupancy_start; preserve the stated value and uncertainty under H15."
+      "rationale": "Occupancy is October 25, 2026."
     },
     {
       "id": "C5",
@@ -80,9 +84,10 @@
       "expected": "2026-10-25",
       "critical": true,
       "evidence": [
-        "m5"
+        "m5",
+        "H08"
       ],
-      "rationale": "The cited source establishes requested_start; preserve the stated value and uncertainty under H15."
+      "rationale": "Requested start is October 25, 2026."
     },
     {
       "id": "C6",
@@ -91,9 +96,11 @@
       "expected": 15000,
       "critical": true,
       "evidence": [
-        "m3"
+        "m3",
+        "m9",
+        "H14"
       ],
-      "rationale": "The cited source establishes personal_property_limit; preserve the stated value and uncertainty under H15."
+      "rationale": "Current selection is $15,000, not the old $50,000."
     },
     {
       "id": "C7",
@@ -102,12 +109,12 @@
       "expected": null,
       "critical": true,
       "evidence": [
-        "m1",
         "m3",
-        "m5",
-        "H02"
+        "m7",
+        "m9",
+        "H14"
       ],
-      "rationale": "The cited source establishes liability_limit; preserve the stated value and uncertainty under H15."
+      "rationale": "Liability is explicitly unselected; the old $300,000 must not be imported."
     },
     {
       "id": "C8",
@@ -116,9 +123,11 @@
       "expected": 500,
       "critical": true,
       "evidence": [
-        "m3"
+        "m3",
+        "m7",
+        "H14"
       ],
-      "rationale": "The cited source establishes deductible; preserve the stated value and uncertainty under H15."
+      "rationale": "Current deductible selection is $500, not the prior $250."
     },
     {
       "id": "C9",
@@ -127,9 +136,11 @@
       "expected": false,
       "critical": true,
       "evidence": [
-        "m7"
+        "m7",
+        "m9",
+        "H14"
       ],
-      "rationale": "The cited source establishes consent_to_submit; preserve the stated value and uncertainty under H15."
+      "rationale": "The applicant declines submission until liability is chosen."
     },
     {
       "id": "C10",
@@ -140,7 +151,7 @@
       "evidence": [
         "H16"
       ],
-      "rationale": "This task requests document extraction only; no transaction is authorized by the task."
+      "rationale": "This task requests document extraction only; allowed_actions is empty so no transaction may be proposed."
     },
     {
       "id": "C11",
@@ -151,10 +162,12 @@
       ],
       "critical": true,
       "evidence": [
-        "H15",
-        "H16"
+        "H14",
+        "H16",
+        "m7",
+        "m9"
       ],
-      "rationale": "Historical amounts are expressly rejected as defaults. The new property and deductible selections are explicit; liability remains unselected and submission has been declined."
+      "rationale": "Disposition follows H16 for the requested workflow given the latest customer intent and unresolved prerequisites."
     },
     {
       "id": "C12",
@@ -165,46 +178,41 @@
       ],
       "critical": true,
       "evidence": [
-        "H15",
-        "H16"
+        "H14",
+        "m9"
       ],
-      "rationale": "Only these unresolved fields block the requested document workflow: liability_limit"
+      "rationale": "missing_fields lists only material unresolved prerequisites for this workflow, not optional nulls."
     }
   ],
   "rubric": [
     {
       "id": "R1",
-      "criterion": "The reply keeps the new $15,000 property choice and $500 deductible separate from historical policy terms while accurately describing liability as still unselected.",
+      "criterion": "The reply keeps the new $15,000 property choice and $500 deductible while leaving liability unselected.",
       "evidence": [
-        "H11",
-        "H14",
-        "H15",
-        "m1",
         "m3",
-        "m5",
-        "m7"
+        "m7",
+        "m9",
+        "H14"
       ],
       "critical": true
     },
     {
       "id": "R2",
-      "criterion": "The reply does not carry over the old liability limit or treat the historical policy as evidence of current selection.",
+      "criterion": "The reply does not import the old $300,000 liability, $50,000 property, or unsupported $250 deductible from the prior policy PDF.",
       "evidence": [
-        "H02",
-        "H14",
-        "H15",
         "m1",
-        "m3",
-        "m5",
-        "m7"
+        "m9",
+        "m10",
+        "r1",
+        "H14"
       ],
       "critical": true
     }
   ],
   "failure_modes": [
-    "Carrying over the old insurer’s $300,000 liability limit after the applicant forbids defaulting it.",
-    "Retaining the historical $50,000 property limit or $1,000 deductible instead of current selections.",
-    "Treating a historical insurance policy as authority for a new application’s choices."
+    "Carrying over the old insurer's $300,000 liability limit after the applicant forbids defaulting it.",
+    "Retaining the historical $50,000 property limit or $250 deductible instead of current selections.",
+    "Treating a historical insurance policy as authority for a new application's choices."
   ],
-  "rationale": "Historical amounts are expressly rejected as defaults. The new property and deductible selections are explicit; liability remains unselected and submission has been declined."
+  "rationale": "Prior policy amounts are not current Harborlight options. New selections are $15,000 and $500. Liability remains null, requiring clarification. Old $250 is unsupported if treated as selected."
 }

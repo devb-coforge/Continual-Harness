@@ -55,23 +55,54 @@
           "incident_date": "2026-10-06",
           "finding": "Wastewater backed up through the floor drain after a downstream sewer blockage. No rising surface water entered the building."
         }
+      },
+      {
+        "id": "r4",
+        "kind": "photo_label",
+        "data": {
+          "filename": "wet-boxes.jpg",
+          "user_label": "flood"
+        }
+      },
+      {
+        "id": "r5",
+        "kind": "prior_note",
+        "data": {
+          "event_date": "2026-03-12",
+          "finding": "A gradual pipe stain before the backup endorsement started; not this October event."
+        }
       }
     ],
     "messages": [
       {
         "id": "m1",
         "role": "customer",
-        "text": "Water came through the floor drain and damaged my own stored boxes on October 6. The maintenance report is attached."
+        "text": "Water came through the floor drain and damaged my own stored boxes on October 6. The maintenance report is attached. I labeled the photo flood."
       },
       {
         "id": "m2",
         "role": "bot",
-        "text": "Do you want help submitting a claim now?"
+        "text": "A neighbor says all water damage is excluded. There is also a March gradual-stain note from before the endorsement."
       },
       {
         "id": "m3",
         "role": "customer",
-        "text": "Just tell me whether this is included under my issued documents and the backup limit. A neighbor says all water damage is excluded."
+        "text": "I am asking about the October 6 drain backup in the report, not the old stain. The photo label was just my word."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "Do you want help submitting a claim now?"
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "Just tell me whether this is included under my issued documents and the backup limit."
+      },
+      {
+        "id": "m6",
+        "role": "customer",
+        "text": "Do not treat the photo as floodwater and do not promise a $5,000 payment."
       }
     ],
     "form": {

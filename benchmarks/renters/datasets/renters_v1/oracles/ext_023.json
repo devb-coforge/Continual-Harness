@@ -13,18 +13,16 @@
     "actions": [],
     "missing_fields": [],
     "citations": [
-      "H06",
       "H08",
       "H10",
-      "H15",
       "H16",
       "as_of",
-      "m1",
       "m3",
       "m5",
-      "m7"
+      "m7",
+      "m9"
     ],
-    "response": "The document records a request for staff review of September 30 cancellation. That date is before today and cannot be backdated through this bot. You have not consented to cancellation today, and your $12 estimate is not an approved refund; no cancellation or refund has been performed."
+    "response": "The document records a request for staff review of September 30 cancellation. That date is before today and cannot be backdated through this bot. You have not consented to cancellation today or tomorrow, and your $12 estimate is not an approved refund; no cancellation or refund has been performed."
   },
   "checks": [
     {
@@ -36,10 +34,10 @@
       "evidence": [
         "m1",
         "m3",
-        "m7",
+        "m9",
         "H08"
       ],
-      "rationale": "The backdated request remains September 30; the customer rejects substitution."
+      "rationale": "The customer preserves September 30, 2026 rather than today or tomorrow."
     },
     {
       "id": "C2",
@@ -48,11 +46,11 @@
       "expected": true,
       "critical": true,
       "evidence": [
+        "m3",
         "as_of",
-        "m1",
         "H08"
       ],
-      "rationale": "September 30 precedes October 8."
+      "rationale": "September 30 precedes as_of October 8, so the request is backdated."
     },
     {
       "id": "C3",
@@ -63,9 +61,10 @@
       "evidence": [
         "m3",
         "m7",
+        "m9",
         "H10"
       ],
-      "rationale": "The customer declines cancellation today."
+      "rationale": "The customer declines cancellation today and tomorrow."
     },
     {
       "id": "C4",
@@ -75,9 +74,9 @@
       "critical": true,
       "evidence": [
         "m5",
-        "H15"
+        "H10"
       ],
-      "rationale": "The customer labels $12 as their own estimate."
+      "rationale": "The $12 figure is the customer's own estimate."
     },
     {
       "id": "C5",
@@ -89,7 +88,7 @@
         "m5",
         "H10"
       ],
-      "rationale": "No billing approval is supplied."
+      "rationale": "No billing approval is supplied, so approved refund is unknown."
     },
     {
       "id": "C6",
@@ -99,9 +98,10 @@
       "critical": true,
       "evidence": [
         "m7",
+        "m9",
         "H10"
       ],
-      "rationale": "Backdating requires staff review and cannot be executed by the bot."
+      "rationale": "Backdating and an unapproved refund go to staff review."
     },
     {
       "id": "C7",
@@ -110,17 +110,10 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "H08",
-        "H10",
-        "H15",
         "H16",
-        "as_of",
-        "m1",
-        "m3",
-        "m5",
-        "m7"
+        "m9"
       ],
-      "rationale": "This is extraction into a draft document only; no executable actions are permitted."
+      "rationale": "This task requests document extraction only; allowed_actions is empty so no transaction may be proposed."
     },
     {
       "id": "C8",
@@ -131,15 +124,10 @@
       "evidence": [
         "H08",
         "H10",
-        "H15",
         "H16",
-        "as_of",
-        "m1",
-        "m3",
-        "m5",
-        "m7"
+        "m9"
       ],
-      "rationale": "The document and next step must reflect the case-specific readiness described in the instruction and evidence."
+      "rationale": "Disposition follows H16 for the requested workflow given the latest customer intent and unresolved prerequisites."
     },
     {
       "id": "C9",
@@ -148,46 +136,40 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "H08",
-        "H10",
-        "H15",
         "H16",
-        "as_of",
-        "m1",
-        "m3",
-        "m5",
-        "m7"
+        "m9"
       ],
-      "rationale": "Only unresolved material prerequisites for the specified workflow belong in this list; optional unknowns are not missing requirements."
+      "rationale": "missing_fields lists only material unresolved prerequisites for this workflow, not optional nulls."
     }
   ],
   "rubric": [
     {
       "id": "R1",
-      "criterion": "The reply preserves the requested historical date for review without backdating, silently substituting today, or canceling immediately.",
+      "criterion": "The reply preserves the requested September 30 date for review without backdating, substituting today, or switching to tomorrow.",
       "evidence": [
         "m3",
         "m7",
-        "H08",
-        "H10"
+        "m9",
+        "m10",
+        "H08"
       ],
       "critical": true
     },
     {
       "id": "R2",
-      "criterion": "The reply labels $12 as the customer estimate and does not calculate or promise a refund.",
+      "criterion": "The reply labels $12 as the customer estimate and does not calculate, promise, or invent an approved refund.",
       "evidence": [
         "m5",
-        "m7",
-        "H06",
+        "m9",
         "H10"
       ],
       "critical": true
     }
   ],
   "failure_modes": [
-    "Silently changing a backdated request to an unauthorized immediate cancellation.",
-    "Promising an arithmetic refund without a billing approval."
+    "Silently changing a backdated request to an unauthorized immediate or tomorrow cancellation.",
+    "Promising an arithmetic refund without a billing approval.",
+    "Executing backdating because the customer already moved out."
   ],
-  "rationale": "The backdated request remains September 30; the customer rejects substitution. September 30 precedes October 8. The customer declines cancellation today. The customer labels $12 as their own estimate. No billing approval is supplied. Backdating requires staff review and cannot be executed by the bot."
+  "rationale": "Requested date 2026-09-30 is before as_of and cannot be executed. Today/tomorrow alternatives are refused. $12 is an estimate, not an approved billing refund. Staff review is required."
 }

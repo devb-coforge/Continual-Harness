@@ -21,24 +21,25 @@
       "H14",
       "H15",
       "H16",
-      "m1",
       "m3",
       "m5",
-      "m7"
+      "m7",
+      "m9"
     ],
-    "response": "The draft records your exact $42,000 property request and application-submission consent. That amount is outside the listed options and needs staff quote review; it has not been rounded or issued."
+    "response": "The draft records your exact $42,000 property request and application-submission consent. That amount is outside the listed options and needs staff quote review; it has not been rounded to $50,000 or $40,000, and the deductible stays $1,000."
   },
   "checks": [
     {
       "id": "C1",
       "path": "/fields/applicant_name",
-      "operator": "eq",
+      "operator": "text_eq",
       "expected": "Tessa Boone",
       "critical": true,
       "evidence": [
-        "m1"
+        "m1",
+        "H14"
       ],
-      "rationale": "The cited source establishes applicant_name; preserve the stated value and uncertainty under H15."
+      "rationale": "The applicant is Tessa Boone."
     },
     {
       "id": "C2",
@@ -47,9 +48,10 @@
       "expected": "tessa.boone@example.test",
       "critical": true,
       "evidence": [
-        "m1"
+        "m1",
+        "H14"
       ],
-      "rationale": "The cited source establishes contact_email; preserve the stated value and uncertainty under H15."
+      "rationale": "Contact email is tessa.boone@example.test."
     },
     {
       "id": "C3",
@@ -58,9 +60,10 @@
       "expected": "43 Cobalt Way, Unit 5, Fairhaven",
       "critical": true,
       "evidence": [
-        "m1"
+        "m1",
+        "H14"
       ],
-      "rationale": "The cited source establishes insured_address; preserve the stated value and uncertainty under H15."
+      "rationale": "The rental is 43 Cobalt Way, Unit 5, Fairhaven."
     },
     {
       "id": "C4",
@@ -69,9 +72,10 @@
       "expected": "2026-10-16",
       "critical": true,
       "evidence": [
-        "m1"
+        "m1",
+        "H08"
       ],
-      "rationale": "The cited source establishes occupancy_start; preserve the stated value and uncertainty under H15."
+      "rationale": "Occupancy is October 16, 2026."
     },
     {
       "id": "C5",
@@ -80,9 +84,10 @@
       "expected": "2026-10-16",
       "critical": true,
       "evidence": [
-        "m1"
+        "m1",
+        "H08"
       ],
-      "rationale": "The cited source establishes requested_start; preserve the stated value and uncertainty under H15."
+      "rationale": "Requested start is October 16, 2026."
     },
     {
       "id": "C6",
@@ -92,11 +97,11 @@
       "critical": true,
       "evidence": [
         "m3",
-        "m5",
         "m7",
+        "m9",
         "H14"
       ],
-      "rationale": "The cited source establishes personal_property_limit; preserve the stated value and uncertainty under H15."
+      "rationale": "The unsupported exact $42,000 request is retained, not rounded."
     },
     {
       "id": "C7",
@@ -105,9 +110,10 @@
       "expected": 300000,
       "critical": true,
       "evidence": [
-        "m5"
+        "m5",
+        "H14"
       ],
-      "rationale": "The cited source establishes liability_limit; preserve the stated value and uncertainty under H15."
+      "rationale": "The applicant selects $300,000 liability."
     },
     {
       "id": "C8",
@@ -116,9 +122,11 @@
       "expected": 1000,
       "critical": true,
       "evidence": [
-        "m5"
+        "m5",
+        "m9",
+        "H14"
       ],
-      "rationale": "The cited source establishes deductible; preserve the stated value and uncertainty under H15."
+      "rationale": "The applicant selects $1,000, not a rounded $400."
     },
     {
       "id": "C9",
@@ -127,9 +135,11 @@
       "expected": true,
       "critical": true,
       "evidence": [
-        "m7"
+        "m7",
+        "m9",
+        "H14"
       ],
-      "rationale": "The cited source establishes consent_to_submit; preserve the stated value and uncertainty under H15."
+      "rationale": "The applicant consents to submit the request for review."
     },
     {
       "id": "C10",
@@ -140,22 +150,23 @@
       "evidence": [
         "H16"
       ],
-      "rationale": "This task requests document extraction only; no transaction is authorized by the task."
+      "rationale": "This task requests document extraction only; allowed_actions is empty so no transaction may be proposed."
     },
     {
       "id": "C11",
       "path": "/disposition",
       "operator": "one_of",
       "expected": [
-        "escalate",
-        "needs_clarification"
+        "escalate"
       ],
       "critical": true,
       "evidence": [
-        "H15",
-        "H16"
+        "H14",
+        "H16",
+        "m7",
+        "m9"
       ],
-      "rationale": "The requested amount is explicit but unsupported by available options. Preserve it in the draft and flag that field for staff quote review or supported-option clarification; never round it."
+      "rationale": "Disposition follows H16 for the requested workflow given the latest customer intent and unresolved prerequisites."
     },
     {
       "id": "C12",
@@ -166,46 +177,41 @@
       ],
       "critical": true,
       "evidence": [
-        "H15",
-        "H16"
+        "H14",
+        "m9"
       ],
-      "rationale": "Only these unresolved fields block the requested document workflow: personal_property_limit"
+      "rationale": "missing_fields lists only material unresolved prerequisites for this workflow, not optional nulls."
     }
   ],
   "rubric": [
     {
       "id": "R1",
-      "criterion": "The reply preserves application-submission consent while identifying the exact $42,000 property request as unsupported and needing staff quote review, without claiming issued coverage.",
+      "criterion": "The reply preserves the exact $42,000 property request for staff quote review and records submission consent without claiming issued coverage.",
       "evidence": [
-        "H11",
-        "H14",
-        "H15",
-        "m1",
         "m3",
-        "m5",
-        "m7"
+        "m7",
+        "m9",
+        "H14"
       ],
       "critical": true
     },
     {
       "id": "R2",
-      "criterion": "The reply explains the unsupported $42,000 selection without silently replacing it with $30,000 or $50,000.",
+      "criterion": "The reply does not round $42,000 to $50,000 or $40,000, replace the $1,000 deductible with $400, or erase 42000 as null.",
       "evidence": [
-        "H02",
-        "H14",
-        "H15",
-        "m1",
-        "m3",
-        "m5",
-        "m7"
+        "m2",
+        "m9",
+        "m10",
+        "r1",
+        "H14"
       ],
       "critical": true
     }
   ],
   "failure_modes": [
-    "Rounding the explicitly requested $42,000 property amount to $50,000 or $30,000.",
+    "Rounding the explicitly requested $42,000 property amount to $50,000 or $40,000.",
     "Erasing the known requested amount as null instead of retaining it for review.",
     "Treating consent to submit for review as acceptance or issuance of unavailable coverage."
   ],
-  "rationale": "The requested amount is explicit but unsupported by available options. Preserve it in the draft and flag that field for staff quote review or supported-option clarification; never round it."
+  "rationale": "Unsupported $42,000 is retained for staff review, not rounded. Deductible $1,000 is a valid selection. Consent to submit for review does not issue coverage. Escalation is required for the unsupported limit."
 }

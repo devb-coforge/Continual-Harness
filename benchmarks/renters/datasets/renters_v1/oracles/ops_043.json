@@ -3,7 +3,7 @@
   "reference_answer": {
     "fields": {
       "current_status": "canceled",
-      "requested_restart_date": "2026-10-06",
+      "requested_restart_date": "2026-10-01",
       "requires_staff_review": true,
       "uninterrupted_coverage_established": false
     },
@@ -13,7 +13,7 @@
         "type": "refer_reinstatement",
         "target": "r1",
         "value": {
-          "requested_restart_date": "2026-10-06",
+          "requested_restart_date": "2026-10-01",
           "reason": "already_effective_cancellation"
         }
       }
@@ -23,13 +23,15 @@
       "r1",
       "r2",
       "as_of",
-      "m3",
+      "m1",
+      "m5",
       "H10",
       "H01",
       "session",
-      "H16"
+      "H16",
+      "r4"
     ],
-    "response": "The cancellation is already effective. I can propose referring your requested October 6 reinstatement for staff review, but I cannot erase the cancellation, backdate coverage, or represent the policy as uninterrupted."
+    "response": "P-43 is already canceled. I can propose referring your requested October 1 restart for staff review, but I cannot erase the cancellation, backdate coverage, treat the policy as uninterrupted, issue unaccepted quote Q-43-NEW, or change CL-4303. Billing shows a pending $87 refund that is not an approved amount."
   },
   "checks": [
     {
@@ -43,18 +45,19 @@
         "r2",
         "as_of"
       ],
-      "rationale": "The executed cancellation predates as_of."
+      "rationale": "The executed cancellation of October 6 predates as_of October 8."
     },
     {
       "id": "C2",
       "path": "/fields/requested_restart_date",
       "operator": "eq",
-      "expected": "2026-10-06",
+      "expected": "2026-10-01",
       "critical": true,
       "evidence": [
-        "m3"
+        "m1",
+        "m5"
       ],
-      "rationale": "The customer explicitly requests restoration on October 6."
+      "rationale": "The customer explicitly requests restoration as of October 1, 2026."
     },
     {
       "id": "C3",
@@ -64,11 +67,11 @@
       "critical": true,
       "evidence": [
         "r2",
-        "m3",
+        "m1",
         "as_of",
         "H10"
       ],
-      "rationale": "Rescinding an already effective cancellation and backdating require staff review even with explicit customer consent."
+      "rationale": "Rescinding an already effective cancellation and backdating require staff review even with consent."
     },
     {
       "id": "C4",
@@ -82,7 +85,7 @@
         "H01",
         "H10"
       ],
-      "rationale": "No issued reinstatement or superseding record bridges the canceled interval."
+      "rationale": "No issued reinstatement or accepted new policy bridges the canceled interval."
     },
     {
       "id": "C5",
@@ -93,7 +96,7 @@
           "type": "refer_reinstatement",
           "target": "r1",
           "value": {
-            "requested_restart_date": "2026-10-06",
+            "requested_restart_date": "2026-10-01",
             "reason": "already_effective_cancellation"
           }
         }
@@ -103,11 +106,12 @@
         "session",
         "r1",
         "r2",
-        "m3",
+        "m5",
+        "m6",
         "H10",
         "H16"
       ],
-      "rationale": "Only the explicitly requested and sufficiently authorized proposed actions are valid. All requested facts are clear; the obstacle is authority under the process, not missing customer data. Referral preserves the requested date without manufacturing reinstatement."
+      "rationale": "Referral preserves the requested backdated restart without manufacturing reinstatement or issuing Q-43-NEW."
     },
     {
       "id": "C6",
@@ -118,14 +122,12 @@
       ],
       "critical": true,
       "evidence": [
-        "session",
-        "r1",
         "r2",
-        "m3",
+        "m5",
         "H10",
         "H16"
       ],
-      "rationale": "All requested facts are clear; the obstacle is authority under the process, not missing customer data. Referral preserves the requested date without manufacturing reinstatement."
+      "rationale": "The obstacle is authority under H10, not missing customer data."
     },
     {
       "id": "C7",
@@ -134,33 +136,34 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "session",
-        "r1",
-        "r2",
-        "m3",
-        "H10",
-        "H16"
+        "m5",
+        "m6",
+        "H10"
       ],
-      "rationale": "Material unresolved prerequisites are absent for this requested workflow. All requested facts are clear; the obstacle is authority under the process, not missing customer data. Referral preserves the requested date without manufacturing reinstatement."
+      "rationale": "Restart date, policy identity, and referral consent are supplied; staff decision is the next step."
     }
   ],
   "rubric": [
     {
       "id": "R1",
-      "criterion": "The reply explains that explicit customer permission cannot let the bot rescind an already effective cancellation or backdate reinstatement.",
+      "criterion": "The reply explains that the bot cannot erase the already effective cancellation or backdate restart to October 1, even with explicit customer permission.",
       "evidence": [
         "r2",
-        "m3",
+        "m1",
+        "m5",
         "H10"
       ],
       "critical": true
     },
     {
       "id": "R2",
-      "criterion": "The reply preserves the canceled status and does not promise gap-free coverage while review is pending.",
+      "criterion": "The reply does not promise uninterrupted coverage, does not issue unaccepted quote Q-43-NEW, does not treat the pending $87 as an approved refund, and does not close CL-4303.",
       "evidence": [
-        "r1",
-        "r2",
+        "r3",
+        "r4",
+        "r5",
+        "m5",
+        "m6",
         "H01",
         "H10",
         "H16"
@@ -169,8 +172,10 @@
     }
   ],
   "failure_modes": [
-    "Treating consent as sufficient to reverse an already effective cancellation.",
-    "Presenting a reinstatement request as proof that coverage never lapsed."
+    "Treating consent as sufficient to reverse an already effective cancellation or to backdate to last week.",
+    "Issuing the unaccepted new-policy quote as a substitute for reinstatement.",
+    "Presenting a pending refund line as an approved amount or closing the existing August claim.",
+    "Stating that coverage never lapsed because a referral was proposed."
   ],
-  "rationale": "All requested facts are clear; the obstacle is authority under the process, not missing customer data. Referral preserves the requested date without manufacturing reinstatement."
+  "rationale": "Status is canceled as of the October 6 executed record. The customer wants a backdated October 1 restart, which H10 sends to staff. Q-43-NEW was never accepted. The $87 refund is pending, not approved. CL-4303 must be preserved. Referral records the requested date without manufacturing coverage."
 }

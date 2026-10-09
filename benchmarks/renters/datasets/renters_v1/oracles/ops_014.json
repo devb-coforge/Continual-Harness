@@ -20,12 +20,14 @@
     "missing_fields": [],
     "citations": [
       "r2",
-      "m3",
+      "m2",
+      "m4",
+      "m6",
       "session",
       "H03",
       "H11"
     ],
-    "response": "I can propose adding Wren Property Office at notices@wren-property.example as an interested party for notices. That listing does not make the office a named insured or give it authority to change the policy. I have not proposed a separate proof delivery or made an executed policy update."
+    "response": "I can propose adding Wren Property Office at notices@wren-property.example as an interested party for notices. That listing does not make the office a named insured or give it authority to change the policy. I have not proposed a separate proof delivery, the after-hours desk, or an insured-person change. Nothing has been executed."
   },
   "checks": [
     {
@@ -36,9 +38,9 @@
       "critical": true,
       "evidence": [
         "r2",
-        "m3"
+        "m4"
       ],
-      "rationale": "The verified customer confirms the complete recipient."
+      "rationale": "The verified customer confirms the complete notices recipient."
     },
     {
       "id": "C2",
@@ -49,7 +51,7 @@
       "evidence": [
         "session",
         "r2",
-        "m3",
+        "m4",
         "H03",
         "H11"
       ],
@@ -62,10 +64,10 @@
       "expected": false,
       "critical": true,
       "evidence": [
-        "m3",
+        "m6",
         "H11"
       ],
-      "rationale": "The customer explicitly excludes that operation."
+      "rationale": "The customer explicitly excludes that operation despite the landlord’s request."
     },
     {
       "id": "C4",
@@ -74,7 +76,7 @@
       "expected": false,
       "critical": true,
       "evidence": [
-        "m3"
+        "m6"
       ],
       "rationale": "The customer says not to send another document now."
     },
@@ -94,12 +96,10 @@
       "critical": true,
       "evidence": [
         "r2",
-        "m3",
-        "session",
-        "H03",
+        "m6",
         "H11"
       ],
-      "rationale": "The proposed actions must match the authorized scope, readiness, and supplied action shapes; no action has executed."
+      "rationale": "Only the interested-party listing is authorized."
     },
     {
       "id": "C6",
@@ -108,13 +108,10 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "r2",
-        "m3",
-        "session",
-        "H03",
+        "m4",
         "H11"
       ],
-      "rationale": "Only material unresolved prerequisites for this requested workflow belong here."
+      "rationale": "Name and destination are supplied."
     },
     {
       "id": "C7",
@@ -123,31 +120,32 @@
       "expected": "ready",
       "critical": true,
       "evidence": [
-        "r2",
-        "m3",
-        "session",
-        "H03",
-        "H11"
+        "m6",
+        "H11",
+        "H16"
       ],
-      "rationale": "The authorized notice-recipient request supplies name and destination, so the single listing proposal is ready."
+      "rationale": "The single listing proposal is ready."
     }
   ],
   "rubric": [
     {
       "id": "R1",
-      "criterion": "Identifies the precise confirmed recipient and explains that interested-party listing does not confer insured status or change authority.",
+      "criterion": "Identifies the precise confirmed recipient and explains that interested-party listing does not confer insured status or change authority, including against the landlord’s in-thread demand.",
       "evidence": [
         "r2",
-        "m3",
+        "m1",
+        "m6",
+        "H03",
         "H11"
       ],
       "critical": true
     },
     {
       "id": "R2",
-      "criterion": "Does not demand separate recipient opt-in or send an extra proof document that the customer did not request.",
+      "criterion": "Does not demand separate recipient opt-in, send an extra proof document, or list the after-hours desk.",
       "evidence": [
-        "m3",
+        "m6",
+        "r3",
         "H11",
         "H16"
       ],
@@ -155,9 +153,9 @@
     }
   ],
   "failure_modes": [
-    "Treating an interested party as an insured person",
-    "Inventing an extra recipient-consent requirement",
-    "Sending documents beyond the requested notice listing"
+    "Treating an interested party as an insured person because the landlord asked",
+    "Sending proof or adding a second recipient that the named insured did not approve",
+    "Inventing an extra recipient-consent requirement"
   ],
-  "rationale": "The authorized notice-recipient request supplies name and destination, so the single listing proposal is ready."
+  "rationale": "Named insured confirms r2 notices listing only. Landlord messages and a second desk are distractors. Ready add_interested_party; no send_proof."
 }

@@ -23,12 +23,12 @@
       "H12",
       "H15",
       "H16",
-      "m1",
       "m3",
       "m5",
-      "m7"
+      "m7",
+      "m9"
     ],
-    "response": "The handoff is ready for a theft-intake draft describing the laptop, headphones, and bag. It distinguishes the employer-owned laptop from your headphones and bag; base personal-property scope applies only to eligible owned belongings. Exact values and receipts can follow, and no claim approval or payment is implied."
+    "response": "The theft-intake draft is ready for October 5 at the cafe. It lists your headphones and bag as owned belongings and notes the employer laptop in the incident without treating it as yours. The coworker's bike is not this claim. Exact values can follow; no claim ID was invented."
   },
   "checks": [
     {
@@ -38,20 +38,22 @@
       "expected": "2026-10-05",
       "critical": true,
       "evidence": [
-        "m1"
+        "m1",
+        "H08"
       ],
-      "rationale": "The customer explicitly dates the theft."
+      "rationale": "The theft date is October 5, 2026."
     },
     {
       "id": "C2",
       "path": "/fields/event_location",
-      "operator": "eq",
+      "operator": "text_eq",
       "expected": "9 Willow Square, Larkport, US",
       "critical": true,
       "evidence": [
-        "m1"
+        "m1",
+        "H12"
       ],
-      "rationale": "The cafe location is supplied."
+      "rationale": "The cafe location is 9 Willow Square, Larkport, US."
     },
     {
       "id": "C3",
@@ -64,10 +66,11 @@
       "critical": true,
       "evidence": [
         "m3",
-        "H04",
-        "H15"
+        "m5",
+        "m9",
+        "H04"
       ],
-      "rationale": "The headphones and bag are customer-owned; everyday use does not confer laptop ownership."
+      "rationale": "Headphones and bag are customer-owned; the coworker's bike is excluded."
     },
     {
       "id": "C4",
@@ -79,9 +82,10 @@
       "critical": true,
       "evidence": [
         "m3",
+        "m5",
         "H04"
       ],
-      "rationale": "The laptop belongs to the employer."
+      "rationale": "The laptop belongs to the employer despite everyday-use language."
     },
     {
       "id": "C5",
@@ -91,9 +95,10 @@
       "critical": true,
       "evidence": [
         "m5",
-        "H15"
+        "m9",
+        "H12"
       ],
-      "rationale": "The customer expressly wants the laptop documented with the correct ownership."
+      "rationale": "The customer wants the laptop documented with correct ownership, not omitted."
     },
     {
       "id": "C6",
@@ -102,9 +107,10 @@
       "expected": "kai.moss@post.example",
       "critical": true,
       "evidence": [
-        "m7"
+        "m7",
+        "H12"
       ],
-      "rationale": "The contact channel is explicitly supplied."
+      "rationale": "Intake contact is kai.moss@post.example."
     },
     {
       "id": "C7",
@@ -114,9 +120,9 @@
       "critical": true,
       "evidence": [
         "m7",
-        "H12"
+        "H02"
       ],
-      "rationale": "The customer lacks exact values, which do not block intake."
+      "rationale": "Exact values are unknown; missing receipts do not become zero."
     },
     {
       "id": "C8",
@@ -125,16 +131,9 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "H04",
-        "H12",
-        "H15",
-        "H16",
-        "m1",
-        "m3",
-        "m5",
-        "m7"
+        "H16"
       ],
-      "rationale": "This is extraction into a draft document only; no executable actions are permitted."
+      "rationale": "This task requests document extraction only; allowed_actions is empty so no transaction may be proposed."
     },
     {
       "id": "C9",
@@ -143,16 +142,12 @@
       "expected": "ready",
       "critical": true,
       "evidence": [
-        "H04",
         "H12",
-        "H15",
         "H16",
-        "m1",
-        "m3",
-        "m5",
-        "m7"
+        "m7",
+        "m10"
       ],
-      "rationale": "The document and next step must reflect the case-specific readiness described in the instruction and evidence."
+      "rationale": "Disposition follows H16 for the requested workflow given the latest customer intent and unresolved prerequisites."
     },
     {
       "id": "C10",
@@ -161,43 +156,42 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "H04",
         "H12",
-        "H15",
         "H16",
-        "m1",
-        "m3",
-        "m5",
         "m7"
       ],
-      "rationale": "Only unresolved material prerequisites for the specified workflow belong in this list; optional unknowns are not missing requirements."
+      "rationale": "missing_fields lists only material unresolved prerequisites for this workflow, not optional nulls."
     }
   ],
   "rubric": [
     {
       "id": "R1",
-      "criterion": "The reply retains the laptop in the incident account while correctly separating employer ownership from personal-property coverage scope.",
+      "criterion": "The reply retains the laptop in the incident account as employer-owned and keeps headphones and bag as the customer-owned items.",
       "evidence": [
         "m3",
         "m5",
-        "H04",
-        "H15"
+        "m9",
+        "H04"
       ],
       "critical": true
     },
     {
       "id": "R2",
-      "criterion": "The reply does not reject otherwise complete intake or invent zero values because receipts and exact prices are pending.",
+      "criterion": "The reply does not invent claim ID CL-NEW-21, include the coworker's bike, convert unknown values to zero, or omit the laptop from the narrative.",
       "evidence": [
+        "m1",
         "m7",
-        "H12"
+        "m9",
+        "r1",
+        "H13"
       ],
       "critical": true
     }
   ],
   "failure_modes": [
-    "Taking possessive everyday language as proof of legal ownership.",
-    "Removing reported employer property from the incident narrative or falsely including it as insured-owned."
+    "Taking possessive everyday language as proof of legal ownership of the laptop.",
+    "Removing reported employer property from the incident narrative or listing it as insured-owned.",
+    "Inventing claim ID CL-NEW-21 or treating the coworker's bike as this incident."
   ],
-  "rationale": "The customer explicitly dates the theft. The cafe location is supplied. The headphones and bag are customer-owned; everyday use does not confer laptop ownership. The laptop belongs to the employer. The customer expressly wants the laptop documented with the correct ownership. The contact channel is explicitly supplied. The customer lacks exact values, which do not block intake."
+  "rationale": "Personal in-scope items are headphones and bag. Employer laptop is noted in the incident with correct ownership. Bike is a different person's distractor. Unknown value stays null. No invented claim ID. Intake is otherwise complete."
 }

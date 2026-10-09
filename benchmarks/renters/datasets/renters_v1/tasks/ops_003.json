@@ -53,7 +53,26 @@
         "data": {
           "authority": "account_claim_records",
           "policy_id": "P-103",
-          "matching_claims": []
+          "matching_claims": [],
+          "other_open_claims": [
+            {
+              "claim_id": "CL-103-THEFT",
+              "event_date": "2026-08-12",
+              "cause": "theft",
+              "property": "bicycle",
+              "status": "submitted"
+            }
+          ]
+        }
+      },
+      {
+        "id": "r5",
+        "kind": "intake_worksheet",
+        "data": {
+          "authority": "unconfirmed_note",
+          "event_date": "2026-10-04",
+          "serial_number": null,
+          "note": "Staff typed October 4 before Ava corrected the date. Serial is still blank."
         }
       }
     ],
@@ -61,17 +80,32 @@
       {
         "id": "m1",
         "role": "customer",
-        "text": "Please report smoke damage to my own armchair and curtains after an accidental fire in the adjacent apartment on October 6, 2026. It happened in my insured apartment at Willow Walk. The building has been cleared safe and I am not in danger."
+        "text": "Please report smoke damage to my own armchair and curtains after an accidental fire in the adjacent apartment. It happened in my insured apartment at Willow Walk. The building has been cleared safe and I am not in danger."
       },
       {
         "id": "m2",
         "role": "bot",
-        "text": "Do you want to submit intake using the Willow Walk event address and ava.flint@inbox.example contact shown here? Do you have purchase receipts?"
+        "text": "The worksheet shows October 4 and a blank serial. There is also a submitted August bicycle-theft claim. Should I update that theft claim instead?"
       },
       {
         "id": "m3",
         "role": "customer",
-        "text": "Yes, submit the intake with that address and email. I cannot find the receipt yet and do not know the value. Please list the receipt as pending instead of waiting for it."
+        "text": "No. The bicycle theft is a different incident. This is smoke on October 6, 2026, not the worksheet’s October 4. I still do not have a serial number."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "Do you want to submit intake using the Willow Walk event address and ava.flint@inbox.example? Do you have purchase receipts?"
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "Yes, submit the intake with that address and email. I cannot find the receipt yet and do not know the value. Please list the receipt as pending instead of waiting for it. Missing serial should not block this."
+      },
+      {
+        "id": "m6",
+        "role": "customer",
+        "text": "To be exact: event date 2026-10-06, cause is smoke, not theft. Do not invent a claim number."
       }
     ],
     "form": {

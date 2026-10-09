@@ -7,29 +7,43 @@
   "difficulty": "challenging",
   "input": {
     "as_of": "2026-10-08",
-    "instruction": "Complete a revised quote-request document from the full conversation. Ready means the new quote request is specified, not that an old withdrawn quote may be issued. Fill exactly the specified document fields from the supplied conversation and records. Normalize dates to ISO YYYY-MM-DD. Copy names, addresses, emails, and identifiers with the spelling supplied. This is an extraction-only task; actions must be empty. In the response distinguish drafting from execution.",
+    "instruction": "Complete a revised quote-request document from the full conversation. Ready means the currently accepted quote is identified from later corrections, not that a withdrawn earlier quote may be issued. Fill exactly the specified document fields from the supplied conversation and records. Normalize dates to ISO YYYY-MM-DD. Copy names, addresses, emails, and identifiers with the spelling supplied. This is an extraction-only task; actions must be empty. In the response distinguish drafting from execution.",
     "session": {
       "verified": true,
       "role": "named_insured",
-      "policy_id": "P-EX037"
+      "policy_id": "P-RIDGE37"
     },
     "records": [
       {
         "id": "r1",
         "kind": "issued_policy",
         "data": {
-          "policy_id": "P-EX037",
-          "deductible": 500
+          "policy_id": "P-RIDGE37",
+          "deductible": 500,
+          "mailing_address": "12 Ridge Walk, Larkport, US"
         }
       },
       {
         "id": "r2",
         "kind": "quote",
         "data": {
-          "policy_id": "P-EX037",
-          "quote_id": "Q-EX037",
+          "policy_id": "P-RIDGE37",
+          "quote_id": "Q-RIDGE-A",
+          "quote_date": "2026-10-01",
           "deductible": 250,
           "monthly_premium": 31,
+          "effective_date": "2026-10-28"
+        }
+      },
+      {
+        "id": "r3",
+        "kind": "quote",
+        "data": {
+          "policy_id": "P-RIDGE37",
+          "quote_id": "Q-RIDGE-B",
+          "quote_date": "2026-10-07",
+          "deductible": 1000,
+          "monthly_premium": 24,
           "effective_date": "2026-10-28"
         }
       }
@@ -38,37 +52,47 @@
       {
         "id": "m1",
         "role": "customer",
-        "text": "I accept quote Q-EX037: $250 deductible, $31 per month, starting October 28, 2026."
+        "text": "I accept quote Q-RIDGE-A: $250 deductible, $31 per month, starting October 28, 2026. Also change my mailing address to 9 Ferry Lane, Larkport."
       },
       {
         "id": "m2",
         "role": "bot",
-        "text": "I can record acceptance of those exact terms in a change request."
+        "text": "Q-RIDGE-A is already bound on your account. I can keep that acceptance and process the mailing change."
       },
       {
         "id": "m3",
         "role": "customer",
-        "text": "Before you do, I checked my budget. Change the deductible choice to $1,000 instead. I assume that will be cheaper."
+        "text": "Before you do, I checked my budget. I want a $1,000 deductible instead. Keep the mailing change for now."
       },
       {
         "id": "m4",
         "role": "bot",
-        "text": "Would you like me to keep Q-EX037 and simply replace its deductible field?"
+        "text": "Because the first quote is already bound, I can keep Q-RIDGE-A and simply replace its deductible field."
       },
       {
         "id": "m5",
         "role": "customer",
-        "text": "No, get a fresh price for the $1,000 deductible. The old quote was specifically for $250."
+        "text": "No. There is a revised quote Q-RIDGE-B dated October 7, 2026 for the $1,000 deductible. Accept the first premium—the $31."
       },
       {
         "id": "m6",
         "role": "bot",
-        "text": "Should the old acceptance remain active while a new quote is requested?"
+        "text": "Confirm whether you accept Q-RIDGE-A at $31 or the revised October 7 quote."
       },
       {
         "id": "m7",
         "role": "customer",
-        "text": "Withdraw my Q-EX037 acceptance. Keep the October 28 requested start for the new quote, but I need to review its premium before any change."
+        "text": "No, the revised one dated October 7, 2026. I accept Q-RIDGE-B exactly: $1,000 deductible, $24 monthly, October 28 start. Withdraw Q-RIDGE-A."
+      },
+      {
+        "id": "m8",
+        "role": "bot",
+        "text": "Should the mailing-address change to 9 Ferry Lane remain active while Q-RIDGE-B is accepted?"
+      },
+      {
+        "id": "m9",
+        "role": "customer",
+        "text": "Withdraw the mailing request; leave 12 Ridge Walk as is. Current acceptance is only Q-RIDGE-B. The issued deductible stays $500 until a change is actually processed."
       }
     ],
     "form": {
@@ -85,17 +109,17 @@
       "new_requested_deductible": {
         "type": "integer",
         "nullable": true,
-        "description": "Deductible for the newly requested quote, in USD."
+        "description": "Deductible for the currently requested or accepted revised quote, in USD."
       },
       "new_quote_effective_date": {
         "type": "string",
         "nullable": true,
-        "description": "Date retained for the new quote request."
+        "description": "Date retained for the currently accepted or newly requested quote."
       },
       "new_accepted_monthly_premium": {
         "type": "number",
         "nullable": true,
-        "description": "Premium explicitly accepted for the newly requested deductible; null if not quoted/accepted."
+        "description": "Premium explicitly accepted for the current quote; null if not quoted or not accepted."
       },
       "issued_deductible": {
         "type": "integer",

@@ -31,23 +31,57 @@
           "valuation_basis": "actual_cash_value",
           "endorsements": []
         }
+      },
+      {
+        "id": "r2",
+        "kind": "marketing_page",
+        "data": {
+          "authority": "advertisement",
+          "text": "Schedule your heirloom watch for a $6,000 item limit. Scheduling one jewelry item raises the limit for every necklace and earring you own."
+        }
+      },
+      {
+        "id": "r3",
+        "kind": "other_policy_excerpt",
+        "data": {
+          "authority": "sample_for_a_different_product",
+          "policy_id": "P-OTHER",
+          "scheduled_item": "heirloom watch W-77",
+          "theft_limit": 6000,
+          "note": "This sample is not an endorsement on P-107."
+        }
       }
     ],
     "messages": [
       {
         "id": "m1",
         "role": "customer",
-        "text": "My own necklace and earrings were stolen together from my apartment on October 2. Their combined value is about $2,400. My declarations say $30,000 for belongings, so does that mean the theft limit for my jewelry is $30,000 too?"
+        "text": "My own necklace and earrings were stolen together from my apartment on October 2. Their combined value is about $2,400."
       },
       {
         "id": "m2",
         "role": "bot",
-        "text": "Are you asking for a payment estimate or which limit applies?"
+        "text": "A page about scheduling a watch for $6,000 is in the file. Should I apply that to your necklace and earrings?"
       },
       {
         "id": "m3",
         "role": "customer",
-        "text": "Only the applicable limit. I do not want a payout calculation, and neither item is scheduled."
+        "text": "Neither the necklace nor the earrings is scheduled. That watch ad is for a different item I do not have on this policy."
+      },
+      {
+        "id": "m4",
+        "role": "customer",
+        "text": "My declarations say $30,000 for belongings, so does that mean the theft limit for my jewelry is $30,000 too? If not, just tell me the applicable limit."
+      },
+      {
+        "id": "m5",
+        "role": "bot",
+        "text": "Would you like a payout calculation from the $2,400 estimate?"
+      },
+      {
+        "id": "m6",
+        "role": "customer",
+        "text": "I do want to know what would be paid, but first only the applicable limit. Do not calculate a payout from that estimate, and do not treat the watch ad as my endorsement."
       }
     ],
     "form": {

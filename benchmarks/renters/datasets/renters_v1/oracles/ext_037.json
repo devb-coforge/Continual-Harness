@@ -2,11 +2,11 @@
   "task_id": "ext_037",
   "reference_answer": {
     "fields": {
-      "withdrawn_quote_id": "Q-EX037",
-      "current_accepted_quote_id": null,
+      "withdrawn_quote_id": "Q-RIDGE-A",
+      "current_accepted_quote_id": "Q-RIDGE-B",
       "new_requested_deductible": 1000,
       "new_quote_effective_date": "2026-10-28",
-      "new_accepted_monthly_premium": null,
+      "new_accepted_monthly_premium": 24,
       "issued_deductible": 500
     },
     "disposition": "ready",
@@ -18,40 +18,40 @@
       "H11",
       "H15",
       "H16",
-      "m1",
-      "m3",
-      "m5",
       "m7",
-      "r1"
+      "m9",
+      "r1",
+      "r2",
+      "r3"
     ],
-    "response": "The revised document withdraws acceptance of Q-EX037 and requests a new $1,000-deductible quote for October 28. The old $31 premium cannot be reused as an accepted price for different terms. Your issued $500 deductible remains unchanged; no change has executed."
+    "response": "The document records withdrawal of Q-RIDGE-A and current acceptance of revised quote Q-RIDGE-B: $1,000 deductible, $24 monthly, effective October 28. Your issued $500 deductible is unchanged until a change is processed. The mailing-address request was withdrawn, and Q-RIDGE-A was not bound by the earlier bot statement."
   },
   "checks": [
     {
       "id": "C1",
       "path": "/fields/withdrawn_quote_id",
       "operator": "eq",
-      "expected": "Q-EX037",
+      "expected": "Q-RIDGE-A",
       "critical": true,
       "evidence": [
         "m1",
         "m7",
         "H02"
       ],
-      "rationale": "The final instruction expressly withdraws acceptance of Q-EX037."
+      "rationale": "Later instructions expressly withdraw the first quote after a material deductible change."
     },
     {
       "id": "C2",
       "path": "/fields/current_accepted_quote_id",
       "operator": "eq",
-      "expected": null,
+      "expected": "Q-RIDGE-B",
       "critical": true,
       "evidence": [
-        "m5",
         "m7",
+        "m9",
         "H11"
       ],
-      "rationale": "The old quote is withdrawn and no new price is available."
+      "rationale": "The customer's latest statement accepts the revised October 7 quote, not the first premium."
     },
     {
       "id": "C3",
@@ -61,9 +61,10 @@
       "critical": true,
       "evidence": [
         "m3",
-        "m5"
+        "m7",
+        "r3"
       ],
-      "rationale": "The customer changes the requested deductible to $1,000."
+      "rationale": "The current accepted quote and the customer's revision both specify a $1,000 deductible."
     },
     {
       "id": "C4",
@@ -73,22 +74,23 @@
       "critical": true,
       "evidence": [
         "m7",
-        "H02"
+        "r3",
+        "H08"
       ],
-      "rationale": "The date remains October 28 while other quote terms change."
+      "rationale": "Q-RIDGE-B keeps the October 28 effective date."
     },
     {
       "id": "C5",
       "path": "/fields/new_accepted_monthly_premium",
       "operator": "eq",
-      "expected": null,
+      "expected": 24,
       "critical": true,
       "evidence": [
-        "m5",
         "m7",
-        "H11"
+        "r3",
+        "H02"
       ],
-      "rationale": "The earlier $31 is not a price for a $1,000 deductible."
+      "rationale": "After withdrawing 'accept the first premium,' the customer accepts Q-RIDGE-B's $24, not $31."
     },
     {
       "id": "C6",
@@ -98,9 +100,10 @@
       "critical": true,
       "evidence": [
         "r1",
+        "m9",
         "H01"
       ],
-      "rationale": "The issued declaration still specifies $500."
+      "rationale": "The issued declaration still shows $500; a quote is not an issued change."
     },
     {
       "id": "C7",
@@ -109,18 +112,9 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "H01",
-        "H02",
-        "H11",
-        "H15",
-        "H16",
-        "m1",
-        "m3",
-        "m5",
-        "m7",
-        "r1"
+        "H16"
       ],
-      "rationale": "This is extraction into a draft document only; no executable actions are permitted."
+      "rationale": "This extraction-only task does not authorize executable transactions."
     },
     {
       "id": "C8",
@@ -129,18 +123,12 @@
       "expected": "ready",
       "critical": true,
       "evidence": [
-        "H01",
-        "H02",
-        "H11",
-        "H15",
-        "H16",
-        "m1",
-        "m3",
-        "m5",
         "m7",
-        "r1"
+        "m9",
+        "H11",
+        "H16"
       ],
-      "rationale": "The document and next step must reflect the case-specific readiness described in the instruction and evidence."
+      "rationale": "The currently accepted revised quote is fully specified after the withdrawal of Q-RIDGE-A."
     },
     {
       "id": "C9",
@@ -149,29 +137,23 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "H01",
-        "H02",
-        "H11",
-        "H15",
-        "H16",
-        "m1",
-        "m3",
-        "m5",
         "m7",
-        "r1"
+        "m9",
+        "H16"
       ],
-      "rationale": "Only unresolved material prerequisites for the specified workflow belong in this list; optional unknowns are not missing requirements."
+      "rationale": "No material quote-document field remains unresolved after the final acceptance."
     }
   ],
   "rubric": [
     {
       "id": "R1",
-      "criterion": "The reply treats the later withdrawal as superseding initial acceptance and does not patch a different deductible into an accepted quote.",
+      "criterion": "The reply treats Q-RIDGE-B as the currently accepted quote and Q-RIDGE-A as withdrawn, without patching $1,000 into the first quote or reusing the $31 premium.",
       "evidence": [
-        "m1",
-        "m3",
         "m5",
         "m7",
+        "m9",
+        "r2",
+        "r3",
         "H02",
         "H11"
       ],
@@ -179,18 +161,23 @@
     },
     {
       "id": "R2",
-      "criterion": "The reply retains the requested start date but leaves the new premium unaccepted and preserves current issued terms.",
+      "criterion": "The reply does not treat the bot's 'already bound' statement as issued coverage, does not keep the withdrawn mailing change, and does not claim the issued $500 deductible has already changed.",
       "evidence": [
-        "m7",
+        "m2",
+        "m9",
         "r1",
-        "H01"
+        "H01",
+        "H02",
+        "H16"
       ],
       "critical": true
     }
   ],
   "failure_modes": [
-    "Applying an initially accepted quote after a material revision and explicit withdrawal.",
-    "Carrying the old quote premium onto a different deductible without repricing."
+    "Keeping Q-RIDGE-A as accepted because the bot said it was already bound.",
+    "Carrying the first $31 premium onto the revised $1,000 deductible.",
+    "Treating 'accept the first premium' as the latest instruction after the October 7 correction.",
+    "Processing the withdrawn mailing-address change to 9 Ferry Lane."
   ],
-  "rationale": "The final instruction expressly withdraws acceptance of Q-EX037. The old quote is withdrawn and no new price is available. The customer changes the requested deductible to $1,000. The date remains October 28 while other quote terms change. The earlier $31 is not a price for a $1,000 deductible. The issued declaration still specifies $500."
+  "rationale": "The first quote is withdrawn after a material deductible change. The later correction accepts Q-RIDGE-B dated October 7, including its $24 premium, not the earlier $31. Issued deductible remains $500. The mailing change is withdrawn. A bot statement that Q-RIDGE-A is bound is not an issued record."
 }

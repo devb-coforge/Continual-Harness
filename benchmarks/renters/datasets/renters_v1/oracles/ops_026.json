@@ -16,13 +16,14 @@
       "r2",
       "r3",
       "m1",
+      "m3",
       "H01",
       "H06",
-      "m3",
+      "m5",
       "H16",
       "H04"
     ],
-    "response": "The $6,000 scheduled limit applies only to the opal necklace. The gold ring remains subject to the base $1,500 jewelry-theft sublimit within the property limit. These are coverage limits, not approved payment amounts."
+    "response": "The $6,000 scheduled limit applies only to the opal necklace. The gold ring remains subject to the base $1,500 jewelry-theft sublimit within the property limit. Extra inventory items that were not stolen, and the flyer saying one schedule covers all jewelry, do not change that. These are coverage limits, not approved payment amounts."
   },
   "checks": [
     {
@@ -73,10 +74,11 @@
       "expected": false,
       "critical": true,
       "evidence": [
-        "m3",
+        "m5",
+        "m6",
         "H06"
       ],
-      "rationale": "The user asks only about limits and supplies no valuation; neither coverage wording nor a limit approves a claim."
+      "rationale": "The user asks only about limits and supplies no valuation."
     },
     {
       "id": "C5",
@@ -86,10 +88,10 @@
       "critical": true,
       "evidence": [
         "m1",
-        "m3",
+        "m6",
         "H16"
       ],
-      "rationale": "Only the explicitly requested and sufficiently authorized proposed actions are valid. The issued endorsement has both item and date scope. It applies to this incident date but to only one of the two owned items; the user explicitly excludes payout calculation."
+      "rationale": "Informational limits question; no claim action."
     },
     {
       "id": "C6",
@@ -100,11 +102,10 @@
       ],
       "critical": true,
       "evidence": [
-        "m1",
-        "m3",
+        "m5",
         "H16"
       ],
-      "rationale": "The issued endorsement has both item and date scope. It applies to this incident date but to only one of the two owned items; the user explicitly excludes payout calculation."
+      "rationale": "The issued endorsement has item and date scope for one of the two stolen items."
     },
     {
       "id": "C7",
@@ -113,30 +114,31 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "m1",
-        "m3",
+        "m5",
         "H16"
       ],
-      "rationale": "Material unresolved prerequisites are absent for this requested workflow. The issued endorsement has both item and date scope. It applies to this incident date but to only one of the two owned items; the user explicitly excludes payout calculation."
+      "rationale": "No material unresolved prerequisite remains."
     }
   ],
   "rubric": [
     {
       "id": "R1",
-      "criterion": "The reply explains that the scheduled necklace endorsement does not extend its higher limit to the ring.",
+      "criterion": "The reply explains that the scheduled necklace endorsement does not extend its higher limit to the ring or to extra inventory items.",
       "evidence": [
         "r2",
         "r3",
         "m1",
+        "m3",
         "H06"
       ],
       "critical": true
     },
     {
       "id": "R2",
-      "criterion": "The reply does not add the two limits into a guaranteed payment or present coverage explanation as claim approval.",
+      "criterion": "The reply does not add the two limits into a guaranteed payment, follow the blanket-jewelry flyer, or present coverage explanation as claim approval.",
       "evidence": [
-        "m3",
+        "m6",
+        "r4",
         "H04",
         "H06"
       ],
@@ -145,7 +147,8 @@
   ],
   "failure_modes": [
     "Applying one scheduled-item endorsement to every jewelry item.",
-    "Turning stated limits into an approved combined settlement."
+    "Turning stated limits into an approved combined settlement.",
+    "Treating extra inventory listings as stolen scheduled items."
   ],
-  "rationale": "The issued endorsement has both item and date scope. It applies to this incident date but to only one of the two owned items; the user explicitly excludes payout calculation."
+  "rationale": "Same mechanism: issued schedule applies only to J-NECKLACE; unscheduled ring stays at the $1,500 base sublimit. Extra inventory and marketing are distractors. Payment not determined."
 }

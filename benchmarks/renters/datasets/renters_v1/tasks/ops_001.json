@@ -28,7 +28,47 @@
           "status_today": "active",
           "personal_property_limit": 30000,
           "deductible": 500,
-          "valuation_basis": "actual_cash_value"
+          "valuation_basis": "actual_cash_value",
+          "insured_address": "9 Harbor Court, Apt 2, Seaview, ME 04018, US"
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "marketing_page",
+        "data": {
+          "authority": "advertisement",
+          "published_on": "2025-11-12",
+          "text": "Off-premises belongings are excluded. Harborlight only protects items left inside the listed apartment."
+        }
+      },
+      {
+        "id": "r3",
+        "kind": "roommate_inventory",
+        "data": {
+          "authority": "unverified_household_note",
+          "owner": "Jordan Vale",
+          "relationship": "unnamed roommate",
+          "item": "black mirrorless camera",
+          "note": "Jordan’s camera stays in the shared closet and is not listed on P-101."
+        }
+      },
+      {
+        "id": "r4",
+        "kind": "employer_property",
+        "data": {
+          "authority": "employer_asset_tag",
+          "owner": "Northline Labs",
+          "item": "work laptop NL-441",
+          "note": "Assigned to Nina Vale for remote work; remains employer property."
+        }
+      },
+      {
+        "id": "r5",
+        "kind": "prior_incident_note",
+        "data": {
+          "authority": "customer_memory",
+          "event_date": "2025-12-20",
+          "description": "A different camera bag was stolen on a December 2025 weekend trip before this policy started."
         }
       }
     ],
@@ -36,17 +76,32 @@
       {
         "id": "m1",
         "role": "customer",
-        "text": "My camera was stolen from the locked room I rented for a three-night trip. It is my camera, not the host’s. Does my renters policy stop applying once I leave my apartment?"
+        "text": "I’m asking only about my own travel camera. It was taken from the locked room I rented for a three-night trip. It is mine, not the host’s, not Jordan’s closet camera, and not the Northline laptop."
       },
       {
         "id": "m2",
         "role": "bot",
-        "text": "When did the theft happen, and are you asking about coverage scope or to open a claim?"
+        "text": "A saved flyer says items away from the apartment are excluded. Was this during the December 2025 trip, and do you want a claim opened?"
       },
       {
         "id": "m3",
         "role": "customer",
-        "text": "October 6, 2026. Just explain the scope for now; I will gather the details before opening anything."
+        "text": "Not that old December trip. This theft was the sixth of October this year. I still have the flyer, but I want the actual issued terms."
+      },
+      {
+        "id": "m4",
+        "role": "customer",
+        "text": "Confirming the date as 2026-10-06. I am gathering details and do not want intake yet."
+      },
+      {
+        "id": "m5",
+        "role": "bot",
+        "text": "Should I include Jordan’s camera or the employer laptop in the same answer?"
+      },
+      {
+        "id": "m6",
+        "role": "customer",
+        "text": "No. Explain only whether leaving my apartment by itself takes my own camera outside this policy’s theft scope. Do not open a claim."
       }
     ],
     "form": {

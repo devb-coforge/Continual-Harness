@@ -14,18 +14,16 @@
     "actions": [],
     "missing_fields": [],
     "citations": [
-      "H02",
       "H12",
       "H13",
       "H15",
       "H16",
-      "m1",
-      "m3",
       "m5",
       "m7",
+      "m9",
       "r1"
     ],
-    "response": "The ledger shows claim CL-EX003 was submitted for this bicycle theft. The handoff requests an update to that claim using lena.cho@post.example; the purchase email is still pending and the serial number is unknown. No duplicate intake or attachment upload has been performed."
+    "response": "This matches submitted claim CL-EX003 for the September 29 bicycle theft. The handoff is an update: contact lena.cho@post.example, purchase email pending, serial unknown. The scooter is a different item, and CL-FAKE-440 is not a real claim ID. No new intake was filed."
   },
   "checks": [
     {
@@ -36,11 +34,10 @@
       "critical": true,
       "evidence": [
         "r1",
-        "m1",
-        "m3",
+        "m7",
         "H13"
       ],
-      "rationale": "Policy, incident date, theft cause, bicycle and location identify the existing intake."
+      "rationale": "The ledger match is CL-EX003; invented PDF and bot IDs are not authoritative."
     },
     {
       "id": "C2",
@@ -50,11 +47,11 @@
       "critical": true,
       "evidence": [
         "r1",
-        "m1",
-        "m3",
+        "m7",
+        "m9",
         "H13"
       ],
-      "rationale": "This is the same theft, not a second claim."
+      "rationale": "Same policy, date, cause, and bicycle property is a clear duplicate, so the next step is an update, not new intake."
     },
     {
       "id": "C3",
@@ -64,9 +61,10 @@
       "critical": true,
       "evidence": [
         "m1",
-        "r1"
+        "r1",
+        "H08"
       ],
-      "rationale": "The customer identifies the incident date explicitly."
+      "rationale": "The bicycle incident date is September 29, 2026, not the later submission date."
     },
     {
       "id": "C4",
@@ -76,9 +74,9 @@
       "critical": true,
       "evidence": [
         "m5",
-        "H02"
+        "H15"
       ],
-      "rationale": "The personal email supersedes the old work contact."
+      "rationale": "The latest authorized contact is lena.cho@post.example."
     },
     {
       "id": "C5",
@@ -87,10 +85,11 @@
       "expected": "pending",
       "critical": true,
       "evidence": [
+        "m5",
         "m7",
-        "H15"
+        "H12"
       ],
-      "rationale": "The purchase email exists but has not been uploaded."
+      "rationale": "The purchase email is promised but not uploaded, so evidence remains pending."
     },
     {
       "id": "C6",
@@ -99,10 +98,10 @@
       "expected": null,
       "critical": true,
       "evidence": [
-        "m3",
+        "m9",
         "H12"
       ],
-      "rationale": "The customer explicitly lacks the serial number; it does not block the update."
+      "rationale": "The customer has no serial number; absence is unknown rather than blocking."
     },
     {
       "id": "C7",
@@ -114,7 +113,7 @@
         "r1",
         "H13"
       ],
-      "rationale": "The ledger establishes submission despite the disconnected conversation."
+      "rationale": "The claims ledger records submitted status for the matching bicycle claim."
     },
     {
       "id": "C8",
@@ -123,18 +122,9 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "H02",
-        "H12",
-        "H13",
-        "H15",
-        "H16",
-        "m1",
-        "m3",
-        "m5",
-        "m7",
-        "r1"
+        "H16"
       ],
-      "rationale": "This is extraction into a draft document only; no executable actions are permitted."
+      "rationale": "This task requests document extraction only; allowed_actions is empty so no transaction may be proposed."
     },
     {
       "id": "C9",
@@ -143,18 +133,12 @@
       "expected": "ready",
       "critical": true,
       "evidence": [
-        "H02",
         "H12",
-        "H13",
-        "H15",
         "H16",
-        "m1",
-        "m3",
-        "m5",
-        "m7",
+        "m9",
         "r1"
       ],
-      "rationale": "The document and next step must reflect the case-specific readiness described in the instruction and evidence."
+      "rationale": "Disposition follows H16 for the requested workflow given the latest customer intent and unresolved prerequisites."
     },
     {
       "id": "C10",
@@ -163,47 +147,43 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "H02",
         "H12",
-        "H13",
-        "H15",
         "H16",
-        "m1",
-        "m3",
-        "m5",
-        "m7",
-        "r1"
+        "m9"
       ],
-      "rationale": "Only unresolved material prerequisites for the specified workflow belong in this list; optional unknowns are not missing requirements."
+      "rationale": "missing_fields lists only material unresolved prerequisites for this workflow, not optional nulls."
     }
   ],
   "rubric": [
     {
       "id": "R1",
-      "criterion": "The reply identifies a same-incident update and does not tell the customer to create a duplicate claim.",
+      "criterion": "The reply updates existing submitted claim CL-EX003 for the bicycle and does not open a new intake or use CL-FAKE-440 or CL-NEW-991.",
       "evidence": [
-        "m1",
-        "m3",
         "r1",
+        "m2",
+        "m7",
+        "r2",
         "H13"
       ],
       "critical": true
     },
     {
       "id": "R2",
-      "criterion": "The reply distinguishes the submitted intake from the pending purchase attachment and does not require a serial number before updating.",
+      "criterion": "The reply keeps purchase evidence pending, serial unknown, and does not treat the missing receipt or the near-duplicate scooter as blocking or as the same claim.",
       "evidence": [
         "m3",
         "m7",
-        "r1",
+        "m9",
         "H12"
       ],
       "critical": true
     }
   ],
   "failure_modes": [
-    "Treating a disconnected chat as proof the claim was never submitted.",
-    "Representing a promised purchase email as an uploaded receipt."
+    "Opening a new claim because the customer mentioned a disconnected chat.",
+    "Treating a promised purchase email as an uploaded receipt or blocking on the missing serial.",
+    "Using the invented PDF claim ID CL-FAKE-440 or a bot-invented ID.",
+    "Merging the earlier scooter theft with the bicycle update."
   ],
-  "rationale": "Policy, incident date, theft cause, bicycle and location identify the existing intake. This is the same theft, not a second claim. The customer identifies the incident date explicitly. The personal email supersedes the old work contact. The purchase email exists but has not been uploaded. The customer explicitly lacks the serial number; it does not block the update. The ledger establishes submission despite the disconnected conversation."
+  "rationale": "Ledger CL-EX003 matches the bicycle theft on date, location, cause, and property, so the next step is an update. The purchase email is still pending and serial is unknown without blocking intake. Invented IDs and a different scooter item are distractors."
 }

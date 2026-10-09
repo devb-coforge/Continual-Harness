@@ -7,7 +7,7 @@
   "difficulty": "challenging",
   "input": {
     "as_of": "2026-10-08",
-    "instruction": "Calculate only the requested illustrative arithmetic ceiling using H06 and the supplied documented eligible value. This is not a claim settlement. Output all arithmetic inputs in USD and no claim actions. Do not add undocumented expenses or a premium to the illustration.",
+    "instruction": "Calculate only the requested illustrative arithmetic ceiling using H06 and the documented eligible value identified for this illustration. This is not a claim settlement. Output the arithmetic inputs in USD. Propose no claim actions.",
     "session": {
       "verified": true,
       "role": "named_insured",
@@ -24,10 +24,10 @@
           "starts_on": "2026-01-01",
           "ends_on": "2027-01-01",
           "named_insureds": [
-            "Robin Vale"
+            "Tessa Holm"
           ],
-          "insured_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
-          "mailing_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "insured_address": "2 Quarry End, Unit 10, Alderport, MA 01014, US",
+          "mailing_address": "2 Quarry End, Unit 10, Alderport, MA 01014, US",
           "personal_property_limit": 15000,
           "liability_limit": 100000,
           "deductible": 500,
@@ -42,10 +42,44 @@
           "authority": "supplied_documented_eligible_value_for_illustration",
           "event_date": "2026-10-05",
           "cause": "accidental_fire",
-          "owner": "Robin Vale",
+          "owner": "Tessa Holm",
           "category": "ordinary_household_contents_not_jewelry",
+          "item": "kitchen table",
           "documented_eligible_value_usd": 22000,
           "additional_expenses_usd": null
+        }
+      },
+      {
+        "id": "r3",
+        "kind": "receipt",
+        "data": {
+          "item": "kitchen table",
+          "amount_usd": 28000,
+          "note": "Purchase receipt. Not the task-specified eligible value."
+        }
+      },
+      {
+        "id": "r4",
+        "kind": "contractor_estimate",
+        "data": {
+          "item": "kitchen table",
+          "amount_usd": 18000,
+          "note": "Repair estimate. Not the task-specified eligible value."
+        }
+      },
+      {
+        "id": "r5",
+        "kind": "limit_flyer",
+        "data": {
+          "text": "Base jewelry theft sublimit is $1,500 per occurrence."
+        }
+      },
+      {
+        "id": "r6",
+        "kind": "marketing_page",
+        "data": {
+          "authority": "advertisement",
+          "text": "Replacement-cost coverage pays the full replace price and never subtracts a deductible."
         }
       }
     ],
@@ -53,7 +87,7 @@
       {
         "id": "m1",
         "role": "customer",
-        "text": "For the October 5 fire, the supplied worksheet establishes $22,000 of eligible ordinary contents. Can you illustrate the maximum under the listed limit and deductible?"
+        "text": "For the October 5 fire, the worksheet establishes $22,000 of eligible ordinary contents for my table. The receipt is $28,000 and the estimate is $18,000. There is also a jewelry-sublimit flyer. Illustrate the maximum under the listed limit and deductible?"
       },
       {
         "id": "m2",
@@ -63,14 +97,29 @@
       {
         "id": "m3",
         "role": "customer",
-        "text": "No. Just the handbook arithmetic ceiling from those inputs. There is no documented hotel amount, and I understand this is not an approved payout."
+        "text": "No hotel amount is documented. Use only the worksheet eligible value. The table is not jewelry."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "A marketing page says replacement cost pays the full replace price with no deductible."
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "So you’ll pay that illustration, right?"
+      },
+      {
+        "id": "m6",
+        "role": "customer",
+        "text": "Still only the handbook arithmetic ceiling. I understand this is not an approved payout."
       }
     ],
     "form": {
       "eligible_value": {
         "type": "integer",
         "nullable": false,
-        "description": "Documented eligible value explicitly supplied for the illustration, USD."
+        "description": "Documented eligible value explicitly supplied on the illustration worksheet, USD."
       },
       "applicable_limit": {
         "type": "integer",

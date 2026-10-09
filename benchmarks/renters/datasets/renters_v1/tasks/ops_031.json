@@ -53,6 +53,14 @@
         "data": {
           "claims": []
         }
+      },
+      {
+        "id": "r4",
+        "kind": "calendar_note",
+        "data": {
+          "as_of_echo": "2026-10-08",
+          "suggestion": "Some intake tools default the event date to as_of when unknown."
+        }
       }
     ],
     "messages": [
@@ -64,12 +72,27 @@
       {
         "id": "m2",
         "role": "bot",
-        "text": "Do you know the date it was stolen, rather than the date you discovered it?"
+        "text": "Do you know the date it was stolen, rather than the date you discovered it? I could use today’s date."
       },
       {
         "id": "m3",
         "role": "customer",
-        "text": "No, I cannot determine the theft date. Please record it as unknown, with October 7 only as discovery, and proceed with my intake report."
+        "text": "No, I cannot determine the theft date. Please record it as unknown, with October 7 only as discovery."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "Should we wait until you pick a date, or use as_of 2026-10-08 as the event date?"
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "Do not invent a date from as_of. Proceed with my intake report and flag the unknown event date."
+      },
+      {
+        "id": "m6",
+        "role": "customer",
+        "text": "The location, description, cause, and robin.vale@harbor.example contact in the report are correct."
       }
     ],
     "form": {

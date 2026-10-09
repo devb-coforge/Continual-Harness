@@ -22,12 +22,16 @@
       "H15",
       "H16",
       "m1",
+      "m10",
       "m3",
       "m5",
       "m7",
-      "r1"
+      "m8",
+      "r1",
+      "r2",
+      "r3"
     ],
-    "response": "The intake draft can record theft with an explicitly unknown event date and timing review. October 3 is last seen, October 7 is discovery, and the policy starts October 5; those facts do not establish whether the theft occurred during coverage. No incident date, coverage decision, or payment is invented."
+    "response": "The jewelry intake can record theft with an explicitly unknown event date and timing review. October 3 is last seen, October 7 is discovery, and the policy starts October 5; those facts do not establish whether the jewelry theft occurred during coverage. The bike window, today's date, and the advertisement that would force October 7 or an exclusion are not the jewelry event date. No coverage decision or payment is invented."
   },
   "checks": [
     {
@@ -39,10 +43,11 @@
       "evidence": [
         "m3",
         "m7",
+        "m8",
         "H08",
         "H12"
       ],
-      "rationale": "The customer explicitly cannot determine the incident date."
+      "rationale": "The jewelry theft date is explicitly unknown and must not be replaced with last-seen, discovery, or as_of."
     },
     {
       "id": "C2",
@@ -52,9 +57,10 @@
       "critical": true,
       "evidence": [
         "m1",
+        "m8",
         "H15"
       ],
-      "rationale": "October 3 is the reported last-seen date."
+      "rationale": "Jewelry last seen is October 3, not the bike's October 6 last-seen date."
     },
     {
       "id": "C3",
@@ -64,9 +70,10 @@
       "critical": true,
       "evidence": [
         "m1",
+        "m8",
         "H15"
       ],
-      "rationale": "October 7 is discovery, not proof of theft timing."
+      "rationale": "Jewelry discovery is October 7, not as_of October 8 or the bike's missing date."
     },
     {
       "id": "C4",
@@ -78,7 +85,7 @@
         "r1",
         "H08"
       ],
-      "rationale": "Coverage begins on October 5."
+      "rationale": "Issued coverage begins October 5."
     },
     {
       "id": "C5",
@@ -91,7 +98,7 @@
         "m7",
         "H08"
       ],
-      "rationale": "The possible theft window straddles the policy start."
+      "rationale": "The jewelry window straddles the policy start, so interval membership is unresolved."
     },
     {
       "id": "C6",
@@ -100,11 +107,11 @@
       "expected": "theft",
       "critical": true,
       "evidence": [
-        "m1",
+        "m3",
         "m5",
         "H05"
       ],
-      "rationale": "The forced lock supports a reported theft allegation without verifying its exact date."
+      "rationale": "The jewelry report has a forced-lock theft allegation; the unevidenced bike label is withdrawn."
     },
     {
       "id": "C7",
@@ -115,7 +122,7 @@
       "evidence": [
         "m5"
       ],
-      "rationale": "A valid contact channel is provided."
+      "rationale": "A contact channel is supplied for the jewelry intake."
     },
     {
       "id": "C8",
@@ -129,7 +136,7 @@
         "H08",
         "H12"
       ],
-      "rationale": "The customer expressly requests review of unresolved timing."
+      "rationale": "Unknown jewelry timing relative to the October 5 start must be flagged for review."
     },
     {
       "id": "C9",
@@ -138,18 +145,9 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "H05",
-        "H08",
-        "H12",
-        "H15",
-        "H16",
-        "m1",
-        "m3",
-        "m5",
-        "m7",
-        "r1"
+        "H16"
       ],
-      "rationale": "This is extraction into a draft document only; no executable actions are permitted."
+      "rationale": "This extraction-only task does not authorize executable transactions."
     },
     {
       "id": "C10",
@@ -158,18 +156,12 @@
       "expected": "ready",
       "critical": true,
       "evidence": [
-        "H05",
-        "H08",
-        "H12",
-        "H15",
-        "H16",
-        "m1",
-        "m3",
         "m5",
         "m7",
-        "r1"
+        "H12",
+        "H16"
       ],
-      "rationale": "The document and next step must reflect the case-specific readiness described in the instruction and evidence."
+      "rationale": "H12 permits otherwise complete intake with an explicitly unknown event date flagged for review."
     },
     {
       "id": "C11",
@@ -178,29 +170,24 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "H05",
-        "H08",
-        "H12",
-        "H15",
-        "H16",
-        "m1",
-        "m3",
-        "m5",
         "m7",
-        "r1"
+        "H12",
+        "H16"
       ],
-      "rationale": "Only unresolved material prerequisites for the specified workflow belong in this list; optional unknowns are not missing requirements."
+      "rationale": "An explicitly unknown event date is not itself a missing prerequisite when flagged for review."
     }
   ],
   "rubric": [
     {
       "id": "R1",
-      "criterion": "The reply preserves last-seen, discovery, and policy-start dates separately and does not substitute discovery or a midpoint as the theft date.",
+      "criterion": "The reply preserves jewelry last-seen October 3, discovery October 7, and policy start October 5 separately, and does not substitute discovery, as_of, a midpoint, or the bike dates as the event date.",
       "evidence": [
         "m1",
-        "m3",
         "m7",
+        "m8",
+        "m10",
         "r1",
+        "r2",
         "H08",
         "H15"
       ],
@@ -208,10 +195,14 @@
     },
     {
       "id": "R2",
-      "criterion": "The reply permits otherwise complete intake with explicitly unknown timing and flags review without declaring the event covered or excluded.",
+      "criterion": "The reply permits jewelry intake with unknown timing and theft based on the forced lock, without treating the unevidenced bike label as this incident, following the advertisement's discovery-date shortcut, or declaring the jewelry event covered or excluded.",
       "evidence": [
+        "m3",
         "m5",
         "m7",
+        "m10",
+        "r3",
+        "H05",
         "H12",
         "H13"
       ],
@@ -219,8 +210,11 @@
     }
   ],
   "failure_modes": [
-    "Choosing a convenient incident date to fit the coverage interval.",
-    "Refusing intake because an exact theft date is explicitly unknown."
+    "Choosing October 5, October 7, or as_of October 8 as the jewelry event date to fit coverage.",
+    "Mixing the bike last-seen/discovery window into the jewelry intake.",
+    "Keeping the customer's theft label for the unevidenced bike disappearance.",
+    "Refusing intake because the jewelry date is explicitly unknown.",
+    "Following the advertisement by using discovery as the event date or declaring the jewelry excluded because last seen is before start."
   ],
-  "rationale": "The customer explicitly cannot determine the incident date. October 3 is the reported last-seen date. October 7 is discovery, not proof of theft timing. Coverage begins on October 5. The possible theft window straddles the policy start. The forced lock supports a reported theft allegation without verifying its exact date. A valid contact channel is provided. The customer expressly requests review of unresolved timing."
+  "rationale": "The jewelry window last seen October 3 and discovered October 7 straddles the October 5 policy start, so event_date and interval membership stay unknown with timing review. Forced lock supports a jewelry theft allegation. The bike window, as_of, and the marketing shortcut are distractors. The theft label for the bike is withdrawn."
 }

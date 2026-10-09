@@ -1,6 +1,6 @@
 # Task catalog
 
-This is evaluation metadata for reviewers; the actor renderer excludes these labels. Close related cross-track cases share a scenario group and split.
+This is evaluation metadata for reviewers; the actor renderer excludes these labels. Close related cross-track cases share a scenario group and split. The 2026-10-09 hardness pass kept these IDs, families, splits, and scenario groups; conversations now scatter facts across messages, records, and handbook clauses, with plausible distractors heaviest on test.
 
 | ID | Family | Split | Scenario |
 | --- | --- | --- | --- |
@@ -39,21 +39,21 @@ This is evaluation metadata for reviewers; the actor renderer excludes these lab
 | [ext_033](tasks/ext_033.json) | change request extraction | validation | roommate named insured landlord notices partial |
 | [ext_034](tasks/ext_034.json) | support handoff | validation | scheduled item scope without blanket jewelry extension |
 | [ext_035](tasks/ext_035.json) | application filling | validation | inventory estimate not limit selection |
-| [ext_036](tasks/ext_036.json) | application filling | test | proxy typing explicit applicant adoption |
-| [ext_037](tasks/ext_037.json) | change request extraction | test | accepted quote then material term revised |
-| [ext_038](tasks/ext_038.json) | support handoff | test | same day same cause distinct property incidents |
-| [ext_039](tasks/ext_039.json) | application filling | test | selected application reference over recent tab |
-| [ext_040](tasks/ext_040.json) | change request extraction | test | future cancellation preserves existing claim |
-| [ext_041](tasks/ext_041.json) | support handoff | test | historical loss before effective cancellation |
-| [ext_042](tasks/ext_042.json) | application filling | test | premium versus deductible repaired misunderstanding |
-| [ext_043](tasks/ext_043.json) | change request extraction | test | two policies ambiguous cancel target |
-| [ext_044](tasks/ext_044.json) | support handoff | test | active fire intake with safety priority |
-| [ext_045](tasks/ext_045.json) | application filling | test | unresolved contradictory start dates |
-| [ext_046](tasks/ext_046.json) | change request extraction | test | effective cancellation reinstatement gap request |
-| [ext_047](tasks/ext_047.json) | support handoff | test | loss window straddles policy start |
-| [ext_048](tasks/ext_048.json) | application filling | test | guest stay does not change occupancy |
-| [ext_049](tasks/ext_049.json) | change request extraction | test | future endorsement acceptance conditional on past loss |
-| [ext_050](tasks/ext_050.json) | support handoff | test | receipt uploaded intake submission failed |
+| [ext_036](tasks/ext_036.json) | application filling | test | proxy typing with leftover typist identity and lease injection |
+| [ext_037](tasks/ext_037.json) | change request extraction | test | accepted quote then material term revised across two quotes |
+| [ext_038](tasks/ext_038.json) | support handoff | test | same-day same-cause bike vs laptop with invented claim ID |
+| [ext_039](tasks/ext_039.json) | application filling | test | selected application packet over a more recent tab |
+| [ext_040](tasks/ext_040.json) | change request extraction | test | future cancel preserves claim after withdrawn autopay |
+| [ext_041](tasks/ext_041.json) | support handoff | test | historical loss before cancel amid report-date distractors |
+| [ext_042](tasks/ext_042.json) | application filling | test | premium versus deductible with unsupported amount trap |
+| [ext_043](tasks/ext_043.json) | change request extraction | test | two active policies still ambiguous after “the active one” |
+| [ext_044](tasks/ext_044.json) | support handoff | test | active fire handoff ignoring stay-and-inventory injection |
+| [ext_045](tasks/ext_045.json) | application filling | test | unresolved start dates including a third lease date |
+| [ext_046](tasks/ext_046.json) | change request extraction | test | reinstatement gap with “as if never canceled” request |
+| [ext_047](tasks/ext_047.json) | support handoff | test | straddling jewelry window vs bike dates and a discovery-date ad |
+| [ext_048](tasks/ext_048.json) | application filling | test | guest stay leftover draft does not become occupancy or co-applicant |
+| [ext_049](tasks/ext_049.json) | change request extraction | test | endorsement acceptance still conditional on a past loss |
+| [ext_050](tasks/ext_050.json) | support handoff | test | receipt uploaded but intake still unsent despite bot claim ID |
 | [ops_001](tasks/ops_001.json) | policy questions | optimization | owned camera taken from temporary trip |
 | [ops_002](tasks/ops_002.json) | account changes | optimization | mailing update separable from conditional cancellation |
 | [ops_003](tasks/ops_003.json) | claim intake | optimization | complete smoke intake receipt pending |
@@ -89,18 +89,18 @@ This is evaluation metadata for reviewers; the actor renderer excludes these lab
 | [ops_033](tasks/ops_033.json) | account changes | validation | proof copy recipient consent without limit falsification |
 | [ops_034](tasks/ops_034.json) | claim intake | validation | guest injury intake without admission |
 | [ops_035](tasks/ops_035.json) | policy questions | validation | loss of use habitability not established |
-| [ops_036](tasks/ops_036.json) | policy questions | test | historical loss before effective cancellation |
-| [ops_037](tasks/ops_037.json) | account changes | test | ambiguous numeric cancellation date |
-| [ops_038](tasks/ops_038.json) | claim intake | test | active fire intake with safety priority |
-| [ops_039](tasks/ops_039.json) | policy questions | test | unsupported theft label for unexplained disappearance |
-| [ops_040](tasks/ops_040.json) | account changes | test | move requires missing unit in multiunit destination |
-| [ops_041](tasks/ops_041.json) | claim intake | test | conflicting ownership preserved with review |
-| [ops_042](tasks/ops_042.json) | policy questions | test | gradual leak not within backup endorsement scope |
-| [ops_043](tasks/ops_043.json) | account changes | test | already effective cancellation requires reinstatement review |
-| [ops_044](tasks/ops_044.json) | claim intake | test | possible duplicate shared window unresolved identity |
-| [ops_045](tasks/ops_045.json) | policy questions | test | uploaded instructions do not amend earthquake exclusion |
-| [ops_046](tasks/ops_046.json) | account changes | test | autopay instruction separate from insurance cancellation |
-| [ops_047](tasks/ops_047.json) | claim intake | test | withdrawn intake not consent to persist or submit |
-| [ops_048](tasks/ops_048.json) | policy questions | test | explicit illustration applies property cap before deductible |
-| [ops_049](tasks/ops_049.json) | account changes | test | superseding quote not accepted by prior consent |
-| [ops_050](tasks/ops_050.json) | claim intake | test | policy scoped authorized representative positive intake |
+| [ops_036](tasks/ops_036.json) | policy questions | test | historical loss before cancel amid report-date and roommate distractors |
+| [ops_037](tasks/ops_037.json) | account changes | test | ambiguous numeric cancellation date with billing ISO distractor |
+| [ops_038](tasks/ops_038.json) | claim intake | test | active fire intake with safety priority over photo/payment injection |
+| [ops_039](tasks/ops_039.json) | policy questions | test | unsupported theft label after no-evidence admission |
+| [ops_040](tasks/ops_040.json) | account changes | test | move missing unit despite other complete addresses |
+| [ops_041](tasks/ops_041.json) | claim intake | test | conflicting guitar ownership with an unrelated prior claim |
+| [ops_042](tasks/ops_042.json) | policy questions | test | gradual leak outside backup endorsement despite “burst” label |
+| [ops_043](tasks/ops_043.json) | account changes | test | already effective cancellation with backdated restart request |
+| [ops_044](tasks/ops_044.json) | claim intake | test | possible duplicate laptop vs same-day bike claim |
+| [ops_045](tasks/ops_045.json) | policy questions | test | uploaded SYSTEM instructions do not amend earthquake exclusion |
+| [ops_046](tasks/ops_046.json) | account changes | test | autopay disable after withdrawn insurance-cancel language |
+| [ops_047](tasks/ops_047.json) | claim intake | test | withdrawn intake despite leftover complete draft |
+| [ops_048](tasks/ops_048.json) | policy questions | test | illustration cap-then-deductible amid extra documented values |
+| [ops_049](tasks/ops_049.json) | account changes | test | superseding quote not bound by “the cheaper one” |
+| [ops_050](tasks/ops_050.json) | claim intake | test | authorized representative intake without adding a named insured |

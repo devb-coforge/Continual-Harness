@@ -30,6 +30,35 @@
           "deductible": 500,
           "valuation_basis": "actual_cash_value"
         }
+      },
+      {
+        "id": "r2",
+        "kind": "household_note",
+        "data": {
+          "authority": "unverified_roommate_message",
+          "from": "Pri Sen",
+          "text": "The living-room projector is mine. Ravi just uses it on film nights."
+        }
+      },
+      {
+        "id": "r3",
+        "kind": "landlord_inventory",
+        "data": {
+          "authority": "building_inventory",
+          "item": "ceiling-mounted classroom projector in the lobby",
+          "owner": "landlord",
+          "note": "Not the living-room unit."
+        }
+      },
+      {
+        "id": "r4",
+        "kind": "payment_memo",
+        "data": {
+          "authority": "informal_transfer",
+          "amount_usd": 80,
+          "date": "2026-03-02",
+          "memo": "Ravi paid Pri $80 around the time the projector appeared; purpose not labeled."
+        }
       }
     ],
     "messages": [
@@ -41,12 +70,27 @@
       {
         "id": "m2",
         "role": "bot",
-        "text": "Who owns the projector?"
+        "text": "Pri’s note says the projector is theirs. The landlord inventory lists a lobby projector. Who owns the film-night unit?"
       },
       {
         "id": "m3",
         "role": "customer",
-        "text": "It has always been in our shared living room. My roommate arranged to get it, and I paid them money around that time, but I do not remember whether that was my share of buying it or just rent."
+        "text": "I am not asking about the lobby projector. The film-night one has always been in our shared living room. Pri arranged to get it."
+      },
+      {
+        "id": "m4",
+        "role": "customer",
+        "text": "I paid Pri money around that time, but I do not remember whether that was my share of buying it or just rent. Pri’s note might be right or wrong; I am not sure."
+      },
+      {
+        "id": "m5",
+        "role": "bot",
+        "text": "If you paid anything, should I treat it as jointly owned?"
+      },
+      {
+        "id": "m6",
+        "role": "customer",
+        "text": "Do not guess. I still cannot say whether I own it, Pri owns it, or we own it together. Please explain what you can from that uncertainty."
       }
     ],
     "form": {

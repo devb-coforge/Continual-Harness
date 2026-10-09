@@ -18,37 +18,52 @@
       {
         "id": "m1",
         "role": "customer",
-        "text": "I am Alina Moss. My brother Theo Moss and our roommate Keiko will live with me at 9 Foundry Walk, Unit 12, Brookmere. Contact me at alina.moss@example.test."
+        "text": "I am Alina Moss. My brother Theo Moss and our roommate Keiko will live with me at 9 Foundry Walk, Unit 12, Brookmere. Contact me at alina.moss@example.test. Theo's guest, Sam Moss, visits October 14 to 18."
       },
       {
         "id": "m2",
         "role": "bot",
-        "text": "Should I make Theo a joint applicant because you share a surname?"
+        "text": "Should I make Theo a joint applicant because you share a surname, and add Sam Moss because of the guest dates?"
       },
       {
         "id": "m3",
         "role": "customer",
-        "text": "No. I alone am applying. Theo and Keiko are other occupants; I am not requesting insurance in their names."
+        "text": "No. I alone am applying. Theo and Keiko are other occupants; I am not requesting insurance in their names. Sam is a guest, not an occupant or applicant."
       },
       {
         "id": "m4",
         "role": "bot",
-        "text": "Please give the occupancy date, requested start, and your selections."
+        "text": "Please give the occupancy date, requested start, and your selections. I can still add Theo as co-applicant for the lease."
       },
       {
         "id": "m5",
         "role": "customer",
-        "text": "We occupy it October 12, 2026; I want insurance October 12 too. Select $50,000 property, $300,000 liability, and a $1,000 deductible."
+        "text": "We occupy it October 12, 2026; I want insurance October 12 too. Select $50,000 property, $300,000 liability, and a $1,000 deductible. Decline adding Theo as co-applicant."
       },
       {
         "id": "m6",
         "role": "bot",
-        "text": "Are you ready to authorize the application submission?"
+        "text": "Are you ready to authorize the application submission? I listed theo.moss@example.test as a second contact."
       },
       {
         "id": "m7",
         "role": "customer",
-        "text": "Yes, submit my application. Keiko is spelled K-e-i-k-o Chen; please list both people only as occupants."
+        "text": "Yes, submit my application. Use only alina.moss@example.test. Keiko is spelled K-e-i-k-o Chen; please list Theo Moss and Keiko Chen only as occupants. Do not list Sam."
+      },
+      {
+        "id": "m8",
+        "role": "bot",
+        "text": "Application submitted with co-applicants Theo Moss and Sam Moss."
+      },
+      {
+        "id": "m9",
+        "role": "customer",
+        "text": "Correct the draft: applicant is only Alina Moss. Occupants are Theo Moss and Keiko Chen. Guest Sam is not listed. Consent to submit remains yes; this still does not issue a policy."
+      },
+      {
+        "id": "m10",
+        "role": "customer",
+        "text": "Guest dates do not change occupancy start."
       }
     ],
     "form": {

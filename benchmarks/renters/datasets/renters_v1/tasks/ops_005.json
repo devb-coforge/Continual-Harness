@@ -37,6 +37,7 @@
         "id": "r2",
         "kind": "move_destination",
         "data": {
+          "label": "approved_juniper",
           "address": {
             "line1": "91 Juniper Avenue",
             "unit": "12",
@@ -45,6 +46,37 @@
             "postal_code": "98118",
             "country": "US"
           }
+        }
+      },
+      {
+        "id": "r3",
+        "kind": "mailing_destination",
+        "data": {
+          "label": "complete_but_not_requested",
+          "address": {
+            "line1": "200 Poplar Box",
+            "unit": "PO Box 19",
+            "city": "Cedar Bay",
+            "region": "WA",
+            "postal_code": "98118",
+            "country": "US"
+          }
+        }
+      },
+      {
+        "id": "r4",
+        "kind": "move_destination",
+        "data": {
+          "label": "wrong_unit",
+          "address": {
+            "line1": "91 Juniper Avenue",
+            "unit": "8",
+            "city": "Cedar Bay",
+            "region": "WA",
+            "postal_code": "98118",
+            "country": "US"
+          },
+          "note": "Unit 8 was shown on an earlier listing and is not the leased unit."
         }
       }
     ],
@@ -57,12 +89,27 @@
       {
         "id": "m2",
         "role": "bot",
-        "text": "Please confirm the complete destination and date you want to authorize."
+        "text": "There is a complete Poplar Box mailing address on file and a Juniper Unit 8 listing. Should I change mailing today and use Unit 8?"
       },
       {
         "id": "m3",
         "role": "customer",
-        "text": "The Juniper Avenue address including Unit 12 is right, but the movers changed the date. November 15, 2026 is the final date. I explicitly approve changing the insured home to that address effective November 15. I am not asking to insure both homes at once or to change my mailing address today."
+        "text": "No mailing change today, and not Unit 8. The leased unit is Unit 12 in the approved Juniper destination record."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "Some customers backdate a move to November 1 even after the date slips. Want me to keep November 1 anyway?"
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "No. I reject any backdated or November 1 date. The movers changed the date. November 15, 2026 is the final date."
+      },
+      {
+        "id": "m6",
+        "role": "customer",
+        "text": "I explicitly approve changing the insured home to Juniper Avenue Unit 12 effective November 15. I am not asking to insure both homes at once or to change my mailing address today."
       }
     ],
     "form": {

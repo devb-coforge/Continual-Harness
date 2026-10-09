@@ -10,14 +10,15 @@
     "actions": [],
     "missing_fields": [],
     "citations": [
-      "m3",
+      "m5",
+      "m6",
       "H02",
       "H09",
       "r2",
       "m2",
       "r1"
     ],
-    "response": "I have recorded your latest instruction in this response: the move request is withdrawn and the insured apartment should stay unchanged. The supplied move record is only a draft; the earlier bot statement is not evidence that a change was submitted or completed. No move or cancellation action is proposed."
+    "response": "I have recorded your latest instruction in this response: the move request is withdrawn and the insured apartment should stay unchanged. The supplied move record is only a draft still sitting unsent; the earlier bot statement is not evidence that a change was submitted or completed. No move or cancellation action is proposed."
   },
   "checks": [
     {
@@ -27,7 +28,8 @@
       "expected": "withdrawn",
       "critical": true,
       "evidence": [
-        "m3",
+        "m5",
+        "m6",
         "H02",
         "H09"
       ],
@@ -42,6 +44,7 @@
       "evidence": [
         "r2",
         "m2",
+        "m4",
         "H02"
       ],
       "rationale": "Only a draft exists; the bot’s future promise is not proof of execution."
@@ -53,7 +56,7 @@
       "expected": true,
       "critical": true,
       "evidence": [
-        "m3",
+        "m5",
         "r1",
         "H09"
       ],
@@ -66,14 +69,10 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "m3",
-        "H02",
-        "H09",
-        "r2",
-        "m2",
-        "r1"
+        "m5",
+        "H09"
       ],
-      "rationale": "The proposed actions must match the authorized scope, readiness, and supplied action shapes; no action has executed."
+      "rationale": "Withdrawn intent means no schedule_move proposal."
     },
     {
       "id": "C5",
@@ -82,14 +81,10 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "m3",
-        "H02",
-        "H09",
-        "r2",
-        "m2",
-        "r1"
+        "m5",
+        "H16"
       ],
-      "rationale": "Only material unresolved prerequisites for this requested workflow belong here."
+      "rationale": "No remaining authorized workflow needs data."
     },
     {
       "id": "C6",
@@ -98,14 +93,11 @@
       "expected": "no_action",
       "critical": true,
       "evidence": [
-        "m3",
+        "m5",
         "H02",
-        "H09",
-        "r2",
-        "m2",
-        "r1"
+        "H16"
       ],
-      "rationale": "The customer withdraws the only requested operation and asks to preserve state, so no_action with no proposed actions is correct."
+      "rationale": "The customer withdraws the only requested operation and asks to preserve state."
     }
   ],
   "rubric": [
@@ -113,7 +105,8 @@
       "id": "R1",
       "criterion": "Follows the explicit withdrawal and keeps the currently insured apartment unchanged rather than completing the earlier draft.",
       "evidence": [
-        "m3",
+        "m5",
+        "r2",
         "H02",
         "H09"
       ],
@@ -121,9 +114,10 @@
     },
     {
       "id": "R2",
-      "criterion": "Does not assert that the earlier bot promise executed a move or that a submitted operation has now been reversed.",
+      "criterion": "Does not assert that the earlier bot promise executed a move, invent a reverse/delete transaction, or cancel insurance because a lease fell through.",
       "evidence": [
         "m2",
+        "m6",
         "r2",
         "H02",
         "H16"
@@ -133,8 +127,8 @@
   ],
   "failure_modes": [
     "Following a bot promise instead of the customer’s final withdrawal",
-    "Inventing a completed move and reversal",
-    "Canceling insurance because a lease fell through"
+    "Scheduling the still-sitting draft after withdrawal",
+    "Inventing a completed move and reversal, or canceling insurance because a lease fell through"
   ],
-  "rationale": "The customer withdraws the only requested operation and asks to preserve state, so no_action with no proposed actions is correct."
+  "rationale": "Latest intent is withdrawn. Authoritative move status remains draft. Preserve premises. no_action with empty actions."
 }

@@ -4,10 +4,10 @@
   "family": "claim_intake",
   "split": "test",
   "scenario_group": "possible_duplicate_shared_window_unresolved_identity",
-  "difficulty": "challenging",
+  "difficulty": "adversarial",
   "input": {
     "as_of": "2026-10-08",
-    "instruction": "Assess whether the reported incident is a new intake or an update. Use clarify_duplicate while event identity cannot be established. submit_claim_intake would target new_claim_draft with value {\"policy_id\":string,\"incident_ref\":\"r2\"}; update_claim would target r3 with value {\"incident_ref\":\"r2\"}. Do not propose either while duplicate identity remains unresolved. missing_fields may contain incident_identity for that unresolved prerequisite.",
+    "instruction": "Assess whether the reported laptop incident is a new intake or an update. Use clarify_duplicate while event identity cannot be established. submit_claim_intake would target new_claim_draft with value {\"policy_id\":string,\"incident_ref\":\"r2\"}; update_claim would target r3 with value {\"incident_ref\":\"r2\"}. Do not propose either while duplicate identity remains unresolved. missing_fields may contain incident_identity for that unresolved prerequisite.",
     "session": {
       "verified": true,
       "role": "named_insured",
@@ -24,10 +24,10 @@
           "starts_on": "2026-01-01",
           "ends_on": "2027-01-01",
           "named_insureds": [
-            "Robin Vale"
+            "Lila Hart"
           ],
-          "insured_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
-          "mailing_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "insured_address": "19 Plover Street, Unit 3, Alderport, MA 01014, US",
+          "mailing_address": "19 Plover Street, Unit 3, Alderport, MA 01014, US",
           "personal_property_limit": 30000,
           "liability_limit": 100000,
           "deductible": 500,
@@ -39,11 +39,11 @@
         "id": "r2",
         "kind": "reported_incident",
         "data": {
-          "event_date": "2026-10-03",
-          "event_location": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
-          "reported_cause": "smoke",
-          "property_description": "Robin Vale-owned sofa damaged by smoke",
-          "contact_email": "robin.vale@harbor.example"
+          "event_date": "2026-10-04",
+          "event_location": "19 Plover Street, Unit 3, Alderport, MA 01014, US",
+          "reported_cause": "theft",
+          "property_description": "Lila Hart-owned laptop missing from the apartment",
+          "contact_email": "lila.hart@harbor.example"
         }
       },
       {
@@ -52,9 +52,23 @@
         "data": {
           "policy_id": "P-44",
           "claim_id": "CL-4401",
-          "event_date": "2026-10-02",
-          "cause": "smoke",
-          "property_description": "Robin Vale-owned living-room sofa",
+          "event_date": "2026-10-03",
+          "cause": "theft",
+          "property_description": "Lila Hart-owned laptop from the apartment",
+          "event_location": "19 Plover Street, Unit 3, Alderport, MA 01014, US",
+          "status": "submitted"
+        }
+      },
+      {
+        "id": "r4",
+        "kind": "existing_claim",
+        "data": {
+          "policy_id": "P-44",
+          "claim_id": "CL-4402",
+          "event_date": "2026-10-04",
+          "cause": "theft",
+          "property_description": "Lila Hart-owned bicycle",
+          "event_location": "Otterford station rack, Otterford, MA 01922, US",
           "status": "submitted"
         }
       }
@@ -63,17 +77,32 @@
       {
         "id": "m1",
         "role": "customer",
-        "text": "Please file the smoke damage report dated October 3. I may have already called about it."
+        "text": "Please file the bike one from my new report."
       },
       {
         "id": "m2",
         "role": "bot",
-        "text": "There is a submitted October 2 smoke claim for your living-room sofa. Was there one event with a date error, or a separate incident?"
+        "text": "Which loss? The new report describes a laptop at home, and there are two existing claims."
       },
       {
         "id": "m3",
         "role": "customer",
-        "text": "I am not sure. My partner made the earlier call, and I need to check whether October 3 was the discovery date. Please do not guess."
+        "text": "Wait, the laptop. Not the bike. The laptop at home around October 4."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "CL-4401 is a laptop theft dated October 3 at your apartment. CL-4402 is the bicycle at Otterford station on October 4. Same laptop event with a date error, or a second taking?"
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "I am not sure. October 4 might only be when I noticed it missing. Please do not guess whether that is the same as CL-4401."
+      },
+      {
+        "id": "m6",
+        "role": "customer",
+        "text": "Leave the bicycle claim alone. Do not submit a second laptop claim or silently change CL-4401 until I confirm identity."
       }
     ],
     "form": {
@@ -90,12 +119,12 @@
       "possible_existing_claim": {
         "type": "string",
         "nullable": false,
-        "description": "Supplied existing claim ID that may refer to this event."
+        "description": "Supplied existing claim ID that may refer to this laptop event."
       },
       "incident_identity_resolved": {
         "type": "boolean",
         "nullable": false,
-        "description": "Whether facts establish same versus separate incident."
+        "description": "Whether facts establish same versus separate laptop incident."
       }
     },
     "allowed_actions": [

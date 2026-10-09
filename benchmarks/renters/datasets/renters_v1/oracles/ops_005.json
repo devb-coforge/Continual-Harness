@@ -21,15 +21,16 @@
     ],
     "missing_fields": [],
     "citations": [
-      "m1",
       "m3",
+      "m5",
+      "m6",
       "H02",
       "r2",
       "as_of",
       "H08",
       "H09"
     ],
-    "response": "The move proposal is ready for the confirmed Juniper Avenue Unit 12 destination effective November 15, 2026. It is a pending future change, so today’s Maple Court insured address stays in place. I have not proposed a mailing change or simultaneous coverage for both homes, and nothing has been executed by this response."
+    "response": "The move proposal is ready for the confirmed Juniper Avenue Unit 12 destination effective November 15, 2026. It is a pending future change, so today’s Maple Court insured address stays in place. I have not used Unit 8, proposed the Poplar Box mailing change, or backdated to November 1. Nothing has been executed by this response."
   },
   "checks": [
     {
@@ -40,7 +41,7 @@
       "critical": true,
       "evidence": [
         "m1",
-        "m3",
+        "m5",
         "H02"
       ],
       "rationale": "The explicit final correction supersedes November 1."
@@ -53,9 +54,10 @@
       "critical": true,
       "evidence": [
         "r2",
-        "m3"
+        "m3",
+        "m6"
       ],
-      "rationale": "The complete US destination including unit is confirmed."
+      "rationale": "The complete US destination including Unit 12 is confirmed; Unit 8 is rejected."
     },
     {
       "id": "C3",
@@ -65,7 +67,7 @@
       "critical": true,
       "evidence": [
         "as_of",
-        "m3",
+        "m5",
         "H08",
         "H09"
       ],
@@ -79,7 +81,7 @@
       "critical": true,
       "evidence": [
         "as_of",
-        "m3",
+        "m6",
         "H09"
       ],
       "rationale": "The move is future-dated."
@@ -91,9 +93,10 @@
       "expected": false,
       "critical": true,
       "evidence": [
-        "m3"
+        "m3",
+        "m6"
       ],
-      "rationale": "The customer expressly excludes that change."
+      "rationale": "The customer expressly excludes that change despite a complete mailing record."
     },
     {
       "id": "C6",
@@ -111,15 +114,11 @@
       ],
       "critical": true,
       "evidence": [
-        "m1",
-        "m3",
-        "H02",
+        "m6",
         "r2",
-        "as_of",
-        "H08",
         "H09"
       ],
-      "rationale": "The proposed actions must match the authorized scope, readiness, and supplied action shapes; no action has executed."
+      "rationale": "Only the future insured-premises move is authorized."
     },
     {
       "id": "C7",
@@ -128,15 +127,10 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "m1",
-        "m3",
-        "H02",
-        "r2",
-        "as_of",
-        "H08",
+        "m6",
         "H09"
       ],
-      "rationale": "Only material unresolved prerequisites for this requested workflow belong here."
+      "rationale": "All move prerequisites are explicitly satisfied."
     },
     {
       "id": "C8",
@@ -145,23 +139,21 @@
       "expected": "ready",
       "critical": true,
       "evidence": [
-        "m1",
-        "m3",
-        "H02",
-        "r2",
-        "as_of",
-        "H08",
-        "H09"
+        "m6",
+        "H09",
+        "H16"
       ],
-      "rationale": "All move prerequisites are explicitly satisfied, so a single future move proposal is ready."
+      "rationale": "A single future move proposal is ready."
     }
   ],
   "rubric": [
     {
       "id": "R1",
-      "criterion": "Uses the corrected November 15 date and identifies the move as future pending while retaining today’s Maple Court insured premises.",
+      "criterion": "Uses the corrected November 15 date and Unit 12 destination, identifying the move as future pending while retaining today’s Maple Court insured premises.",
       "evidence": [
         "m3",
+        "m5",
+        "m6",
         "as_of",
         "H02",
         "H09"
@@ -170,9 +162,12 @@
     },
     {
       "id": "R2",
-      "criterion": "Does not also change the mailing address, cancel the policy, or claim the move has already taken effect.",
+      "criterion": "Does not change mailing to the Poplar Box record, use Unit 8, backdate to November 1, cancel the policy, or claim the move has already taken effect.",
       "evidence": [
         "m3",
+        "m5",
+        "r3",
+        "r4",
         "H09",
         "H16"
       ],
@@ -181,8 +176,8 @@
   ],
   "failure_modes": [
     "Using the first mentioned move date after explicit correction",
-    "Applying a future insured-address change immediately",
-    "Changing mailing address by inference"
+    "Applying a future insured-address change immediately or backdating it",
+    "Changing mailing address by inference or selecting the wrong Juniper unit"
   ],
-  "rationale": "All move prerequisites are explicitly satisfied, so a single future move proposal is ready."
+  "rationale": "Latest correction sets November 15 and r2 Unit 12. Today’s premises stay. Complete mailing distractor is declined. Ready schedule_move only."
 }

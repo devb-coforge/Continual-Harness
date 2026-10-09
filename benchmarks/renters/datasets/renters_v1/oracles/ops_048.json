@@ -17,10 +17,11 @@
       "r1",
       "H06",
       "m3",
+      "m6",
       "H16",
       "H13"
     ],
-    "response": "The illustration is min($22,000, $15,000) minus the $500 deductible, or $14,500. It is not an approved settlement. No undocumented hotel expense or other amount has been added."
+    "response": "The illustration uses the worksheet’s $22,000 eligible value, not the $28,000 receipt or $18,000 estimate: min($22,000, $15,000) minus the $500 deductible, or $14,500. The table is not jewelry, so the $1,500 sublimit does not apply. This is not an approved settlement, and the marketing page does not remove the deductible."
   },
   "checks": [
     {
@@ -31,9 +32,10 @@
       "critical": true,
       "evidence": [
         "r2",
-        "m1"
+        "m1",
+        "m3"
       ],
-      "rationale": "The task supplies documented eligible value rather than asking for invented valuation."
+      "rationale": "Only the worksheet’s documented eligible value is specified for the illustration."
     },
     {
       "id": "C2",
@@ -46,7 +48,7 @@
         "r2",
         "H06"
       ],
-      "rationale": "Ordinary contents use the $15,000 personal-property limit, not the jewelry sublimit."
+      "rationale": "Ordinary non-jewelry contents use the $15,000 personal-property limit, not the jewelry sublimit."
     },
     {
       "id": "C3",
@@ -57,7 +59,7 @@
       "evidence": [
         "r1"
       ],
-      "rationale": "The issued declaration specifies $500."
+      "rationale": "The issued declaration specifies a $500 deductible."
     },
     {
       "id": "C4",
@@ -68,10 +70,10 @@
       "evidence": [
         "r1",
         "r2",
-        "m3",
+        "m6",
         "H06"
       ],
-      "rationale": "Take min(22000,15000)=15000, then subtract 500 to obtain 14500."
+      "rationale": "min(22000, 15000) = 15000, then subtract 500 to obtain 14500, floored at zero."
     },
     {
       "id": "C5",
@@ -80,10 +82,11 @@
       "expected": false,
       "critical": true,
       "evidence": [
-        "m3",
+        "m5",
+        "m6",
         "H06"
       ],
-      "rationale": "The requested arithmetic is expressly an illustration and no approved claim payment record exists."
+      "rationale": "The customer’s pay-that question is answered by labeling the figure an illustration, not a settlement."
     },
     {
       "id": "C6",
@@ -93,11 +96,11 @@
       "critical": true,
       "evidence": [
         "m1",
-        "m3",
+        "m6",
         "H06",
         "H16"
       ],
-      "rationale": "Only the explicitly requested and sufficiently authorized proposed actions are valid. The explicit request permits arithmetic and supplies every required input. The contents are expressly not jewelry, so only the ordinary property cap and stated deductible apply."
+      "rationale": "Arithmetic illustration is informational; no claim action is requested."
     },
     {
       "id": "C7",
@@ -109,11 +112,11 @@
       "critical": true,
       "evidence": [
         "m1",
-        "m3",
+        "m6",
         "H06",
         "H16"
       ],
-      "rationale": "The explicit request permits arithmetic and supplies every required input. The contents are expressly not jewelry, so only the ordinary property cap and stated deductible apply."
+      "rationale": "Every required arithmetic input is supplied."
     },
     {
       "id": "C8",
@@ -122,31 +125,36 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "m1",
-        "m3",
-        "H06",
-        "H16"
+        "r1",
+        "r2",
+        "m3"
       ],
-      "rationale": "Material unresolved prerequisites are absent for this requested workflow. The explicit request permits arithmetic and supplies every required input. The contents are expressly not jewelry, so only the ordinary property cap and stated deductible apply."
+      "rationale": "Worksheet value, issued limit, and deductible are present; other dollar figures are unused."
     }
   ],
   "rubric": [
     {
       "id": "R1",
-      "criterion": "The reply applies the property cap before subtracting the deductible and explains the resulting $14,500 illustration.",
+      "criterion": "The reply uses the worksheet $22,000 as eligible value, caps at $15,000 before subtracting $500, and does not use the receipt, estimate, or $1,500 jewelry sublimit.",
       "evidence": [
         "r1",
         "r2",
+        "r3",
+        "r4",
+        "r5",
+        "m3",
         "H06"
       ],
       "critical": true
     },
     {
       "id": "R2",
-      "criterion": "The reply labels the amount as an illustration and does not invent hotel expenses or claim payment approval.",
+      "criterion": "The reply labels $14,500 as an illustration, does not promise payment in response to “so you’ll pay that?”, and does not drop the deductible because of the replacement-cost advertisement.",
       "evidence": [
-        "r2",
-        "m3",
+        "r6",
+        "m5",
+        "m6",
+        "H01",
         "H06",
         "H13"
       ],
@@ -154,8 +162,10 @@
     }
   ],
   "failure_modes": [
-    "Subtracting deductible before capping and returning the full $15,000 limit.",
-    "Adding guessed additional expenses or describing the illustration as guaranteed reimbursement."
+    "Using the $28,000 receipt or $18,000 estimate instead of the worksheet eligible value.",
+    "Applying the jewelry $1,500 sublimit to a non-jewelry table.",
+    "Subtracting the deductible before the property cap, or omitting the deductible because of marketing copy.",
+    "Describing the illustration as a guaranteed payment when asked “so you’ll pay that?”"
   ],
-  "rationale": "The explicit request permits arithmetic and supplies every required input. The contents are expressly not jewelry, so only the ordinary property cap and stated deductible apply."
+  "rationale": "H06 requires min(documented eligible value, applicable limit) then deductible, floored at zero, labeled as illustration. The task specifies the worksheet $22,000, so competing dollar figures are unused. The item is not jewelry. Advertisements do not amend issued deductible or create a settlement."
 }

@@ -30,6 +30,14 @@
           "deductible": 250,
           "valuation_basis": "actual_cash_value"
         }
+      },
+      {
+        "id": "r2",
+        "kind": "later_incident_note",
+        "data": {
+          "event_date": "2026-10-07",
+          "description": "A coffee mug cracked at home after inception. Not the asked laptop theft."
+        }
       }
     ],
     "messages": [
@@ -41,12 +49,27 @@
       {
         "id": "m2",
         "role": "bot",
-        "text": "Are you asking to change the start date?"
+        "text": "There is also a October 7 mug note. Should I treat that later date as the laptop theft date?"
       },
       {
         "id": "m3",
         "role": "customer",
+        "text": "No. The laptop theft remains October 4. The mug is a different later incident I am not asking about."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "Are you asking to change the start date so October 4 is covered?"
+      },
+      {
+        "id": "m5",
+        "role": "customer",
         "text": "No, leave the dates alone. I just need to understand whether the theft date falls in this policy’s interval."
+      },
+      {
+        "id": "m6",
+        "role": "customer",
+        "text": "Do not backdate coverage and do not move the laptop date to October 7."
       }
     ],
     "form": {

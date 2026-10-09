@@ -22,12 +22,13 @@
     "citations": [
       "m1",
       "m3",
+      "m6",
       "as_of",
       "H10",
       "r1",
       "r2"
     ],
-    "response": "I can propose scheduling cancellation for October 31, 2026; the policy remains active today. Billing records an approved refund of $42.75 for that date with status approved pending disbursement. That does not show you have received it, and I cannot promise a payment date. The cancellation itself is only proposed here."
+    "response": "I can propose scheduling cancellation for October 31, 2026; the policy remains active today. Billing records an approved refund of $42.75 for that date with status approved pending disbursement. That does not show you have received it, and I will not use the disputed $110 figure or promise a payment date. The cancellation itself is only proposed here."
   },
   "checks": [
     {
@@ -64,7 +65,7 @@
       "evidence": [
         "r1",
         "as_of",
-        "m3",
+        "m6",
         "H10"
       ],
       "rationale": "The current policy is active and the proposal has a future effective date."
@@ -77,9 +78,10 @@
       "critical": true,
       "evidence": [
         "r2",
+        "m3",
         "H10"
       ],
-      "rationale": "The amount is recorded and requires no inferred proration."
+      "rationale": "The amount is recorded and requires no inferred proration or disputed substitute."
     },
     {
       "id": "C5",
@@ -107,14 +109,10 @@
       ],
       "critical": true,
       "evidence": [
-        "m1",
-        "m3",
-        "as_of",
-        "H10",
-        "r1",
-        "r2"
+        "m6",
+        "H10"
       ],
-      "rationale": "The proposed actions must match the authorized scope, readiness, and supplied action shapes; no action has executed."
+      "rationale": "Future cancellation uses schedule_cancellation, not immediate cancel_policy."
     },
     {
       "id": "C7",
@@ -124,13 +122,9 @@
       "critical": true,
       "evidence": [
         "m1",
-        "m3",
-        "as_of",
-        "H10",
-        "r1",
-        "r2"
+        "H10"
       ],
-      "rationale": "Only material unresolved prerequisites for this requested workflow belong here."
+      "rationale": "Authorized future date and recorded refund facts are complete."
     },
     {
       "id": "C8",
@@ -139,14 +133,11 @@
       "expected": "ready",
       "critical": true,
       "evidence": [
-        "m1",
-        "m3",
-        "as_of",
+        "m6",
         "H10",
-        "r1",
-        "r2"
+        "H16"
       ],
-      "rationale": "The authorized customer confirms the future date, and the matching approved billing record supports reporting only the recorded amount and status."
+      "rationale": "The future cancellation proposal is ready."
     }
   ],
   "rubric": [
@@ -155,7 +146,7 @@
       "criterion": "Keeps the policy active today while using October 31 for the cancellation proposal, despite the bot’s immediate-cancellation suggestion.",
       "evidence": [
         "m2",
-        "m3",
+        "m6",
         "r1",
         "H10"
       ],
@@ -163,9 +154,10 @@
     },
     {
       "id": "R2",
-      "criterion": "Reports exactly the recorded $42.75 approved-pending status without recalculating it, saying it was paid, or promising a disbursement date.",
+      "criterion": "Reports exactly the recorded $42.75 approved-pending status without using the disputed $110, saying it was paid, or promising a disbursement date.",
       "evidence": [
         "r2",
+        "r3",
         "m3",
         "H10",
         "H13"
@@ -176,7 +168,7 @@
   "failure_modes": [
     "Executing future cancellation immediately",
     "Confusing approved refund with paid refund",
-    "Calculating a new refund when an approved amount is supplied"
+    "Substituting the disputed $110 for the approved $42.75"
   ],
-  "rationale": "The authorized customer confirms the future date, and the matching approved billing record supports reporting only the recorded amount and status."
+  "rationale": "Future cancel Oct 31, active today, refund exactly 42.75 approved_pending_disbursement. Disputed 110 is a distractor."
 }

@@ -18,37 +18,52 @@
       {
         "id": "m1",
         "role": "customer",
-        "text": "My full name for the application is Alexandra Osei; I go by Lex in chat. Use lex.osei@example.test."
+        "text": "My full name for the application is Alexandra Osei; I go by Lex in chat. Use alexandra.osei@example.test for now."
       },
       {
         "id": "m2",
         "role": "bot",
-        "text": "I can address you as Lex. What dwelling are you applying for?"
+        "text": "I can address you as Lex and put Lex Osei on the application. What dwelling are you applying for?"
       },
       {
         "id": "m3",
         "role": "customer",
-        "text": "17 Wren Avenue, Unit 3, Cedar Bay. I moved in on October 2, 2026, and want the insurance to start October 9, 2026."
+        "text": "17 Wren Avenue, Unit 3, Cedar Bay. I moved in on October 2, 2026, and want the insurance to start October 9, 2026. Application name stays Alexandra Osei."
       },
       {
         "id": "m4",
         "role": "bot",
-        "text": "Please choose the property and liability limits and deductible."
+        "text": "Please choose the property and liability limits and deductible. I will keep alexandra.osei@example.test."
       },
       {
         "id": "m5",
         "role": "customer",
-        "text": "Property $30,000, liability $100,000, deductible $250. My old insurer called me Lex Osei, but use Alexandra Osei on this application."
+        "text": "Property $30,000, liability $100,000, deductible $250. My old insurer called me Lex Osei, but use Alexandra Osei on this application. Correct the email to lex.osei@example.test; the first inbox is a typo."
       },
       {
         "id": "m6",
         "role": "bot",
-        "text": "Should I hold this draft for you?"
+        "text": "Should I hold this draft for you? Occupancy already passed, so I can backdate the start to October 2."
       },
       {
         "id": "m7",
         "role": "customer",
-        "text": "No need to hold it: I consent to submitting this application now."
+        "text": "No need to hold it: I consent to submitting this application now. Do not backdate the start to occupancy. Requested start remains October 9."
+      },
+      {
+        "id": "m8",
+        "role": "bot",
+        "text": "Filed as Lex Osei at alexandra.osei@example.test starting October 2."
+      },
+      {
+        "id": "m9",
+        "role": "customer",
+        "text": "Correct: applicant_name Alexandra Osei, contact_email lex.osei@example.test, occupancy October 2, requested start October 9, consent true. Preferred name Lex."
+      },
+      {
+        "id": "m10",
+        "role": "customer",
+        "text": "Preferred chat name is not the application legal name."
       }
     ],
     "form": {

@@ -57,6 +57,19 @@
           "property_description": "Robin Vale-owned bicycle, serial BIKE-FIRST-1",
           "status": "submitted"
         }
+      },
+      {
+        "id": "r4",
+        "kind": "existing_claim",
+        "data": {
+          "policy_id": "P-28",
+          "claim_id": "CL-2801-NEAR",
+          "event_date": "2026-09-02",
+          "cause": "theft",
+          "property_description": "duplicate-looking note of the September bicycle",
+          "status": "draft_duplicate_of_CL-2801",
+          "note": "Near-duplicate of the September claim, not the October replacement bike."
+        }
       }
     ],
     "messages": [
@@ -68,12 +81,27 @@
       {
         "id": "m2",
         "role": "bot",
-        "text": "Is the October 6 incident in your new report the same event with a corrected date?"
+        "text": "There is also a near-duplicate note of that September claim. Is the October 6 incident in your new report the same event with a corrected date?"
       },
       {
         "id": "m3",
         "role": "customer",
-        "text": "No. I bought a replacement; BIKE-SECOND-2 was stolen in a separate incident on October 6 at home. Use the report and email I supplied."
+        "text": "No. I bought a replacement; BIKE-SECOND-2 was stolen in a separate incident on October 6 at home."
+      },
+      {
+        "id": "m4",
+        "role": "customer",
+        "text": "Use the report and email I supplied. Do not update CL-2801 or the near-duplicate note."
+      },
+      {
+        "id": "m5",
+        "role": "bot",
+        "text": "Shared cause usually means we should attach everything to the first theft."
+      },
+      {
+        "id": "m6",
+        "role": "customer",
+        "text": "Different dates and different serials. Please prepare new intake, not an update."
       }
     ],
     "form": {

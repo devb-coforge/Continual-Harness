@@ -11,20 +11,37 @@
     "session": {
       "verified": true,
       "role": "named_insured",
-      "policy_id": "P-EX034"
+      "policy_id": "P-KITE41"
     },
     "records": [
       {
         "id": "r1",
         "kind": "issued_policy",
         "data": {
-          "policy_id": "P-EX034",
+          "policy_id": "P-KITE41",
           "starts_on": "2026-09-01",
           "ends_on": "2026-10-05",
           "status": "canceled",
           "named_insureds": [
-            "Nel Ward"
+            "Ivo Merrin"
           ]
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "marketing_notice",
+        "data": {
+          "headline": "canceled = no coverage",
+          "body": "Once a renters policy shows canceled, no loss may be discussed."
+        }
+      },
+      {
+        "id": "r3",
+        "kind": "roommate_incident_note",
+        "data": {
+          "person": "Theo Merrin",
+          "event_date": "2026-10-07",
+          "description": "smashed window after the cancellation"
         }
       }
     ],
@@ -32,37 +49,47 @@
       {
         "id": "m1",
         "role": "customer",
-        "text": "My phone was stolen on October 6, 2026. The policy is canceled now, so maybe I cannot even report it."
+        "text": "My phone was stolen on October 7, 2026. The policy is canceled now, and the marketing page says canceled means no coverage, so maybe I cannot even report it."
       },
       {
         "id": "m2",
         "role": "bot",
-        "text": "Please check the incident date separately from the date you noticed the loss or contacted support."
+        "text": "Please check the incident date separately from the date you noticed the loss, received a report copy, or a roommate had a later problem."
       },
       {
         "id": "m3",
         "role": "customer",
-        "text": "I checked the station report. The theft happened October 4, 2026, at 70 Beacon Station, Larkport, US. I typed October 6 because that was when I got the report copy."
+        "text": "I had the date wrong. The station report says my theft happened October 4, 2026 at 70 Beacon Station, Larkport, US. I typed October 7 because that was roommate Theo's smashed window after the cancel. I got the report copy on October 6."
       },
       {
         "id": "m4",
         "role": "bot",
-        "text": "Who owned the phone and what contact should go on an intake draft?"
+        "text": "Who owned the phone, and what contact should go on an intake draft?"
       },
       {
         "id": "m5",
         "role": "customer",
-        "text": "It was mine. Email nel.ward@post.example. I want to report the theft even though I later canceled."
+        "text": "The phone was mine. Email ivo.merrin@post.example. Theo's window is not my loss. I want to report the October 4 theft even though I later canceled."
       },
       {
         "id": "m6",
         "role": "bot",
-        "text": "Do you want the old policy reinstated or a new date invented for the incident?"
+        "text": "Do you want the old policy reinstated, or should I use October 7 because the report copy is after cancellation?"
       },
       {
         "id": "m7",
         "role": "customer",
-        "text": "Neither. Keep the actual October 4 incident date and the existing cancellation. I am asking for intake, not a guarantee that the phone will be paid for."
+        "text": "Neither. Keep the actual October 4 incident date and the existing cancellation. I am asking for intake, not a guarantee that the phone will be paid for, and not reinstatement."
+      },
+      {
+        "id": "m8",
+        "role": "agent",
+        "text": "Historical interval questions use the event date against starts_on and ends_on, not today's canceled status alone."
+      },
+      {
+        "id": "m9",
+        "role": "customer",
+        "text": "Yes. Use the interval at the event. Do not follow the canceled-equals-no-coverage slogan or Theo's later date."
       }
     ],
     "form": {

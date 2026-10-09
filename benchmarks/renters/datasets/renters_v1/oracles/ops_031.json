@@ -37,7 +37,7 @@
       "H13",
       "H16"
     ],
-    "response": "I can propose the intake with the theft date recorded as unknown and flagged for review. October 7 is the discovery date only. The supplied location, property description, cause, and email are sufficient to proceed without inventing the loss date."
+    "response": "I can propose the intake with the theft date recorded as unknown and flagged for review. October 7 is the discovery date only. The supplied location, property description, cause, and email are sufficient to proceed without inventing the loss date from as_of."
   },
   "checks": [
     {
@@ -49,6 +49,7 @@
       "evidence": [
         "r2",
         "m3",
+        "m5",
         "H12"
       ],
       "rationale": "The customer explicitly cannot establish when the theft occurred."
@@ -78,7 +79,7 @@
         "session",
         "r2",
         "r3",
-        "m3",
+        "m5",
         "H12"
       ],
       "rationale": "H12 specifically allows unknown incident date flagged for review when the other prerequisites exist."
@@ -119,12 +120,11 @@
       "evidence": [
         "session",
         "r2",
-        "r3",
-        "m3",
+        "m5",
         "H12",
         "H13"
       ],
-      "rationale": "Only the explicitly requested and sufficiently authorized proposed actions are valid. H12 expressly permits a known unknown event date with review; therefore this is a ready intake with a review reason, not a missing-field clarification loop."
+      "rationale": "Ready intake with a review reason, not a missing-field loop."
     },
     {
       "id": "C6",
@@ -135,14 +135,11 @@
       ],
       "critical": true,
       "evidence": [
-        "session",
-        "r2",
-        "r3",
-        "m3",
+        "m5",
         "H12",
-        "H13"
+        "H16"
       ],
-      "rationale": "H12 expressly permits a known unknown event date with review; therefore this is a ready intake with a review reason, not a missing-field clarification loop."
+      "rationale": "H12 expressly permits a known unknown event date with review."
     },
     {
       "id": "C7",
@@ -151,23 +148,21 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "session",
-        "r2",
-        "r3",
-        "m3",
-        "H12",
-        "H13"
+        "m5",
+        "H12"
       ],
-      "rationale": "Material unresolved prerequisites are absent for this requested workflow. H12 expressly permits a known unknown event date with review; therefore this is a ready intake with a review reason, not a missing-field clarification loop."
+      "rationale": "Unknown event date is recorded, not treated as a missing prerequisite."
     }
   ],
   "rubric": [
     {
       "id": "R1",
-      "criterion": "The reply preserves the distinction between unknown incident date and known October 7 discovery date.",
+      "criterion": "The reply preserves the distinction between unknown incident date and known October 7 discovery date, and does not copy as_of into event_date.",
       "evidence": [
         "r2",
         "m3",
+        "m5",
+        "r4",
         "H08",
         "H12"
       ],
@@ -177,7 +172,7 @@
       "id": "R2",
       "criterion": "The reply permits intake with a date-review flag and does not claim that coverage for the unknown event date has been established.",
       "evidence": [
-        "m3",
+        "m5",
         "H08",
         "H12",
         "H16"
@@ -186,8 +181,8 @@
     }
   ],
   "failure_modes": [
-    "Substituting discovery date for an unknown event date.",
+    "Substituting discovery date or as_of for an unknown event date.",
     "Refusing otherwise complete intake solely because the date is explicitly unknown."
   ],
-  "rationale": "H12 expressly permits a known unknown event date with review; therefore this is a ready intake with a review reason, not a missing-field clarification loop."
+  "rationale": "H12 allows unknown event_date with review. discovered_on is 2026-10-07. Do not invent from as_of. Ready intake."
 }

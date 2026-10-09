@@ -2,8 +2,8 @@
   "task_id": "ext_042",
   "reference_answer": {
     "fields": {
-      "applicant_name": "Elena Brook",
-      "contact_email": "elena.brook@example.test",
+      "applicant_name": "Maren Holt",
+      "contact_email": "maren.holt@example.test",
       "insured_address": "27 Pine Arch, Unit 14, Reed Harbor",
       "occupancy_start": "2026-11-06",
       "requested_start": "2026-11-06",
@@ -12,7 +12,7 @@
       "deductible": 500,
       "consent_to_submit": true,
       "monthly_budget": 25,
-      "quoted_monthly_premium": null
+      "quoted_monthly_premium": 38
     },
     "disposition": "ready",
     "actions": [],
@@ -20,38 +20,39 @@
     "citations": [
       "H02",
       "H06",
+      "H14",
       "H15",
       "H16",
       "m1",
-      "m3",
-      "m4",
       "m5",
-      "m7"
+      "m7",
+      "m9",
+      "r1"
     ],
-    "response": "The application is complete with your corrected $500 deductible and submission consent. Your $25 monthly budget is recorded separately; no premium was quoted and no policy was issued."
+    "response": "The application is complete with your corrected $500 deductible and submission consent. Your $25 monthly budget and the $38 quoted premium are recorded separately from the deductible. The landlord's $1,000 figure was not used, and no policy was issued."
   },
   "checks": [
     {
       "id": "C1",
       "path": "/fields/applicant_name",
       "operator": "eq",
-      "expected": "Elena Brook",
+      "expected": "Maren Holt",
       "critical": true,
       "evidence": [
         "m1"
       ],
-      "rationale": "The cited source establishes applicant_name; preserve the stated value and uncertainty under H15."
+      "rationale": "The applicant is named Maren Holt."
     },
     {
       "id": "C2",
       "path": "/fields/contact_email",
       "operator": "eq",
-      "expected": "elena.brook@example.test",
+      "expected": "maren.holt@example.test",
       "critical": true,
       "evidence": [
         "m1"
       ],
-      "rationale": "The cited source establishes contact_email; preserve the stated value and uncertainty under H15."
+      "rationale": "The applicant contact email is explicitly supplied."
     },
     {
       "id": "C3",
@@ -62,7 +63,7 @@
       "evidence": [
         "m1"
       ],
-      "rationale": "The cited source establishes insured_address; preserve the stated value and uncertainty under H15."
+      "rationale": "The dwelling address is stated in full including unit."
     },
     {
       "id": "C4",
@@ -71,9 +72,10 @@
       "expected": "2026-11-06",
       "critical": true,
       "evidence": [
-        "m1"
+        "m1",
+        "H08"
       ],
-      "rationale": "The cited source establishes occupancy_start; preserve the stated value and uncertainty under H15."
+      "rationale": "Occupancy is November 6, 2026."
     },
     {
       "id": "C5",
@@ -82,9 +84,10 @@
       "expected": "2026-11-06",
       "critical": true,
       "evidence": [
-        "m1"
+        "m1",
+        "H08"
       ],
-      "rationale": "The cited source establishes requested_start; preserve the stated value and uncertainty under H15."
+      "rationale": "Requested insurance start is the same explicit November 6 date."
     },
     {
       "id": "C6",
@@ -95,7 +98,7 @@
       "evidence": [
         "m3"
       ],
-      "rationale": "The cited source establishes personal_property_limit; preserve the stated value and uncertainty under H15."
+      "rationale": "The applicant selects $30,000 personal property."
     },
     {
       "id": "C7",
@@ -106,7 +109,7 @@
       "evidence": [
         "m3"
       ],
-      "rationale": "The cited source establishes liability_limit; preserve the stated value and uncertainty under H15."
+      "rationale": "The applicant selects $100,000 liability."
     },
     {
       "id": "C8",
@@ -116,9 +119,11 @@
       "critical": true,
       "evidence": [
         "m5",
-        "H02"
+        "m9",
+        "H02",
+        "H14"
       ],
-      "rationale": "The cited source establishes deductible; preserve the stated value and uncertainty under H15."
+      "rationale": "After rejecting $400, rounding, $38, and the landlord $1,000, the applicant independently selects $500."
     },
     {
       "id": "C9",
@@ -127,9 +132,10 @@
       "expected": true,
       "critical": true,
       "evidence": [
-        "m7"
+        "m7",
+        "H14"
       ],
-      "rationale": "The cited source establishes consent_to_submit; preserve the stated value and uncertainty under H15."
+      "rationale": "The applicant explicitly consents to submit after the deductible correction."
     },
     {
       "id": "C10",
@@ -141,20 +147,21 @@
         "m3",
         "m5"
       ],
-      "rationale": "The cited source establishes monthly_budget; preserve the stated value and uncertainty under H15."
+      "rationale": "The $25 figure is a budget, not a deductible or quoted premium."
     },
     {
       "id": "C11",
       "path": "/fields/quoted_monthly_premium",
       "operator": "eq",
-      "expected": null,
+      "expected": 38,
       "critical": true,
       "evidence": [
-        "m4",
+        "r1",
+        "m3",
         "m7",
         "H06"
       ],
-      "rationale": "The cited source establishes quoted_monthly_premium; preserve the stated value and uncertainty under H15."
+      "rationale": "The $38 chat quote is a premium to record, not a deductible value."
     },
     {
       "id": "C12",
@@ -165,7 +172,7 @@
       "evidence": [
         "H16"
       ],
-      "rationale": "This task requests document extraction only; no transaction is authorized by the task."
+      "rationale": "This extraction-only task does not authorize executable transactions."
     },
     {
       "id": "C13",
@@ -176,10 +183,12 @@
       ],
       "critical": true,
       "evidence": [
-        "H15",
+        "m5",
+        "m7",
+        "H14",
         "H16"
       ],
-      "rationale": "The customer explicitly repairs the premium/deductible misunderstanding, choosing a valid deductible. The monthly budget is neither a deductible nor an offered premium."
+      "rationale": "A valid deductible is selected after the misunderstanding is repaired, and consent is explicit."
     },
     {
       "id": "C14",
@@ -188,48 +197,46 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "H15",
+        "m7",
+        "m9",
         "H16"
       ],
-      "rationale": "Only these unresolved fields block the requested document workflow: none; optional uncertainty is preserved in the document."
+      "rationale": "No required application field remains unresolved after the $500 selection."
     }
   ],
   "rubric": [
     {
       "id": "R1",
-      "criterion": "The reply describes a complete application after the explicit $500 deductible correction and submission consent, while making clear that no premium was quoted or policy issued.",
+      "criterion": "The reply records a complete application with the corrected $500 deductible and submission consent, while keeping $38 as quoted premium rather than a deductible.",
       "evidence": [
-        "H11",
-        "H14",
-        "H15",
-        "m1",
-        "m3",
-        "m4",
         "m5",
-        "m7"
+        "m7",
+        "r1",
+        "H14",
+        "H15"
       ],
       "critical": true
     },
     {
       "id": "R2",
-      "criterion": "The reply does not label the $25 budget as a quoted premium or deductible.",
+      "criterion": "The reply does not copy $25, $38, $400, a rounded amount, or the landlord's $1,000 into the deductible after the applicant rejects those substitutions.",
       "evidence": [
-        "H02",
-        "H14",
-        "H15",
-        "m1",
         "m3",
         "m4",
         "m5",
-        "m7"
+        "m8",
+        "m9",
+        "H02",
+        "H14"
       ],
       "critical": true
     }
   ],
   "failure_modes": [
-    "Recording the $25 monthly budget as a deductible after the customer corrects the misunderstanding.",
-    "Treating a monthly spending budget as an offered or accepted premium.",
-    "Ignoring the final valid deductible selection because the initial request was unsupported."
+    "Copying the $38 quoted premium into the deductible field.",
+    "Using the landlord-required $1,000 deductible instead of the applicant's $500 choice.",
+    "Rounding unsupported $400 to $500 as if the bot suggestion were accepted.",
+    "Recording the $25 monthly budget as a deductible or as the quoted premium."
   ],
-  "rationale": "The customer explicitly repairs the premium/deductible misunderstanding, choosing a valid deductible. The monthly budget is neither a deductible nor an offered premium."
+  "rationale": "The applicant first confuses premium, budget, and an unsupported $400 deductible, then independently selects allowed $500. H14 forbids rounding and requires applicant selections over landlord requirements. The $38 quote belongs in quoted_monthly_premium, and $25 remains only a budget."
 }

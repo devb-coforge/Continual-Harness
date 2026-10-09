@@ -28,7 +28,8 @@
           "status_today": "active",
           "personal_property_limit": 30000,
           "deductible": 500,
-          "valuation_basis": "actual_cash_value"
+          "valuation_basis": "actual_cash_value",
+          "endorsements": []
         }
       },
       {
@@ -39,23 +40,57 @@
           "inspection_date": "2026-10-07",
           "finding": "A kitchen internal cold-water supply pipe suddenly split; no exterior floodwater or drain backup was observed."
         }
+      },
+      {
+        "id": "r3",
+        "kind": "photo_label",
+        "data": {
+          "filename": "wet-table.jpg",
+          "user_label": "flood",
+          "note": "Photograph of a wet table; label is the customer’s word, not a cause finding."
+        }
+      },
+      {
+        "id": "r4",
+        "kind": "unused_endorsement_quote",
+        "data": {
+          "authority": "quote",
+          "coverage": "water_backup",
+          "status": "not_purchased",
+          "note": "Backup endorsement was quoted for a basement drain that was not involved."
+        }
       }
     ],
     "messages": [
       {
         "id": "m1",
         "role": "customer",
-        "text": "Water ruined the table I own yesterday, October 7. My friend says all water damage is excluded. The plumber’s report is attached. Can you explain the rule?"
+        "text": "Water ruined the table I own yesterday, October 7. My friend says all water damage is excluded. I first thought it was a slow stain that built up for months."
       },
       {
         "id": "m2",
         "role": "bot",
-        "text": "Are you asking us to file a claim yet?"
+        "text": "The photo is labeled flood and a backup-endorsement quote is on file. Is this floodwater or drain backup?"
       },
       {
         "id": "m3",
         "role": "customer",
-        "text": "Not yet. I just want to know whether the report describes an excluded cause."
+        "text": "I used the word flood because the table was wet. The plumber’s report is attached and I accept that finding over my first stain guess."
+      },
+      {
+        "id": "m4",
+        "role": "customer",
+        "text": "The unused drain in the basement was not involved. I never bought that backup quote."
+      },
+      {
+        "id": "m5",
+        "role": "bot",
+        "text": "Are you asking us to file a claim yet?"
+      },
+      {
+        "id": "m6",
+        "role": "customer",
+        "text": "Not yet. I just want to know whether the plumber’s report describes an excluded cause."
       }
     ],
     "form": {

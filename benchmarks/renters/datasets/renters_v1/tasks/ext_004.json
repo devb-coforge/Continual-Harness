@@ -28,27 +28,42 @@
       {
         "id": "m3",
         "role": "customer",
-        "text": "Both on October 20, 2026. I select $15,000 property and $100,000 liability."
+        "text": "Both on October 20, 2026. I select $15,000 property and $100,000 liability. I am comparing a $250 deductible with a $1,000 deductible."
       },
       {
         "id": "m4",
         "role": "bot",
-        "text": "We offer $250, $500, or $1,000 deductibles. Shall I put the middle option in while you decide?"
+        "text": "I'll put 500 in the deductible field as the middle option while you decide."
       },
       {
         "id": "m5",
         "role": "customer",
-        "text": "No, leave that blank. I am comparing $250 with $1,000 and have not selected either."
+        "text": "No, leave that blank. I have not selected $250, $500, or $1,000."
       },
       {
         "id": "m6",
         "role": "bot",
-        "text": "Do you authorize application submission yet?"
+        "text": "A comparison usually means people pick $500. Confirm I should keep $500, and may I submit?"
       },
       {
         "id": "m7",
         "role": "customer",
-        "text": "Not yet. Keep it as a draft until I choose the deductible."
+        "text": "Do not keep $500. Not yet on submission. Keep it as a draft until I choose the deductible."
+      },
+      {
+        "id": "m8",
+        "role": "bot",
+        "text": "Draft saved with deductible 500 and consent true because you described the options."
+      },
+      {
+        "id": "m9",
+        "role": "customer",
+        "text": "That is incorrect. Deductible is still unselected. I decline submission until I choose. Occupancy and requested start remain October 20."
+      },
+      {
+        "id": "m10",
+        "role": "customer",
+        "text": "My landlord prefers $1,000, but that is not my selection either."
       }
     ],
     "form": {

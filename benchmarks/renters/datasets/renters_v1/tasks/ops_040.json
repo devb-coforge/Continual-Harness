@@ -4,10 +4,10 @@
   "family": "account_changes",
   "split": "test",
   "scenario_group": "move_requires_missing_unit_in_multiunit_destination",
-  "difficulty": "standard",
+  "difficulty": "challenging",
   "input": {
     "as_of": "2026-10-08",
-    "instruction": "Assess the move request. schedule_move would target r1 with value {\"destination_ref\":\"r2\",\"unit\":string,\"effective_date\":ISO date} when the unit and destination/date consent are complete. r2 expressly represents a multiunit building. Do not infer a unit from the current insured address.",
+    "instruction": "Assess the move request. schedule_move would target r1 with value {\"destination_ref\":\"r2\",\"unit\":string,\"effective_date\":ISO date} when the unit and destination/date consent are complete. r2 represents the requested destination building. Propose only the currently confirmed move, and only when its prerequisites are met.",
     "session": {
       "verified": true,
       "role": "named_insured",
@@ -24,10 +24,10 @@
           "starts_on": "2026-01-01",
           "ends_on": "2027-01-01",
           "named_insureds": [
-            "Robin Vale"
+            "Dana Quill"
           ],
           "insured_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
-          "mailing_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "mailing_address": "9 Laurel Mews, Unit 2B, Alderport, MA 01014, US",
           "personal_property_limit": 30000,
           "liability_limit": 100000,
           "deductible": 500,
@@ -47,23 +47,48 @@
           "country": "US",
           "building_type": "multiunit"
         }
+      },
+      {
+        "id": "r3",
+        "kind": "family_note",
+        "data": {
+          "subject": "Sister residence",
+          "address": "41 Wicker Lane, Alderport, MA 01014, US",
+          "building_type": "single_family",
+          "note": "Complete single-family address on file. Not an approved insured destination unless the customer confirms it as the move target."
+        }
       }
     ],
     "messages": [
       {
         "id": "m1",
         "role": "customer",
-        "text": "I approve moving my coverage to 280 Heron Court, Alderport, MA 01014, US on October 20, 2026."
+        "text": "Please cancel P-40 and move my coverage to 280 Heron Court on October 15, 2026."
       },
       {
         "id": "m2",
         "role": "bot",
-        "text": "Which apartment unit will you occupy there?"
+        "text": "Do you want cancellation as well as a move, and which unit at 280 Heron Court?"
       },
       {
         "id": "m3",
         "role": "customer",
-        "text": "It is definitely a multiunit building, but the landlord has not assigned my unit yet. My present Unit 4 number does not carry over."
+        "text": "Forget cancellation; that request is withdrawn. I am only moving. The date is October 22, 2026, not the 15th. I approve 280 Heron Court, Alderport, MA 01014, US as the destination building."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "Mailing on file is 9 Laurel Mews, Unit 2B, Alderport, MA 01014, US. A family note lists 41 Wicker Lane, Alderport, MA 01014, US."
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "41 Wicker Lane is my sister’s single-family house. That is not where I am moving. Do not copy Unit 2B from mailing and do not copy Unit 4 from Kestrel Street. Heron Court is multiunit and the landlord has not assigned my unit yet."
+      },
+      {
+        "id": "m6",
+        "role": "customer",
+        "text": "I still approve October 22, 2026 and 280 Heron Court once the unit exists. Until then, keep today’s insured address unchanged."
       }
     ],
     "form": {
@@ -80,7 +105,7 @@
       "effective_date": {
         "type": "string",
         "nullable": false,
-        "description": "Explicit requested move date, ISO YYYY-MM-DD."
+        "description": "Latest explicit requested move date, ISO YYYY-MM-DD."
       },
       "ready_to_schedule": {
         "type": "boolean",

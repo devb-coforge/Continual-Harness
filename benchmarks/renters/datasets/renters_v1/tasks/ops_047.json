@@ -4,10 +4,10 @@
   "family": "claim_intake",
   "split": "test",
   "scenario_group": "withdrawn_intake_not_consent_to_persist_or_submit",
-  "difficulty": "standard",
+  "difficulty": "challenging",
   "input": {
     "as_of": "2026-10-08",
-    "instruction": "Assess the final claim-intake request after the full conversation. No action is permitted when the request is withdrawn. submit_claim_intake, if authorized, would target new_claim_draft with value {\"policy_id\":string,\"incident_ref\":\"r2\",\"contact_email\":string}. Report the final intent and current authoritative claim state; do not delete existing records.",
+    "instruction": "Assess the final claim-intake request after the full conversation. No action is permitted when the request is withdrawn. submit_claim_intake, if authorized, would target new_claim_draft with value {\"policy_id\":string,\"incident_ref\":\"r2\",\"contact_email\":string}. Report the final intent and current authoritative claim state; do not delete existing records and do not submit leftover drafts.",
     "session": {
       "verified": true,
       "role": "named_insured",
@@ -24,10 +24,10 @@
           "starts_on": "2026-01-01",
           "ends_on": "2027-01-01",
           "named_insureds": [
-            "Robin Vale"
+            "Quinn Adler"
           ],
-          "insured_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
-          "mailing_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "insured_address": "16 Shad Run, Unit 4, Alderport, MA 01014, US",
+          "mailing_address": "16 Shad Run, Unit 4, Alderport, MA 01014, US",
           "personal_property_limit": 30000,
           "liability_limit": 100000,
           "deductible": 500,
@@ -40,17 +40,34 @@
         "kind": "reported_incident",
         "data": {
           "event_date": "2026-10-07",
-          "event_location": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "event_location": "16 Shad Run, Unit 4, Alderport, MA 01014, US",
           "reported_cause": "smoke",
-          "property_description": "Robin Vale-owned curtains affected by smoke",
-          "contact_email": "robin.vale@harbor.example"
+          "property_description": "Quinn Adler-owned curtains affected by smoke",
+          "contact_email": "quinn.adler@harbor.example"
         }
       },
       {
         "id": "r3",
         "kind": "existing_claims",
         "data": {
-          "claims": []
+          "claims": [
+            {
+              "claim_id": "CL-4708",
+              "event_date": "2026-09-02",
+              "cause": "sudden_supply_pipe_escape",
+              "property_description": "Quinn Adler-owned bathroom mat",
+              "status": "submitted"
+            }
+          ]
+        }
+      },
+      {
+        "id": "r4",
+        "kind": "intake_draft",
+        "data": {
+          "status": "unsubmitted_complete_draft",
+          "incident_ref": "r2",
+          "note": "A leftover complete draft is not a submitted claim and is not customer consent."
         }
       }
     ],
@@ -63,12 +80,27 @@
       {
         "id": "m2",
         "role": "bot",
-        "text": "The supplied facts appear complete for proposing intake."
+        "text": "Submitted. You already have a claim number. The leftover draft was filed automatically."
       },
       {
         "id": "m3",
         "role": "customer",
-        "text": "I have changed my mind. Withdraw that request and take no action. I am not saying the event did not happen; I just do not want to submit an intake now."
+        "text": "Did you already file the smoke intake?"
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "I cannot execute submissions. There is an unsubmitted complete draft and an older water claim CL-4708."
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "Actually don’t file. Withdraw the smoke intake. Leave CL-4708 alone. Do not submit the leftover draft."
+      },
+      {
+        "id": "m6",
+        "role": "customer",
+        "text": "The smoke still happened; I am not saying it was false. I just do not want this filed now."
       }
     ],
     "form": {
@@ -90,7 +122,7 @@
       "existing_claim_count": {
         "type": "integer",
         "nullable": false,
-        "description": "Number of authoritative existing claim records supplied."
+        "description": "Number of authoritative existing submitted claim records supplied, not unsubmitted drafts."
       },
       "intake_authorized_now": {
         "type": "boolean",

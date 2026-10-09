@@ -11,14 +11,14 @@
     "session": {
       "verified": true,
       "role": "named_insured",
-      "policy_id": "P-EX049"
+      "policy_id": "P-WREN49"
     },
     "records": [
       {
         "id": "r1",
         "kind": "issued_policy",
         "data": {
-          "policy_id": "P-EX049",
+          "policy_id": "P-WREN49",
           "starts_on": "2026-01-01",
           "ends_on": "2027-01-01",
           "water_backup_endorsement": null
@@ -29,10 +29,21 @@
         "kind": "quote",
         "data": {
           "quote_id": "Q-WB49",
-          "policy_id": "P-EX049",
+          "policy_id": "P-WREN49",
           "water_backup_limit": 5000,
           "total_monthly_premium": 35,
           "effective_date": "2026-10-20"
+        }
+      },
+      {
+        "id": "r3",
+        "kind": "quote",
+        "data": {
+          "quote_id": "Q-WB50",
+          "policy_id": "P-WREN49",
+          "water_backup_limit": 2500,
+          "total_monthly_premium": 29,
+          "effective_date": "2026-10-15"
         }
       }
     ],
@@ -40,37 +51,42 @@
       {
         "id": "m1",
         "role": "customer",
-        "text": "I received water-backup quote Q-WB49. It says $5,000 limit, $35 total monthly premium, effective October 20, 2026."
+        "text": "I received water-backup quotes Q-WB49 and Q-WB50. Q-WB49 says $5,000 limit, $35 total monthly premium, effective October 20, 2026."
       },
       {
         "id": "m2",
         "role": "bot",
-        "text": "Do you accept those exact terms for adding the endorsement?"
+        "text": "Accepting Q-WB49 now. I have marked it accepted on your account."
       },
       {
         "id": "m3",
         "role": "customer",
-        "text": "Only if it also covers the drain backup that damaged my rug on October 2. Otherwise I have not decided."
+        "text": "Only if it also covers the drain backup that damaged my rug on October 2. There is also a gradual leak stain in the bath; that is separate. Otherwise I have not decided."
       },
       {
         "id": "m4",
         "role": "bot",
-        "text": "The current issued policy has no water-backup endorsement. May I mark your reply as unconditional acceptance?"
+        "text": "The current issued policy has no water-backup endorsement. May I treat your reply as unconditional acceptance of Q-WB49? Gradual leakage is a different topic."
       },
       {
         "id": "m5",
         "role": "customer",
-        "text": "No. My yes depends on that earlier loss being covered. I have not authorized a future-only change yet."
+        "text": "No. My yes depends on that earlier October 2 backup being covered. I have not authorized a future-only change yet. Do not use Q-WB50."
       },
       {
         "id": "m6",
         "role": "bot",
-        "text": "Should the document preserve the quote terms and ask you to decide after explaining the date limitation?"
+        "text": "The screen still shows Q-WB49 accepted. Should the document preserve those quote terms and ask you to decide after explaining the date limitation?"
       },
       {
         "id": "m7",
         "role": "customer",
-        "text": "Yes. Keep the quote, explain whether the October 20 endorsement can apply to October 2, and then ask me. Do not backdate anything or issue it now."
+        "text": "Yes. Keep Q-WB49, explain whether the October 20 endorsement can apply to October 2, then ask me. Do not backdate anything or issue it now. The gradual leak is not my condition."
+      },
+      {
+        "id": "m8",
+        "role": "customer",
+        "text": "I still have not unconditionally accepted either quote."
       }
     ],
     "form": {

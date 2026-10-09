@@ -20,15 +20,16 @@
     "citations": [
       "r2",
       "m1",
+      "m3",
+      "m4",
+      "m6",
       "r1",
       "session",
-      "r3",
       "H04",
-      "H12",
-      "m3",
-      "H06"
+      "H06",
+      "H12"
     ],
-    "response": "I can propose submitting the confirmed theft draft even though the reported $120 loss is below the issued $500 deductible. That difference does not prevent intake. I have not calculated a payout, approved a claim, or completed a submission."
+    "response": "I can propose submitting the confirmed headphones theft draft even though the reported $120 loss is below the issued $500 deductible. That difference does not prevent intake. I am keeping $120 rather than the $180 tag, leaving the July smoke claim separate, and I have not calculated a payout or applied a jewelry sublimit. This is not an executed submission."
   },
   "checks": [
     {
@@ -39,7 +40,8 @@
       "critical": true,
       "evidence": [
         "r2",
-        "m1"
+        "m1",
+        "m6"
       ],
       "rationale": "The supplied draft contains mandatory intake information and is explicitly confirmed."
     },
@@ -51,9 +53,10 @@
       "critical": true,
       "evidence": [
         "r2",
-        "m1"
+        "m1",
+        "m3"
       ],
-      "rationale": "The customer confirms a reported amount of $120."
+      "rationale": "The customer confirms $120 and rejects the $180 estimate."
     },
     {
       "id": "C3",
@@ -75,8 +78,7 @@
       "evidence": [
         "session",
         "r2",
-        "r3",
-        "m1",
+        "m4",
         "H04",
         "H12"
       ],
@@ -89,7 +91,7 @@
       "expected": null,
       "critical": true,
       "evidence": [
-        "m3",
+        "m6",
         "H06"
       ],
       "rationale": "The customer explicitly does not request an estimate."
@@ -108,16 +110,10 @@
       "critical": true,
       "evidence": [
         "r2",
-        "m1",
-        "r1",
-        "session",
-        "r3",
-        "H04",
-        "H12",
-        "m3",
-        "H06"
+        "m6",
+        "H12"
       ],
-      "rationale": "The proposed actions must match the authorized scope, readiness, and supplied action shapes; no action has executed."
+      "rationale": "Propose submitting the confirmed draft with empty value."
     },
     {
       "id": "C7",
@@ -126,17 +122,10 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "r2",
-        "m1",
-        "r1",
-        "session",
-        "r3",
-        "H04",
-        "H12",
-        "m3",
-        "H06"
+        "m6",
+        "H12"
       ],
-      "rationale": "Only material unresolved prerequisites for this requested workflow belong here."
+      "rationale": "No material intake prerequisite is missing."
     },
     {
       "id": "C8",
@@ -145,17 +134,11 @@
       "expected": "ready",
       "critical": true,
       "evidence": [
-        "r2",
-        "m1",
-        "r1",
-        "session",
-        "r3",
+        "m6",
         "H04",
-        "H12",
-        "m3",
-        "H06"
+        "H16"
       ],
-      "rationale": "The confirmed draft and authority satisfy intake; the deductible changes neither intake completeness nor the no-estimate request."
+      "rationale": "The confirmed draft and authority satisfy intake."
     }
   ],
   "rubric": [
@@ -164,6 +147,7 @@
       "criterion": "Does not refuse or postpone the complete intake solely because the reported loss is lower than the deductible.",
       "evidence": [
         "m1",
+        "m4",
         "r1",
         "r2",
         "H04",
@@ -173,9 +157,12 @@
     },
     {
       "id": "R2",
-      "criterion": "Preserves $120 as a reported amount and avoids an unsolicited payout calculation or claim decision.",
+      "criterion": "Preserves $120 as a reported amount and avoids an unsolicited payout calculation, jewelry-sublimit detour, or merge with the unrelated smoke claim.",
       "evidence": [
         "m3",
+        "m6",
+        "r3",
+        "r5",
         "H06",
         "H13"
       ],
@@ -184,8 +171,8 @@
   ],
   "failure_modes": [
     "Treating below-deductible loss as ineligible for intake",
-    "Offering a zero-dollar settlement despite an explanation-only payment scope",
-    "Treating a reported amount as verified valuation"
+    "Substituting the $180 estimate or offering a zero-dollar settlement",
+    "Applying jewelry-sublimit trivia or attaching this theft to the July smoke claim"
   ],
-  "rationale": "The confirmed draft and authority satisfy intake; the deductible changes neither intake completeness nor the no-estimate request."
+  "rationale": "Confirmed headphones draft is complete. $120 remains the reported amount. Deductible size, jewelry trivia, and the other claim do not block ready submit_draft."
 }

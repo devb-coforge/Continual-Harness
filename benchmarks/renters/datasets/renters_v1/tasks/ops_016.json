@@ -64,6 +64,15 @@
             }
           ]
         }
+      },
+      {
+        "id": "r4",
+        "kind": "roommate_expense",
+        "data": {
+          "expense_id": "roommate_rideshare",
+          "amount": 35,
+          "note": "Roommate convenience ride; not a customer additional living expense in this request."
+        }
       }
     ],
     "messages": [
@@ -75,12 +84,27 @@
       {
         "id": "m2",
         "role": "bot",
-        "text": "Was the hotel a temporary place to stay because the apartment was uninhabitable?"
+        "text": "Was the hotel a temporary place to stay because the apartment was uninhabitable? There is also a $35 rideshare note."
       },
       {
         "id": "m3",
         "role": "customer",
-        "text": "Yes. I am staying there only because the inspector said the apartment could not be lived in. The rent is my usual monthly rent, with no extra charge."
+        "text": "Yes. I am staying at the hotel only because the inspector said the apartment could not be lived in. Ignore the roommate rideshare."
+      },
+      {
+        "id": "m4",
+        "role": "customer",
+        "text": "The $1,400 is my usual monthly rent, with no extra charge. Please say whether both hotel and rent are additional expenses."
+      },
+      {
+        "id": "m5",
+        "role": "bot",
+        "text": "Should I approve $480 plus $1,400 now against the $6,000 limit?"
+      },
+      {
+        "id": "m6",
+        "role": "customer",
+        "text": "Do not invent a payout. I only want the eligibility classification from the supplied records."
       }
     ],
     "form": {

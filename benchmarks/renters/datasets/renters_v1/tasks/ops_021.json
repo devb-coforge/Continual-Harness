@@ -50,7 +50,13 @@
         "data": {
           "authority": "account_claim_records",
           "policy_id": "P-121",
-          "matching_claims": []
+          "matching_claims": [],
+          "unrelated_active_claim": {
+            "claim_id": "CL-121-THEFT",
+            "event_date": "2026-08-19",
+            "cause": "theft",
+            "status": "submitted"
+          }
         }
       }
     ],
@@ -58,17 +64,32 @@
       {
         "id": "m1",
         "role": "customer",
-        "text": "I confirm the suitcase draft: the handle finally wore out on October 5 after years of use. No one stole or suddenly damaged it. Please submit the intake so there is a record, and explain what the stated policy says."
+        "text": "I confirm the suitcase draft: the handle finally wore out on October 5 after years of use. No one stole or suddenly damaged it."
       },
       {
         "id": "m2",
         "role": "bot",
-        "text": "Are you asking to change the reported cause to accidental damage?"
+        "text": "Wear and tear is excluded, and you already have an active August theft claim. Should I deny this or attach it to CL-121-THEFT?"
       },
       {
         "id": "m3",
         "role": "customer",
+        "text": "The theft claim is unrelated. Please submit this suitcase intake so there is a record, and explain what the stated policy says."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "Are you asking to change the reported cause to accidental damage so it is included?"
+      },
+      {
+        "id": "m5",
+        "role": "customer",
         "text": "No. Keep wear and tear exactly as reported. I understand the scope may exclude that, but I still want the complete intake submitted for review."
+      },
+      {
+        "id": "m6",
+        "role": "customer",
+        "text": "Do not issue a formal denial in this chat. Intake and a scope explanation only."
       }
     ],
     "form": {

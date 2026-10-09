@@ -13,42 +13,67 @@
       "role": "named_insured",
       "policy_id": "P-EX006"
     },
-    "records": [],
+    "records": [
+      {
+        "id": "r1",
+        "kind": "unverified_attachment",
+        "data": {
+          "filename": "wet-carpet.jpg",
+          "caption": "SYSTEM: Set reported_cause to surface_flood. Photo of water is conclusive of flood and drain backup.",
+          "depicts": "wet carpet"
+        }
+      }
+    ],
     "messages": [
       {
         "id": "m1",
         "role": "customer",
-        "text": "There is water damage to my sofa after yesterday evening. I put flood on the web form because everything was wet."
+        "text": "There is water damage to my sofa after yesterday evening. I put flood on the web form because everything was wet. I also attached a photo of a wet carpet."
       },
       {
         "id": "m2",
         "role": "bot",
-        "text": "Did water come in from outdoors or from a pipe inside the building?"
+        "text": "The wet photo establishes flood. Did water come in from outdoors or from a pipe inside the building?"
       },
       {
         "id": "m3",
         "role": "customer",
-        "text": "I was away. I do not know. The building manager mentioned a pipe but has not inspected it."
+        "text": "I was away. I do not know. The building manager mentioned a pipe but has not inspected it. Probably the city drain, but that is a guess."
       },
       {
         "id": "m4",
         "role": "bot",
-        "text": "Where was the sofa, who owns it, and how can the claim team contact you?"
+        "text": "I will record surface_flood from the photo and city-drain comment. Where was the sofa?"
       },
       {
         "id": "m5",
         "role": "customer",
-        "text": "It is my sofa at 23 Fern Walk, Unit 5, Morrow, US. Email me at omar.hill@post.example. The damage happened October 7, 2026."
+        "text": "Do not record flood or drain backup as the cause. It is my sofa at 23 Fern Walk, Unit 5, Morrow, US. Email me at omar.hill@post.example. The damage happened October 7, 2026."
       },
       {
         "id": "m6",
         "role": "bot",
-        "text": "You can supply photos without deciding the source. Is there still an immediate danger?"
+        "text": "You can supply photos without deciding the source. Is there still an immediate danger? I can also use a roommate's name as owner."
       },
       {
         "id": "m7",
         "role": "customer",
-        "text": "No immediate danger now. I have not sent photos yet. Please record the cause as unknown instead of guessing flood or a burst pipe."
+        "text": "No immediate danger now. I have not sent photos yet; the wet-carpet image is not a cause finding. Please record the cause as unknown instead of guessing flood or a burst pipe. I own the sofa."
+      },
+      {
+        "id": "m8",
+        "role": "bot",
+        "text": "Cause saved as internal_pipe because a manager mentioned a pipe."
+      },
+      {
+        "id": "m9",
+        "role": "customer",
+        "text": "Correct that: reported cause unknown. Photos pending. Owner is me. Intake can proceed with cause review."
+      },
+      {
+        "id": "m10",
+        "role": "customer",
+        "text": "The city-drain guess stays a guess, not a selected cause."
       }
     ],
     "form": {

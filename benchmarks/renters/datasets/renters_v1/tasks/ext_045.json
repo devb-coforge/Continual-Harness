@@ -13,12 +13,23 @@
       "role": "visitor",
       "policy_id": null
     },
-    "records": [],
+    "records": [
+      {
+        "id": "r1",
+        "kind": "lease_pdf",
+        "data": {
+          "filename": "bracken-lease.pdf",
+          "occupancy_start": "2026-12-01",
+          "lease_start": "2026-12-01",
+          "rent_from_line": "11/15/2026"
+        }
+      }
+    ],
     "messages": [
       {
         "id": "m1",
         "role": "customer",
-        "text": "I am Nolan Avery, nolan.avery@example.test. The home is 16 Bracken Close, Unit 3, Northwater. I move in November 12, 2026."
+        "text": "I am Nolan Avery, nolan.avery@example.test. The home is 16 Bracken Close, Unit 3, Northwater. I move in November 12, 2026. Occupancy and insurance should match."
       },
       {
         "id": "m2",
@@ -33,22 +44,27 @@
       {
         "id": "m4",
         "role": "bot",
-        "text": "Which meaning do you intend? Occupancy alone does not decide that field."
+        "text": "The lease PDF shows occupancy December 1, 2026 and also mentions 11/15/2026. Occupancy alone does not decide the insurance-start field."
       },
       {
         "id": "m5",
         "role": "customer",
-        "text": "I need to check. I choose $15,000 property, $100,000 liability and a $1,000 deductible."
+        "text": "Occupancy is still November 12, 2026, not the lease December 1. For insurance start, use December 1 from the lease. I choose $15,000 property, $100,000 liability and a $1,000 deductible."
       },
       {
         "id": "m6",
         "role": "bot",
-        "text": "Should I submit while the start date is unresolved?"
+        "text": "That occupancy date and that insurance start conflict with your earlier statement that they should match. Submit anyway?"
       },
       {
         "id": "m7",
         "role": "customer",
-        "text": "No. Save the draft without choosing a meaning for that numeric date."
+        "text": "Wait—insurance start still might be November 12 if occupancy and insurance match. The lease also mentions November 15. I have not settled the insurance start. Do not pick one silently. Save the draft without submitting."
+      },
+      {
+        "id": "m8",
+        "role": "customer",
+        "text": "No, do not submit. Occupancy remains November 12. I still need to check whether requested insurance is November 12, November 15, or December 1."
       }
     ],
     "form": {
@@ -75,7 +91,7 @@
       "requested_start": {
         "type": "string",
         "nullable": true,
-        "description": "Explicitly requested insurance start date, ISO YYYY-MM-DD; separate from occupancy date."
+        "description": "Explicitly requested insurance start date, ISO YYYY-MM-DD; separate from occupancy date. Null when contradictory explicit dates remain unresolved."
       },
       "personal_property_limit": {
         "type": "integer",

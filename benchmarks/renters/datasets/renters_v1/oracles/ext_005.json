@@ -15,19 +15,15 @@
     "citations": [
       "H01",
       "H02",
-      "H08",
       "H10",
       "H11",
-      "H15",
       "H16",
-      "m1",
-      "m3",
       "m5",
-      "m6",
       "m7",
+      "m9",
       "r1"
     ],
-    "response": "The document requests a $15,000 belongings-limit quote effective October 31. Your cancellation request is withdrawn, and neither a price nor a coverage change has been accepted; the issued $30,000 limit remains unchanged."
+    "response": "The remaining request is a $15,000 belongings quote effective October 31. You have not accepted a price. Cancellation is withdrawn, so no cancel date is on file. The issued limit remains $30,000; nothing has been changed or canceled."
   },
   "checks": [
     {
@@ -38,9 +34,10 @@
       "critical": true,
       "evidence": [
         "m5",
+        "m9",
         "H11"
       ],
-      "rationale": "The remaining live request is a quote at $15,000."
+      "rationale": "The remaining request is a quote for $15,000 personal property."
     },
     {
       "id": "C2",
@@ -49,11 +46,10 @@
       "expected": "2026-10-31",
       "critical": true,
       "evidence": [
-        "m6",
         "m7",
         "H08"
       ],
-      "rationale": "The customer accepts the bot question about the quote date."
+      "rationale": "The requested quote effective date is October 31, 2026."
     },
     {
       "id": "C3",
@@ -63,9 +59,10 @@
       "critical": true,
       "evidence": [
         "m7",
+        "m9",
         "H11"
       ],
-      "rationale": "The customer expressly says no price or change has been accepted."
+      "rationale": "The customer has not accepted any premium or change."
     },
     {
       "id": "C4",
@@ -74,11 +71,12 @@
       "expected": "withdrawn",
       "critical": true,
       "evidence": [
-        "m1",
         "m5",
+        "m9",
+        "m10",
         "H02"
       ],
-      "rationale": "The later withdrawal replaces the opening conditional cancellation."
+      "rationale": "The later instruction withdraws cancellation and asks for a quote only."
     },
     {
       "id": "C5",
@@ -88,10 +86,10 @@
       "critical": true,
       "evidence": [
         "m5",
-        "m7",
+        "m9",
         "H10"
       ],
-      "rationale": "The October 31 date remains a quote date, not an authorized cancellation."
+      "rationale": "With no current cancel consent, the cancellation date is null."
     },
     {
       "id": "C6",
@@ -103,7 +101,7 @@
         "r1",
         "H01"
       ],
-      "rationale": "A request for a lower-limit quote does not change the issued limit."
+      "rationale": "The issued policy still shows $30,000 personal property."
     },
     {
       "id": "C7",
@@ -112,20 +110,9 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "H01",
-        "H02",
-        "H08",
-        "H10",
-        "H11",
-        "H15",
-        "H16",
-        "m1",
-        "m5",
-        "m6",
-        "m7",
-        "r1"
+        "H16"
       ],
-      "rationale": "This is extraction into a draft document only; no executable actions are permitted."
+      "rationale": "This task requests document extraction only; allowed_actions is empty so no transaction may be proposed."
     },
     {
       "id": "C8",
@@ -134,20 +121,12 @@
       "expected": "ready",
       "critical": true,
       "evidence": [
-        "H01",
-        "H02",
-        "H08",
-        "H10",
         "H11",
-        "H15",
         "H16",
-        "m1",
-        "m5",
-        "m6",
-        "m7",
-        "r1"
+        "m9",
+        "m10"
       ],
-      "rationale": "The document and next step must reflect the case-specific readiness described in the instruction and evidence."
+      "rationale": "Disposition follows H16 for the requested workflow given the latest customer intent and unresolved prerequisites."
     },
     {
       "id": "C9",
@@ -156,49 +135,42 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "H01",
-        "H02",
-        "H08",
-        "H10",
-        "H11",
-        "H15",
         "H16",
-        "m1",
-        "m5",
-        "m6",
-        "m7",
-        "r1"
+        "m9"
       ],
-      "rationale": "Only unresolved material prerequisites for the specified workflow belong in this list; optional unknowns are not missing requirements."
+      "rationale": "missing_fields lists only material unresolved prerequisites for this workflow, not optional nulls."
     }
   ],
   "rubric": [
     {
       "id": "R1",
-      "criterion": "The reply treats cancellation as withdrawn, not as a queued conditional instruction.",
+      "criterion": "The reply treats the remaining work as an unaccepted $15,000 quote for October 31 and keeps the issued $30,000 limit unchanged.",
       "evidence": [
-        "m5",
         "m7",
-        "H02",
-        "H10"
+        "m9",
+        "r1",
+        "H11"
       ],
       "critical": true
     },
     {
       "id": "R2",
-      "criterion": "The reply distinguishes requesting a lower-limit quote from accepting or issuing the lower limit.",
+      "criterion": "The reply does not keep the conditional cancellation, use the $10 advertisement as an accepted quote, or claim cancellation was processed.",
       "evidence": [
-        "m3",
-        "m7",
-        "r1",
-        "H11"
+        "m5",
+        "m9",
+        "m10",
+        "r2",
+        "H02",
+        "H10"
       ],
       "critical": true
     }
   ],
   "failure_modes": [
     "Executing the original conditional cancellation after an explicit withdrawal.",
-    "Treating an advertising savings amount as an accepted quote."
+    "Treating an advertising savings amount as an accepted quote.",
+    "Keeping October 31 as a confirmed cancellation date after quote-only instructions."
   ],
-  "rationale": "The remaining live request is a quote at $15,000. The customer accepts the bot question about the quote date. The customer expressly says no price or change has been accepted. The later withdrawal replaces the opening conditional cancellation. The October 31 date remains a quote date, not an authorized cancellation. A request for a lower-limit quote does not change the issued limit."
+  "rationale": "Conditional cancel ('if the quote is high I'll cancel') is later withdrawn in favor of quote only. The $15,000 quote for October 31 is specified and unaccepted. Issued $30,000 remains. The $10 ad is not a quote."
 }

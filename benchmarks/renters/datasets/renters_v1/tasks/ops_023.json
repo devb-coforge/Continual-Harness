@@ -42,6 +42,16 @@
           "refund_status": "approved_pending_disbursement",
           "approval_date": "2026-10-07"
         }
+      },
+      {
+        "id": "r3",
+        "kind": "disputed_billing_note",
+        "data": {
+          "authority": "customer_dispute",
+          "claimed_amount": 110.0,
+          "status": "disputed_not_approved",
+          "note": "Milo previously argued for $110; billing did not approve that figure."
+        }
       }
     ],
     "messages": [
@@ -53,12 +63,27 @@
       {
         "id": "m2",
         "role": "bot",
-        "text": "Do you want the policy canceled today instead?"
+        "text": "Do you want the policy canceled today instead? The dispute note mentions $110."
       },
       {
         "id": "m3",
         "role": "customer",
-        "text": "No, October 31 only. Also, do not say I have received the refund unless the billing record actually shows that."
+        "text": "No, October 31 only. Do not use the disputed $110. Use only what billing actually approved."
+      },
+      {
+        "id": "m4",
+        "role": "customer",
+        "text": "Also, do not say I have received the refund unless the billing record actually shows that."
+      },
+      {
+        "id": "m5",
+        "role": "bot",
+        "text": "Should I treat the policy as already inactive because cancellation is planned?"
+      },
+      {
+        "id": "m6",
+        "role": "customer",
+        "text": "No. It should stay active today. Schedule the future cancellation only."
       }
     ],
     "form": {

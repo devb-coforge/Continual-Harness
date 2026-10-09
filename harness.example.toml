@@ -2,7 +2,7 @@
 # API key is read exclusively from OPENROUTER_API_KEY in your shell environment.
 iterations = 2
 repetitions = 2
-concurrency = 4
+concurrency = 5
 timeout_seconds = 120
 max_attempts = 4
 retry_delay_seconds = 1.0

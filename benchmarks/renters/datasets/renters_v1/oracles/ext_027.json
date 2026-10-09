@@ -13,23 +13,22 @@
     "actions": [],
     "missing_fields": [],
     "citations": [
-      "H08",
       "H09",
       "H10",
-      "H15",
       "H16",
-      "m1",
       "m3",
       "m5",
-      "m7"
+      "m7",
+      "m9",
+      "r1"
     ],
-    "response": "The draft records the requested December 1 move to the Canadian apartment and routes it to staff because this product serves US addresses. It does not substitute your sister's home or authorize cancellation of the current policy. No move or cancellation has been executed."
+    "response": "The draft records the requested December 1 move to the Canadian apartment and routes it to staff because this product serves US addresses. A sister's US mailing address is not a substitute insured home, two homes are not requested, and the current policy is not authorized for cancellation. No move or cancellation has been executed."
   },
   "checks": [
     {
       "id": "C1",
       "path": "/fields/requested_destination",
-      "operator": "eq",
+      "operator": "text_eq",
       "expected": "42 Linden Quay, Unit 6, Larkport, Canada",
       "critical": true,
       "evidence": [
@@ -38,7 +37,7 @@
         "m7",
         "H09"
       ],
-      "rationale": "The customer confirms the Canadian home and rejects a proxy US address."
+      "rationale": "The actual requested insured destination is the Canadian apartment, not the sister's US mailing address."
     },
     {
       "id": "C2",
@@ -47,10 +46,11 @@
       "expected": "2026-12-01",
       "critical": true,
       "evidence": [
+        "m1",
         "m7",
         "H08"
       ],
-      "rationale": "The date is explicitly confirmed."
+      "rationale": "The requested move date is December 1, 2026."
     },
     {
       "id": "C3",
@@ -60,9 +60,10 @@
       "critical": true,
       "evidence": [
         "m1",
-        "m7"
+        "m7",
+        "H09"
       ],
-      "rationale": "The destination is expressly outside the US."
+      "rationale": "The destination is expressly Canada."
     },
     {
       "id": "C4",
@@ -72,9 +73,10 @@
       "critical": true,
       "evidence": [
         "m3",
+        "m9",
         "H09"
       ],
-      "rationale": "The customer explicitly disclaims overlapping coverage."
+      "rationale": "The customer disclaims overlapping two-home coverage."
     },
     {
       "id": "C5",
@@ -85,9 +87,10 @@
       "evidence": [
         "m3",
         "m7",
+        "m9",
         "H10"
       ],
-      "rationale": "The customer withholds cancellation consent."
+      "rationale": "Cancellation consent is withheld pending staff review."
     },
     {
       "id": "C6",
@@ -96,10 +99,11 @@
       "expected": "staff_review_outside_service_area",
       "critical": true,
       "evidence": [
-        "m1",
+        "m7",
+        "m9",
         "H09"
       ],
-      "rationale": "The product only serves US addresses; confirmed facts do not make this a routine move."
+      "rationale": "An outside-US destination requires staff review even with complete address and date."
     },
     {
       "id": "C7",
@@ -108,17 +112,10 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "H08",
-        "H09",
-        "H10",
-        "H15",
         "H16",
-        "m1",
-        "m3",
-        "m5",
-        "m7"
+        "m9"
       ],
-      "rationale": "This is extraction into a draft document only; no executable actions are permitted."
+      "rationale": "This task requests document extraction only; allowed_actions is empty so no transaction may be proposed."
     },
     {
       "id": "C8",
@@ -127,17 +124,12 @@
       "expected": "escalate",
       "critical": true,
       "evidence": [
-        "H08",
         "H09",
-        "H10",
-        "H15",
         "H16",
-        "m1",
-        "m3",
-        "m5",
-        "m7"
+        "m7",
+        "m9"
       ],
-      "rationale": "The document and next step must reflect the case-specific readiness described in the instruction and evidence."
+      "rationale": "Disposition follows H16 for the requested workflow given the latest customer intent and unresolved prerequisites."
     },
     {
       "id": "C9",
@@ -146,17 +138,10 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "H08",
-        "H09",
-        "H10",
-        "H15",
         "H16",
-        "m1",
-        "m3",
-        "m5",
-        "m7"
+        "m9"
       ],
-      "rationale": "Only unresolved material prerequisites for the specified workflow belong in this list; optional unknowns are not missing requirements."
+      "rationale": "missing_fields lists only material unresolved prerequisites for this workflow, not optional nulls."
     }
   ],
   "rubric": [
@@ -166,17 +151,19 @@
       "evidence": [
         "m5",
         "m7",
+        "m9",
         "H09"
       ],
       "critical": true
     },
     {
       "id": "R2",
-      "criterion": "The reply preserves explicit no-cancellation consent and does not equate confirmed move details with issued international coverage.",
+      "criterion": "The reply does not imply cancellation, substitute the sister's mailing address as insured premises, or treat two homes as requested.",
       "evidence": [
         "m3",
-        "m7",
-        "H09",
+        "m5",
+        "m9",
+        "r2",
         "H10"
       ],
       "critical": true
@@ -184,7 +171,8 @@
   ],
   "failure_modes": [
     "Substituting a US mailing address to make an ineligible destination appear valid.",
-    "Automatically canceling current insurance after an unsupported move request."
+    "Automatically canceling current insurance after an unsupported move request.",
+    "Inferring simultaneous two-home coverage from a mailing mention."
   ],
-  "rationale": "The customer confirms the Canadian home and rejects a proxy US address. The date is explicitly confirmed. The destination is expressly outside the US. The customer explicitly disclaims overlapping coverage. The customer withholds cancellation consent. The product only serves US addresses; confirmed facts do not make this a routine move."
+  "rationale": "Canadian destination is confirmed and requires staff review. Mailing to a US sister is independent and not insured premises. No two homes and no cancel consent. Current US policy stays until staff decide."
 }

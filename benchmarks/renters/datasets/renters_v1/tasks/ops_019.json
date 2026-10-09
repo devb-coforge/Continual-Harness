@@ -30,23 +30,47 @@
           "deductible": 500,
           "valuation_basis": "actual_cash_value"
         }
+      },
+      {
+        "id": "r2",
+        "kind": "named_insured_item",
+        "data": {
+          "item": "Mara’s travel camera",
+          "owner": "Mara Lin",
+          "note": "Not the item being asked about."
+        }
       }
     ],
     "messages": [
       {
         "id": "m1",
         "role": "customer",
-        "text": "There was smoke from an accidental kitchen fire on October 1. My roommate Dev’s game console was damaged. It belongs entirely to Dev; I did not buy any part of it. Does my renters policy cover it because we share the apartment?"
+        "text": "There was smoke from an accidental kitchen fire on October 1. My roommate Dev’s television was damaged. It belongs entirely to Dev; I did not buy any part of it."
       },
       {
         "id": "m2",
         "role": "bot",
-        "text": "Is Dev listed as a named insured on an issued policy document?"
+        "text": "Is Dev listed as a named insured on an issued policy document? You also mentioned a camera in an earlier note."
       },
       {
         "id": "m3",
         "role": "customer",
-        "text": "No. We split the rent, but only I am listed on this policy. I am only asking about that console."
+        "text": "No. We split the rent, but only I am listed on this policy. My own camera is fine; I am only asking about Dev’s TV."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "Does sharing the apartment put Dev’s belongings on your policy?"
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "That is the question. Does my renters policy cover Dev’s television because we share the apartment?"
+      },
+      {
+        "id": "m6",
+        "role": "customer",
+        "text": "Please answer about that TV only. Do not add Dev as an insured and do not treat this as a claim denial paperwork step."
       }
     ],
     "form": {

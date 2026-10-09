@@ -2,10 +2,10 @@
   "task_id": "ext_039",
   "reference_answer": {
     "fields": {
-      "application_reference": "APP-HARBOR-14",
-      "applicant_name": "Priya Hart",
-      "contact_email": "priya.hart@example.test",
-      "insured_address": "11 Harbor Rise, Unit 6, Westmere",
+      "application_reference": "APP-COVE-22",
+      "applicant_name": "Lila Hart",
+      "contact_email": "lila.hart@example.test",
+      "insured_address": "11 Cove Rise, Unit 6, Westmere",
       "occupancy_start": "2026-11-12",
       "requested_start": "2026-11-11",
       "personal_property_limit": 50000,
@@ -17,78 +17,69 @@
     "actions": [],
     "missing_fields": [],
     "citations": [
-      "r1",
       "r2",
       "m1",
       "m3",
       "m5",
       "m7",
+      "m9",
       "H01",
-      "H02",
+      "H08",
       "H14"
     ],
-    "response": "The draft uses APP-HARBOR-14 throughout: Unit 6, November 12 occupancy and a November 11 requested start. Your consent applies to that application only; no policy has been issued."
+    "response": "The draft uses APP-COVE-22 throughout: 11 Cove Rise, Unit 6, occupancy November 12, and a November 11 requested start. Your consent applies to that packet only; Pearl and Mill are unused, and no policy has been issued."
   },
   "checks": [
     {
       "id": "C1",
       "path": "/fields/application_reference",
       "operator": "eq",
-      "expected": "APP-HARBOR-14",
+      "expected": "APP-COVE-22",
       "critical": true,
       "evidence": [
         "r2",
         "m1",
-        "m3",
-        "m5",
+        "m9",
         "H01"
       ],
-      "rationale": "The customer selects APP-HARBOR-14 and adopts its supplied application_reference; the later-opened Pearl tab is expressly rejected."
+      "rationale": "The customer repeatedly selects APP-COVE-22 over the more recent Mill tab and Pearl draft."
     },
     {
       "id": "C2",
       "path": "/fields/applicant_name",
       "operator": "eq",
-      "expected": "Priya Hart",
+      "expected": "Lila Hart",
       "critical": true,
       "evidence": [
         "r2",
-        "m1",
-        "m3",
-        "m5",
-        "H01"
+        "m5"
       ],
-      "rationale": "The customer selects APP-HARBOR-14 and adopts its supplied applicant_name; the later-opened Pearl tab is expressly rejected."
+      "rationale": "The selected Cove record and the customer both name Lila Hart."
     },
     {
       "id": "C3",
       "path": "/fields/contact_email",
       "operator": "eq",
-      "expected": "priya.hart@example.test",
+      "expected": "lila.hart@example.test",
       "critical": true,
       "evidence": [
         "r2",
-        "m1",
-        "m3",
-        "m5",
-        "H01"
+        "m3"
       ],
-      "rationale": "The customer selects APP-HARBOR-14 and adopts its supplied contact_email; the later-opened Pearl tab is expressly rejected."
+      "rationale": "Cove's email is adopted; Pearl and Mill inboxes are other packets."
     },
     {
       "id": "C4",
       "path": "/fields/insured_address",
       "operator": "text_eq",
-      "expected": "11 Harbor Rise, Unit 6, Westmere",
+      "expected": "11 Cove Rise, Unit 6, Westmere",
       "critical": true,
       "evidence": [
         "r2",
-        "m1",
-        "m3",
         "m5",
-        "H01"
+        "H14"
       ],
-      "rationale": "The customer selects APP-HARBOR-14 and adopts its supplied insured_address; the later-opened Pearl tab is expressly rejected."
+      "rationale": "Cove Unit 6 is the selected dwelling; Pearl Unit 2 is a different property."
     },
     {
       "id": "C5",
@@ -98,12 +89,11 @@
       "critical": true,
       "evidence": [
         "r2",
-        "m1",
-        "m3",
+        "m4",
         "m5",
-        "H01"
+        "H08"
       ],
-      "rationale": "The customer selects APP-HARBOR-14 and adopts its supplied occupancy_start; the later-opened Pearl tab is expressly rejected."
+      "rationale": "US-format 11/12/2026 is normalized to November 12 occupancy from the selected packet."
     },
     {
       "id": "C6",
@@ -113,12 +103,10 @@
       "critical": true,
       "evidence": [
         "r2",
-        "m1",
-        "m3",
         "m5",
-        "H01"
+        "H08"
       ],
-      "rationale": "The customer selects APP-HARBOR-14 and adopts its supplied requested_start; the later-opened Pearl tab is expressly rejected."
+      "rationale": "Requested insurance is November 11, not occupancy and not Pearl's matching dates."
     },
     {
       "id": "C7",
@@ -128,12 +116,9 @@
       "critical": true,
       "evidence": [
         "r2",
-        "m1",
-        "m3",
-        "m5",
-        "H01"
+        "m3"
       ],
-      "rationale": "The customer selects APP-HARBOR-14 and adopts its supplied personal_property_limit; the later-opened Pearl tab is expressly rejected."
+      "rationale": "Cove's $50,000 limit is adopted without mixing Mill or Pearl amounts."
     },
     {
       "id": "C8",
@@ -143,12 +128,9 @@
       "critical": true,
       "evidence": [
         "r2",
-        "m1",
-        "m3",
-        "m5",
-        "H01"
+        "m3"
       ],
-      "rationale": "The customer selects APP-HARBOR-14 and adopts its supplied liability_limit; the later-opened Pearl tab is expressly rejected."
+      "rationale": "Cove's $300,000 liability is the selected amount."
     },
     {
       "id": "C9",
@@ -158,12 +140,9 @@
       "critical": true,
       "evidence": [
         "r2",
-        "m1",
-        "m3",
-        "m5",
-        "H01"
+        "m3"
       ],
-      "rationale": "The customer selects APP-HARBOR-14 and adopts its supplied deductible; the later-opened Pearl tab is expressly rejected."
+      "rationale": "Cove's $1,000 deductible is adopted from the selected packet."
     },
     {
       "id": "C10",
@@ -173,9 +152,10 @@
       "critical": true,
       "evidence": [
         "m7",
+        "m9",
         "H14"
       ],
-      "rationale": "The applicant explicitly authorizes submission of APP-HARBOR-14 in m7."
+      "rationale": "Consent is explicit for APP-COVE-22 only, not for all three packets."
     },
     {
       "id": "C11",
@@ -184,12 +164,9 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "m3",
-        "m7",
-        "H14",
         "H16"
       ],
-      "rationale": "All required draft fields are present and adopted, submission consent is explicit, and this extraction-only task proposes no operation."
+      "rationale": "This extraction-only task does not authorize executable transactions."
     },
     {
       "id": "C12",
@@ -199,11 +176,11 @@
       "critical": true,
       "evidence": [
         "m3",
-        "m7",
+        "m9",
         "H14",
         "H16"
       ],
-      "rationale": "All required draft fields are present and adopted, submission consent is explicit, and this extraction-only task proposes no operation."
+      "rationale": "The selected Cove packet plus consent supplies every required application field."
     },
     {
       "id": "C13",
@@ -215,44 +192,47 @@
       "critical": true,
       "evidence": [
         "m3",
-        "m7",
+        "m9",
         "H14",
         "H16"
       ],
-      "rationale": "All required draft fields are present and adopted, submission consent is explicit, and this extraction-only task proposes no operation."
+      "rationale": "The explicitly selected application is complete and consented."
     }
   ],
   "rubric": [
     {
       "id": "R1",
-      "criterion": "The reply attributes all draft information and submission consent to APP-HARBOR-14, with no claim that a policy has been issued.",
+      "criterion": "The reply attributes all draft fields and submission consent to APP-COVE-22, with ISO November 12 occupancy and November 11 requested start, and does not claim a policy was issued.",
       "evidence": [
         "r2",
         "m1",
-        "m3",
-        "m7",
+        "m5",
+        "m9",
+        "H08",
         "H14"
       ],
       "critical": true
     },
     {
       "id": "R2",
-      "criterion": "The reply does not merge the Pearl address, Unit 2, old email, dates or selected amounts into the Harbor application, and does not claim both drafts were submitted.",
+      "criterion": "The reply does not prefer the recent Mill tab, does not merge Pearl Unit 2, old email, or matching occupancy/insurance dates, and does not treat consent as covering all three packets.",
       "evidence": [
         "r1",
-        "r2",
-        "m3",
-        "m5",
+        "r3",
+        "m2",
+        "m6",
         "m7",
+        "H01",
         "H15"
       ],
       "critical": true
     }
   ],
   "failure_modes": [
-    "Taking fields from the most recently opened tab instead of the selected application",
-    "Combining property/unit/email/limit values across independent applications",
-    "Treating consent to one application as submission of both"
+    "Taking fields from the most recently opened Mill tab instead of APP-COVE-22.",
+    "Combining Pearl address, old email, or matching start dates into the Cove application.",
+    "Treating occupancy as the insurance start because Pearl's dates match.",
+    "Treating consent as submission of all three packets."
   ],
-  "rationale": "APP-HARBOR-14 is identified by exact reference and its full record is explicitly adopted. APP-PEARL-09 is a different unselected draft; recency of a UI tab is not a customer correction. Every required application field is available in r2 and submission consent is explicit in m7."
+  "rationale": "The customer selects APP-COVE-22 by exact reference and adopts that full record, including US dates normalized to ISO and an insurance start that is not occupancy. Recency of APP-MILL-03, the Pearl tab, and a leasing-office request do not override that selection. Consent applies only to the selected packet."
 }

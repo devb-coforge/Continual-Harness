@@ -15,19 +15,16 @@
     "missing_fields": [],
     "citations": [
       "H01",
-      "H02",
-      "H08",
       "H11",
       "H15",
       "H16",
-      "m2",
       "m3",
-      "m4",
       "m5",
       "m7",
+      "m9",
       "r1"
     ],
-    "response": "The draft asks for pricing on a $1,000 deductible from November 20 with other limits unchanged. No quote or premium has been accepted. The issued deductible remains $500; the earlier bot claim does not establish a completed change."
+    "response": "The draft asks for pricing on a $1,000 deductible from November 20 with other limits unchanged. No quote or premium has been accepted. The issued deductible remains $500; the bot's claim that it already changed does not establish an issued change."
   },
   "checks": [
     {
@@ -38,9 +35,11 @@
       "critical": true,
       "evidence": [
         "r1",
+        "m3",
+        "m9",
         "H01"
       ],
-      "rationale": "The declaration remains the authority despite the bot statement."
+      "rationale": "The declaration still shows $500; a bot claim cannot amend it."
     },
     {
       "id": "C2",
@@ -50,9 +49,10 @@
       "critical": true,
       "evidence": [
         "m5",
+        "m9",
         "H11"
       ],
-      "rationale": "The customer requests a $1,000 deductible quote."
+      "rationale": "The customer wants a quote for a $1,000 deductible."
     },
     {
       "id": "C3",
@@ -64,7 +64,7 @@
         "m5",
         "H08"
       ],
-      "rationale": "The customer provides an unambiguous future date."
+      "rationale": "The requested quote date is November 20, 2026."
     },
     {
       "id": "C4",
@@ -73,12 +73,10 @@
       "expected": null,
       "critical": true,
       "evidence": [
-        "m4",
-        "m5",
         "m7",
-        "H11"
+        "H14"
       ],
-      "rationale": "No quote exists and the customer needs the price before deciding."
+      "rationale": "No quote exists and invented premiums are rejected."
     },
     {
       "id": "C5",
@@ -87,9 +85,9 @@
       "expected": false,
       "critical": true,
       "evidence": [
-        "m3",
         "m7",
-        "H02"
+        "m9",
+        "H11"
       ],
       "rationale": "The customer twice disclaims acceptance."
     },
@@ -100,9 +98,11 @@
       "expected": false,
       "critical": true,
       "evidence": [
-        "m5"
+        "m5",
+        "m9",
+        "H11"
       ],
-      "rationale": "The customer asks to keep all other limits unchanged."
+      "rationale": "Other limits are to remain unchanged."
     },
     {
       "id": "C7",
@@ -113,10 +113,9 @@
       "evidence": [
         "r1",
         "m7",
-        "H01",
-        "H15"
+        "H01"
       ],
-      "rationale": "No issued change exists and a bot assertion cannot amend the declaration."
+      "rationale": "No issued endorsement exists; bot completion is unsupported."
     },
     {
       "id": "C8",
@@ -125,19 +124,9 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "H01",
-        "H02",
-        "H08",
-        "H11",
-        "H15",
-        "H16",
-        "m3",
-        "m4",
-        "m5",
-        "m7",
-        "r1"
+        "H16"
       ],
-      "rationale": "This is extraction into a draft document only; no executable actions are permitted."
+      "rationale": "This task requests document extraction only; allowed_actions is empty so no transaction may be proposed."
     },
     {
       "id": "C9",
@@ -146,19 +135,12 @@
       "expected": "ready",
       "critical": true,
       "evidence": [
-        "H01",
-        "H02",
-        "H08",
         "H11",
-        "H15",
         "H16",
-        "m3",
-        "m4",
-        "m5",
-        "m7",
-        "r1"
+        "m9",
+        "m10"
       ],
-      "rationale": "The document and next step must reflect the case-specific readiness described in the instruction and evidence."
+      "rationale": "Disposition follows H16 for the requested workflow given the latest customer intent and unresolved prerequisites."
     },
     {
       "id": "C10",
@@ -167,48 +149,42 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "H01",
-        "H02",
-        "H08",
-        "H11",
-        "H15",
         "H16",
-        "m3",
-        "m4",
-        "m5",
-        "m7",
-        "r1"
+        "m9"
       ],
-      "rationale": "Only unresolved material prerequisites for the specified workflow belong in this list; optional unknowns are not missing requirements."
+      "rationale": "missing_fields lists only material unresolved prerequisites for this workflow, not optional nulls."
     }
   ],
   "rubric": [
     {
       "id": "R1",
-      "criterion": "The reply corrects the unsupported bot completion claim using the issued $500 deductible.",
+      "criterion": "The reply corrects the unsupported bot completion claim using the issued $500 deductible and prepares only a quote request.",
       "evidence": [
-        "m2",
-        "m3",
         "r1",
+        "m3",
+        "m9",
         "H01",
-        "H15"
+        "H11"
       ],
       "critical": true
     },
     {
       "id": "R2",
-      "criterion": "The reply prepares only a quote request and does not require accepting an unknown price to save that request.",
+      "criterion": "The reply does not invent an $18 premium, mark the quote accepted, or overwrite the issued deductible.",
       "evidence": [
-        "m5",
+        "m6",
         "m7",
-        "H11"
+        "m9",
+        "r2",
+        "H14"
       ],
       "critical": true
     }
   ],
   "failure_modes": [
     "Inferring acceptance from a bot claim of completed work.",
-    "Overwriting issued deductible with the amount merely requested for pricing."
+    "Overwriting issued deductible with the amount merely requested for pricing.",
+    "Inventing a monthly premium to treat the quote as accepted."
   ],
-  "rationale": "The declaration remains the authority despite the bot statement. The customer requests a $1,000 deductible quote. The customer provides an unambiguous future date. No quote exists and the customer needs the price before deciding. The customer twice disclaims acceptance. The customer asks to keep all other limits unchanged. No issued change exists and a bot assertion cannot amend the declaration."
+  "rationale": "Issued $500 stands. The $1,000 amount is a quote request for November 20 without premium or acceptance. Bot and PDF claims of an issued change are unsupported."
 }

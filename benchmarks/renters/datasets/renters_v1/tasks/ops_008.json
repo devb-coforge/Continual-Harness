@@ -53,23 +53,59 @@
           "approved_refund_amount": null,
           "refund_status": "not_determined"
         }
+      },
+      {
+        "id": "r4",
+        "kind": "claim",
+        "data": {
+          "authority": "submitted_claim_record",
+          "claim_id": "CL-108-B",
+          "policy_id": "P-108",
+          "event_date": "2026-06-03",
+          "cause": "smoke",
+          "status": "closed"
+        }
+      },
+      {
+        "id": "r5",
+        "kind": "autopay_instruction",
+        "data": {
+          "authority": "billing_preference",
+          "status": "active",
+          "note": "Canceling autopay is a payment-method instruction, not a policy cancellation."
+        }
       }
     ],
     "messages": [
       {
         "id": "m1",
         "role": "customer",
-        "text": "Please cancel P-108 today, October 8, 2026. I understand that is the effective cancellation date and I consent. My September theft claim should stay open."
+        "text": "Please cancel P-108. I first thought October 20, but I am restating: cancel today, October 8, 2026. I understand that is the effective cancellation date and I consent."
       },
       {
         "id": "m2",
         "role": "bot",
-        "text": "Are you also asking to withdraw that claim or for a refund calculation?"
+        "text": "Your autopay note says canceling the payment method closes the policy. Should I also withdraw CL-108-A and the closed June smoke claim CL-108-B?"
       },
       {
         "id": "m3",
         "role": "customer",
-        "text": "No to both. Cancel only the policy as of today; preserve the existing claim. I know a refund has not been determined."
+        "text": "Do not confuse autopay with insurance cancellation. Keep CL-108-A open. I am not asking about CL-108-B. I still want the policy canceled as of today."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "Confirm whether you still want October 20 instead of today, and whether you want a refund calculation."
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "No future date. Immediate cancellation as of 2026-10-08. No refund calculation; I know a refund has not been determined."
+      },
+      {
+        "id": "m6",
+        "role": "customer",
+        "text": "Cancel only the policy as of today; preserve the existing September theft claim. Do not withdraw it."
       }
     ],
     "form": {

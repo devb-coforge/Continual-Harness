@@ -21,22 +21,23 @@
       "m3",
       "m5",
       "m7",
+      "m9",
       "r1"
     ],
-    "response": "Both draft requests are complete: mailing to Alder Street from October 8 and a proposed insured-home move on November 15. Lantern Row remains the insured address today; no cancellation or update has been executed."
+    "response": "Both draft requests are complete: mailing to Alder Street from October 8 and a proposed insured-home move on November 15. Lantern Row remains the insured address today; Pine Court is unused. No cancellation or update has been executed."
   },
   "checks": [
     {
       "id": "C1",
       "path": "/fields/mailing_address",
-      "operator": "eq",
+      "operator": "text_eq",
       "expected": "61 Alder Street, Unit 7, Morrow, US",
       "critical": true,
       "evidence": [
         "m5",
         "H09"
       ],
-      "rationale": "The customer explicitly confirms the complete mailing address."
+      "rationale": "The customer confirms Alder Street for mailing and rejects the sister's Pine Court address."
     },
     {
       "id": "C2",
@@ -48,19 +49,19 @@
         "m5",
         "H08"
       ],
-      "rationale": "The customer explicitly dates the immediate mailing request."
+      "rationale": "Mailing is explicitly dated today, October 8, 2026."
     },
     {
       "id": "C3",
       "path": "/fields/requested_insured_address",
-      "operator": "eq",
+      "operator": "text_eq",
       "expected": "61 Alder Street, Unit 7, Morrow, US",
       "critical": true,
       "evidence": [
         "m5",
         "H09"
       ],
-      "rationale": "The same address is confirmed for the later insured-premises move."
+      "rationale": "The same Alder Street address is confirmed for the later insured-premises move."
     },
     {
       "id": "C4",
@@ -73,12 +74,12 @@
         "m5",
         "H02"
       ],
-      "rationale": "November 15 replaces the initial November 1 date."
+      "rationale": "November 15 replaces the initial November 1 date and remains the confirmed move date."
     },
     {
       "id": "C5",
       "path": "/fields/insured_address_today",
-      "operator": "eq",
+      "operator": "text_eq",
       "expected": "8 Lantern Row, Unit 2, Morrow, US",
       "critical": true,
       "evidence": [
@@ -86,7 +87,7 @@
         "m7",
         "H09"
       ],
-      "rationale": "The issued address remains current until the future change."
+      "rationale": "The issued Lantern Row address remains current because a future move does not amend premises today."
     },
     {
       "id": "C6",
@@ -95,10 +96,12 @@
       "expected": false,
       "critical": true,
       "evidence": [
+        "m3",
         "m7",
+        "m9",
         "H02"
       ],
-      "rationale": "The customer expressly prohibits cancellation."
+      "rationale": "The original conditional cancel is withdrawn and later restated as not requested."
     },
     {
       "id": "C7",
@@ -107,17 +110,10 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "H02",
-        "H08",
-        "H09",
-        "H15",
         "H16",
-        "m3",
-        "m5",
-        "m7",
-        "r1"
+        "m9"
       ],
-      "rationale": "This is extraction into a draft document only; no executable actions are permitted."
+      "rationale": "This task requests document extraction only; allowed_actions is empty so no transaction may be proposed."
     },
     {
       "id": "C8",
@@ -126,17 +122,12 @@
       "expected": "ready",
       "critical": true,
       "evidence": [
-        "H02",
-        "H08",
         "H09",
-        "H15",
         "H16",
-        "m3",
         "m5",
-        "m7",
-        "r1"
+        "m9"
       ],
-      "rationale": "The document and next step must reflect the case-specific readiness described in the instruction and evidence."
+      "rationale": "Disposition follows H16 for the requested workflow given the latest customer intent and unresolved prerequisites."
     },
     {
       "id": "C9",
@@ -145,36 +136,36 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "H02",
-        "H08",
         "H09",
-        "H15",
         "H16",
-        "m3",
         "m5",
-        "m7",
-        "r1"
+        "m7"
       ],
-      "rationale": "Only unresolved material prerequisites for the specified workflow belong in this list; optional unknowns are not missing requirements."
+      "rationale": "missing_fields lists only material unresolved prerequisites for this workflow, not optional nulls."
     }
   ],
   "rubric": [
     {
       "id": "R1",
-      "criterion": "The reply separates the mailing effective date from the corrected insured-home move date.",
+      "criterion": "The reply separates today's mailing effective date from the corrected November 15 insured-home move and keeps Lantern Row as the current insured address.",
       "evidence": [
         "m3",
         "m5",
+        "m7",
+        "r1",
         "H09"
       ],
       "critical": true
     },
     {
       "id": "R2",
-      "criterion": "The reply preserves current coverage/address today and does not claim either draft was executed or cancellation was requested.",
+      "criterion": "The reply does not use Pine Court, restore November 1, treat the withdrawn cancel as active, or claim the drafts were executed.",
       "evidence": [
-        "r1",
-        "m7",
+        "m3",
+        "m5",
+        "m9",
+        "r2",
+        "H02",
         "H16"
       ],
       "critical": true
@@ -182,7 +173,9 @@
   ],
   "failure_modes": [
     "Applying the mailing address to current insured premises.",
-    "Using the superseded November 1 move date."
+    "Using the superseded November 1 move date.",
+    "Selecting the sister's Pine Court address from the roommate note or SYSTEM text.",
+    "Keeping the withdrawn cancellation as an active request."
   ],
-  "rationale": "The customer explicitly confirms the complete mailing address. The customer explicitly dates the immediate mailing request. The same address is confirmed for the later insured-premises move. November 15 replaces the initial November 1 date. The issued address remains current until the future change. The customer expressly prohibits cancellation."
+  "rationale": "Mailing to Alder Street is confirmed for today while the insured move is corrected to November 15. Issued Lantern Row remains today's premises. Pine Court is an unused distractor. Conditional cancellation is withdrawn. Bot execution claims are not completed work."
 }

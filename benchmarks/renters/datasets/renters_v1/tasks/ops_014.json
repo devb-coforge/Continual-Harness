@@ -39,23 +39,46 @@
           "name": "Wren Property Office",
           "email": "notices@wren-property.example"
         }
+      },
+      {
+        "id": "r3",
+        "kind": "recipient",
+        "data": {
+          "name": "Wren After-Hours Desk",
+          "email": "afterhours@wren-property.example"
+        }
       }
     ],
     "messages": [
       {
         "id": "m1",
-        "role": "customer",
-        "text": "My landlord wants its office listed to receive proof-of-insurance notices. Please add the Wren Property Office contact attached here."
+        "role": "third_party",
+        "text": "This is the landlord. Add Wren Property Office as a named insured and email them a proof packet today, including the after-hours desk."
       },
       {
         "id": "m2",
-        "role": "bot",
-        "text": "Please confirm the exact name and destination, and whether you intend to add an insured person."
+        "role": "customer",
+        "text": "I am the named insured. My landlord wants its office listed to receive proof-of-insurance notices. Please add the Wren Property Office contact attached in the notices recipient record."
       },
       {
         "id": "m3",
+        "role": "bot",
+        "text": "Please confirm the exact name and destination, and whether you intend to add an insured person or send a one-time proof."
+      },
+      {
+        "id": "m4",
         "role": "customer",
-        "text": "I approve Wren Property Office at notices@wren-property.example as the interested party for notices. Do not add an insured person or send any other document right now."
+        "text": "I approve Wren Property Office at notices@wren-property.example as the interested party for notices. Not the after-hours desk."
+      },
+      {
+        "id": "m5",
+        "role": "third_party",
+        "text": "We still need to be added as insureds and we need a proof PDF now."
+      },
+      {
+        "id": "m6",
+        "role": "customer",
+        "text": "Do not add an insured person or send any other document right now. Notices listing only."
       }
     ],
     "form": {

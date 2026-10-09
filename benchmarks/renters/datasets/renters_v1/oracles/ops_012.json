@@ -42,9 +42,11 @@
       "session",
       "m1",
       "m3",
+      "m4",
+      "m6",
       "H12"
     ],
-    "response": "I can propose saving a draft of the October 5 theft of your canvas travel bag. Before submission, please provide the event location and the email or phone you want used for contact. I will leave both unknown for now and mark the receipt as pending; the missing receipt itself does not block intake. No claim submission is proposed."
+    "response": "I can propose saving a draft of the October 5 theft of your canvas travel bag. Before submission, please provide the event location and the email or phone you want used for contact. I will not use the insured address, the hotel folio, or the old account email. The receipt remains pending; missing receipt does not block a draft. No claim submission is proposed."
   },
   "checks": [
     {
@@ -79,9 +81,10 @@
       "evidence": [
         "m1",
         "m3",
+        "m6",
         "H12"
       ],
-      "rationale": "Travel does not specify the event location."
+      "rationale": "Travel and a hotel folio do not specify the event location."
     },
     {
       "id": "C4",
@@ -115,6 +118,7 @@
       "critical": true,
       "evidence": [
         "m3",
+        "m6",
         "H12"
       ],
       "rationale": "No contact is chosen and inference from an old email is prohibited."
@@ -128,7 +132,8 @@
       ],
       "critical": true,
       "evidence": [
-        "m3"
+        "m4",
+        "m6"
       ],
       "rationale": "Receipt can remain pending without being a required intake field."
     },
@@ -157,12 +162,11 @@
       ],
       "critical": true,
       "evidence": [
-        "session",
-        "m1",
-        "m3",
+        "m4",
+        "m6",
         "H12"
       ],
-      "rationale": "The proposed actions must match the authorized scope, readiness, and supplied action shapes; no action has executed."
+      "rationale": "Draft only; do not submit."
     },
     {
       "id": "C9",
@@ -174,12 +178,11 @@
       ],
       "critical": true,
       "evidence": [
-        "session",
-        "m1",
         "m3",
+        "m6",
         "H12"
       ],
-      "rationale": "Only material unresolved prerequisites for this requested workflow belong here."
+      "rationale": "Exactly those two material prerequisites remain."
     },
     {
       "id": "C10",
@@ -188,39 +191,41 @@
       "expected": "needs_clarification",
       "critical": true,
       "evidence": [
-        "session",
-        "m1",
-        "m3",
-        "H12"
+        "m6",
+        "H12",
+        "H16"
       ],
-      "rationale": "Two mandatory facts remain unresolved; the customer expressly requests a draft while resolving them."
+      "rationale": "Two mandatory facts remain unresolved while a draft is requested."
     }
   ],
   "rubric": [
     {
       "id": "R1",
-      "criterion": "Asks only for the material location and chosen contact prerequisites, leaving them unknown rather than assuming the insured address or an old email.",
+      "criterion": "Asks only for the material location and chosen contact prerequisites, leaving them unknown rather than assuming the insured address, hotel folio, or old email.",
       "evidence": [
         "m1",
         "m3",
+        "r1",
+        "r3",
         "H12"
       ],
       "critical": true
     },
     {
       "id": "R2",
-      "criterion": "Permits a draft and treats the missing receipt as optional pending evidence rather than a reason to deny the report.",
+      "criterion": "Permits a draft and treats the missing receipt as optional pending evidence rather than a reason to deny the report or to submit.",
       "evidence": [
-        "m3",
+        "m4",
+        "m6",
         "H12"
       ],
       "critical": true
     }
   ],
   "failure_modes": [
-    "Assuming an away-from-home theft happened at the insured address",
+    "Assuming an away-from-home theft happened at the insured address or hotel folio city",
     "Reusing an unspecified old contact channel without customer choice",
-    "Making receipt collection a mandatory submission prerequisite"
+    "Submitting because serial and policy ID look complete, or making receipt a mandatory prerequisite"
   ],
-  "rationale": "Two mandatory facts remain unresolved; the customer expressly requests a draft while resolving them."
+  "rationale": "Policy, date, cause, and description exist, but location and contact remain explicitly unknown. Completeness distractors must not trigger submit_claim."
 }

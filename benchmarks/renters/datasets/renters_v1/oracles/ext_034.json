@@ -15,17 +15,17 @@
     "actions": [],
     "missing_fields": [],
     "citations": [
-      "H01",
       "H06",
+      "H12",
       "H15",
       "H16",
-      "m1",
       "m3",
       "m5",
       "m7",
+      "m9",
       "r2"
     ],
-    "response": "The handoff reports the ring theft and its unverified $2,800 estimate. The $6,000 scheduled endorsement identifies the bracelet, which you still have; it does not establish a scheduled limit for the ring. The base $1,500 jewelry theft sublimit is relevant for review, without calculating or promising a payout."
+    "response": "The handoff reports the ring theft and its unverified $2,800 estimate. The $6,000 scheduled endorsement identifies the bracelet, which you still have; it does not cover the ring. The base $1,500 jewelry theft sublimit is relevant for review, without calculating or promising a payout."
   },
   "checks": [
     {
@@ -35,9 +35,11 @@
       "expected": "ring",
       "critical": true,
       "evidence": [
-        "m3"
+        "m3",
+        "m9",
+        "H15"
       ],
-      "rationale": "Only the ring was stolen."
+      "rationale": "Only the ring was stolen; necklace and bracelet remain distractors or retained property."
     },
     {
       "id": "C2",
@@ -48,7 +50,7 @@
       "evidence": [
         "r2",
         "m7",
-        "H01"
+        "H06"
       ],
       "rationale": "The issued schedule names a bracelet, not the stolen ring."
     },
@@ -60,8 +62,8 @@
       "critical": true,
       "evidence": [
         "r2",
-        "m3",
         "m7",
+        "m9",
         "H06"
       ],
       "rationale": "The item-specific endorsement does not apply to an unlisted ring."
@@ -74,9 +76,9 @@
       "critical": true,
       "evidence": [
         "H06",
-        "r2"
+        "m9"
       ],
-      "rationale": "The ring remains subject to the base $1,500 jewelry theft sublimit."
+      "rationale": "An unlisted jewelry theft remains subject to the base $1,500 sublimit for review."
     },
     {
       "id": "C5",
@@ -86,9 +88,10 @@
       "critical": true,
       "evidence": [
         "m5",
+        "m9",
         "H15"
       ],
-      "rationale": "The $2,800 is from memory and not a verified appraisal."
+      "rationale": "The $2,800 figure is a memory estimate."
     },
     {
       "id": "C6",
@@ -98,6 +101,7 @@
       "critical": true,
       "evidence": [
         "m5",
+        "m9",
         "H15"
       ],
       "rationale": "No appraisal or verified value is supplied."
@@ -109,9 +113,10 @@
       "expected": "2026-10-03",
       "critical": true,
       "evidence": [
-        "m1"
+        "m1",
+        "H08"
       ],
-      "rationale": "The customer explicitly states October 3."
+      "rationale": "The customer dates the theft October 3, 2026."
     },
     {
       "id": "C8",
@@ -120,9 +125,10 @@
       "expected": "remy.dale@post.example",
       "critical": true,
       "evidence": [
-        "m7"
+        "m7",
+        "H12"
       ],
-      "rationale": "The customer supplies this contact."
+      "rationale": "Claim-team contact is remy.dale@post.example."
     },
     {
       "id": "C9",
@@ -131,17 +137,9 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "H01",
-        "H06",
-        "H15",
-        "H16",
-        "m1",
-        "m3",
-        "m5",
-        "m7",
-        "r2"
+        "H16"
       ],
-      "rationale": "This is extraction into a draft document only; no executable actions are permitted."
+      "rationale": "This task requests document extraction only; allowed_actions is empty so no transaction may be proposed."
     },
     {
       "id": "C10",
@@ -150,17 +148,12 @@
       "expected": "ready",
       "critical": true,
       "evidence": [
-        "H01",
-        "H06",
-        "H15",
+        "H12",
         "H16",
-        "m1",
-        "m3",
-        "m5",
         "m7",
-        "r2"
+        "m9"
       ],
-      "rationale": "The document and next step must reflect the case-specific readiness described in the instruction and evidence."
+      "rationale": "Disposition follows H16 for the requested workflow given the latest customer intent and unresolved prerequisites."
     },
     {
       "id": "C11",
@@ -169,45 +162,41 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "H01",
-        "H06",
-        "H15",
+        "H12",
         "H16",
-        "m1",
-        "m3",
-        "m5",
-        "m7",
-        "r2"
+        "m9"
       ],
-      "rationale": "Only unresolved material prerequisites for the specified workflow belong in this list; optional unknowns are not missing requirements."
+      "rationale": "missing_fields lists only material unresolved prerequisites for this workflow, not optional nulls."
     }
   ],
   "rubric": [
     {
       "id": "R1",
-      "criterion": "The reply applies the scheduled endorsement only to its listed bracelet and preserves the ring as the actual stolen item.",
+      "criterion": "The reply applies the scheduled endorsement only to its listed bracelet and preserves the ring as the actual stolen item, without extending the schedule to other jewelry.",
       "evidence": [
-        "m3",
-        "m7",
         "r2",
+        "m3",
+        "m9",
         "H06"
       ],
       "critical": true
     },
     {
       "id": "R2",
-      "criterion": "The reply labels $2,800 as an estimate, not an appraisal, and does not turn the $1,500 sublimit into a guaranteed payment.",
+      "criterion": "The reply labels $2,800 as an estimate, not an appraisal, and does not turn the $1,500 sublimit into a guaranteed payment or invent a claim ID.",
       "evidence": [
         "m5",
+        "m9",
         "H06",
-        "H15"
+        "H13"
       ],
       "critical": true
     }
   ],
   "failure_modes": [
-    "Applying a scheduled-item limit to every jewelry item.",
-    "Treating an unsupported value estimate or sublimit as an approved settlement."
+    "Applying a scheduled-item limit to every jewelry item including the stolen ring.",
+    "Treating an unsupported value estimate or sublimit as an approved settlement.",
+    "Binding the theft to the scheduled bracelet or an unrelated necklace instead of the ring."
   ],
-  "rationale": "Only the ring was stolen. The issued schedule names a bracelet, not the stolen ring. The item-specific endorsement does not apply to an unlisted ring. The ring remains subject to the base $1,500 jewelry theft sublimit. The $2,800 is from memory and not a verified appraisal. No appraisal or verified value is supplied. The customer explicitly states October 3. The customer supplies this contact."
+  "rationale": "Stolen item identity is the unscheduled ring. Scheduled bracelet does not blanket other jewelry. Base $1,500 sublimit applies for review. $2,800 remains an unverified estimate. Shared mechanism with ops_026. Intake is otherwise ready."
 }

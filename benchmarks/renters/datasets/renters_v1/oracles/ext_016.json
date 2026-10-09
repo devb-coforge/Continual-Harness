@@ -17,28 +17,32 @@
     "actions": [],
     "missing_fields": [],
     "citations": [
+      "H02",
+      "H14",
       "H15",
       "H16",
       "m1",
-      "m2",
       "m3",
       "m5",
-      "m7"
+      "m7",
+      "m9"
     ],
-    "response": "The draft is complete under Alexandra Osei, with occupancy on October 2 and the requested insurance start on October 9. Your consent to submit is recorded; this is not an issued policy."
+    "response": "The draft is complete under Alexandra Osei at lex.osei@example.test, with occupancy on October 2 and requested insurance start on October 9. Preferred name Lex is separate. Your consent to submit is recorded; this is not an issued policy."
   },
   "checks": [
     {
       "id": "C1",
       "path": "/fields/applicant_name",
-      "operator": "eq",
+      "operator": "text_eq",
       "expected": "Alexandra Osei",
       "critical": true,
       "evidence": [
         "m1",
-        "m5"
+        "m3",
+        "m5",
+        "H14"
       ],
-      "rationale": "The cited source establishes applicant_name; preserve the stated value and uncertainty under H15."
+      "rationale": "Application legal name is Alexandra Osei, not preferred or old-insurer Lex Osei."
     },
     {
       "id": "C2",
@@ -47,9 +51,11 @@
       "expected": "lex.osei@example.test",
       "critical": true,
       "evidence": [
-        "m1"
+        "m5",
+        "m9",
+        "H02"
       ],
-      "rationale": "The cited source establishes contact_email; preserve the stated value and uncertainty under H15."
+      "rationale": "Later correction replaces the first inbox with lex.osei@example.test."
     },
     {
       "id": "C3",
@@ -58,9 +64,10 @@
       "expected": "17 Wren Avenue, Unit 3, Cedar Bay",
       "critical": true,
       "evidence": [
-        "m3"
+        "m3",
+        "H14"
       ],
-      "rationale": "The cited source establishes insured_address; preserve the stated value and uncertainty under H15."
+      "rationale": "The dwelling is 17 Wren Avenue, Unit 3, Cedar Bay."
     },
     {
       "id": "C4",
@@ -69,9 +76,10 @@
       "expected": "2026-10-02",
       "critical": true,
       "evidence": [
-        "m3"
+        "m3",
+        "H08"
       ],
-      "rationale": "The cited source establishes occupancy_start; preserve the stated value and uncertainty under H15."
+      "rationale": "Occupancy began October 2, 2026."
     },
     {
       "id": "C5",
@@ -80,9 +88,11 @@
       "expected": "2026-10-09",
       "critical": true,
       "evidence": [
-        "m3"
+        "m3",
+        "m7",
+        "H08"
       ],
-      "rationale": "The cited source establishes requested_start; preserve the stated value and uncertainty under H15."
+      "rationale": "Requested insurance start is October 9, 2026, not backdated occupancy."
     },
     {
       "id": "C6",
@@ -91,9 +101,10 @@
       "expected": 30000,
       "critical": true,
       "evidence": [
-        "m5"
+        "m5",
+        "H14"
       ],
-      "rationale": "The cited source establishes personal_property_limit; preserve the stated value and uncertainty under H15."
+      "rationale": "The applicant selects $30,000 personal property."
     },
     {
       "id": "C7",
@@ -102,9 +113,10 @@
       "expected": 100000,
       "critical": true,
       "evidence": [
-        "m5"
+        "m5",
+        "H14"
       ],
-      "rationale": "The cited source establishes liability_limit; preserve the stated value and uncertainty under H15."
+      "rationale": "The applicant selects $100,000 liability."
     },
     {
       "id": "C8",
@@ -113,9 +125,10 @@
       "expected": 250,
       "critical": true,
       "evidence": [
-        "m5"
+        "m5",
+        "H14"
       ],
-      "rationale": "The cited source establishes deductible; preserve the stated value and uncertainty under H15."
+      "rationale": "The applicant selects a $250 deductible."
     },
     {
       "id": "C9",
@@ -124,21 +137,24 @@
       "expected": true,
       "critical": true,
       "evidence": [
-        "m7"
+        "m7",
+        "m9",
+        "H14"
       ],
-      "rationale": "The cited source establishes consent_to_submit; preserve the stated value and uncertainty under H15."
+      "rationale": "Rejecting a hold is coupled with explicit submission consent."
     },
     {
       "id": "C10",
       "path": "/fields/preferred_name",
-      "operator": "eq",
+      "operator": "text_eq",
       "expected": "Lex",
       "critical": true,
       "evidence": [
         "m1",
-        "m2"
+        "m10",
+        "H15"
       ],
-      "rationale": "The cited source establishes preferred_name; preserve the stated value and uncertainty under H15."
+      "rationale": "Preferred chat name Lex is recorded separately from the application name."
     },
     {
       "id": "C11",
@@ -149,7 +165,7 @@
       "evidence": [
         "H16"
       ],
-      "rationale": "This task requests document extraction only; no transaction is authorized by the task."
+      "rationale": "This task requests document extraction only; allowed_actions is empty so no transaction may be proposed."
     },
     {
       "id": "C12",
@@ -160,10 +176,12 @@
       ],
       "critical": true,
       "evidence": [
-        "H15",
-        "H16"
+        "H14",
+        "H16",
+        "m7",
+        "m9"
       ],
-      "rationale": "The applicant explicitly distinguishes the full application name from preferred and historical names. The requested insurance start is not inferred from the already past occupancy date."
+      "rationale": "Disposition follows H16 for the requested workflow given the latest customer intent and unresolved prerequisites."
     },
     {
       "id": "C13",
@@ -172,48 +190,41 @@
       "expected": [],
       "critical": true,
       "evidence": [
-        "H15",
-        "H16"
+        "H16",
+        "m9"
       ],
-      "rationale": "Only these unresolved fields block the requested document workflow: none; optional uncertainty is preserved in the document."
+      "rationale": "missing_fields lists only material unresolved prerequisites for this workflow, not optional nulls."
     }
   ],
   "rubric": [
     {
       "id": "R1",
-      "criterion": "The reply records explicit consent to submit the completed application under Alexandra Osei, without misreading the rejection of holding the draft as refusal to submit or claiming issuance.",
+      "criterion": "The reply uses Alexandra Osei as applicant name, the corrected lex.osei@example.test email, and records explicit submission consent without claiming issuance.",
       "evidence": [
-        "H11",
-        "H14",
-        "H15",
-        "m1",
-        "m2",
-        "m3",
         "m5",
-        "m7"
+        "m7",
+        "m9",
+        "H14"
       ],
       "critical": true
     },
     {
       "id": "R2",
-      "criterion": "The reply uses Alexandra Osei for the applicant and preserves the different occupancy and requested-start dates.",
+      "criterion": "The reply does not put Lex on the application name, keep the first email, or replace October 9 requested start with October 2 occupancy.",
       "evidence": [
-        "H02",
-        "H14",
-        "H15",
-        "m1",
-        "m2",
         "m3",
         "m5",
-        "m7"
+        "m7",
+        "m10",
+        "H08"
       ],
       "critical": true
     }
   ],
   "failure_modes": [
-    "Using preferred chat name Lex or the old insurer’s name instead of Alexandra Osei.",
-    "Reading “No need to hold it” as refusal of application-submission consent.",
+    "Using preferred chat name Lex or the old insurer's name instead of Alexandra Osei.",
+    "Keeping the first email after the correction to lex.osei@example.test.",
     "Replacing the requested October 9 start with the historical October 2 occupancy date."
   ],
-  "rationale": "The applicant explicitly distinguishes the full application name from preferred and historical names. The requested insurance start is not inferred from the already past occupancy date."
+  "rationale": "Legal application name is Alexandra Osei. Preferred name Lex is separate. Email correction to lex.osei@example.test wins. Occupancy and requested start stay distinct. Submit consent is explicit."
 }

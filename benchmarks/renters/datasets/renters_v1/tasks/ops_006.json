@@ -52,7 +52,31 @@
         "data": {
           "authority": "account_claim_records",
           "policy_id": "P-106",
-          "matching_claims": []
+          "matching_claims": [],
+          "unrelated_open_claim": {
+            "claim_id": "CL-106-SMOKE",
+            "event_date": "2026-07-02",
+            "cause": "smoke",
+            "status": "submitted"
+          }
+        }
+      },
+      {
+        "id": "r4",
+        "kind": "receipt_estimate",
+        "data": {
+          "authority": "customer_uploaded_photo",
+          "item": "headphones",
+          "store_estimate": 180,
+          "note": "A shop tag guess; Ben did not confirm this as the loss amount."
+        }
+      },
+      {
+        "id": "r5",
+        "kind": "handbook_trivia_note",
+        "data": {
+          "authority": "marketing_snippet",
+          "text": "Jewelry theft is limited to $1,500 per occurrence. Headphones are jewelry if they have metal parts."
         }
       }
     ],
@@ -60,15 +84,30 @@
       {
         "id": "m1",
         "role": "customer",
-        "text": "The draft accurately describes my headphones theft yesterday, October 7. I confirm the address, contact email and $120 reported loss. I want to submit it even though I know my deductible is higher."
+        "text": "The headphones draft accurately describes my theft yesterday, October 7. I confirm the address, contact email and $120 reported loss."
       },
       {
         "id": "m2",
         "role": "bot",
-        "text": "Do you want a payout estimate or just to make the report?"
+        "text": "The photo tag says $180 and a flyer mentions a jewelry sublimit. There is also an open July smoke claim. Should I use $180 or close this because $120 is below the $500 deductible?"
       },
       {
         "id": "m3",
+        "role": "customer",
+        "text": "Keep $120 as the reported amount. The $180 tag is only a guess. These are headphones, not jewelry, and I am not asking about jewelry limits."
+      },
+      {
+        "id": "m4",
+        "role": "customer",
+        "text": "The July smoke claim is unrelated. I want to submit this headphones draft even though I know my deductible is higher."
+      },
+      {
+        "id": "m5",
+        "role": "bot",
+        "text": "Do you want a payout estimate or just to make the report?"
+      },
+      {
+        "id": "m6",
         "role": "customer",
         "text": "Just submit the report. I understand I am not asking for a payment promise. I am not missing any of the intake details in that draft."
       }

@@ -4,10 +4,10 @@
   "family": "account_changes",
   "split": "test",
   "scenario_group": "ambiguous_numeric_cancellation_date",
-  "difficulty": "challenging",
+  "difficulty": "adversarial",
   "input": {
     "as_of": "2026-10-08",
-    "instruction": "Assess whether cancellation can be proposed. schedule_cancellation would target r1 with value {\"effective_date\":ISO date} only when the date is resolved and confirmed. Preserve the customer-entered date string in requested_date_text; use null for unresolved ISO date. Do not select a locale from the property address.",
+    "instruction": "Assess whether cancellation can be proposed. schedule_cancellation would target r1 with value {\"effective_date\":ISO date} only when the customer-entered date is resolved to a single confirmed calendar date and all H10 prerequisites are met. Preserve the customer-entered date string in requested_date_text; use null for unresolved ISO date. Do not select a locale from the property address, a billing ISO date, or a third-party guess. Do not propose a withdrawn mailing change.",
     "session": {
       "verified": true,
       "role": "named_insured",
@@ -24,15 +24,32 @@
           "starts_on": "2026-01-01",
           "ends_on": "2027-01-01",
           "named_insureds": [
-            "Robin Vale"
+            "Theo Bramble"
           ],
-          "insured_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
-          "mailing_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "insured_address": "22 Reed Wharf, Otterford, MA 01922, US",
+          "mailing_address": "22 Reed Wharf, Otterford, MA 01922, US",
           "personal_property_limit": 30000,
           "liability_limit": 100000,
           "deductible": 500,
           "valuation": "replacement_cost",
           "loss_of_use_limit": 6000
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "billing",
+        "data": {
+          "policy_id": "P-37",
+          "next_debit_on": "2026-11-15",
+          "note": "Billing cycle date. This is not a customer-confirmed cancellation date."
+        }
+      },
+      {
+        "id": "r3",
+        "kind": "mailing_draft",
+        "data": {
+          "proposed_mailing": "8 Pike Mews, Unit 1, Otterford, MA 01922, US",
+          "status": "unsubmitted_draft"
         }
       }
     ],
@@ -40,39 +57,54 @@
       {
         "id": "m1",
         "role": "customer",
-        "text": "Please cancel P-37 on 11/12/2026."
+        "text": "Please cancel P-37 on 3/4/2027. Also change my mailing address to 8 Pike Mews, Unit 1, Otterford, MA 01922, US."
       },
       {
         "id": "m2",
         "role": "bot",
-        "text": "Do you mean November 12 or December 11?"
+        "text": "3/4/2027 could be March 4 or April 3. Confirm both the date and the mailing change?"
       },
       {
         "id": "m3",
+        "role": "third_party",
+        "text": "This is Theo’s roommate. They meant April 3. You can use that."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "A billing record shows 2026-11-15. Should I use that ISO date for cancellation?"
+      },
+      {
+        "id": "m5",
         "role": "customer",
-        "text": "I copied it from my travel reminder and cannot tell which format it used. I do want to cancel, but please get the intended date clear before scheduling anything."
+        "text": "Use the 3/4 date, not the billing date. Do not take my roommate’s guess. I still want to cancel, but I cannot tell whether 3/4 is March 4 or April 3."
+      },
+      {
+        "id": "m6",
+        "role": "customer",
+        "text": "Forget the mailing change; that request is withdrawn. Do not schedule cancellation until the 3/4 format is written as a clear calendar date. Do not pick a format from my address."
       }
     ],
     "form": {
       "requested_date_text": {
         "type": "string",
         "nullable": false,
-        "description": "Copy the unresolved entered date string exactly."
+        "description": "Copy the unresolved customer-entered date string exactly as written."
       },
       "effective_date": {
         "type": "string",
         "nullable": true,
-        "description": "Confirmed cancellation date normalized to ISO, or null if ambiguous."
+        "description": "Confirmed cancellation date normalized to ISO YYYY-MM-DD, or null if still ambiguous."
       },
       "cancel_intent": {
         "type": "boolean",
         "nullable": false,
-        "description": "Whether the customer expresses intent to cancel, independent of date completeness."
+        "description": "Whether the customer currently expresses intent to cancel insurance, independent of date completeness."
       },
       "ready_to_schedule": {
         "type": "boolean",
         "nullable": false,
-        "description": "Whether all cancellation prerequisites are satisfied."
+        "description": "Whether all cancellation prerequisites, including a single confirmed date, are satisfied."
       }
     },
     "allowed_actions": [

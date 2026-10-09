@@ -28,7 +28,9 @@
           "status_today": "active",
           "personal_property_limit": 30000,
           "deductible": 500,
-          "valuation_basis": "actual_cash_value"
+          "valuation_basis": "actual_cash_value",
+          "insured_address": "88 Fern Court, Apt 6, Hillside, CT 06018, US",
+          "contact_email": "leo.old@account.example"
         }
       },
       {
@@ -38,6 +40,23 @@
           "authority": "account_claim_records",
           "policy_id": "P-112",
           "matching_claims": []
+        }
+      },
+      {
+        "id": "r3",
+        "kind": "hotel_folio",
+        "data": {
+          "hotel": "Pine Rest Inn",
+          "city": "Not specified by the customer as the theft site",
+          "stay_dates": "2026-10-04 to 2026-10-06"
+        }
+      },
+      {
+        "id": "r4",
+        "kind": "serial_note",
+        "data": {
+          "bag_serial": "CV-4419",
+          "note": "Serial is available; location and contact still not chosen."
         }
       }
     ],
@@ -50,12 +69,27 @@
       {
         "id": "m2",
         "role": "bot",
-        "text": "Where did the incident happen, and what email or phone should the claims team use?"
+        "text": "A hotel folio and an old account email leo.old@account.example are on file, and a serial is listed. I can submit now using the insured address and that email."
       },
       {
         "id": "m3",
         "role": "customer",
-        "text": "Please save what I have told you as a draft. I will check the location and choose a contact channel later. Do not use an old account email by default. I do not have the purchase receipt either."
+        "text": "Do not use the insured address as the event location and do not use the old account email. I have not chosen a contact channel."
+      },
+      {
+        "id": "m4",
+        "role": "customer",
+        "text": "The serial can wait with the receipt. Please save what I have told you as a draft."
+      },
+      {
+        "id": "m5",
+        "role": "bot",
+        "text": "Where did the incident happen, and what email or phone should the claims team use?"
+      },
+      {
+        "id": "m6",
+        "role": "customer",
+        "text": "I will check the location and choose a contact channel later. Do not submit. I do not have the purchase receipt either."
       }
     ],
     "form": {
