@@ -5,3 +5,4 @@ __pycache__/
 .pytest_cache/
 artifacts/
 *.sqlite3
+continual_harness.egg-info/
