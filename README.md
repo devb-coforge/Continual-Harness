@@ -1,6 +1,6 @@
 # Continual-Harness
 
-A Python CLI that optimizes an actor's strategy prompt using a fixed **100-task renters insurance benchmark**, an OpenRouter judge and optimizer, paired validation, and a frozen held-out comparison. The fictional company, Harborlight Renters, has one supplied handbook; no outside insurance knowledge is needed.
+A Python CLI that optimizes an actor's strategy prompt using a fixed **100-task renters insurance benchmark**, an OpenRouter judge and optimizer, paired validation, and a frozen held-out comparison. The company, Harborlight Renters, has one supplied handbook; no outside insurance knowledge is needed.
 
 ## Prompt optimization
 
@@ -18,7 +18,7 @@ python -m continual_harness report artifacts/demo-001
 
 The demo uses private reference answers and scripted judgments. Its scores are **synthetic orchestration evidence**, not model performance.
 
-For live use, copy `harness.example.toml` to a config file and choose each role's model and provider slug. Set `OPENROUTER_API_KEY` in your shell environment; the CLI does not read or modify `.env` files. Each configured provider must support the selected model, temperature and JSON-object output. Explicit routing disables fallbacks.
+For live use, copy `harness.example.toml` to a config file and choose each role's OpenRouter model id. Set `OPENROUTER_API_KEY` in your shell environment; the CLI does not read or modify `.env` files. OpenRouter picks the backend; each role's model must support temperature and JSON-object output.
 
 ```bash
 python -m continual_harness optimize --config harness.toml --output artifacts/run-001

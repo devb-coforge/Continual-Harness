@@ -33,9 +33,7 @@ class Client(Protocol):
 def request_body(settings: ModelSettings, messages: list[dict[str, str]]) -> dict[str, Any]:
     return {"model": settings.model, "messages": messages, "temperature": settings.temperature,
             "max_tokens": settings.max_tokens, "stream": False,
-            "response_format": {"type": "json_object"},
-            "provider": {"only": [settings.provider], "allow_fallbacks": False,
-                         "require_parameters": True}}
+            "response_format": {"type": "json_object"}}
 
 
 class OpenRouterClient:

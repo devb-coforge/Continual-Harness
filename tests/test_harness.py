@@ -240,8 +240,8 @@ class ProviderTests(unittest.TestCase):
         for content in ('{"x": NaN}', '{"x": 1e309}', '{"x": 1, "x": 2}', '[]', '```json\n{}\n```'):
             with self.assertRaises(ValueError):
                 parse_object(content)
-        for kwargs in ({"temperature": float("nan")}, {"max_tokens": True}, {"provider": ""}):
-            values = {"model": "fixture/model", "provider": "fixture", **kwargs}
+        for kwargs in ({"temperature": float("nan")}, {"max_tokens": True}):
+            values = {"model": "fixture/model", **kwargs}
             with self.assertRaises(ValueError):
                 ModelSettings(**values)
         with self.assertRaises(ValueError):
@@ -255,7 +255,7 @@ class ProviderTests(unittest.TestCase):
         self.assertEqual(Config.load(Path("harness.example.toml")).repetitions, 2)
 
     def test_request_routing_usage_and_errors_without_network(self):
-        settings = ModelSettings("fixture/model", "fixture-provider")
+        settings = ModelSettings("fixture/model")
         messages = [{"role": "user", "content": "Return JSON"}]
         raw = {"id": "generation-fixture", "model": settings.model,
                "choices": [{"message": {"content": '{"ok": true}'}, "finish_reason": "stop"}],
@@ -267,9 +267,7 @@ class ProviderTests(unittest.TestCase):
             self.assertEqual(completion.raw["usage"]["cost"], 0.02)
             request = opened.call_args.args[0]
             body = json.loads(request.data)
-            self.assertEqual(body["provider"]["only"], ["fixture-provider"])
-            self.assertFalse(body["provider"]["allow_fallbacks"])
-            self.assertTrue(body["provider"]["require_parameters"])
+            self.assertNotIn("provider", body)
             self.assertNotIn("secret-fixture", canonical(body))
         for envelope in ({"error": {"message": "fixture"}},
                          {**raw, "choices": []},

@@ -12,7 +12,7 @@ DEMO_STRATEGY = "SYNTHETIC_DEMO_CORRECT: reconcile corrections and verify every 
 
 
 def demo_config() -> Config:
-    role = ModelSettings("synthetic/fixture", "offline")
+    role = ModelSettings("synthetic/fixture")
     return Config(role, role, role, iterations=1, repetitions=2)
 
 

@@ -10,15 +10,12 @@ from typing import Any
 @dataclass(frozen=True)
 class ModelSettings:
     model: str
-    provider: str
     temperature: float = 0.0
     max_tokens: int = 4096
 
     def __post_init__(self) -> None:
         if not isinstance(self.model, str) or not self.model.strip():
             raise ValueError("Each role needs a model")
-        if not isinstance(self.provider, str) or not self.provider.strip():
-            raise ValueError("Each role needs an explicit provider for controlled routing")
         if type(self.max_tokens) is not int or self.max_tokens < 1:
             raise ValueError("max_tokens must be a positive integer")
         if type(self.temperature) not in (int, float) or not math.isfinite(self.temperature) or not 0 <= self.temperature <= 2:
