@@ -15,14 +15,11 @@ feedback_successes = 3
 [actor]
 model = "REPLACE_WITH_ACTOR_MODEL"
 temperature = 0.0
-max_tokens = 4096
 
 [judge]
 model = "REPLACE_WITH_JUDGE_MODEL"
 temperature = 0.0
-max_tokens = 4096
 
 [optimizer]
 model = "REPLACE_WITH_OPTIMIZER_MODEL"
 temperature = 0.0
-max_tokens = 4096
