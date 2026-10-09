@@ -39,9 +39,11 @@ class Config:
     max_strategy_chars: int = 12000
     feedback_failures: int = 6
     feedback_successes: int = 3
+    max_attempts: int = 4
+    retry_delay_seconds: float = 1.0
 
     def __post_init__(self) -> None:
-        for name in ("iterations", "repetitions", "concurrency", "timeout_seconds", "max_strategy_chars", "feedback_failures", "feedback_successes"):
+        for name in ("iterations", "repetitions", "concurrency", "timeout_seconds", "max_strategy_chars", "feedback_failures", "feedback_successes", "max_attempts"):
             value = getattr(self, name)
             if type(value) is not int or value < 1:
                 raise ValueError(f"{name} must be a positive integer")
@@ -49,6 +51,9 @@ class Config:
             raise ValueError("max_regressions must be a nonnegative integer")
         if type(self.min_gain) not in (int, float) or not math.isfinite(self.min_gain) or not 0 <= self.min_gain <= 1:
             raise ValueError("min_gain must be finite and between 0 and 1")
+        if (type(self.retry_delay_seconds) not in (int, float)
+                or not math.isfinite(self.retry_delay_seconds) or self.retry_delay_seconds < 0):
+            raise ValueError("retry_delay_seconds must be finite and nonnegative")
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)

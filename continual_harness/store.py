@@ -93,11 +93,15 @@ class Store:
 
     def usage(self) -> dict[str, Any]:
         totals = {r: {"calls": 0, "usage_calls": 0, "input_tokens": 0, "output_tokens": 0,
+                      "retry_attempts": 0, "failed_attempts": 0,
                       "cost_calls": 0, "recorded_cost_usd": 0.0} for r in ("actor", "judge", "optimizer")}
         for role, path in self.db.execute("SELECT role, artifact FROM calls"):
             total = totals[role]
             total["calls"] += 1
-            raw = read_json(self.directory / path).get("raw")
+            artifact = read_json(self.directory / path)
+            total["retry_attempts"] += artifact.get("attempt", 1) > 1
+            total["failed_attempts"] += artifact["status"] != "completed"
+            raw = artifact.get("raw")
             usage = raw.get("usage") if isinstance(raw, dict) else None
             if not isinstance(usage, dict):
                 continue

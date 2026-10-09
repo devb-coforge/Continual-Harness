@@ -3,7 +3,9 @@ name = "continual-harness"
 version = "0.1.0"
 description = "Fixed-task renters benchmark and OpenRouter system-prompt optimization CLI"
 requires-python = ">=3.11"
-dependencies = []
+dependencies = [
+    "requests>=2.34.2",
+]
 
 [build-system]
 requires = ["setuptools>=68"]

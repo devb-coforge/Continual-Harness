@@ -6,12 +6,16 @@ from typing import Any
 
 def summary(results: list[dict[str, Any]]) -> dict[str, Any]:
     intended = len(results)
-    complete = sum(r["complete_success"] is not None for r in results)
+    complete = sum(r["status"] == "evaluated" for r in results)
     successes = sum(r["complete_success"] is True for r in results)
     return {"intended": intended, "actor_completed": sum(r.get("answer") is not None for r in results),
             "valid_judgments": sum(r.get("semantic_status") in {"passed", "failed"} for r in results),
             "quality_observations": complete, "successes": successes,
-            "complete_coverage": all(r["status"] == "evaluated" for r in results),
+            "complete_coverage": all(r["status"] in {"evaluated", "model_failure"}
+                                     and type(r["complete_success"]) is bool for r in results),
+            "model_failures": sum(r["status"] == "model_failure" for r in results),
+            "failures_by_stage": dict(Counter(r.get("failure_stage") for r in results
+                                               if r["status"] == "model_failure")),
             "success_rate": successes / intended if intended else None,
             "statuses": dict(Counter(r["status"] for r in results)),
             "by_family": {family: {"intended": sum(r["family"] == family for r in results),
@@ -32,7 +36,8 @@ def compare(incumbent: list[dict[str, Any]], candidate: list[dict[str, Any]],
         raise ValueError("Comparison requires identical nonempty task/repetition cohorts")
     improved, regressed = [], []
     for key in sorted(left):
-        if left[key]["status"] != "evaluated" or right[key]["status"] != "evaluated":
+        if (left[key]["status"] not in {"evaluated", "model_failure"}
+                or right[key]["status"] not in {"evaluated", "model_failure"}):
             continue
         a, b = left[key]["complete_success"], right[key]["complete_success"]
         if a is False and b is True:

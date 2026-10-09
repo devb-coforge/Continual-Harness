@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import asyncio
 import hashlib
+import random
+from collections.abc import Callable
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -36,17 +38,34 @@ class Harness:
 
     async def call(self, role: str, messages: list[dict[str, str]], phase: str,
                    prompt_id: str, task_id: str | None = None,
-                   repetition: int | None = None) -> tuple[Any, str | None]:
+                   repetition: int | None = None,
+                   validator: Callable[[dict[str, Any]], None] | None = None) -> tuple[Any, str | None]:
+        for attempt in range(1, self.config.max_attempts + 1):
+            result, error = await self.call_attempt(
+                role, messages, phase, prompt_id, task_id, repetition, attempt, validator)
+            if error is None:
+                return result, None
+            if attempt < self.config.max_attempts:
+                delay = self.config.retry_delay_seconds * 2 ** (attempt - 1)
+                await asyncio.sleep(delay + random.uniform(0, delay / 4))
+        return None, error
+
+    async def call_attempt(self, role: str, messages: list[dict[str, str]], phase: str,
+                           prompt_id: str, task_id: str | None, repetition: int | None,
+                           attempt: int, validator: Callable[[dict[str, Any]], None] | None) -> tuple[Any, str | None]:
         settings = getattr(self.config, role)
         artifact: dict[str, Any] = {
             "request": request_body(settings, messages), "status": "started",
-            "started_at": datetime.now(timezone.utc).isoformat(), "raw": None}
+            "started_at": datetime.now(timezone.utc).isoformat(), "raw": None,
+            "attempt": attempt, "max_attempts": self.config.max_attempts}
         try:
             async with self.semaphore:
                 reply = await self.client.complete(role, settings, messages)
             artifact["raw"] = reply.raw
             artifact["content"] = reply.content
             result = parse_object(reply.content)
+            if validator:
+                validator(result)
             artifact["status"] = "completed"
             return result, None
         except ProviderError as exc:
@@ -68,15 +87,23 @@ class Harness:
                                   "track": task["track"], "repetition": repetition,
                                   "answer": answer, "complete_success": None}
         if error:
-            result["status"] = "actor_" + error
+            result.update(status="model_failure", complete_success=False,
+                          failure_stage="actor", failure_reason=error)
         else:
+            def validate_judgments(judgments: dict[str, Any]) -> None:
+                entries = judgments.get("judgments") if set(judgments) == {"judgments"} else {}
+                if grade(task, oracle, answer, entries)["semantic_status"] == "invalid":
+                    raise ValueError("Judge response violates the rubric contract")
+
             judgments, judge_error = await self.call("judge", judge_messages(task, oracle, answer, self.dataset),
-                                                      phase, prompt_id, task["id"], repetition)
+                                                      phase, prompt_id, task["id"], repetition,
+                                                      validator=validate_judgments)
             entries = judgments.get("judgments") if isinstance(judgments, dict) and set(judgments) == {"judgments"} else {}
             score = grade(task, oracle, answer, entries)
             result.update(score, judgments=judgments)
             if judge_error or score["semantic_status"] == "invalid":
-                result["status"] = "judge_" + (judge_error or "invalid")
+                result.update(status="model_failure", complete_success=False,
+                              failure_stage="judge", failure_reason=judge_error or "invalid")
             else:
                 result["status"] = "evaluated"
         self.store.evaluation(phase, prompt_id, result)
@@ -147,25 +174,33 @@ class Harness:
         self.store.put("baseline", baseline)
         incumbent = baseline
         comparisons = []
+        proposal_failures = []
         for iteration in range(1, self.config.iterations + 1):
             phase = f"iteration-{iteration}"
             records = await self.evaluate(incumbent, "optimization", phase + "/optimization")
             if not summary(records)["complete_coverage"]:
                 self.store.put("status", "failed")
                 raise ValueError("Optimization evaluation incomplete; inspect saved call artifacts")
-            if not any(r["complete_success"] is False for r in records):
+            if not any(r["status"] == "evaluated" and r["complete_success"] is False for r in records):
                 break
+            def validate_proposal(proposal: dict[str, Any]) -> None:
+                if set(proposal) != {"strategy", "rationale"}:
+                    raise ValueError("Optimizer response must contain strategy and rationale")
+                strategy, rationale = proposal["strategy"], proposal["rationale"]
+                if (not isinstance(strategy, str) or not strategy.strip()
+                        or len(strategy) > self.config.max_strategy_chars
+                        or not isinstance(rationale, str) or not rationale.strip()):
+                    raise ValueError("Optimizer proposal violates strategy/rationale constraints")
+
             proposal, error = await self.call("optimizer", optimizer_messages(
                 self.store.strategy(incumbent), self.feedback(records), self.config.max_strategy_chars),
-                phase + "/proposal", incumbent)
-            if error or not isinstance(proposal, dict) or set(proposal) != {"strategy", "rationale"}:
-                self.store.put("status", "failed")
-                raise ValueError("Optimizer did not return a valid strategy proposal")
+                phase + "/proposal", incumbent, validator=validate_proposal)
+            if error:
+                proposal_failures.append({"phase": phase, "status": "model_failure",
+                                          "failure_stage": "optimizer", "failure_reason": error})
+                self.store.put("proposal_failures", proposal_failures)
+                continue
             strategy, rationale = proposal["strategy"], proposal["rationale"]
-            if (not isinstance(strategy, str) or not strategy.strip() or len(strategy) > self.config.max_strategy_chars
-                    or not isinstance(rationale, str) or not rationale.strip()):
-                self.store.put("status", "failed")
-                raise ValueError("Optimizer proposal violates strategy/rationale constraints")
             candidate = self.store.prompt(strategy, incumbent, rationale)
             if candidate == incumbent:
                 break
@@ -182,7 +217,8 @@ class Harness:
         (self.store.directory / "final_strategy.txt").write_text(self.store.strategy(incumbent) + "\n")
         report = {"evidence": self.store.get("evidence"), "status": "frozen",
                   "baseline_prompt": baseline, "final_prompt": incumbent,
-                  "comparisons": comparisons, "usage": self.store.usage()}
+                  "comparisons": comparisons, "proposal_failures": proposal_failures,
+                  "optimization": summary(records), "usage": self.store.usage()}
         (self.store.directory / "optimization_report.json").write_text(canonical(report) + "\n")
         return report
 

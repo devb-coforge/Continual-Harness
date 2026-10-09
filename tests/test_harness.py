@@ -7,6 +7,7 @@ import tempfile
 import unittest
 import urllib.error
 from pathlib import Path
+from dataclasses import replace
 from unittest.mock import patch
 
 from renters_benchmark.core import DATASET, canonical, load_pair
@@ -48,7 +49,7 @@ class HarnessTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.store = Store(Path(self.temp.name) / "experiment", create=True)
-        self.config = demo_config()
+        self.config = replace(demo_config(), max_attempts=2, retry_delay_seconds=0)
         initialize(self.store, DATASET, self.config, "synthetic_offline")
         self.baseline = self.store.prompt(BASELINE)
 
@@ -106,33 +107,79 @@ class HarnessTests(unittest.TestCase):
         self.store.put("status", "frozen")
         harness = Harness(DATASET, self.config, BrokenClient("provider"), self.store)
         report = asyncio.run(harness.final_test())
-        self.assertFalse(report["candidate"]["complete_coverage"])
+        self.assertTrue(report["candidate"]["complete_coverage"])
         self.assertEqual(report["candidate"]["quality_observations"], 0)
+        self.assertEqual(report["candidate"]["model_failures"], 60)
+        self.assertEqual(report["candidate"]["successes"], 0)
         with self.assertRaisesRegex(ValueError, "already reserved"):
             asyncio.run(harness.final_test())
 
     def test_failures_remain_distinct_and_usage_survives_bad_json(self):
         task, _ = load_pair("ops_001", DATASET)
-        for mode, expected in (("provider", "actor_provider_error"),
-                               ("parse", "actor_parse_error"), ("judge", "judge_invalid")):
+        for mode, stage in (("provider", "actor"), ("parse", "actor"), ("judge", "judge")):
             harness = Harness(DATASET, self.config, BrokenClient(mode), self.store)
             result = asyncio.run(harness.evaluate_case(task, self.baseline, mode, 0))
-            self.assertEqual(result["status"], expected)
-            self.assertIsNot(result["complete_success"], True)
+            self.assertEqual(result["status"], "model_failure")
+            self.assertEqual(result["failure_stage"], stage)
+            self.assertIs(result["complete_success"], False)
             self.assertEqual(harness.feedback([result]), [])
         usage = self.store.usage()["actor"]
-        self.assertEqual(usage["usage_calls"], 1)
-        self.assertEqual(usage["input_tokens"], 9)
-        self.assertEqual(usage["output_tokens"], 3)
-        self.assertEqual(usage["cost_calls"], 1)
-        self.assertEqual(usage["recorded_cost_usd"], 0.01)
+        self.assertEqual(usage["usage_calls"], 2)
+        self.assertEqual(usage["input_tokens"], 18)
+        self.assertEqual(usage["output_tokens"], 6)
+        self.assertEqual(usage["cost_calls"], 2)
+        self.assertEqual(usage["recorded_cost_usd"], 0.02)
 
-    def test_invalid_optimization_stops_before_proposal(self):
+    def test_exhausted_optimization_freezes_and_allows_test(self):
         harness = Harness(DATASET, self.config, BrokenClient("provider"), self.store)
-        with self.assertRaisesRegex(ValueError, "incomplete"):
-            asyncio.run(harness.optimize(self.baseline))
-        self.assertEqual(self.store.get("status"), "failed")
+        result = asyncio.run(harness.optimize(self.baseline))
+        self.assertEqual(self.store.get("status"), "frozen")
+        self.assertEqual(result["optimization"]["model_failures"], 100)
+        self.assertEqual(result["final_prompt"], self.baseline)
         self.assertEqual(self.store.db.execute("SELECT count(*) FROM calls WHERE role='optimizer'").fetchone()[0], 0)
+
+    def test_transient_provider_parse_and_judge_schema_errors_recover(self):
+        for mode in ("provider", "parse", "judge"):
+            broken = BrokenClient(mode)
+            demo = DemoClient(DATASET)
+            attempts = {"actor": 0, "judge": 0}
+
+            class FlakyClient:
+                async def complete(self, role, settings, messages):
+                    attempts[role] += 1
+                    if attempts[role] == 1:
+                        return await broken.complete(role, settings, messages)
+                    return await demo.complete(role, settings, messages)
+
+            harness = Harness(DATASET, self.config, FlakyClient(), self.store)
+            task, _ = load_pair("ops_002", DATASET)
+            result = asyncio.run(harness.evaluate_case(task, self.baseline, mode, 0))
+            self.assertEqual(result["status"], "evaluated")
+            self.assertTrue(result["complete_success"])
+            role = "judge" if mode == "judge" else "actor"
+            self.assertEqual(attempts[role], 2)
+            artifacts = [json.loads((self.store.directory / path).read_text())
+                         for path, in self.store.db.execute(
+                             "SELECT artifact FROM calls WHERE phase=? AND role=? ORDER BY rowid", (mode, role))]
+            self.assertEqual([a["attempt"] for a in artifacts], [1, 2])
+            self.assertEqual(artifacts[-1]["status"], "completed")
+
+    def test_exhausted_optimizer_keeps_incumbent_and_test_runs(self):
+        demo = DemoClient(DATASET)
+
+        class BrokenOptimizer:
+            async def complete(self, role, settings, messages):
+                if role == "optimizer":
+                    return Completion({}, '{"strategy": ""}')
+                return await demo.complete(role, settings, messages)
+
+        harness = Harness(DATASET, self.config, BrokenOptimizer(), self.store)
+        result = asyncio.run(harness.optimize(self.baseline))
+        self.assertEqual(result["final_prompt"], self.baseline)
+        self.assertEqual(result["proposal_failures"][0]["failure_stage"], "optimizer")
+        self.assertEqual(result["usage"]["optimizer"]["calls"], 2)
+        report = asyncio.run(harness.final_test())
+        self.assertTrue(report["candidate"]["complete_coverage"])
 
     def test_feedback_rejects_validation_task(self):
         harness = Harness(DATASET, self.config, DemoClient(DATASET), self.store)
@@ -177,6 +224,16 @@ class MetricsTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             compare(self.rows([True]) * 2, self.rows([True]) * 2)
 
+    def test_model_failures_count_in_paired_gains_and_regressions(self):
+        failures = self.rows([False], "model_failure")
+        result = compare(failures, self.rows([True]))
+        self.assertTrue(result["promote"])
+        self.assertEqual(len(result["improvements"]), 1)
+        self.assertEqual(result["incumbent"]["quality_observations"], 0)
+        result = compare(self.rows([True]), failures)
+        self.assertEqual(result["reason"], "regression_limit")
+        self.assertEqual(len(result["regressions"]), 1)
+
 
 class ProviderTests(unittest.TestCase):
     def test_strict_json_and_config_validation(self):
@@ -189,6 +246,12 @@ class ProviderTests(unittest.TestCase):
                 ModelSettings(**values)
         with self.assertRaises(ValueError):
             Config.from_dict({**demo_config().to_dict(), "repetitions": 0})
+        for value in (0, True):
+            with self.assertRaises(ValueError):
+                replace(demo_config(), max_attempts=value)
+        for value in (-1, float("nan"), True):
+            with self.assertRaises(ValueError):
+                replace(demo_config(), retry_delay_seconds=value)
         self.assertEqual(Config.load(Path("harness.example.toml")).repetitions, 2)
 
     def test_request_routing_usage_and_errors_without_network(self):
