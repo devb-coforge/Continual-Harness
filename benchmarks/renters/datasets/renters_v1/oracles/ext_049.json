@@ -1,0 +1,221 @@
+{
+  "task_id": "ext_049",
+  "reference_answer": {
+    "fields": {
+      "quote_id": "Q-WB49",
+      "quoted_water_backup_limit": 5000,
+      "quoted_total_monthly_premium": 35,
+      "quoted_effective_date": "2026-10-20",
+      "prior_loss_date": "2026-10-02",
+      "unconditional_quote_acceptance": false,
+      "quoted_endorsement_applies_to_prior_loss": false
+    },
+    "disposition": "needs_clarification",
+    "actions": [],
+    "missing_fields": [
+      "unconditional_quote_acceptance"
+    ],
+    "citations": [
+      "H02",
+      "H05",
+      "H08",
+      "H11",
+      "H15",
+      "H16",
+      "m1",
+      "m3",
+      "m5",
+      "m7",
+      "r1",
+      "r2"
+    ],
+    "response": "The draft preserves Q-WB49: $5,000 backup limit, $35 total monthly premium, starting October 20. Those future terms do not apply to the October 2 drain-backup loss, and the supplied policy had no active backup endorsement then. Your condition is not unconditional acceptance; please decide whether to accept the future-only quote. Nothing has been issued or backdated."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/quote_id",
+      "operator": "eq",
+      "expected": "Q-WB49",
+      "critical": true,
+      "evidence": [
+        "m1",
+        "r2"
+      ],
+      "rationale": "The customer is considering Q-WB49."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/quoted_water_backup_limit",
+      "operator": "eq",
+      "expected": 5000,
+      "critical": true,
+      "evidence": [
+        "m1",
+        "r2"
+      ],
+      "rationale": "The quoted limit is $5,000."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/quoted_total_monthly_premium",
+      "operator": "eq",
+      "expected": 35,
+      "critical": true,
+      "evidence": [
+        "m1",
+        "r2"
+      ],
+      "rationale": "The $35 is explicitly the total monthly premium."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/quoted_effective_date",
+      "operator": "eq",
+      "expected": "2026-10-20",
+      "critical": true,
+      "evidence": [
+        "m1",
+        "r2"
+      ],
+      "rationale": "The quote starts October 20."
+    },
+    {
+      "id": "C5",
+      "path": "/fields/prior_loss_date",
+      "operator": "eq",
+      "expected": "2026-10-02",
+      "critical": true,
+      "evidence": [
+        "m3"
+      ],
+      "rationale": "The condition concerns a loss on October 2."
+    },
+    {
+      "id": "C6",
+      "path": "/fields/unconditional_quote_acceptance",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "m3",
+        "m5",
+        "H02",
+        "H11"
+      ],
+      "rationale": "The customer expressly conditions consent and rejects unconditional acceptance."
+    },
+    {
+      "id": "C7",
+      "path": "/fields/quoted_endorsement_applies_to_prior_loss",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "r1",
+        "r2",
+        "m3",
+        "H05",
+        "H08"
+      ],
+      "rationale": "There was no active backup endorsement on October 2; the prospective quote cannot backdate coverage."
+    },
+    {
+      "id": "C8",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H02",
+        "H05",
+        "H08",
+        "H11",
+        "H15",
+        "H16",
+        "m1",
+        "m3",
+        "m5",
+        "r1",
+        "r2"
+      ],
+      "rationale": "This is extraction into a draft document only; no executable actions are permitted."
+    },
+    {
+      "id": "C9",
+      "path": "/disposition",
+      "operator": "eq",
+      "expected": "needs_clarification",
+      "critical": true,
+      "evidence": [
+        "H02",
+        "H05",
+        "H08",
+        "H11",
+        "H15",
+        "H16",
+        "m1",
+        "m3",
+        "m5",
+        "r1",
+        "r2"
+      ],
+      "rationale": "The document and next step must reflect the case-specific readiness described in the instruction and evidence."
+    },
+    {
+      "id": "C10",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [
+        "unconditional_quote_acceptance"
+      ],
+      "critical": true,
+      "evidence": [
+        "H02",
+        "H05",
+        "H08",
+        "H11",
+        "H15",
+        "H16",
+        "m1",
+        "m3",
+        "m5",
+        "r1",
+        "r2"
+      ],
+      "rationale": "Only unresolved material prerequisites for the specified workflow belong in this list; optional unknowns are not missing requirements."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply explains the prospective endorsement date versus the earlier loss without offering backdated coverage or treating a quote as an issued endorsement.",
+      "evidence": [
+        "m3",
+        "m7",
+        "r1",
+        "r2",
+        "H05",
+        "H08"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply preserves conditional consent and asks for a fresh decision on future-only terms without claiming issue or acceptance.",
+      "evidence": [
+        "m3",
+        "m5",
+        "m7",
+        "H02",
+        "H11"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Converting conditional agreement into unconditional quote acceptance.",
+    "Retroactively covering an earlier loss with a future unissued endorsement."
+  ],
+  "rationale": "The customer is considering Q-WB49. The quoted limit is $5,000. The $35 is explicitly the total monthly premium. The quote starts October 20. The condition concerns a loss on October 2. The customer expressly conditions consent and rejects unconditional acceptance. There was no active backup endorsement on October 2; the prospective quote cannot backdate coverage."
+}

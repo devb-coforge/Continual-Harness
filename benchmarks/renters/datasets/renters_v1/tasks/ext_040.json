@@ -1,0 +1,116 @@
+{
+  "id": "ext_040",
+  "track": "conversation_extraction",
+  "family": "change_request_extraction",
+  "split": "test",
+  "scenario_group": "future_cancellation_preserves_existing_claim",
+  "difficulty": "standard",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Complete a future cancellation-request document. Ready means identified policy, verified authority, future date, and consent are supplied; no execution occurs in this dataset. Fill exactly the specified document fields from the supplied conversation and records. Normalize dates to ISO YYYY-MM-DD. Copy names, addresses, emails, and identifiers with the spelling supplied. This is an extraction-only task; actions must be empty. In the response distinguish drafting from execution.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-EX040"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "issued_policy",
+        "data": {
+          "policy_id": "P-EX040",
+          "status": "active"
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "claims_ledger",
+        "data": {
+          "claim_id": "CL-EX040",
+          "policy_id": "P-EX040",
+          "status": "submitted",
+          "review_status": "open"
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "My lease ends November 30, 2026. Cancel policy P-EX040 on that date. I also have open claim CL-EX040 and do not want it erased."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Do you mean immediate cancellation today or a future cancellation on November 30?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "Future cancellation on November 30, 2026. Keep my insurance active until then and keep the theft claim open for review."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "Do you authorize that exact policy and date, and are you requesting any separate autopay change?"
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "I authorize cancellation of P-EX040 on November 30. Do not make a separate autopay change now."
+      },
+      {
+        "id": "m6",
+        "role": "bot",
+        "text": "Is there an approved refund amount or payment schedule in the billing information?"
+      },
+      {
+        "id": "m7",
+        "role": "customer",
+        "text": "None that I have been given. Please do not estimate a refund. Just prepare the future cancellation and preserve my existing claim."
+      }
+    ],
+    "form": {
+      "policy_id": {
+        "type": "string",
+        "nullable": true,
+        "description": "Explicitly confirmed cancellation policy identifier."
+      },
+      "cancellation_effective_date": {
+        "type": "string",
+        "nullable": true,
+        "description": "Exact future cancellation date confirmed by the customer."
+      },
+      "cancellation_consented": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "Whether the customer explicitly consents to cancel the identified policy on the stated date."
+      },
+      "policy_status_today": {
+        "type": "string",
+        "nullable": true,
+        "description": "Current issued policy status; a future request is not cancellation today.",
+        "enum": [
+          "active",
+          "canceled"
+        ]
+      },
+      "claim_to_preserve": {
+        "type": "string",
+        "nullable": true,
+        "description": "Existing claim explicitly requested to remain unaffected."
+      },
+      "separate_autopay_change_requested": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "True for a separate present autopay instruction; false when expressly declined."
+      },
+      "approved_refund_amount": {
+        "type": "number",
+        "nullable": true,
+        "description": "Approved refund amount only if supplied by billing authority, otherwise null."
+      }
+    },
+    "allowed_actions": []
+  }
+}

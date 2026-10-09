@@ -1,0 +1,108 @@
+{
+  "id": "ext_043",
+  "track": "conversation_extraction",
+  "family": "change_request_extraction",
+  "split": "test",
+  "scenario_group": "two_policies_ambiguous_cancel_target",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Complete a proposed cancellation document. Use selected_policy_id and final_policy_specific_consent in missing_fields while the target and final authorization remain unresolved. The task supplies both summaries for drafting only. Fill exactly the specified document fields from the supplied conversation and records. Normalize dates to ISO YYYY-MM-DD. Copy names, addresses, emails, and identifiers with the spelling supplied. This is an extraction-only task; actions must be empty. In the response distinguish drafting from execution. The verified session authorizes reading both listed policy summaries; it does not identify which policy the customer wants canceled.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": null,
+      "authorized_policy_ids": [
+        "P-EAST43",
+        "P-WEST43"
+      ]
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "policy_summary",
+        "data": {
+          "policy_id": "P-EAST43",
+          "renewal_date": "2026-11-01",
+          "insured_address": "6 East Court, Larkport, US",
+          "mailing_address": "55 Main Road, Larkport, US"
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "policy_summary",
+        "data": {
+          "policy_id": "P-WEST43",
+          "renewal_date": "2026-11-01",
+          "insured_address": "9 West Court, Larkport, US",
+          "mailing_address": "55 Main Road, Larkport, US"
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "Cancel the policy that renews next month on November 1, 2026. I have two accounts after my separation and do not want to cancel the wrong one."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Both supplied policy summaries show November 1 renewal dates. Which policy identifier do you intend?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "The last digits in my notes are 43, but both of these identifiers end with 43. I cannot tell from this phone which is the one I mean."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "Should I pick the policy listed first, or the one with a different mailing address?"
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "No. The mailing address is my contact address, not proof of which home I want to stop insuring. Do not choose for me."
+      },
+      {
+        "id": "m6",
+        "role": "bot",
+        "text": "Should the document retain November 1 as your proposed date while requesting the specific policy and final confirmation?"
+      },
+      {
+        "id": "m7",
+        "role": "customer",
+        "text": "Yes. Keep that proposed date. Ask me for the full policy ID, then get my confirmation before preparing a cancellation for either one."
+      }
+    ],
+    "form": {
+      "candidate_policy_ids": {
+        "type": "array",
+        "nullable": true,
+        "description": "Unordered supplied policy IDs still consistent with the unresolved customer description."
+      },
+      "selected_policy_id": {
+        "type": "string",
+        "nullable": true,
+        "description": "Single policy explicitly selected by the customer; null when unresolved."
+      },
+      "proposed_cancellation_date": {
+        "type": "string",
+        "nullable": true,
+        "description": "Date retained as a proposal, not final consent for an identified policy."
+      },
+      "final_policy_specific_consent": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "True for confirmed cancellation of an identified policy; false when expressly withheld pending identification."
+      },
+      "choose_by_mailing_address_authorized": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "Whether customer authorizes target selection by mailing address; false if expressly prohibited."
+      }
+    },
+    "allowed_actions": []
+  }
+}

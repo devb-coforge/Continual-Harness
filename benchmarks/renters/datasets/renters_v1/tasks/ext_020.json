@@ -1,0 +1,129 @@
+{
+  "id": "ext_020",
+  "track": "conversation_extraction",
+  "family": "change_request_extraction",
+  "split": "optimization",
+  "scenario_group": "autopay_disabled_policy_unchanged",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Complete a correction-of-intent document. Disposition follows the customer current request to preserve state, not the historical completed autopay action. Fill exactly the specified document fields from the supplied conversation and records. Normalize dates to ISO YYYY-MM-DD. Copy names, addresses, emails, and identifiers with the spelling supplied. This is an extraction-only task; actions must be empty. In the response distinguish drafting from execution.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-EX020"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "billing_event",
+        "data": {
+          "policy_id": "P-EX020",
+          "autopay_enabled": false,
+          "completed_on": "2026-10-07"
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "billing",
+        "data": {
+          "policy_id": "P-EX020",
+          "amount_due": 34,
+          "status": "unpaid"
+        }
+      },
+      {
+        "id": "r3",
+        "kind": "issued_policy",
+        "data": {
+          "policy_id": "P-EX020",
+          "status": "active"
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "I said cancel it yesterday and I am worried the system canceled my insurance. I meant the automatic card payments."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "What should the clarification document say about your intent?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "Keep my renters policy active. I only wanted autopay turned off so I can pay manually."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "The billing-event record says autopay was disabled on October 7, 2026. Does that resolve the payment-setting part?"
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "Yes. I do not need a second request to disable it. I still owe this month and I will pay manually."
+      },
+      {
+        "id": "m6",
+        "role": "bot",
+        "text": "Are you asking to cancel coverage, dispute the bill, or change any limits?"
+      },
+      {
+        "id": "m7",
+        "role": "customer",
+        "text": "None of those. Please document the correction and leave the insurance and amount due alone."
+      }
+    ],
+    "form": {
+      "clarified_cancellation_target": {
+        "type": "string",
+        "nullable": true,
+        "description": "autopay means payment automation only; policy means insurance coverage; unresolved means intent not established.",
+        "enum": [
+          "autopay",
+          "policy",
+          "unresolved"
+        ]
+      },
+      "autopay_recorded_enabled": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "Current autopay flag from the authoritative billing event."
+      },
+      "autopay_disabled_on": {
+        "type": "string",
+        "nullable": true,
+        "description": "Recorded completion date of autopay disabling."
+      },
+      "policy_cancellation_requested": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "True for current explicit consent to cancel insurance; false for explicit rejection."
+      },
+      "new_billing_action_requested": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "Whether a new billing transaction is currently requested; false for explicit no further change."
+      },
+      "recorded_amount_due": {
+        "type": "integer",
+        "nullable": true,
+        "description": "Current billed amount due in USD from supplied billing record; do not infer payment from disabled autopay."
+      },
+      "recorded_policy_status": {
+        "type": "string",
+        "nullable": true,
+        "description": "Current issued policy status from supplied record.",
+        "enum": [
+          "active",
+          "canceled"
+        ]
+      }
+    },
+    "allowed_actions": []
+  }
+}

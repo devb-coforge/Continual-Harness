@@ -1,0 +1,113 @@
+{
+  "id": "ext_042",
+  "track": "conversation_extraction",
+  "family": "application_filling",
+  "split": "test",
+  "scenario_group": "premium_versus_deductible_repaired_misunderstanding",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Complete the renters insurance application draft from this chat. Include every declared field. Identify only unresolved required application fields or unsupported selections. Do not submit, bind, or change insurance.",
+    "session": {
+      "verified": false,
+      "role": "visitor",
+      "policy_id": null
+    },
+    "records": [],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "Can you prepare an application for Elena Brook, elena.brook@example.test, at 27 Pine Arch, Unit 14, Reed Harbor? Occupancy and insurance start November 6, 2026."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Which property limit, liability limit, and deductible would you like?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "Property $30,000, liability $100,000, and I can pay $25 for the deductible each month."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "The deductible is not a monthly premium. Available deductibles are $250, $500 and $1,000; this chat has not provided any premium quote."
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "Understood. I select a $500 deductible. The $25 was my monthly budget, not a quoted price."
+      },
+      {
+        "id": "m6",
+        "role": "bot",
+        "text": "Do you consent to submit the application with that selection?"
+      },
+      {
+        "id": "m7",
+        "role": "customer",
+        "text": "Yes. Submit the application, but record that no premium has been quoted."
+      }
+    ],
+    "form": {
+      "applicant_name": {
+        "type": "string",
+        "nullable": true,
+        "description": "Applicant full name as explicitly given, preserving spelling."
+      },
+      "contact_email": {
+        "type": "string",
+        "nullable": true,
+        "description": "Applicant contact email; do not substitute a landlord or another occupant email."
+      },
+      "insured_address": {
+        "type": "string",
+        "nullable": true,
+        "description": "Complete requested insured dwelling address including unit; null if no single complete address is established. Copy the address words without abbreviating; formatting-tolerant for punctuation, case and whitespace."
+      },
+      "occupancy_start": {
+        "type": "string",
+        "nullable": true,
+        "description": "Date applicant starts occupying the dwelling, ISO YYYY-MM-DD; null if unresolved."
+      },
+      "requested_start": {
+        "type": "string",
+        "nullable": true,
+        "description": "Explicitly requested insurance start date, ISO YYYY-MM-DD; separate from occupancy date."
+      },
+      "personal_property_limit": {
+        "type": "integer",
+        "nullable": true,
+        "description": "Explicit selected personal-property limit in USD; retain unsupported requested numeric options and flag for clarification."
+      },
+      "liability_limit": {
+        "type": "integer",
+        "nullable": true,
+        "description": "Explicit selected liability limit in USD; null when unselected."
+      },
+      "deductible": {
+        "type": "integer",
+        "nullable": true,
+        "description": "Explicit selected deductible in USD; null when unselected."
+      },
+      "consent_to_submit": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "True only for explicit application submission consent, false for explicit decline, otherwise null."
+      },
+      "monthly_budget": {
+        "type": "number",
+        "nullable": true,
+        "description": "Applicant stated monthly budget in USD; not a quoted premium."
+      },
+      "quoted_monthly_premium": {
+        "type": "number",
+        "nullable": true,
+        "description": "An explicitly offered premium; null when none was quoted."
+      }
+    },
+    "allowed_actions": []
+  }
+}

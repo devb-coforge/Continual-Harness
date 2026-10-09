@@ -1,0 +1,71 @@
+{
+  "id": "ops_022",
+  "track": "support_ops",
+  "family": "policy_questions",
+  "split": "optimization",
+  "scenario_group": "pre_inception_theft_with_active_status_today",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Answer the customer’s policy question using the supplied records and handbook. Complete the requested fields and provide a concise explanation. This is an informational request; propose no account or claim actions.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-122"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "issued_declarations",
+        "data": {
+          "authority": "issued",
+          "policy_id": "P-122",
+          "named_insureds": [
+            "Noor Hale"
+          ],
+          "starts_on": "2026-10-05",
+          "ends_on": "2027-10-05",
+          "status_today": "active",
+          "personal_property_limit": 15000,
+          "deductible": 250,
+          "valuation_basis": "actual_cash_value"
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "The account says active today. My own laptop was stolen on October 4, 2026. Does the active badge mean that event is inside the policy dates?"
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Are you asking to change the start date?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "No, leave the dates alone. I just need to understand whether the theft date falls in this policy’s interval."
+      }
+    ],
+    "form": {
+      "event_date": {
+        "type": "string",
+        "nullable": false,
+        "description": "Reported loss date in ISO format."
+      },
+      "issued_start": {
+        "type": "string",
+        "nullable": false,
+        "description": "Start of the issued coverage interval in ISO format."
+      },
+      "event_within_interval": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Whether starts_on <= event_date < ends_on for the supplied issued policy."
+      }
+    },
+    "allowed_actions": []
+  }
+}

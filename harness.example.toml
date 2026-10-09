@@ -1,0 +1,29 @@
+# Replace each model/provider with a compatible OpenRouter model and provider slug.
+# API key is read exclusively from OPENROUTER_API_KEY in your shell environment.
+iterations = 2
+repetitions = 2
+concurrency = 4
+timeout_seconds = 120
+min_gain = 0.0
+max_regressions = 0
+max_strategy_chars = 12000
+feedback_failures = 6
+feedback_successes = 3
+
+[actor]
+model = "REPLACE_WITH_ACTOR_MODEL"
+provider = "REPLACE_WITH_PROVIDER_SLUG"
+temperature = 0.0
+max_tokens = 4096
+
+[judge]
+model = "REPLACE_WITH_JUDGE_MODEL"
+provider = "REPLACE_WITH_PROVIDER_SLUG"
+temperature = 0.0
+max_tokens = 4096
+
+[optimizer]
+model = "REPLACE_WITH_OPTIMIZER_MODEL"
+provider = "REPLACE_WITH_PROVIDER_SLUG"
+temperature = 0.0
+max_tokens = 4096

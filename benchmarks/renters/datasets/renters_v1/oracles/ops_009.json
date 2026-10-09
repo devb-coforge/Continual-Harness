@@ -1,0 +1,164 @@
+{
+  "task_id": "ops_009",
+  "reference_answer": {
+    "fields": {
+      "matching_claim_id": "CL-109-Q",
+      "claim_status": "submitted",
+      "evidence_record": "r3",
+      "new_claim_required": false
+    },
+    "disposition": "ready",
+    "actions": [
+      {
+        "type": "add_claim_evidence",
+        "target": "r2",
+        "value": {
+          "evidence_record": "r3"
+        }
+      }
+    ],
+    "missing_fields": [],
+    "citations": [
+      "r2",
+      "m1",
+      "m3",
+      "H13",
+      "r3"
+    ],
+    "response": "This is the same submitted bicycle-theft claim, CL-109-Q. I can propose adding the attached receipt to that existing claim without opening a second intake or changing the reported incident facts. The receipt has not been attached by this response, and I am not treating its $680 purchase price as an approved payment."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/matching_claim_id",
+      "operator": "eq",
+      "expected": "CL-109-Q",
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m1",
+        "m3",
+        "H13"
+      ],
+      "rationale": "Policy, date, cause and property match, and the customer confirms the same incident."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/claim_status",
+      "operator": "eq",
+      "expected": "submitted",
+      "critical": true,
+      "evidence": [
+        "r2"
+      ],
+      "rationale": "The record explicitly says submitted."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/evidence_record",
+      "operator": "eq",
+      "expected": "r3",
+      "critical": true,
+      "evidence": [
+        "r3",
+        "m3"
+      ],
+      "rationale": "The customer requests adding the attached receipt."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/new_claim_required",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m3",
+        "H13"
+      ],
+      "rationale": "This is a confirmed duplicate incident, so update the existing case."
+    },
+    {
+      "id": "C5",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [
+        {
+          "type": "add_claim_evidence",
+          "target": "r2",
+          "value": {
+            "evidence_record": "r3"
+          }
+        }
+      ],
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m1",
+        "m3",
+        "H13",
+        "r3"
+      ],
+      "rationale": "The proposed actions must match the authorized scope, readiness, and supplied action shapes; no action has executed."
+    },
+    {
+      "id": "C6",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m1",
+        "m3",
+        "H13",
+        "r3"
+      ],
+      "rationale": "Only material unresolved prerequisites for this requested workflow belong here."
+    },
+    {
+      "id": "C7",
+      "path": "/disposition",
+      "operator": "eq",
+      "expected": "ready",
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m1",
+        "m3",
+        "H13",
+        "r3"
+      ],
+      "rationale": "The customer and authoritative record establish a clear duplicate; a narrow evidence update is ready."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "Uses the existing matching submitted claim rather than treating the initial phrase open a claim as a request for a duplicate after the customer corrected it.",
+      "evidence": [
+        "r2",
+        "m3",
+        "H02",
+        "H13"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "Does not claim the receipt has already been added or use its historical purchase amount as an approved settlement.",
+      "evidence": [
+        "r3",
+        "H06",
+        "H16"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Opening duplicate intake despite a confirmed exact incident match",
+    "Ignoring explicit final correction to add evidence only",
+    "Treating purchase receipt as an approved loss valuation"
+  ],
+  "rationale": "The customer and authoritative record establish a clear duplicate; a narrow evidence update is ready."
+}

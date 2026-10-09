@@ -1,0 +1,103 @@
+{
+  "id": "ext_009",
+  "track": "conversation_extraction",
+  "family": "support_handoff",
+  "split": "optimization",
+  "scenario_group": "injury_allegation_customer_disputes_fault",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Complete a liability-review handoff. Disposition reflects the required staff liability decision; unknown optional evidence does not block the handoff. Fill exactly the specified document fields from the supplied conversation and records. Normalize dates to ISO YYYY-MM-DD. Copy names, addresses, emails, and identifiers with the spelling supplied. This is an extraction-only task; actions must be empty. In the response distinguish drafting from execution.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-EX009"
+    },
+    "records": [],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "My downstairs neighbor says my plant pot fell and cut his arm on October 6, 2026. He wants me to promise the insurer will pay."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Did you see the fall, and has anyone determined whose pot it was?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "I was at work. He sent a picture of a broken pot by 18 Harbor Steps, Morrow, US. Several neighbors keep pots there. I do not accept that it was mine."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "What would you like passed to the liability team?"
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "Record his injury allegation and my uncertainty about ownership. Contact me at imani.reed@post.example; do not contact him directly yet."
+      },
+      {
+        "id": "m6",
+        "role": "bot",
+        "text": "Do you have an agreed medical amount or a finding of fault?"
+      },
+      {
+        "id": "m7",
+        "role": "customer",
+        "text": "No agreed amount and no finding. He says the clinic bill may be around $600, but I have not seen it. Please ask a staff member to review."
+      }
+    ],
+    "form": {
+      "incident_date": {
+        "type": "string",
+        "nullable": true,
+        "description": "Date of the alleged incident."
+      },
+      "incident_location": {
+        "type": "string",
+        "nullable": true,
+        "description": "Reported incident location, copied exactly."
+      },
+      "injury_alleged": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "Whether a third-party injury is alleged, without treating it as verified."
+      },
+      "ownership_status": {
+        "type": "string",
+        "nullable": true,
+        "description": "disputed means a party contests ownership; confirmed means explicit agreement; unknown means nobody establishes ownership.",
+        "enum": [
+          "disputed",
+          "confirmed",
+          "unknown"
+        ]
+      },
+      "estimated_medical_amount": {
+        "type": "integer",
+        "nullable": true,
+        "description": "Reported numeric estimate in USD, null if none; never a verified bill."
+      },
+      "medical_amount_verified": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "True only for a supplied verified bill; false if explicitly unverified."
+      },
+      "contact_email": {
+        "type": "string",
+        "nullable": true,
+        "description": "Customer contact approved for staff follow-up."
+      },
+      "direct_neighbor_contact_authorized": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "Whether the customer explicitly authorizes direct contact with the neighbor."
+      }
+    },
+    "allowed_actions": []
+  }
+}

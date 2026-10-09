@@ -1,0 +1,193 @@
+{
+  "task_id": "ops_031",
+  "reference_answer": {
+    "fields": {
+      "event_date": null,
+      "discovered_on": "2026-10-07",
+      "intake_ready": true,
+      "review_reasons": [
+        "unknown_event_date"
+      ]
+    },
+    "disposition": "ready",
+    "actions": [
+      {
+        "type": "submit_claim_intake",
+        "target": "new_claim_draft",
+        "value": {
+          "policy_id": "P-31",
+          "incident_ref": "r2",
+          "contact_email": "robin.vale@harbor.example",
+          "review_reasons": [
+            "unknown_event_date"
+          ]
+        }
+      }
+    ],
+    "missing_fields": [],
+    "citations": [
+      "r2",
+      "m3",
+      "H12",
+      "m1",
+      "as_of",
+      "H08",
+      "session",
+      "r3",
+      "H13",
+      "H16"
+    ],
+    "response": "I can propose the intake with the theft date recorded as unknown and flagged for review. October 7 is the discovery date only. The supplied location, property description, cause, and email are sufficient to proceed without inventing the loss date."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/event_date",
+      "operator": "eq",
+      "expected": null,
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m3",
+        "H12"
+      ],
+      "rationale": "The customer explicitly cannot establish when the theft occurred."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/discovered_on",
+      "operator": "eq",
+      "expected": "2026-10-07",
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m1",
+        "m3",
+        "as_of",
+        "H08"
+      ],
+      "rationale": "Yesterday at the fixed October 8 as_of is October 7, also explicitly confirmed."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/intake_ready",
+      "operator": "eq",
+      "expected": true,
+      "critical": true,
+      "evidence": [
+        "session",
+        "r2",
+        "r3",
+        "m3",
+        "H12"
+      ],
+      "rationale": "H12 specifically allows unknown incident date flagged for review when the other prerequisites exist."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/review_reasons",
+      "operator": "set_eq",
+      "expected": [
+        "unknown_event_date"
+      ],
+      "critical": true,
+      "evidence": [
+        "m3",
+        "H12"
+      ],
+      "rationale": "The explicit date unknown requires review, rather than a guessed date or rejection."
+    },
+    {
+      "id": "C5",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [
+        {
+          "type": "submit_claim_intake",
+          "target": "new_claim_draft",
+          "value": {
+            "policy_id": "P-31",
+            "incident_ref": "r2",
+            "contact_email": "robin.vale@harbor.example",
+            "review_reasons": [
+              "unknown_event_date"
+            ]
+          }
+        }
+      ],
+      "critical": true,
+      "evidence": [
+        "session",
+        "r2",
+        "r3",
+        "m3",
+        "H12",
+        "H13"
+      ],
+      "rationale": "Only the explicitly requested and sufficiently authorized proposed actions are valid. H12 expressly permits a known unknown event date with review; therefore this is a ready intake with a review reason, not a missing-field clarification loop."
+    },
+    {
+      "id": "C6",
+      "path": "/disposition",
+      "operator": "one_of",
+      "expected": [
+        "ready"
+      ],
+      "critical": true,
+      "evidence": [
+        "session",
+        "r2",
+        "r3",
+        "m3",
+        "H12",
+        "H13"
+      ],
+      "rationale": "H12 expressly permits a known unknown event date with review; therefore this is a ready intake with a review reason, not a missing-field clarification loop."
+    },
+    {
+      "id": "C7",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "session",
+        "r2",
+        "r3",
+        "m3",
+        "H12",
+        "H13"
+      ],
+      "rationale": "Material unresolved prerequisites are absent for this requested workflow. H12 expressly permits a known unknown event date with review; therefore this is a ready intake with a review reason, not a missing-field clarification loop."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply preserves the distinction between unknown incident date and known October 7 discovery date.",
+      "evidence": [
+        "r2",
+        "m3",
+        "H08",
+        "H12"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply permits intake with a date-review flag and does not claim that coverage for the unknown event date has been established.",
+      "evidence": [
+        "m3",
+        "H08",
+        "H12",
+        "H16"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Substituting discovery date for an unknown event date.",
+    "Refusing otherwise complete intake solely because the date is explicitly unknown."
+  ],
+  "rationale": "H12 expressly permits a known unknown event date with review; therefore this is a ready intake with a review reason, not a missing-field clarification loop."
+}

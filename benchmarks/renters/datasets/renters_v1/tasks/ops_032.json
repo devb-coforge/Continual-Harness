@@ -1,0 +1,101 @@
+{
+  "id": "ops_032",
+  "track": "support_ops",
+  "family": "policy_questions",
+  "split": "validation",
+  "scenario_group": "issued_backup_endorsement_overrides_base_exclusion",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Explain whether the reported cause falls within the supplied property coverage and state the applicable cause-specific limit. No payment calculation or claim transaction is requested. coverage_scope means included for a supplied covered cause, excluded for an explicit exclusion, or unresolved when material cause or authority is unclear.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-32"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "policy",
+        "data": {
+          "policy_id": "P-32",
+          "authority": "issued",
+          "status": "active",
+          "starts_on": "2026-01-01",
+          "ends_on": "2027-01-01",
+          "named_insureds": [
+            "Robin Vale"
+          ],
+          "insured_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "mailing_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "personal_property_limit": 30000,
+          "liability_limit": 100000,
+          "deductible": 500,
+          "valuation": "replacement_cost",
+          "loss_of_use_limit": 6000
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "endorsement",
+        "data": {
+          "authority": "issued",
+          "policy_id": "P-32",
+          "starts_on": "2026-04-01",
+          "ends_on": "2027-01-01",
+          "coverage": "water_backup",
+          "scope": "Includes direct damage to insured-owned personal property caused by sewer or drain backup.",
+          "limit_usd": 5000
+        }
+      },
+      {
+        "id": "r3",
+        "kind": "maintenance_report",
+        "data": {
+          "incident_date": "2026-10-06",
+          "finding": "Wastewater backed up through the floor drain after a downstream sewer blockage. No rising surface water entered the building."
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "Water came through the floor drain and damaged my own stored boxes on October 6. The maintenance report is attached."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Do you want help submitting a claim now?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "Just tell me whether this is included under my issued documents and the backup limit. A neighbor says all water damage is excluded."
+      }
+    ],
+    "form": {
+      "coverage_scope": {
+        "type": "string",
+        "nullable": false,
+        "description": "Coverage classification for the reported cause under supplied issued documents.",
+        "enum": [
+          "included",
+          "excluded",
+          "unresolved"
+        ]
+      },
+      "applicable_endorsement_ref": {
+        "type": "string",
+        "nullable": true,
+        "description": "Record ID of the issued endorsement controlling this cause, or null."
+      },
+      "cause_specific_limit": {
+        "type": "integer",
+        "nullable": false,
+        "description": "Issued water-backup limit in USD, not a payment amount."
+      }
+    },
+    "allowed_actions": []
+  }
+}

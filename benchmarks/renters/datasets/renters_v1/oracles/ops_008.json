@@ -1,0 +1,171 @@
+{
+  "task_id": "ops_008",
+  "reference_answer": {
+    "fields": {
+      "cancellation_date": "2026-10-08",
+      "cancellation_timing": "immediate",
+      "preserve_claim_id": "CL-108-A",
+      "approved_refund_amount": null
+    },
+    "disposition": "ready",
+    "actions": [
+      {
+        "type": "cancel_policy",
+        "target": "r1",
+        "value": {
+          "effective_date": "2026-10-08"
+        }
+      }
+    ],
+    "missing_fields": [],
+    "citations": [
+      "m1",
+      "m3",
+      "as_of",
+      "H10",
+      "r2",
+      "r3"
+    ],
+    "response": "I can propose cancellation of P-108 effective October 8, 2026, as you explicitly requested. The submitted claim CL-108-A is to remain unchanged. Billing has no determined refund amount, so I am not calculating one. This response proposes the cancellation; it does not confirm it has executed."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/cancellation_date",
+      "operator": "eq",
+      "expected": "2026-10-08",
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m3",
+        "as_of"
+      ],
+      "rationale": "The customer confirms today by both wording and ISO-equivalent date."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/cancellation_timing",
+      "operator": "eq",
+      "expected": "immediate",
+      "critical": true,
+      "evidence": [
+        "m1",
+        "as_of",
+        "H10"
+      ],
+      "rationale": "The confirmed date is today."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/preserve_claim_id",
+      "operator": "eq",
+      "expected": "CL-108-A",
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m1",
+        "m3",
+        "H10"
+      ],
+      "rationale": "Cancellation must not erase or withdraw the submitted theft claim."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/approved_refund_amount",
+      "operator": "eq",
+      "expected": null,
+      "critical": true,
+      "evidence": [
+        "r3",
+        "H10"
+      ],
+      "rationale": "Billing explicitly says the amount has not been determined."
+    },
+    {
+      "id": "C5",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [
+        {
+          "type": "cancel_policy",
+          "target": "r1",
+          "value": {
+            "effective_date": "2026-10-08"
+          }
+        }
+      ],
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m3",
+        "as_of",
+        "H10",
+        "r2",
+        "r3"
+      ],
+      "rationale": "The proposed actions must match the authorized scope, readiness, and supplied action shapes; no action has executed."
+    },
+    {
+      "id": "C6",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m3",
+        "as_of",
+        "H10",
+        "r2",
+        "r3"
+      ],
+      "rationale": "Only material unresolved prerequisites for this requested workflow belong here."
+    },
+    {
+      "id": "C7",
+      "path": "/disposition",
+      "operator": "eq",
+      "expected": "ready",
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m3",
+        "as_of",
+        "H10",
+        "r2",
+        "r3"
+      ],
+      "rationale": "Identity, authority, policy and explicit eligible-date consent are all present; immediate cancellation can be proposed."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "Preserves the supplied submitted claim and its actual reference while proposing only the confirmed policy cancellation.",
+      "evidence": [
+        "r2",
+        "m1",
+        "m3",
+        "H10"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "Does not invent a refund or describe cancellation as already executed.",
+      "evidence": [
+        "r3",
+        "m3",
+        "H10",
+        "H16"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Deleting claims as a side effect of cancellation",
+    "Estimating a prorated refund without an approved billing amount",
+    "Treating an authorized proposal as a completed cancellation"
+  ],
+  "rationale": "Identity, authority, policy and explicit eligible-date consent are all present; immediate cancellation can be proposed."
+}

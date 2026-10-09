@@ -1,0 +1,122 @@
+{
+  "task_id": "ops_022",
+  "reference_answer": {
+    "fields": {
+      "event_date": "2026-10-04",
+      "issued_start": "2026-10-05",
+      "event_within_interval": false
+    },
+    "disposition": "answered",
+    "actions": [],
+    "missing_fields": [],
+    "citations": [
+      "m1",
+      "r1",
+      "H08"
+    ],
+    "response": "The October 4 theft is before the issued October 5 start date, so it does not fall within this policy’s supplied interval. The active badge on October 8 describes today’s status, not coverage for an earlier event. I have not proposed changing or backdating your start date."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/event_date",
+      "operator": "eq",
+      "expected": "2026-10-04",
+      "critical": true,
+      "evidence": [
+        "m1"
+      ],
+      "rationale": "The event date is explicit."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/issued_start",
+      "operator": "eq",
+      "expected": "2026-10-05",
+      "critical": true,
+      "evidence": [
+        "r1"
+      ],
+      "rationale": "The declarations start one day after the event."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/event_within_interval",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "m1",
+        "r1",
+        "H08"
+      ],
+      "rationale": "The event precedes inception; today’s active status does not apply retroactively."
+    },
+    {
+      "id": "C4",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "m1",
+        "r1",
+        "H08"
+      ],
+      "rationale": "The proposed actions must match the authorized scope, readiness, and supplied action shapes; no action has executed."
+    },
+    {
+      "id": "C5",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "m1",
+        "r1",
+        "H08"
+      ],
+      "rationale": "Only material unresolved prerequisites for this requested workflow belong here."
+    },
+    {
+      "id": "C6",
+      "path": "/disposition",
+      "operator": "eq",
+      "expected": "answered",
+      "critical": true,
+      "evidence": [
+        "m1",
+        "r1",
+        "H08"
+      ],
+      "rationale": "The supplied dates fully resolve the interval question and the customer expressly asks to preserve them."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "Evaluates the event against the issued inception date and explicitly distinguishes today’s active status from event-date coverage.",
+      "evidence": [
+        "m1",
+        "r1",
+        "H08"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "Does not propose backdating or silently move the reported theft date into the interval.",
+      "evidence": [
+        "m3",
+        "H02",
+        "H08"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Using current active status as sufficient evidence of historic coverage",
+    "Offering retroactive changes to make the event eligible"
+  ],
+  "rationale": "The supplied dates fully resolve the interval question and the customer expressly asks to preserve them."
+}

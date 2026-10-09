@@ -1,0 +1,110 @@
+{
+  "id": "ops_009",
+  "track": "support_ops",
+  "family": "claim_intake",
+  "split": "optimization",
+  "scenario_group": "exact_existing_theft_match_new_receipt_update",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Resolve whether this is new intake or an update. add_claim_evidence targets a supplied existing claim record with value {\"evidence_record\": \"r#\"}. submit_claim would target new_claim with value {\"source_message_ids\": [\"m#\", ...]} for the confirmed incident. Preserve unrelated recorded facts.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-109"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "issued_declarations",
+        "data": {
+          "authority": "issued",
+          "policy_id": "P-109",
+          "named_insureds": [
+            "Ada Brook"
+          ],
+          "starts_on": "2026-01-01",
+          "ends_on": "2027-01-01",
+          "status_today": "active",
+          "personal_property_limit": 30000,
+          "deductible": 500,
+          "valuation_basis": "actual_cash_value"
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "claim",
+        "data": {
+          "authority": "submitted_claim_record",
+          "claim_id": "CL-109-Q",
+          "policy_id": "P-109",
+          "event_date": "2026-09-29",
+          "cause": "theft",
+          "property": [
+            "blue commuter bicycle"
+          ],
+          "event_location": "12 Sycamore Place, Unit 5, Millport, RI 02818, US",
+          "status": "submitted",
+          "evidence": [
+            "police_report"
+          ],
+          "assigned_adjuster": null
+        }
+      },
+      {
+        "id": "r3",
+        "kind": "receipt",
+        "data": {
+          "authority": "customer_uploaded_document",
+          "document_id": "DOC-109-7",
+          "item": "blue commuter bicycle",
+          "purchase_amount": 680,
+          "purchase_date": "2025-04-03"
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "I found the original receipt for my blue commuter bicycle. Can you open a claim with it? The bike was stolen at Sycamore Place on September 29, 2026."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "There is a supplied submitted record for that policy, date and bicycle. Is this another theft or evidence for that same incident?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "The very same incident, no second theft. I meant add the attached receipt to the claim already on file, not create another one. Do not change any other reported facts."
+      }
+    ],
+    "form": {
+      "matching_claim_id": {
+        "type": "string",
+        "nullable": false,
+        "description": "Existing authoritative claim reference for the matching incident."
+      },
+      "claim_status": {
+        "type": "string",
+        "nullable": false,
+        "description": "Existing status from the supplied authoritative claim record."
+      },
+      "evidence_record": {
+        "type": "string",
+        "nullable": false,
+        "description": "Record ID of the newly supplied evidence to propose adding."
+      },
+      "new_claim_required": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Whether a distinct new intake is needed for this request."
+      }
+    },
+    "allowed_actions": [
+      "add_claim_evidence",
+      "submit_claim"
+    ]
+  }
+}

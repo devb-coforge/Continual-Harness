@@ -1,0 +1,193 @@
+{
+  "task_id": "ops_027",
+  "reference_answer": {
+    "fields": {
+      "mailing_destination_ref": "r2",
+      "move_destination_ref": "r3",
+      "move_effective_date": "2026-11-01",
+      "insured_address_changes_today": false
+    },
+    "disposition": "partial",
+    "actions": [
+      {
+        "type": "update_mailing_address",
+        "target": "r1",
+        "value": {
+          "mailing_address_ref": "r2"
+        }
+      },
+      {
+        "type": "refer_move_review",
+        "target": "r1",
+        "value": {
+          "destination_ref": "r3",
+          "effective_date": "2026-11-01",
+          "reason": "outside_us"
+        }
+      }
+    ],
+    "missing_fields": [],
+    "citations": [
+      "m3",
+      "r2",
+      "H09",
+      "m1",
+      "r3",
+      "H08",
+      "session",
+      "H16"
+    ],
+    "response": "I can propose the mailing-only update to the US address. The November 1 move to Canada needs staff review because this product serves US addresses. The proposed mailing change does not change your insured premises or cancel coverage."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/mailing_destination_ref",
+      "operator": "eq",
+      "expected": "r2",
+      "critical": true,
+      "evidence": [
+        "m3",
+        "r2",
+        "H09"
+      ],
+      "rationale": "The customer confirms the independent US mailing destination."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/move_destination_ref",
+      "operator": "eq",
+      "expected": "r3",
+      "critical": true,
+      "evidence": [
+        "m1",
+        "r3"
+      ],
+      "rationale": "The Canadian record is the intended insured premises, not the mailing address."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/move_effective_date",
+      "operator": "eq",
+      "expected": "2026-11-01",
+      "critical": true,
+      "evidence": [
+        "m1",
+        "H08"
+      ],
+      "rationale": "November 1, 2026 is explicit."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/insured_address_changes_today",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "m3",
+        "r3",
+        "H09"
+      ],
+      "rationale": "Outside-US moves require staff review; the customer additionally asks to preserve current insurance."
+    },
+    {
+      "id": "C5",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [
+        {
+          "type": "update_mailing_address",
+          "target": "r1",
+          "value": {
+            "mailing_address_ref": "r2"
+          }
+        },
+        {
+          "type": "refer_move_review",
+          "target": "r1",
+          "value": {
+            "destination_ref": "r3",
+            "effective_date": "2026-11-01",
+            "reason": "outside_us"
+          }
+        }
+      ],
+      "critical": true,
+      "evidence": [
+        "session",
+        "m1",
+        "m3",
+        "r2",
+        "r3",
+        "H09",
+        "H16"
+      ],
+      "rationale": "Only the explicitly requested and sufficiently authorized proposed actions are valid. Authority is established, the mailing change is explicit, and the outside-US move has a complete date/address but needs staff rather than more customer address data."
+    },
+    {
+      "id": "C6",
+      "path": "/disposition",
+      "operator": "one_of",
+      "expected": [
+        "partial"
+      ],
+      "critical": true,
+      "evidence": [
+        "session",
+        "m1",
+        "m3",
+        "r2",
+        "r3",
+        "H09",
+        "H16"
+      ],
+      "rationale": "Authority is established, the mailing change is explicit, and the outside-US move has a complete date/address but needs staff rather than more customer address data."
+    },
+    {
+      "id": "C7",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "session",
+        "m1",
+        "m3",
+        "r2",
+        "r3",
+        "H09",
+        "H16"
+      ],
+      "rationale": "Material unresolved prerequisites are absent for this requested workflow. Authority is established, the mailing change is explicit, and the outside-US move has a complete date/address but needs staff rather than more customer address data."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply separates the permitted US mailing update from the Canadian coverage request requiring review.",
+      "evidence": [
+        "m1",
+        "m3",
+        "r2",
+        "r3",
+        "H09"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply does not claim coverage has moved to Canada or cancel the current policy.",
+      "evidence": [
+        "m3",
+        "H09",
+        "H16"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Rejecting an independent mailing update because the insured move is unsupported.",
+    "Moving or canceling the policy automatically when a foreign destination is requested."
+  ],
+  "rationale": "Authority is established, the mailing change is explicit, and the outside-US move has a complete date/address but needs staff rather than more customer address data."
+}

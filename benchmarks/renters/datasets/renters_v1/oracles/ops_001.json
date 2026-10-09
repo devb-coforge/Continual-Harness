@@ -1,0 +1,145 @@
+{
+  "task_id": "ops_001",
+  "reference_answer": {
+    "fields": {
+      "event_date": "2026-10-06",
+      "property_scope": "within_base_scope",
+      "away_from_home_disqualifies": false,
+      "claim_requested": false
+    },
+    "disposition": "answered",
+    "actions": [],
+    "missing_fields": [],
+    "citations": [
+      "m3",
+      "m1",
+      "r1",
+      "H04",
+      "H08"
+    ],
+    "response": "Your own camera can fall within the policy’s theft scope while temporarily away from home, and October 6 is within the supplied policy interval. Leaving the apartment does not by itself disqualify it. Limits and the deductible still apply; this is not claim approval or a payment promise. I have not proposed a claim because you asked only for an explanation."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/event_date",
+      "operator": "eq",
+      "expected": "2026-10-06",
+      "critical": true,
+      "evidence": [
+        "m3"
+      ],
+      "rationale": "The customer gives an explicit event date."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/property_scope",
+      "operator": "eq",
+      "expected": "within_base_scope",
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m3",
+        "r1",
+        "H04",
+        "H08"
+      ],
+      "rationale": "The named insured owns the camera, theft occurred during the effective interval, and temporary travel is included."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/away_from_home_disqualifies",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "m1",
+        "H04"
+      ],
+      "rationale": "Temporary off-premises belongings are included."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/claim_requested",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "m3"
+      ],
+      "rationale": "The customer explicitly seeks explanation only."
+    },
+    {
+      "id": "C5",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "m3",
+        "m1",
+        "r1",
+        "H04",
+        "H08"
+      ],
+      "rationale": "The proposed actions must match the authorized scope, readiness, and supplied action shapes; no action has executed."
+    },
+    {
+      "id": "C6",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "m3",
+        "m1",
+        "r1",
+        "H04",
+        "H08"
+      ],
+      "rationale": "Only material unresolved prerequisites for this requested workflow belong here."
+    },
+    {
+      "id": "C7",
+      "path": "/disposition",
+      "operator": "eq",
+      "expected": "answered",
+      "critical": true,
+      "evidence": [
+        "m3",
+        "m1",
+        "r1",
+        "H04",
+        "H08"
+      ],
+      "rationale": "The question has enough facts to explain scope and expressly declines intake; an informational answer is appropriate."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "Explains that temporary travel does not itself remove theft protection for the named insured’s own camera.",
+      "evidence": [
+        "m1",
+        "r1",
+        "H04"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "Does not claim to have opened a claim or guarantee reimbursement, and distinguishes scope from claim approval.",
+      "evidence": [
+        "m3",
+        "H04",
+        "H16"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Treating off-premises property as automatically excluded",
+    "Opening a claim after an informational-only request"
+  ],
+  "rationale": "The question has enough facts to explain scope and expressly declines intake; an informational answer is appropriate."
+}

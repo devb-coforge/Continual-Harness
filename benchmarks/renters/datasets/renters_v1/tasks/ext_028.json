@@ -1,0 +1,113 @@
+{
+  "id": "ext_028",
+  "track": "conversation_extraction",
+  "family": "support_handoff",
+  "split": "validation",
+  "scenario_group": "equal_authority_conflicting_deductible",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Complete a document-conflict handoff, not a claim or payout form. Disposition reflects the need for staff reconciliation; missing_fields should not list unavailable internal decisions as customer prerequisites. Fill exactly the specified document fields from the supplied conversation and records. Normalize dates to ISO YYYY-MM-DD. Copy names, addresses, emails, and identifiers with the spelling supplied. This is an extraction-only task; actions must be empty. In the response distinguish drafting from execution.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-EX021"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "issued_declarations",
+        "data": {
+          "policy_id": "P-EX021",
+          "issued_on": "2026-09-01",
+          "starts_on": "2026-09-01",
+          "ends_on": "2027-09-01",
+          "deductible": 250,
+          "supersedes": null
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "issued_declarations",
+        "data": {
+          "policy_id": "P-EX021",
+          "issued_on": "2026-09-01",
+          "starts_on": "2026-09-01",
+          "ends_on": "2027-09-01",
+          "deductible": 1000,
+          "supersedes": null
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "I downloaded two declarations for the same policy term. One says a $250 deductible and the other says $1,000. Which one should I put on the claim worksheet?"
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Does either document say it replaces the other, or have you received an endorsement?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "Neither says superseded. They both show the same issue date and policy dates. I have no endorsement or notice explaining it."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "Would you prefer the lower figure?"
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "Of course, but preference is not evidence. Please have staff reconcile the documents instead of guessing."
+      },
+      {
+        "id": "m6",
+        "role": "bot",
+        "text": "What contact should go on the handoff, and should I calculate a possible payment now?"
+      },
+      {
+        "id": "m7",
+        "role": "customer",
+        "text": "Use sol.fern@post.example. Do not calculate a payment until the deductible is resolved. I am only asking about the conflicting records today."
+      }
+    ],
+    "form": {
+      "policy_id": {
+        "type": "string",
+        "nullable": true,
+        "description": "Policy identifier shared by the supplied declarations."
+      },
+      "conflicting_deductibles": {
+        "type": "array",
+        "nullable": true,
+        "description": "Unordered distinct deductible amounts appearing in equally authoritative applicable declarations, in USD."
+      },
+      "resolved_deductible": {
+        "type": "integer",
+        "nullable": true,
+        "description": "Single authoritative deductible only if the record conflict can be resolved; otherwise null."
+      },
+      "conflicting_record_ids": {
+        "type": "array",
+        "nullable": true,
+        "description": "Unordered supplied record IDs that create the unresolved conflict."
+      },
+      "payment_calculation_requested": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "True for a current payment illustration request; false if expressly declined."
+      },
+      "contact_email": {
+        "type": "string",
+        "nullable": true,
+        "description": "Customer contact for reconciliation follow-up."
+      }
+    },
+    "allowed_actions": []
+  }
+}

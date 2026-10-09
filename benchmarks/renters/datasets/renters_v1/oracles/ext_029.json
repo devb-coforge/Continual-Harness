@@ -1,0 +1,224 @@
+{
+  "task_id": "ext_029",
+  "reference_answer": {
+    "fields": {
+      "applicant_name": "Imani Frost",
+      "contact_email": "imani.frost@example.test",
+      "insured_address": "22 Moss Lane, Ground Floor, Elmswell",
+      "occupancy_start": "2026-10-09",
+      "requested_start": "2026-10-08",
+      "personal_property_limit": 15000,
+      "liability_limit": 100000,
+      "deductible": 250,
+      "consent_to_submit": true,
+      "other_occupants": []
+    },
+    "disposition": "ready",
+    "actions": [],
+    "missing_fields": [],
+    "citations": [
+      "H02",
+      "H08",
+      "H15",
+      "H16",
+      "as_of",
+      "m1",
+      "m3",
+      "m5",
+      "m7"
+    ],
+    "response": "The application is complete with an October 8 requested start and October 9 occupancy. It records no other occupants and your submission consent; it does not establish issued coverage."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/applicant_name",
+      "operator": "eq",
+      "expected": "Imani Frost",
+      "critical": true,
+      "evidence": [
+        "m1"
+      ],
+      "rationale": "The cited source establishes applicant_name; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/contact_email",
+      "operator": "eq",
+      "expected": "imani.frost@example.test",
+      "critical": true,
+      "evidence": [
+        "m1"
+      ],
+      "rationale": "The cited source establishes contact_email; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/insured_address",
+      "operator": "text_eq",
+      "expected": "22 Moss Lane, Ground Floor, Elmswell",
+      "critical": true,
+      "evidence": [
+        "m1"
+      ],
+      "rationale": "The cited source establishes insured_address; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/occupancy_start",
+      "operator": "eq",
+      "expected": "2026-10-09",
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m3",
+        "as_of",
+        "H08"
+      ],
+      "rationale": "The cited source establishes occupancy_start; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C5",
+      "path": "/fields/requested_start",
+      "operator": "eq",
+      "expected": "2026-10-08",
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m3",
+        "as_of",
+        "H08"
+      ],
+      "rationale": "The cited source establishes requested_start; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C6",
+      "path": "/fields/personal_property_limit",
+      "operator": "eq",
+      "expected": 15000,
+      "critical": true,
+      "evidence": [
+        "m5"
+      ],
+      "rationale": "The cited source establishes personal_property_limit; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C7",
+      "path": "/fields/liability_limit",
+      "operator": "eq",
+      "expected": 100000,
+      "critical": true,
+      "evidence": [
+        "m5"
+      ],
+      "rationale": "The cited source establishes liability_limit; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C8",
+      "path": "/fields/deductible",
+      "operator": "eq",
+      "expected": 250,
+      "critical": true,
+      "evidence": [
+        "m5"
+      ],
+      "rationale": "The cited source establishes deductible; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C9",
+      "path": "/fields/consent_to_submit",
+      "operator": "eq",
+      "expected": true,
+      "critical": true,
+      "evidence": [
+        "m7"
+      ],
+      "rationale": "The cited source establishes consent_to_submit; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C10",
+      "path": "/fields/other_occupants",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "m5",
+        "H02"
+      ],
+      "rationale": "The cited source establishes other_occupants; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C11",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H16"
+      ],
+      "rationale": "This task requests document extraction only; no transaction is authorized by the task."
+    },
+    {
+      "id": "C12",
+      "path": "/disposition",
+      "operator": "one_of",
+      "expected": [
+        "ready"
+      ],
+      "critical": true,
+      "evidence": [
+        "H15",
+        "H16"
+      ],
+      "rationale": "Relative dates are independently anchored by explicit calendar dates and as_of, so clarification is unnecessary. The absence of other occupants is explicitly stated."
+    },
+    {
+      "id": "C13",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H15",
+        "H16"
+      ],
+      "rationale": "Only these unresolved fields block the requested document workflow: none; optional uncertainty is preserved in the document."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply describes a complete draft with explicit submission consent and no other occupants, while distinguishing that draft from issued insurance.",
+      "evidence": [
+        "H11",
+        "H14",
+        "H15",
+        "m1",
+        "m3",
+        "m5",
+        "m7"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply resolves today and tomorrow correctly and does not request needless date clarification.",
+      "evidence": [
+        "H02",
+        "H14",
+        "H15",
+        "m1",
+        "m3",
+        "m5",
+        "m7"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Treating explicitly anchored today and tomorrow as ambiguous dates.",
+    "Using October 9 occupancy for the October 8 requested insurance start.",
+    "Replacing the explicitly empty other-occupants list with null."
+  ],
+  "rationale": "Relative dates are independently anchored by explicit calendar dates and as_of, so clarification is unnecessary. The absence of other occupants is explicitly stated."
+}

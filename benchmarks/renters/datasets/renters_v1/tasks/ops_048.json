@@ -1,0 +1,98 @@
+{
+  "id": "ops_048",
+  "track": "support_ops",
+  "family": "policy_questions",
+  "split": "test",
+  "scenario_group": "explicit_illustration_applies_property_cap_before_deductible",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Calculate only the requested illustrative arithmetic ceiling using H06 and the supplied documented eligible value. This is not a claim settlement. Output all arithmetic inputs in USD and no claim actions. Do not add undocumented expenses or a premium to the illustration.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-48"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "policy",
+        "data": {
+          "policy_id": "P-48",
+          "authority": "issued",
+          "status": "active",
+          "starts_on": "2026-01-01",
+          "ends_on": "2027-01-01",
+          "named_insureds": [
+            "Robin Vale"
+          ],
+          "insured_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "mailing_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "personal_property_limit": 15000,
+          "liability_limit": 100000,
+          "deductible": 500,
+          "valuation": "replacement_cost",
+          "loss_of_use_limit": 6000
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "loss_worksheet",
+        "data": {
+          "authority": "supplied_documented_eligible_value_for_illustration",
+          "event_date": "2026-10-05",
+          "cause": "accidental_fire",
+          "owner": "Robin Vale",
+          "category": "ordinary_household_contents_not_jewelry",
+          "documented_eligible_value_usd": 22000,
+          "additional_expenses_usd": null
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "For the October 5 fire, the supplied worksheet establishes $22,000 of eligible ordinary contents. Can you illustrate the maximum under the listed limit and deductible?"
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Do you want a final settlement estimate including hotel costs?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "No. Just the handbook arithmetic ceiling from those inputs. There is no documented hotel amount, and I understand this is not an approved payout."
+      }
+    ],
+    "form": {
+      "eligible_value": {
+        "type": "integer",
+        "nullable": false,
+        "description": "Documented eligible value explicitly supplied for the illustration, USD."
+      },
+      "applicable_limit": {
+        "type": "integer",
+        "nullable": false,
+        "description": "Applicable issued personal-property limit for these ordinary contents, USD."
+      },
+      "deductible": {
+        "type": "integer",
+        "nullable": false,
+        "description": "Issued deductible in USD."
+      },
+      "illustrative_ceiling": {
+        "type": "integer",
+        "nullable": false,
+        "description": "max(0, min(documented eligible value, applicable limit) minus deductible), USD."
+      },
+      "is_settlement": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Whether this output is an approved settlement rather than the requested illustration."
+      }
+    },
+    "allowed_actions": []
+  }
+}

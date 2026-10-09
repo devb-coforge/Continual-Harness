@@ -1,0 +1,152 @@
+{
+  "task_id": "ops_040",
+  "reference_answer": {
+    "fields": {
+      "destination_ref": "r2",
+      "unit": null,
+      "effective_date": "2026-10-20",
+      "ready_to_schedule": false
+    },
+    "disposition": "needs_clarification",
+    "actions": [],
+    "missing_fields": [
+      "unit"
+    ],
+    "citations": [
+      "r2",
+      "m1",
+      "m3",
+      "H09",
+      "H08",
+      "H16",
+      "r1"
+    ],
+    "response": "The October 20 date and new building are clear, but the assigned apartment unit is still needed before a move can be proposed. Please provide it once assigned. Your current insured address stays unchanged; I will not copy Unit 4 into the new address."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/destination_ref",
+      "operator": "eq",
+      "expected": "r2",
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m1"
+      ],
+      "rationale": "The building record matches the confirmed request."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/unit",
+      "operator": "eq",
+      "expected": null,
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m3",
+        "H09"
+      ],
+      "rationale": "The unit is explicitly unassigned and must not be copied from the old dwelling."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/effective_date",
+      "operator": "eq",
+      "expected": "2026-10-20",
+      "critical": true,
+      "evidence": [
+        "m1",
+        "H08"
+      ],
+      "rationale": "October 20, 2026 is unambiguous and future."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/ready_to_schedule",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m3",
+        "H09"
+      ],
+      "rationale": "The complete destination including applicable unit remains missing."
+    },
+    {
+      "id": "C5",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m1",
+        "m3",
+        "H09"
+      ],
+      "rationale": "Only the explicitly requested and sufficiently authorized proposed actions are valid. The destination is explicitly multiunit, so the missing unit is material. Other move facts are sufficient and need not be re-collected."
+    },
+    {
+      "id": "C6",
+      "path": "/disposition",
+      "operator": "one_of",
+      "expected": [
+        "needs_clarification"
+      ],
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m1",
+        "m3",
+        "H09"
+      ],
+      "rationale": "The destination is explicitly multiunit, so the missing unit is material. Other move facts are sufficient and need not be re-collected."
+    },
+    {
+      "id": "C7",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [
+        "unit"
+      ],
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m1",
+        "m3",
+        "H09"
+      ],
+      "rationale": "Material unresolved prerequisites are unit. The destination is explicitly multiunit, so the missing unit is material. Other move facts are sufficient and need not be re-collected."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply asks specifically for the destination unit while retaining the confirmed move date and building.",
+      "evidence": [
+        "m1",
+        "m3",
+        "H09"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply does not reuse the old Unit 4, schedule the incomplete destination, or cancel existing coverage.",
+      "evidence": [
+        "r1",
+        "m3",
+        "H09",
+        "H16"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Copying the current apartment number into an incompletely specified new address.",
+    "Treating date consent as sufficient for a move to an incomplete destination."
+  ],
+  "rationale": "The destination is explicitly multiunit, so the missing unit is material. Other move facts are sufficient and need not be re-collected."
+}

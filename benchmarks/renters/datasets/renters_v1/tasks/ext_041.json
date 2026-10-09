@@ -1,0 +1,111 @@
+{
+  "id": "ext_041",
+  "track": "conversation_extraction",
+  "family": "support_handoff",
+  "split": "test",
+  "scenario_group": "historical_loss_before_effective_cancellation",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Complete a historical-loss intake handoff. The disposition concerns the completeness of the requested intake, using the corrected incident date and supplied effective interval, not a final settlement decision. Fill exactly the specified document fields from the supplied conversation and records. Normalize dates to ISO YYYY-MM-DD. Copy names, addresses, emails, and identifiers with the spelling supplied. This is an extraction-only task; actions must be empty. In the response distinguish drafting from execution.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-EX034"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "issued_policy",
+        "data": {
+          "policy_id": "P-EX034",
+          "starts_on": "2026-09-01",
+          "ends_on": "2026-10-05",
+          "status": "canceled",
+          "named_insureds": [
+            "Nel Ward"
+          ]
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "My phone was stolen on October 6, 2026. The policy is canceled now, so maybe I cannot even report it."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Please check the incident date separately from the date you noticed the loss or contacted support."
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "I checked the station report. The theft happened October 4, 2026, at 70 Beacon Station, Larkport, US. I typed October 6 because that was when I got the report copy."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "Who owned the phone and what contact should go on an intake draft?"
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "It was mine. Email nel.ward@post.example. I want to report the theft even though I later canceled."
+      },
+      {
+        "id": "m6",
+        "role": "bot",
+        "text": "Do you want the old policy reinstated or a new date invented for the incident?"
+      },
+      {
+        "id": "m7",
+        "role": "customer",
+        "text": "Neither. Keep the actual October 4 incident date and the existing cancellation. I am asking for intake, not a guarantee that the phone will be paid for."
+      }
+    ],
+    "form": {
+      "event_date": {
+        "type": "string",
+        "nullable": true,
+        "description": "Latest explicit corrected theft date; not report receipt date."
+      },
+      "report_copy_received_date": {
+        "type": "string",
+        "nullable": true,
+        "description": "Date the customer received a report copy, distinct from incident date."
+      },
+      "event_location": {
+        "type": "string",
+        "nullable": true,
+        "description": "Reported theft location, copied exactly."
+      },
+      "within_policy_interval": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "Whether the corrected incident date falls within supplied starts_on inclusive and ends_on exclusive."
+      },
+      "policy_status_today": {
+        "type": "string",
+        "nullable": true,
+        "description": "Current status from supplied authoritative record, separate from event-date interval.",
+        "enum": [
+          "active",
+          "canceled"
+        ]
+      },
+      "reinstatement_requested": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "Whether the customer currently requests reinstatement; false for express refusal."
+      },
+      "contact_email": {
+        "type": "string",
+        "nullable": true,
+        "description": "Requested customer contact for intake."
+      }
+    },
+    "allowed_actions": []
+  }
+}

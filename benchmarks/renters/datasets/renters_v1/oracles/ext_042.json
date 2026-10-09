@@ -1,0 +1,235 @@
+{
+  "task_id": "ext_042",
+  "reference_answer": {
+    "fields": {
+      "applicant_name": "Elena Brook",
+      "contact_email": "elena.brook@example.test",
+      "insured_address": "27 Pine Arch, Unit 14, Reed Harbor",
+      "occupancy_start": "2026-11-06",
+      "requested_start": "2026-11-06",
+      "personal_property_limit": 30000,
+      "liability_limit": 100000,
+      "deductible": 500,
+      "consent_to_submit": true,
+      "monthly_budget": 25,
+      "quoted_monthly_premium": null
+    },
+    "disposition": "ready",
+    "actions": [],
+    "missing_fields": [],
+    "citations": [
+      "H02",
+      "H06",
+      "H15",
+      "H16",
+      "m1",
+      "m3",
+      "m4",
+      "m5",
+      "m7"
+    ],
+    "response": "The application is complete with your corrected $500 deductible and submission consent. Your $25 monthly budget is recorded separately; no premium was quoted and no policy was issued."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/applicant_name",
+      "operator": "eq",
+      "expected": "Elena Brook",
+      "critical": true,
+      "evidence": [
+        "m1"
+      ],
+      "rationale": "The cited source establishes applicant_name; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/contact_email",
+      "operator": "eq",
+      "expected": "elena.brook@example.test",
+      "critical": true,
+      "evidence": [
+        "m1"
+      ],
+      "rationale": "The cited source establishes contact_email; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/insured_address",
+      "operator": "text_eq",
+      "expected": "27 Pine Arch, Unit 14, Reed Harbor",
+      "critical": true,
+      "evidence": [
+        "m1"
+      ],
+      "rationale": "The cited source establishes insured_address; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/occupancy_start",
+      "operator": "eq",
+      "expected": "2026-11-06",
+      "critical": true,
+      "evidence": [
+        "m1"
+      ],
+      "rationale": "The cited source establishes occupancy_start; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C5",
+      "path": "/fields/requested_start",
+      "operator": "eq",
+      "expected": "2026-11-06",
+      "critical": true,
+      "evidence": [
+        "m1"
+      ],
+      "rationale": "The cited source establishes requested_start; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C6",
+      "path": "/fields/personal_property_limit",
+      "operator": "eq",
+      "expected": 30000,
+      "critical": true,
+      "evidence": [
+        "m3"
+      ],
+      "rationale": "The cited source establishes personal_property_limit; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C7",
+      "path": "/fields/liability_limit",
+      "operator": "eq",
+      "expected": 100000,
+      "critical": true,
+      "evidence": [
+        "m3"
+      ],
+      "rationale": "The cited source establishes liability_limit; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C8",
+      "path": "/fields/deductible",
+      "operator": "eq",
+      "expected": 500,
+      "critical": true,
+      "evidence": [
+        "m5",
+        "H02"
+      ],
+      "rationale": "The cited source establishes deductible; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C9",
+      "path": "/fields/consent_to_submit",
+      "operator": "eq",
+      "expected": true,
+      "critical": true,
+      "evidence": [
+        "m7"
+      ],
+      "rationale": "The cited source establishes consent_to_submit; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C10",
+      "path": "/fields/monthly_budget",
+      "operator": "eq",
+      "expected": 25,
+      "critical": true,
+      "evidence": [
+        "m3",
+        "m5"
+      ],
+      "rationale": "The cited source establishes monthly_budget; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C11",
+      "path": "/fields/quoted_monthly_premium",
+      "operator": "eq",
+      "expected": null,
+      "critical": true,
+      "evidence": [
+        "m4",
+        "m7",
+        "H06"
+      ],
+      "rationale": "The cited source establishes quoted_monthly_premium; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C12",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H16"
+      ],
+      "rationale": "This task requests document extraction only; no transaction is authorized by the task."
+    },
+    {
+      "id": "C13",
+      "path": "/disposition",
+      "operator": "one_of",
+      "expected": [
+        "ready"
+      ],
+      "critical": true,
+      "evidence": [
+        "H15",
+        "H16"
+      ],
+      "rationale": "The customer explicitly repairs the premium/deductible misunderstanding, choosing a valid deductible. The monthly budget is neither a deductible nor an offered premium."
+    },
+    {
+      "id": "C14",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H15",
+        "H16"
+      ],
+      "rationale": "Only these unresolved fields block the requested document workflow: none; optional uncertainty is preserved in the document."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply describes a complete application after the explicit $500 deductible correction and submission consent, while making clear that no premium was quoted or policy issued.",
+      "evidence": [
+        "H11",
+        "H14",
+        "H15",
+        "m1",
+        "m3",
+        "m4",
+        "m5",
+        "m7"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply does not label the $25 budget as a quoted premium or deductible.",
+      "evidence": [
+        "H02",
+        "H14",
+        "H15",
+        "m1",
+        "m3",
+        "m4",
+        "m5",
+        "m7"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Recording the $25 monthly budget as a deductible after the customer corrects the misunderstanding.",
+    "Treating a monthly spending budget as an offered or accepted premium.",
+    "Ignoring the final valid deductible selection because the initial request was unsupported."
+  ],
+  "rationale": "The customer explicitly repairs the premium/deductible misunderstanding, choosing a valid deductible. The monthly budget is neither a deductible nor an offered premium."
+}

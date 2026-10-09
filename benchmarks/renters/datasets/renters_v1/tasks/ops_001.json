@@ -1,0 +1,81 @@
+{
+  "id": "ops_001",
+  "track": "support_ops",
+  "family": "policy_questions",
+  "split": "optimization",
+  "scenario_group": "owned_camera_taken_from_temporary_trip",
+  "difficulty": "standard",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Answer the customer’s policy question using the supplied records and handbook. Complete the requested fields and provide a concise explanation. This is an informational request; propose no account or claim actions.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-101"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "issued_declarations",
+        "data": {
+          "authority": "issued",
+          "policy_id": "P-101",
+          "named_insureds": [
+            "Nina Vale"
+          ],
+          "starts_on": "2026-01-01",
+          "ends_on": "2027-01-01",
+          "status_today": "active",
+          "personal_property_limit": 30000,
+          "deductible": 500,
+          "valuation_basis": "actual_cash_value"
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "My camera was stolen from the locked room I rented for a three-night trip. It is my camera, not the host’s. Does my renters policy stop applying once I leave my apartment?"
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "When did the theft happen, and are you asking about coverage scope or to open a claim?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "October 6, 2026. Just explain the scope for now; I will gather the details before opening anything."
+      }
+    ],
+    "form": {
+      "event_date": {
+        "type": "string",
+        "nullable": false,
+        "description": "Reported event date in ISO format."
+      },
+      "property_scope": {
+        "type": "string",
+        "nullable": false,
+        "description": "Whether this reported property/event meets the supplied base ownership, cause and timing scope; this is not a claim decision.",
+        "enum": [
+          "within_base_scope",
+          "outside_base_scope",
+          "unresolved"
+        ]
+      },
+      "away_from_home_disqualifies": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Whether temporary absence from the insured home alone disqualifies these belongings."
+      },
+      "claim_requested": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Whether the customer has requested claim intake in this chat."
+      }
+    },
+    "allowed_actions": []
+  }
+}

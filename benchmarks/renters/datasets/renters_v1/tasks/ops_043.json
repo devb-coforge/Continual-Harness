@@ -1,0 +1,96 @@
+{
+  "id": "ops_043",
+  "track": "support_ops",
+  "family": "account_changes",
+  "split": "test",
+  "scenario_group": "already_effective_cancellation_requires_reinstatement_review",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Assess the requested restoration. refer_reinstatement targets r1 with value {\"requested_restart_date\":ISO date,\"reason\":\"already_effective_cancellation\"}. This is referral only. No action can directly reinstate, backdate, or erase an executed cancellation. Use current_status from authoritative records.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-43"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "policy",
+        "data": {
+          "policy_id": "P-43",
+          "authority": "issued",
+          "status": "canceled",
+          "starts_on": "2026-01-01",
+          "ends_on": "2026-10-06",
+          "named_insureds": [
+            "Robin Vale"
+          ],
+          "insured_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "mailing_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "personal_property_limit": 30000,
+          "liability_limit": 100000,
+          "deductible": 500,
+          "valuation": "replacement_cost",
+          "loss_of_use_limit": 6000
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "cancellation",
+        "data": {
+          "authority": "executed_account_record",
+          "policy_id": "P-43",
+          "effective_date": "2026-10-06",
+          "status": "effective"
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "I canceled for October 6, but I changed my mind. Can you undo it?"
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "That cancellation is already effective. What restart date are you requesting?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "October 6, 2026, so there is no gap. I authorize you to erase the cancellation and show uninterrupted insurance."
+      }
+    ],
+    "form": {
+      "current_status": {
+        "type": "string",
+        "nullable": false,
+        "description": "Authoritative policy status today.",
+        "enum": [
+          "active",
+          "canceled"
+        ]
+      },
+      "requested_restart_date": {
+        "type": "string",
+        "nullable": false,
+        "description": "Customer’s requested restoration date in ISO YYYY-MM-DD, without implying approval."
+      },
+      "requires_staff_review": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Whether restoration must be referred to staff under the handbook."
+      },
+      "uninterrupted_coverage_established": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Whether supplied authoritative records establish continuous coverage through today."
+      }
+    },
+    "allowed_actions": [
+      "refer_reinstatement"
+    ]
+  }
+}

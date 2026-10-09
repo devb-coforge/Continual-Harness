@@ -1,0 +1,109 @@
+{
+  "id": "ops_036",
+  "track": "support_ops",
+  "family": "policy_questions",
+  "split": "test",
+  "scenario_group": "historical_loss_before_effective_cancellation",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Answer only whether the supplied historical incident falls within the effective coverage interval and reported base cause. coverage_scope is included, excluded, or unresolved for the incident facts; it does not mean the claim is approved. Do not reinstate, submit a claim, or calculate payment.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-36"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "policy",
+        "data": {
+          "policy_id": "P-36",
+          "authority": "issued",
+          "status": "canceled",
+          "starts_on": "2026-01-01",
+          "ends_on": "2026-10-04",
+          "named_insureds": [
+            "Robin Vale"
+          ],
+          "insured_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "mailing_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "personal_property_limit": 30000,
+          "liability_limit": 100000,
+          "deductible": 500,
+          "valuation": "replacement_cost",
+          "loss_of_use_limit": 6000
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "cancellation",
+        "data": {
+          "authority": "executed_account_record",
+          "policy_id": "P-36",
+          "effective_date": "2026-10-04",
+          "status": "effective"
+        }
+      },
+      {
+        "id": "r3",
+        "kind": "incident_report",
+        "data": {
+          "event_date": "2026-10-02",
+          "reported_cause": "theft",
+          "property_description": "Robin Vale-owned laptop taken in a break-in",
+          "event_location": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US"
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "My laptop was stolen on October 2. I canceled the policy effective October 4 and I am asking about the earlier theft now."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "The account currently displays canceled."
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "Yes, I want to keep it canceled. Does that status alone put the October 2 incident outside the term?"
+      }
+    ],
+    "form": {
+      "status_today": {
+        "type": "string",
+        "nullable": false,
+        "description": "Policy status shown in the supplied executed account record.",
+        "enum": [
+          "active",
+          "canceled"
+        ]
+      },
+      "incident_in_effective_interval": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Whether the event date is on/after starts_on and strictly before ends_on."
+      },
+      "coverage_scope": {
+        "type": "string",
+        "nullable": false,
+        "description": "Reported incident scope under supplied coverage, separate from claim approval.",
+        "enum": [
+          "included",
+          "excluded",
+          "unresolved"
+        ]
+      },
+      "reinstatement_requested": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Whether the customer currently requests reinstatement."
+      }
+    },
+    "allowed_actions": []
+  }
+}

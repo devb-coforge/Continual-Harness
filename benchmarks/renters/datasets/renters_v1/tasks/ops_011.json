@@ -1,0 +1,79 @@
+{
+  "id": "ops_011",
+  "track": "support_ops",
+  "family": "account_changes",
+  "split": "optimization",
+  "scenario_group": "deductible_preference_without_quote_acceptance",
+  "difficulty": "standard",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Prepare the requested quote or coverage action. request_quote targets r1 with value {\"deductible\": integer USD, \"effective_date\": \"YYYY-MM-DD\"}. accept_coverage_change targets r1 with value {\"quote_id\": string, \"effective_date\": \"YYYY-MM-DD\", \"premium\": number USD}. Do not treat a request for pricing as acceptance.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-111"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "issued_declarations",
+        "data": {
+          "authority": "issued",
+          "policy_id": "P-111",
+          "named_insureds": [
+            "Pia North"
+          ],
+          "starts_on": "2026-01-01",
+          "ends_on": "2027-01-01",
+          "status_today": "active",
+          "personal_property_limit": 30000,
+          "deductible": 500,
+          "valuation_basis": "actual_cash_value"
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "I would like a $250 deductible instead of $500, starting November 1, 2026. Can you tell me what it would cost?"
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Do you already have a quoted premium and want to accept it?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "No quote yet. Please request one for that exact deductible and date. I need to see the price before deciding; do not change the coverage now."
+      }
+    ],
+    "form": {
+      "requested_deductible": {
+        "type": "integer",
+        "nullable": false,
+        "description": "Deductible amount explicitly requested for the quote in USD."
+      },
+      "requested_effective_date": {
+        "type": "string",
+        "nullable": false,
+        "description": "Requested quote effective date in ISO format."
+      },
+      "issued_deductible": {
+        "type": "integer",
+        "nullable": false,
+        "description": "Current deductible from issued declarations."
+      },
+      "quote_accepted": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Whether an exact supplied quote, premium, and date have been explicitly accepted."
+      }
+    },
+    "allowed_actions": [
+      "request_quote",
+      "accept_coverage_change"
+    ]
+  }
+}

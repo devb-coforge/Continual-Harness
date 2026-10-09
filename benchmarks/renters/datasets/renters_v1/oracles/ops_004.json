@@ -1,0 +1,131 @@
+{
+  "task_id": "ops_004",
+  "reference_answer": {
+    "fields": {
+      "event_date": "2026-10-05",
+      "owned_by_named_insured": null,
+      "property_scope": "unresolved"
+    },
+    "disposition": "needs_clarification",
+    "actions": [],
+    "missing_fields": [
+      "property_ownership"
+    ],
+    "citations": [
+      "m1",
+      "m3",
+      "H02",
+      "H04"
+    ],
+    "response": "Fire is a base covered cause, but I cannot determine whether this projector is your covered property from its location or the payment alone. Please clarify whether you own it, jointly own it, or it belongs solely to your roommate. I am not treating the shared living room as proof of ownership."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/event_date",
+      "operator": "eq",
+      "expected": "2026-10-05",
+      "critical": true,
+      "evidence": [
+        "m1"
+      ],
+      "rationale": "The loss date is explicit."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/owned_by_named_insured",
+      "operator": "eq",
+      "expected": null,
+      "critical": true,
+      "evidence": [
+        "m3",
+        "H02",
+        "H04"
+      ],
+      "rationale": "Neither joint use nor an unexplained transfer establishes ownership."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/property_scope",
+      "operator": "eq",
+      "expected": "unresolved",
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m3",
+        "H04"
+      ],
+      "rationale": "A covered cause does not resolve the ownership prerequisite."
+    },
+    {
+      "id": "C4",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m3",
+        "H02",
+        "H04"
+      ],
+      "rationale": "The proposed actions must match the authorized scope, readiness, and supplied action shapes; no action has executed."
+    },
+    {
+      "id": "C5",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [
+        "property_ownership"
+      ],
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m3",
+        "H02",
+        "H04"
+      ],
+      "rationale": "Only material unresolved prerequisites for this requested workflow belong here."
+    },
+    {
+      "id": "C6",
+      "path": "/disposition",
+      "operator": "eq",
+      "expected": "needs_clarification",
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m3",
+        "H02",
+        "H04"
+      ],
+      "rationale": "Ownership is a material unresolved prerequisite for the property-scope question."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "Asks a targeted ownership question and explains why shared use/location does not establish named-insured ownership.",
+      "evidence": [
+        "m3",
+        "H02",
+        "H04"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "Does not declare the projector covered or excluded solely because a roommate obtained it, and does not infer the purpose of the payment.",
+      "evidence": [
+        "m3",
+        "H04"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Assuming shared-use property is jointly owned",
+    "Rejecting property solely because a roommate arranged the purchase"
+  ],
+  "rationale": "Ownership is a material unresolved prerequisite for the property-scope question."
+}

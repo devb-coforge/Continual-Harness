@@ -1,0 +1,174 @@
+{
+  "task_id": "ops_046",
+  "reference_answer": {
+    "fields": {
+      "autopay_enabled_requested": false,
+      "insurance_cancellation_requested": false,
+      "policy_status_today": "active",
+      "sensitive_payment_data_needed": false
+    },
+    "disposition": "ready",
+    "actions": [
+      {
+        "type": "disable_autopay",
+        "target": "r2",
+        "value": {
+          "enabled": false
+        }
+      }
+    ],
+    "missing_fields": [],
+    "citations": [
+      "r2",
+      "m1",
+      "m3",
+      "H10",
+      "r1",
+      "H03",
+      "session",
+      "H16"
+    ],
+    "response": "I can propose disabling only the existing autopay instruction. Your request keeps the insurance active and does not change any premium or balance. No full card number is needed."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/autopay_enabled_requested",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m1",
+        "m3"
+      ],
+      "rationale": "The confirmed request is to turn off the already identified instruction."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/insurance_cancellation_requested",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "m3",
+        "H10"
+      ],
+      "rationale": "The customer explicitly rejects policy cancellation."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/policy_status_today",
+      "operator": "eq",
+      "expected": "active",
+      "critical": true,
+      "evidence": [
+        "r1",
+        "m3",
+        "H10"
+      ],
+      "rationale": "The supplied policy is active and no coverage change is requested."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/sensitive_payment_data_needed",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m3",
+        "H03"
+      ],
+      "rationale": "The instruction is already identified; H03 prohibits collecting full card numbers in chat."
+    },
+    {
+      "id": "C5",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [
+        {
+          "type": "disable_autopay",
+          "target": "r2",
+          "value": {
+            "enabled": false
+          }
+        }
+      ],
+      "critical": true,
+      "evidence": [
+        "session",
+        "r2",
+        "m3",
+        "H03",
+        "H10",
+        "H16"
+      ],
+      "rationale": "Only the explicitly requested and sufficiently authorized proposed actions are valid. The verified customer confirms a narrow billing instruction change and explicitly preserves coverage. H10 says autopay cancellation is not insurance cancellation."
+    },
+    {
+      "id": "C6",
+      "path": "/disposition",
+      "operator": "one_of",
+      "expected": [
+        "ready"
+      ],
+      "critical": true,
+      "evidence": [
+        "session",
+        "r2",
+        "m3",
+        "H03",
+        "H10",
+        "H16"
+      ],
+      "rationale": "The verified customer confirms a narrow billing instruction change and explicitly preserves coverage. H10 says autopay cancellation is not insurance cancellation."
+    },
+    {
+      "id": "C7",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "session",
+        "r2",
+        "m3",
+        "H03",
+        "H10",
+        "H16"
+      ],
+      "rationale": "Material unresolved prerequisites are absent for this requested workflow. The verified customer confirms a narrow billing instruction change and explicitly preserves coverage. H10 says autopay cancellation is not insurance cancellation."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply separates disabling the payment instruction from canceling the insurance policy.",
+      "evidence": [
+        "r1",
+        "r2",
+        "m1",
+        "m3",
+        "H10"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply neither asks for a full card number nor invents a refund, balance waiver, or completed billing change.",
+      "evidence": [
+        "r2",
+        "m3",
+        "H03",
+        "H16"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Interpreting the word cancel as insurance cancellation despite explicit billing-only intent.",
+    "Requesting full payment credentials for an already identified instruction."
+  ],
+  "rationale": "The verified customer confirms a narrow billing instruction change and explicitly preserves coverage. H10 says autopay cancellation is not insurance cancellation."
+}

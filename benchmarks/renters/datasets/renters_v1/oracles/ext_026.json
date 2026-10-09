@@ -1,0 +1,210 @@
+{
+  "task_id": "ext_026",
+  "reference_answer": {
+    "fields": {
+      "applicant_name": "Mara Kline",
+      "contact_email": "mara.kline@example.test",
+      "insured_address": "70 Quarry Crescent, Unit 10, Brindle",
+      "occupancy_start": "2026-11-02",
+      "requested_start": "2026-11-02",
+      "personal_property_limit": null,
+      "liability_limit": 300000,
+      "deductible": 500,
+      "consent_to_submit": false
+    },
+    "disposition": "needs_clarification",
+    "actions": [],
+    "missing_fields": [
+      "personal_property_limit"
+    ],
+    "citations": [
+      "H02",
+      "H15",
+      "H16",
+      "m1",
+      "m3",
+      "m5",
+      "m7"
+    ],
+    "response": "The application stays in draft with the property limit unselected. Your liability and deductible choices are recorded; no premium or provisional property choice has been supplied."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/applicant_name",
+      "operator": "eq",
+      "expected": "Mara Kline",
+      "critical": true,
+      "evidence": [
+        "m1"
+      ],
+      "rationale": "The cited source establishes applicant_name; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/contact_email",
+      "operator": "eq",
+      "expected": "mara.kline@example.test",
+      "critical": true,
+      "evidence": [
+        "m1"
+      ],
+      "rationale": "The cited source establishes contact_email; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/insured_address",
+      "operator": "text_eq",
+      "expected": "70 Quarry Crescent, Unit 10, Brindle",
+      "critical": true,
+      "evidence": [
+        "m1"
+      ],
+      "rationale": "The cited source establishes insured_address; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/occupancy_start",
+      "operator": "eq",
+      "expected": "2026-11-02",
+      "critical": true,
+      "evidence": [
+        "m1"
+      ],
+      "rationale": "The cited source establishes occupancy_start; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C5",
+      "path": "/fields/requested_start",
+      "operator": "eq",
+      "expected": "2026-11-02",
+      "critical": true,
+      "evidence": [
+        "m1"
+      ],
+      "rationale": "The cited source establishes requested_start; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C6",
+      "path": "/fields/personal_property_limit",
+      "operator": "eq",
+      "expected": null,
+      "critical": true,
+      "evidence": [
+        "m3",
+        "m5",
+        "m7",
+        "H02"
+      ],
+      "rationale": "The cited source establishes personal_property_limit; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C7",
+      "path": "/fields/liability_limit",
+      "operator": "eq",
+      "expected": 300000,
+      "critical": true,
+      "evidence": [
+        "m5"
+      ],
+      "rationale": "The cited source establishes liability_limit; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C8",
+      "path": "/fields/deductible",
+      "operator": "eq",
+      "expected": 500,
+      "critical": true,
+      "evidence": [
+        "m5"
+      ],
+      "rationale": "The cited source establishes deductible; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C9",
+      "path": "/fields/consent_to_submit",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "m7"
+      ],
+      "rationale": "The cited source establishes consent_to_submit; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C10",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H16"
+      ],
+      "rationale": "This task requests document extraction only; no transaction is authorized by the task."
+    },
+    {
+      "id": "C11",
+      "path": "/disposition",
+      "operator": "one_of",
+      "expected": [
+        "needs_clarification"
+      ],
+      "critical": true,
+      "evidence": [
+        "H15",
+        "H16"
+      ],
+      "rationale": "Both property amounts are conditional alternatives, expressly unselected. A pricing condition is not fulfilled anywhere in the evidence."
+    },
+    {
+      "id": "C12",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [
+        "personal_property_limit"
+      ],
+      "critical": true,
+      "evidence": [
+        "H15",
+        "H16"
+      ],
+      "rationale": "Only these unresolved fields block the requested document workflow: personal_property_limit"
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply keeps the application in draft with no selected property amount and does not invent pricing that would satisfy the applicant’s conditional preference.",
+      "evidence": [
+        "H11",
+        "H14",
+        "H15",
+        "m1",
+        "m3",
+        "m5",
+        "m7"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply does not select either conditional property amount or invent a premium satisfying the condition.",
+      "evidence": [
+        "H02",
+        "H14",
+        "H15",
+        "m1",
+        "m3",
+        "m5",
+        "m7"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Turning the conditional $50,000 preference into a selected property limit without a quote.",
+    "Selecting $30,000 merely because it was mentioned as an alternative.",
+    "Inventing a premium below the $20 threshold to manufacture consent."
+  ],
+  "rationale": "Both property amounts are conditional alternatives, expressly unselected. A pricing condition is not fulfilled anywhere in the evidence."
+}

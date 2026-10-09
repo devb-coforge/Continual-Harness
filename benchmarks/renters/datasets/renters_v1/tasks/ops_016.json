@@ -1,0 +1,105 @@
+{
+  "id": "ops_016",
+  "track": "support_ops",
+  "family": "policy_questions",
+  "split": "optimization",
+  "scenario_group": "additional_displacement_costs_exclude_ordinary_rent",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Answer the customer’s policy question using the supplied records and handbook. Complete the requested fields and provide a concise explanation. This is an informational request; propose no account or claim actions.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-116"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "issued_declarations",
+        "data": {
+          "authority": "issued",
+          "policy_id": "P-116",
+          "named_insureds": [
+            "Tessa Ford"
+          ],
+          "starts_on": "2026-01-01",
+          "ends_on": "2027-01-01",
+          "status_today": "active",
+          "personal_property_limit": 30000,
+          "deductible": 500,
+          "valuation_basis": "actual_cash_value",
+          "loss_of_use_limit": 6000
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "property_inspection",
+        "data": {
+          "authority": "supplied_inspection",
+          "event_date": "2026-10-04",
+          "cause": "accidental fire",
+          "habitability": "uninhabitable"
+        }
+      },
+      {
+        "id": "r3",
+        "kind": "expense_record",
+        "data": {
+          "authority": "customer_uploaded_receipts",
+          "items": [
+            {
+              "expense_id": "hotel",
+              "description": "Four hotel nights after the fire",
+              "amount": 480,
+              "additional": true,
+              "documented": true
+            },
+            {
+              "expense_id": "rent",
+              "description": "Ordinary October apartment rent",
+              "amount": 1400,
+              "additional": false,
+              "documented": true
+            }
+          ]
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "I had to leave after the October 4 fire. The inspection and both receipts are attached. Should the hotel and my normal apartment rent both go into the loss-of-use review?"
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Was the hotel a temporary place to stay because the apartment was uninhabitable?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "Yes. I am staying there only because the inspector said the apartment could not be lived in. The rent is my usual monthly rent, with no extra charge."
+      }
+    ],
+    "form": {
+      "expenses_eligible_for_review": {
+        "type": "array",
+        "nullable": false,
+        "description": "Expense IDs that satisfy supplied loss-of-use prerequisites; eligibility for review is not approval."
+      },
+      "expenses_not_established_as_additional": {
+        "type": "array",
+        "nullable": false,
+        "description": "Expense IDs that are explicitly ordinary rather than additional displacement expenses."
+      },
+      "loss_of_use_limit": {
+        "type": "integer",
+        "nullable": false,
+        "description": "Issued loss-of-use limit in USD."
+      }
+    },
+    "allowed_actions": []
+  }
+}

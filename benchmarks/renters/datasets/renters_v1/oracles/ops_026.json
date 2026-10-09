@@ -1,0 +1,151 @@
+{
+  "task_id": "ops_026",
+  "reference_answer": {
+    "fields": {
+      "scheduled_item_ids": [
+        "J-NECKLACE"
+      ],
+      "scheduled_limit": 6000,
+      "other_jewelry_sublimit": 1500,
+      "payment_determined": false
+    },
+    "disposition": "answered",
+    "actions": [],
+    "missing_fields": [],
+    "citations": [
+      "r2",
+      "r3",
+      "m1",
+      "H01",
+      "H06",
+      "m3",
+      "H16",
+      "H04"
+    ],
+    "response": "The $6,000 scheduled limit applies only to the opal necklace. The gold ring remains subject to the base $1,500 jewelry-theft sublimit within the property limit. These are coverage limits, not approved payment amounts."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/scheduled_item_ids",
+      "operator": "set_eq",
+      "expected": [
+        "J-NECKLACE"
+      ],
+      "critical": true,
+      "evidence": [
+        "r2",
+        "r3",
+        "m1",
+        "H01"
+      ],
+      "rationale": "The endorsement identifies only the necklace, so the ring is not scheduled."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/scheduled_limit",
+      "operator": "eq",
+      "expected": 6000,
+      "critical": true,
+      "evidence": [
+        "r2",
+        "H06"
+      ],
+      "rationale": "The issued endorsement states $6,000 for the necklace."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/other_jewelry_sublimit",
+      "operator": "eq",
+      "expected": 1500,
+      "critical": true,
+      "evidence": [
+        "r2",
+        "r3",
+        "H06"
+      ],
+      "rationale": "The base $1,500 per-occurrence jewelry theft sublimit remains for unscheduled jewelry."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/payment_determined",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "m3",
+        "H06"
+      ],
+      "rationale": "The user asks only about limits and supplies no valuation; neither coverage wording nor a limit approves a claim."
+    },
+    {
+      "id": "C5",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m3",
+        "H16"
+      ],
+      "rationale": "Only the explicitly requested and sufficiently authorized proposed actions are valid. The issued endorsement has both item and date scope. It applies to this incident date but to only one of the two owned items; the user explicitly excludes payout calculation."
+    },
+    {
+      "id": "C6",
+      "path": "/disposition",
+      "operator": "one_of",
+      "expected": [
+        "answered"
+      ],
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m3",
+        "H16"
+      ],
+      "rationale": "The issued endorsement has both item and date scope. It applies to this incident date but to only one of the two owned items; the user explicitly excludes payout calculation."
+    },
+    {
+      "id": "C7",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m3",
+        "H16"
+      ],
+      "rationale": "Material unresolved prerequisites are absent for this requested workflow. The issued endorsement has both item and date scope. It applies to this incident date but to only one of the two owned items; the user explicitly excludes payout calculation."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply explains that the scheduled necklace endorsement does not extend its higher limit to the ring.",
+      "evidence": [
+        "r2",
+        "r3",
+        "m1",
+        "H06"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply does not add the two limits into a guaranteed payment or present coverage explanation as claim approval.",
+      "evidence": [
+        "m3",
+        "H04",
+        "H06"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Applying one scheduled-item endorsement to every jewelry item.",
+    "Turning stated limits into an approved combined settlement."
+  ],
+  "rationale": "The issued endorsement has both item and date scope. It applies to this incident date but to only one of the two owned items; the user explicitly excludes payout calculation."
+}

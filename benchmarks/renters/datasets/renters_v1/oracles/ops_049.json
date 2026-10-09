@@ -1,0 +1,188 @@
+{
+  "task_id": "ops_049",
+  "reference_answer": {
+    "fields": {
+      "issued_property_limit": 15000,
+      "historically_accepted_quote": "Q-49-A",
+      "current_quote_id": "Q-49-B",
+      "current_quote_accepted": false,
+      "ready_to_issue_change": false
+    },
+    "disposition": "needs_clarification",
+    "actions": [
+      {
+        "type": "request_quote_acceptance",
+        "target": "r1",
+        "value": {
+          "quote_ref": "r3"
+        }
+      }
+    ],
+    "missing_fields": [
+      "current_quote_accepted"
+    ],
+    "citations": [
+      "r1",
+      "H01",
+      "m1",
+      "m3",
+      "r2",
+      "r3",
+      "H11",
+      "H16"
+    ],
+    "response": "Your issued property limit remains $15,000. Q-49-A was accepted at $18 but has been superseded. Before proposing the change, please confirm whether you accept Q-49-B: $30,000 from November 1 for the additional $31. No change is proposed as issued now."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/issued_property_limit",
+      "operator": "eq",
+      "expected": 15000,
+      "critical": true,
+      "evidence": [
+        "r1",
+        "H01"
+      ],
+      "rationale": "A quote and its historical acceptance do not replace supplied issued facts."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/historically_accepted_quote",
+      "operator": "eq",
+      "expected": "Q-49-A",
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m3"
+      ],
+      "rationale": "The customer confirms acceptance only of the old $18 quote."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/current_quote_id",
+      "operator": "eq",
+      "expected": "Q-49-B",
+      "critical": true,
+      "evidence": [
+        "r2",
+        "r3"
+      ],
+      "rationale": "The supplied record explicitly supersedes A with B."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/current_quote_accepted",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "r3",
+        "m3",
+        "H11"
+      ],
+      "rationale": "The customer expressly has not accepted the revised $31 premium."
+    },
+    {
+      "id": "C5",
+      "path": "/fields/ready_to_issue_change",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "r2",
+        "r3",
+        "m3",
+        "H11"
+      ],
+      "rationale": "The required acceptance must match the exact current quote, including its changed premium."
+    },
+    {
+      "id": "C6",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [
+        {
+          "type": "request_quote_acceptance",
+          "target": "r1",
+          "value": {
+            "quote_ref": "r3"
+          }
+        }
+      ],
+      "critical": true,
+      "evidence": [
+        "r2",
+        "r3",
+        "m3",
+        "H11",
+        "H16"
+      ],
+      "rationale": "Only the explicitly requested and sufficiently authorized proposed actions are valid. The revised quote is available but not accepted. The user explicitly authorizes asking for acceptance and preserves their earlier narrower consent."
+    },
+    {
+      "id": "C7",
+      "path": "/disposition",
+      "operator": "one_of",
+      "expected": [
+        "needs_clarification"
+      ],
+      "critical": true,
+      "evidence": [
+        "r2",
+        "r3",
+        "m3",
+        "H11",
+        "H16"
+      ],
+      "rationale": "The revised quote is available but not accepted. The user explicitly authorizes asking for acceptance and preserves their earlier narrower consent."
+    },
+    {
+      "id": "C8",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [
+        "current_quote_accepted"
+      ],
+      "critical": true,
+      "evidence": [
+        "r2",
+        "r3",
+        "m3",
+        "H11",
+        "H16"
+      ],
+      "rationale": "Material unresolved prerequisites are current_quote_accepted. The revised quote is available but not accepted. The user explicitly authorizes asking for acceptance and preserves their earlier narrower consent."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply distinguishes historical acceptance of Q-49-A from missing acceptance of the revised Q-49-B premium.",
+      "evidence": [
+        "r2",
+        "r3",
+        "m1",
+        "m3",
+        "H11"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply asks for the current exact quote acceptance and does not apply the obsolete $18 quote or silently accept $31 for the customer.",
+      "evidence": [
+        "m3",
+        "H01",
+        "H11",
+        "H16"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Carrying prior consent across a changed premium because limit and effective date stayed the same.",
+    "Treating a superseded quote as executable or as already issued coverage."
+  ],
+  "rationale": "The revised quote is available but not accepted. The user explicitly authorizes asking for acceptance and preserves their earlier narrower consent."
+}

@@ -1,0 +1,103 @@
+{
+  "id": "ext_005",
+  "track": "conversation_extraction",
+  "family": "change_request_extraction",
+  "split": "optimization",
+  "scenario_group": "conditional_cancellation_resolved_to_quote_only",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Complete the final-intent quote-and-cancellation document. Ready means the remaining quote request is sufficiently specified, not that a coverage change is authorized. Fill exactly the specified document fields from the supplied conversation and records. Normalize dates to ISO YYYY-MM-DD. Copy names, addresses, emails, and identifiers with the spelling supplied. This is an extraction-only task; actions must be empty. In the response distinguish drafting from execution.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-EX005"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "issued_policy",
+        "data": {
+          "policy_id": "P-EX005",
+          "personal_property_limit": 30000,
+          "status": "active"
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "If dropping my belongings limit to $15,000 does not save at least $8 a month, cancel my insurance on October 31, 2026."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Do you already have a price for that change?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "No. I only saw an ad saying some people save $10. My current limit is $30,000."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "I could prepare a lower-limit quote and a cancellation request."
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "Hold on: do not prepare any cancellation. I need insurance for the lease. Get the $15,000 quote first and leave the policy as it is."
+      },
+      {
+        "id": "m6",
+        "role": "bot",
+        "text": "Would that quote be for October 31, and have you accepted a premium?"
+      },
+      {
+        "id": "m7",
+        "role": "customer",
+        "text": "Yes, quote an October 31 start. I have not accepted any price or change. The $8 savings was a condition, not permission to cancel now."
+      }
+    ],
+    "form": {
+      "requested_personal_property_limit": {
+        "type": "integer",
+        "nullable": true,
+        "description": "Personal-property limit for the current quote request, in USD."
+      },
+      "quote_effective_date": {
+        "type": "string",
+        "nullable": true,
+        "description": "Requested effective date for the quote."
+      },
+      "quote_accepted": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "True only for acceptance of an exact supplied quote; false for explicit nonacceptance."
+      },
+      "cancellation_intent": {
+        "type": "string",
+        "nullable": true,
+        "description": "withdrawn means a previous cancellation request was expressly retracted; conditional means still contingent; confirmed means unconditional consent.",
+        "enum": [
+          "withdrawn",
+          "conditional",
+          "confirmed"
+        ]
+      },
+      "cancellation_date": {
+        "type": "string",
+        "nullable": true,
+        "description": "Current confirmed cancellation date; null when no current cancellation consent exists."
+      },
+      "issued_personal_property_limit": {
+        "type": "integer",
+        "nullable": true,
+        "description": "Personal-property limit in the issued policy, in USD."
+      }
+    },
+    "allowed_actions": []
+  }
+}

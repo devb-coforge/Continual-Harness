@@ -1,0 +1,111 @@
+{
+  "id": "ops_021",
+  "track": "support_ops",
+  "family": "claim_intake",
+  "split": "optimization",
+  "scenario_group": "wear_and_tear_scope_exclusion_does_not_deny_intake",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Assess both the supplied cause’s base scope and the readiness of the confirmed claim intake. submit_draft targets the claim_draft record with value {}; it preserves that record’s facts without adjudicating the claim. Fill the requested checklist and explain the distinction to the customer.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-121"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "issued_declarations",
+        "data": {
+          "authority": "issued",
+          "policy_id": "P-121",
+          "named_insureds": [
+            "Nia Birch"
+          ],
+          "starts_on": "2026-01-01",
+          "ends_on": "2027-01-01",
+          "status_today": "active",
+          "personal_property_limit": 30000,
+          "deductible": 500,
+          "valuation_basis": "actual_cash_value"
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "claim_draft",
+        "data": {
+          "authority": "customer_confirmed_draft",
+          "policy_id": "P-121",
+          "event_date": "2026-10-05",
+          "event_location": "14 Linden Close, Unit 11, Fairhaven, NJ 07018, US",
+          "reported_cause": "wear_and_tear",
+          "description": "Customer reports their own suitcase handle failed after years of normal use; no theft, fire or sudden accidental event is alleged.",
+          "contact_channel": "nia.birch@inbox.example"
+        }
+      },
+      {
+        "id": "r3",
+        "kind": "existing_claim_search",
+        "data": {
+          "authority": "account_claim_records",
+          "policy_id": "P-121",
+          "matching_claims": []
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "I confirm the suitcase draft: the handle finally wore out on October 5 after years of use. No one stole or suddenly damaged it. Please submit the intake so there is a record, and explain what the stated policy says."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Are you asking to change the reported cause to accidental damage?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "No. Keep wear and tear exactly as reported. I understand the scope may exclude that, but I still want the complete intake submitted for review."
+      }
+    ],
+    "form": {
+      "reported_cause": {
+        "type": "string",
+        "nullable": false,
+        "description": "Customer-reported cause; preserve it without relabeling.",
+        "enum": [
+          "wear_and_tear",
+          "theft",
+          "fire",
+          "unknown"
+        ]
+      },
+      "base_scope": {
+        "type": "string",
+        "nullable": false,
+        "description": "Scope of the supplied reported cause under the base handbook; not a formal claim decision.",
+        "enum": [
+          "included",
+          "excluded",
+          "unresolved"
+        ]
+      },
+      "intake_ready": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Whether verified authority and mandatory reported facts permit intake."
+      },
+      "draft_record": {
+        "type": "string",
+        "nullable": false,
+        "description": "Confirmed intake draft with incident facts and contact."
+      }
+    },
+    "allowed_actions": [
+      "submit_draft"
+    ]
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "id": "ops_005",
+  "track": "support_ops",
+  "family": "account_changes",
+  "split": "optimization",
+  "scenario_group": "corrected_future_move_keeps_current_premises",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Prepare the authorized address operation. schedule_move targets r1 with value {\"destination_record\": \"r#\", \"effective_date\": \"YYYY-MM-DD\"}; the destination record contains the full canonical address. update_mailing_address targets r1 with value {\"destination_record\": \"r#\"}. Evaluate each address type separately and fill the requested fields.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-105"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "issued_declarations",
+        "data": {
+          "authority": "issued",
+          "policy_id": "P-105",
+          "named_insureds": [
+            "Imani Ross"
+          ],
+          "starts_on": "2026-01-01",
+          "ends_on": "2027-01-01",
+          "status_today": "active",
+          "personal_property_limit": 30000,
+          "deductible": 500,
+          "valuation_basis": "actual_cash_value",
+          "insured_address": "40 Maple Court, Unit 6, Cedar Bay, WA 98118, US",
+          "mailing_address": "40 Maple Court, Unit 6, Cedar Bay, WA 98118, US"
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "move_destination",
+        "data": {
+          "address": {
+            "line1": "91 Juniper Avenue",
+            "unit": "12",
+            "city": "Cedar Bay",
+            "region": "WA",
+            "postal_code": "98118",
+            "country": "US"
+          }
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "I am moving from Maple Court to the Juniper Avenue address on November 1, 2026. Can we set that up?"
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Please confirm the complete destination and date you want to authorize."
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "The Juniper Avenue address including Unit 12 is right, but the movers changed the date. November 15, 2026 is the final date. I explicitly approve changing the insured home to that address effective November 15. I am not asking to insure both homes at once or to change my mailing address today."
+      }
+    ],
+    "form": {
+      "effective_date": {
+        "type": "string",
+        "nullable": false,
+        "description": "Latest explicitly confirmed move date in ISO format."
+      },
+      "destination_record": {
+        "type": "string",
+        "nullable": false,
+        "description": "Record ID of the complete customer-approved destination."
+      },
+      "change_timing": {
+        "type": "string",
+        "nullable": false,
+        "description": "Whether this proposed move applies today or on a future date.",
+        "enum": [
+          "immediate",
+          "pending",
+          "unresolved"
+        ]
+      },
+      "preserve_current_insured_address_today": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Whether today’s insured premises must remain unchanged."
+      },
+      "mailing_change_requested": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Whether a separate mailing-address update is requested now."
+      }
+    },
+    "allowed_actions": [
+      "schedule_move",
+      "update_mailing_address"
+    ]
+  }
+}

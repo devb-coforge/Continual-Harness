@@ -1,0 +1,122 @@
+{
+  "id": "ext_034",
+  "track": "conversation_extraction",
+  "family": "support_handoff",
+  "split": "validation",
+  "scenario_group": "scheduled_item_scope_without_blanket_jewelry_extension",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Complete a jewelry-theft intake handoff. Ready refers to H12 intake completeness; an item-specific endorsement question and missing appraisal do not block the intake. Fill exactly the specified document fields from the supplied conversation and records. Normalize dates to ISO YYYY-MM-DD. Copy names, addresses, emails, and identifiers with the spelling supplied. This is an extraction-only task; actions must be empty. In the response distinguish drafting from execution.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-EX041"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "issued_policy",
+        "data": {
+          "policy_id": "P-EX041",
+          "starts_on": "2026-01-01",
+          "ends_on": "2027-01-01",
+          "personal_property_limit": 30000,
+          "deductible": 500
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "issued_endorsement",
+        "data": {
+          "policy_id": "P-EX041",
+          "starts_on": "2026-01-01",
+          "ends_on": "2027-01-01",
+          "scheduled_item": "bracelet",
+          "serial_number": "BR-77",
+          "scheduled_theft_limit": 6000
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "My ring was stolen on October 3, 2026. I thought the $6,000 jewelry endorsement would cover it, but the certificate lists my bracelet."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Which item was actually stolen, and are you asking for a payment calculation?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "Only the ring. I still have the bracelet. Do not calculate a payout; I need the intake to describe the right item."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "Where did the theft occur, who owns the ring, and what value information do you have?"
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "It is my ring, stolen from the locker at 3 Tide Pool Lane, Larkport, US. I estimate $2,800 from memory; I have no appraisal attached."
+      },
+      {
+        "id": "m6",
+        "role": "bot",
+        "text": "Which contact should the claim team use, and should the report say the ring is scheduled?"
+      },
+      {
+        "id": "m7",
+        "role": "customer",
+        "text": "Use remy.dale@post.example. The schedule only names the bracelet with its serial number. Please flag that mismatch for review rather than pretending the ring is listed."
+      }
+    ],
+    "form": {
+      "stolen_item": {
+        "type": "string",
+        "nullable": true,
+        "description": "Short item noun for property actually reported stolen."
+      },
+      "scheduled_item": {
+        "type": "string",
+        "nullable": true,
+        "description": "Short item noun listed on the issued scheduled-item endorsement."
+      },
+      "stolen_item_is_scheduled": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "Whether the actual stolen item is included in the supplied issued schedule."
+      },
+      "base_jewelry_theft_sublimit": {
+        "type": "integer",
+        "nullable": true,
+        "description": "Base per-occurrence jewelry theft sublimit in USD when no matching schedule overrides it."
+      },
+      "reported_value_estimate": {
+        "type": "integer",
+        "nullable": true,
+        "description": "Customer estimate of stolen-item value in USD, preserving estimate status."
+      },
+      "value_verified": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "True for supplied verified valuation; false when explicitly unverified estimate."
+      },
+      "event_date": {
+        "type": "string",
+        "nullable": true,
+        "description": "Reported theft date."
+      },
+      "contact_email": {
+        "type": "string",
+        "nullable": true,
+        "description": "Requested staff follow-up email."
+      }
+    },
+    "allowed_actions": []
+  }
+}

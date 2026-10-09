@@ -1,0 +1,207 @@
+{
+  "task_id": "ext_032",
+  "reference_answer": {
+    "fields": {
+      "applicant_name": "Rowan D'Arcy",
+      "contact_email": "rowan.new@example.test",
+      "insured_address": "6 Copper Rise, Flat 2, Willow Reach",
+      "occupancy_start": "2026-10-22",
+      "requested_start": "2026-10-22",
+      "personal_property_limit": 50000,
+      "liability_limit": 100000,
+      "deductible": 1000,
+      "consent_to_submit": false
+    },
+    "disposition": "ready",
+    "actions": [],
+    "missing_fields": [],
+    "citations": [
+      "H02",
+      "H15",
+      "H16",
+      "m1",
+      "m3",
+      "m5",
+      "m7"
+    ],
+    "response": "The draft is complete for Rowan D'Arcy at rowan.new@example.test. Your instruction not to submit is recorded; email contact permission has not been treated as submission consent."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/applicant_name",
+      "operator": "eq",
+      "expected": "Rowan D'Arcy",
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m3",
+        "H02"
+      ],
+      "rationale": "The cited source establishes applicant_name; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/contact_email",
+      "operator": "eq",
+      "expected": "rowan.new@example.test",
+      "critical": true,
+      "evidence": [
+        "m5",
+        "H02"
+      ],
+      "rationale": "The cited source establishes contact_email; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/insured_address",
+      "operator": "text_eq",
+      "expected": "6 Copper Rise, Flat 2, Willow Reach",
+      "critical": true,
+      "evidence": [
+        "m1"
+      ],
+      "rationale": "The cited source establishes insured_address; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/occupancy_start",
+      "operator": "eq",
+      "expected": "2026-10-22",
+      "critical": true,
+      "evidence": [
+        "m3"
+      ],
+      "rationale": "The cited source establishes occupancy_start; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C5",
+      "path": "/fields/requested_start",
+      "operator": "eq",
+      "expected": "2026-10-22",
+      "critical": true,
+      "evidence": [
+        "m3"
+      ],
+      "rationale": "The cited source establishes requested_start; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C6",
+      "path": "/fields/personal_property_limit",
+      "operator": "eq",
+      "expected": 50000,
+      "critical": true,
+      "evidence": [
+        "m3"
+      ],
+      "rationale": "The cited source establishes personal_property_limit; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C7",
+      "path": "/fields/liability_limit",
+      "operator": "eq",
+      "expected": 100000,
+      "critical": true,
+      "evidence": [
+        "m3"
+      ],
+      "rationale": "The cited source establishes liability_limit; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C8",
+      "path": "/fields/deductible",
+      "operator": "eq",
+      "expected": 1000,
+      "critical": true,
+      "evidence": [
+        "m3"
+      ],
+      "rationale": "The cited source establishes deductible; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C9",
+      "path": "/fields/consent_to_submit",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "m5",
+        "m7"
+      ],
+      "rationale": "The cited source establishes consent_to_submit; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C10",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H16"
+      ],
+      "rationale": "This task requests document extraction only; no transaction is authorized by the task."
+    },
+    {
+      "id": "C11",
+      "path": "/disposition",
+      "operator": "one_of",
+      "expected": [
+        "ready"
+      ],
+      "critical": true,
+      "evidence": [
+        "H15",
+        "H16"
+      ],
+      "rationale": "The applicant explicitly corrects punctuation and email. Permission to use email is separate from explicitly declined application submission, which is a known false value, not a missing field."
+    },
+    {
+      "id": "C12",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H15",
+        "H16"
+      ],
+      "rationale": "Only these unresolved fields block the requested document workflow: none; optional uncertainty is preserved in the document."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply treats the corrected-contact application draft as complete while preserving the express instruction not to submit; contact permission is not an issued policy or permission to submit.",
+      "evidence": [
+        "H11",
+        "H14",
+        "H15",
+        "m1",
+        "m3",
+        "m5",
+        "m7"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply preserves the apostrophe and corrected email while respecting explicit declined submission consent.",
+      "evidence": [
+        "H02",
+        "H14",
+        "H15",
+        "m1",
+        "m3",
+        "m5",
+        "m7"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Losing the corrected apostrophe in Rowan D’Arcy despite the applicant emphasizing it.",
+    "Retaining the retired rowan.old email instead of the corrected new email.",
+    "Treating approval to use an email for contact as submission consent."
+  ],
+  "rationale": "The applicant explicitly corrects punctuation and email. Permission to use email is separate from explicitly declined application submission, which is a known false value, not a missing field."
+}

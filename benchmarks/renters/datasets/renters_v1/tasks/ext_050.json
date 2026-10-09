@@ -1,0 +1,135 @@
+{
+  "id": "ext_050",
+  "track": "conversation_extraction",
+  "family": "support_handoff",
+  "split": "test",
+  "scenario_group": "receipt_uploaded_intake_submission_failed",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Complete an intake-resumption handoff. Disposition follows current prerequisite completeness using the full conversation, while recorded_intake_status describes what the supplied backend record actually completed. Fill exactly the specified document fields from the supplied conversation and records. Normalize dates to ISO YYYY-MM-DD. Copy names, addresses, emails, and identifiers with the spelling supplied. This is an extraction-only task; actions must be empty. In the response distinguish drafting from execution.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-EX050"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "claim_draft",
+        "data": {
+          "draft_id": "DR-EX050",
+          "policy_id": "P-EX050",
+          "event_date": "2026-10-06",
+          "event_location": "81 Moor Street, Larkport, US",
+          "reported_cause": "theft",
+          "property": "headphones",
+          "status": "draft",
+          "contact_email": null,
+          "claim_id": null,
+          "attachment_ids": [
+            "ATT-EX050"
+          ],
+          "last_submission_error": "contact_missing"
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "uploaded_attachment",
+        "data": {
+          "attachment_id": "ATT-EX050",
+          "draft_id": "DR-EX050",
+          "status": "received",
+          "merchant_email": "returns@audio-shop.example"
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "I uploaded the receipt for my stolen headphones and pressed Submit. Does that mean I have a claim number now?"
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "What happened after you pressed Submit?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "An error said the contact field was blank. The receipt still shows uploaded. This was the theft on October 6, 2026 at 81 Moor Street, Larkport, US."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "Who owns the headphones, and what contact should staff use to finish the draft?"
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "They are mine. Please use june.sato@post.example. The old draft email is blank; do not copy an email off the store receipt."
+      },
+      {
+        "id": "m6",
+        "role": "bot",
+        "text": "The draft record has the attachment but no submission reference. Should the handoff say the claim is submitted?"
+      },
+      {
+        "id": "m7",
+        "role": "customer",
+        "text": "No. Record that the upload worked but submission failed. I authorize completing the draft with my email and submitting it, but do not invent a claim number before that happens."
+      }
+    ],
+    "form": {
+      "existing_draft_id": {
+        "type": "string",
+        "nullable": true,
+        "description": "Identifier of the supplied incomplete intake draft; not a submitted claim reference."
+      },
+      "recorded_intake_status": {
+        "type": "string",
+        "nullable": true,
+        "description": "Authoritative current intake status, separate from upload success or requested next action.",
+        "enum": [
+          "draft",
+          "submitted"
+        ]
+      },
+      "receipt_upload_status": {
+        "type": "string",
+        "nullable": true,
+        "description": "Attachment status from supplied authoritative record; received means uploaded, pending means not uploaded.",
+        "enum": [
+          "received",
+          "pending"
+        ]
+      },
+      "assigned_claim_id": {
+        "type": "string",
+        "nullable": true,
+        "description": "Submitted claim identifier only if supplied by authoritative submission record."
+      },
+      "contact_email": {
+        "type": "string",
+        "nullable": true,
+        "description": "Latest customer-approved claim contact, not merchant details on receipt."
+      },
+      "submission_consented": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "Whether customer explicitly authorizes finishing and submitting the intake after the supplied correction."
+      },
+      "next_step": {
+        "type": "string",
+        "nullable": true,
+        "description": "complete_existing_draft means use the existing draft with corrected prerequisites; update_submitted_claim means an already submitted claim exists.",
+        "enum": [
+          "complete_existing_draft",
+          "update_submitted_claim"
+        ]
+      }
+    },
+    "allowed_actions": []
+  }
+}

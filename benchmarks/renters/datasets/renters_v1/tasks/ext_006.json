@@ -1,0 +1,111 @@
+{
+  "id": "ext_006",
+  "track": "conversation_extraction",
+  "family": "support_handoff",
+  "split": "optimization",
+  "scenario_group": "uncertain_water_source_photo_not_cause",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Complete the staff handoff for a water-damage intake. Disposition follows intake readiness; unknown cause is a review flag, not a missing prerequisite. Fill exactly the specified document fields from the supplied conversation and records. Normalize dates to ISO YYYY-MM-DD. Copy names, addresses, emails, and identifiers with the spelling supplied. This is an extraction-only task; actions must be empty. In the response distinguish drafting from execution.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-EX006"
+    },
+    "records": [],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "There is water damage to my sofa after yesterday evening. I put flood on the web form because everything was wet."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Did water come in from outdoors or from a pipe inside the building?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "I was away. I do not know. The building manager mentioned a pipe but has not inspected it."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "Where was the sofa, who owns it, and how can the claim team contact you?"
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "It is my sofa at 23 Fern Walk, Unit 5, Morrow, US. Email me at omar.hill@post.example. The damage happened October 7, 2026."
+      },
+      {
+        "id": "m6",
+        "role": "bot",
+        "text": "You can supply photos without deciding the source. Is there still an immediate danger?"
+      },
+      {
+        "id": "m7",
+        "role": "customer",
+        "text": "No immediate danger now. I have not sent photos yet. Please record the cause as unknown instead of guessing flood or a burst pipe."
+      }
+    ],
+    "form": {
+      "event_date": {
+        "type": "string",
+        "nullable": true,
+        "description": "Reported loss date in ISO format."
+      },
+      "event_location": {
+        "type": "string",
+        "nullable": true,
+        "description": "Reported incident address, copied exactly."
+      },
+      "reported_cause": {
+        "type": "string",
+        "nullable": true,
+        "description": "unknown means no cause established; internal_pipe means reported sudden internal supply-pipe escape; surface_flood means reported rising surface floodwater.",
+        "enum": [
+          "unknown",
+          "internal_pipe",
+          "surface_flood"
+        ]
+      },
+      "property_owner": {
+        "type": "string",
+        "nullable": true,
+        "description": "customer means customer claims sole ownership; roommate means solely another occupant; unresolved means ownership unclear.",
+        "enum": [
+          "customer",
+          "roommate",
+          "unresolved"
+        ]
+      },
+      "contact_email": {
+        "type": "string",
+        "nullable": true,
+        "description": "Customer contact email for the intake."
+      },
+      "photos_status": {
+        "type": "string",
+        "nullable": true,
+        "description": "pending means not yet supplied; received means present in authoritative attachment records.",
+        "enum": [
+          "pending",
+          "received"
+        ]
+      },
+      "intake_readiness": {
+        "type": "string",
+        "nullable": true,
+        "description": "ready_with_cause_review means the core H12 inputs exist but cause needs review; incomplete means a core input is missing.",
+        "enum": [
+          "ready_with_cause_review",
+          "incomplete"
+        ]
+      }
+    },
+    "allowed_actions": []
+  }
+}

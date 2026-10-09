@@ -1,0 +1,107 @@
+{
+  "id": "ops_008",
+  "track": "support_ops",
+  "family": "account_changes",
+  "split": "optimization",
+  "scenario_group": "immediate_cancel_preserves_submitted_claim",
+  "difficulty": "standard",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Prepare the customer’s requested policy operation. cancel_policy targets r1 with value {\"effective_date\": \"YYYY-MM-DD\"}. withdraw_claim, if actually authorized, targets a supplied claim record with value {}. Report only a billing-approved refund amount; do not estimate one.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-108"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "issued_declarations",
+        "data": {
+          "authority": "issued",
+          "policy_id": "P-108",
+          "named_insureds": [
+            "Theo Wynn"
+          ],
+          "starts_on": "2026-01-01",
+          "ends_on": "2027-01-01",
+          "status_today": "active",
+          "personal_property_limit": 30000,
+          "deductible": 500,
+          "valuation_basis": "actual_cash_value"
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "claim",
+        "data": {
+          "authority": "submitted_claim_record",
+          "claim_id": "CL-108-A",
+          "policy_id": "P-108",
+          "event_date": "2026-09-20",
+          "cause": "theft",
+          "status": "submitted",
+          "adjuster_assignment": null
+        }
+      },
+      {
+        "id": "r3",
+        "kind": "billing",
+        "data": {
+          "authority": "billing_record",
+          "policy_id": "P-108",
+          "approved_refund_amount": null,
+          "refund_status": "not_determined"
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "Please cancel P-108 today, October 8, 2026. I understand that is the effective cancellation date and I consent. My September theft claim should stay open."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Are you also asking to withdraw that claim or for a refund calculation?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "No to both. Cancel only the policy as of today; preserve the existing claim. I know a refund has not been determined."
+      }
+    ],
+    "form": {
+      "cancellation_date": {
+        "type": "string",
+        "nullable": false,
+        "description": "Explicitly confirmed cancellation effective date."
+      },
+      "cancellation_timing": {
+        "type": "string",
+        "nullable": false,
+        "description": "Timing of proposed cancellation relative to as_of.",
+        "enum": [
+          "immediate",
+          "scheduled",
+          "unresolved"
+        ]
+      },
+      "preserve_claim_id": {
+        "type": "string",
+        "nullable": false,
+        "description": "Existing claim reference that must be preserved."
+      },
+      "approved_refund_amount": {
+        "type": "number",
+        "nullable": true,
+        "description": "Approved refund amount in USD from billing, or null if none is supplied."
+      }
+    },
+    "allowed_actions": [
+      "cancel_policy",
+      "withdraw_claim"
+    ]
+  }
+}

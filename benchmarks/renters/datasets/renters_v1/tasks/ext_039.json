@@ -1,0 +1,139 @@
+{
+  "id": "ext_039",
+  "track": "conversation_extraction",
+  "family": "application_filling",
+  "split": "test",
+  "scenario_group": "selected_application_reference_over_recent_tab",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Complete the renters insurance application draft from this chat. Include every declared field. Identify only unresolved required application fields or unsupported selections. Do not submit, bind, or change insurance.",
+    "session": {
+      "verified": false,
+      "role": "visitor",
+      "policy_id": null
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "customer_supplied_application_draft",
+        "data": {
+          "application_reference": "APP-PEARL-09",
+          "applicant_name": "Priya Hart",
+          "contact_email": "priya.old@example.test",
+          "insured_address": "90 Pearl Street, Unit 2, Westmere",
+          "occupancy_start": "2026-11-10",
+          "requested_start": "2026-11-10",
+          "personal_property_limit": 15000,
+          "liability_limit": 100000,
+          "deductible": 250
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "customer_supplied_application_draft",
+        "data": {
+          "application_reference": "APP-HARBOR-14",
+          "applicant_name": "Priya Hart",
+          "contact_email": "priya.hart@example.test",
+          "insured_address": "11 Harbor Rise, Unit 6, Westmere",
+          "occupancy_start": "2026-11-12",
+          "requested_start": "2026-11-11",
+          "personal_property_limit": 50000,
+          "liability_limit": 300000,
+          "deductible": 1000
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "I uploaded both draft applications because the tabs are confusing. Continue APP-HARBOR-14; I signed that lease. The Pearl Street place fell through."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "The screen most recently opened APP-PEARL-09. Should I carry its dates and contact email over?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "No, use the complete Harbor draft, including its dates, email, coverage amounts and deductible. Do not combine fields across applications."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "The Harbor record says Unit 6. Is that your final apartment, and is Priya Hart the applicant?"
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "Yes to both. The Pearl record has Unit 2; that is another property, not a correction to Harbor."
+      },
+      {
+        "id": "m6",
+        "role": "bot",
+        "text": "Do you authorize submitting the selected application?"
+      },
+      {
+        "id": "m7",
+        "role": "customer",
+        "text": "Yes, submit APP-HARBOR-14 as recorded. The Pearl draft should not be submitted or used."
+      }
+    ],
+    "form": {
+      "applicant_name": {
+        "type": "string",
+        "nullable": true,
+        "description": "Applicant full name as explicitly given, preserving spelling."
+      },
+      "contact_email": {
+        "type": "string",
+        "nullable": true,
+        "description": "Applicant contact email; do not substitute a landlord or another occupant email."
+      },
+      "insured_address": {
+        "type": "string",
+        "nullable": true,
+        "description": "Complete selected application address including unit. Copy its words without abbreviating; formatting-tolerant for punctuation, case and whitespace."
+      },
+      "occupancy_start": {
+        "type": "string",
+        "nullable": true,
+        "description": "Date applicant starts occupying the dwelling, ISO YYYY-MM-DD; null if unresolved."
+      },
+      "requested_start": {
+        "type": "string",
+        "nullable": true,
+        "description": "Explicitly requested insurance start date, ISO YYYY-MM-DD; separate from occupancy date."
+      },
+      "personal_property_limit": {
+        "type": "integer",
+        "nullable": true,
+        "description": "Explicit selected personal-property limit in USD; retain unsupported requested numeric options and flag for clarification."
+      },
+      "liability_limit": {
+        "type": "integer",
+        "nullable": true,
+        "description": "Explicit selected liability limit in USD; null when unselected."
+      },
+      "deductible": {
+        "type": "integer",
+        "nullable": true,
+        "description": "Explicit selected deductible in USD; null when unselected."
+      },
+      "consent_to_submit": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "True only for explicit application submission consent, false for explicit decline, otherwise null."
+      },
+      "application_reference": {
+        "type": "string",
+        "nullable": false,
+        "description": "Exact customer-selected application reference from the supplied draft records."
+      }
+    },
+    "allowed_actions": []
+  }
+}

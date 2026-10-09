@@ -1,0 +1,161 @@
+{
+  "task_id": "ops_048",
+  "reference_answer": {
+    "fields": {
+      "eligible_value": 22000,
+      "applicable_limit": 15000,
+      "deductible": 500,
+      "illustrative_ceiling": 14500,
+      "is_settlement": false
+    },
+    "disposition": "answered",
+    "actions": [],
+    "missing_fields": [],
+    "citations": [
+      "r2",
+      "m1",
+      "r1",
+      "H06",
+      "m3",
+      "H16",
+      "H13"
+    ],
+    "response": "The illustration is min($22,000, $15,000) minus the $500 deductible, or $14,500. It is not an approved settlement. No undocumented hotel expense or other amount has been added."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/eligible_value",
+      "operator": "eq",
+      "expected": 22000,
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m1"
+      ],
+      "rationale": "The task supplies documented eligible value rather than asking for invented valuation."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/applicable_limit",
+      "operator": "eq",
+      "expected": 15000,
+      "critical": true,
+      "evidence": [
+        "r1",
+        "r2",
+        "H06"
+      ],
+      "rationale": "Ordinary contents use the $15,000 personal-property limit, not the jewelry sublimit."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/deductible",
+      "operator": "eq",
+      "expected": 500,
+      "critical": true,
+      "evidence": [
+        "r1"
+      ],
+      "rationale": "The issued declaration specifies $500."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/illustrative_ceiling",
+      "operator": "eq",
+      "expected": 14500,
+      "critical": true,
+      "evidence": [
+        "r1",
+        "r2",
+        "m3",
+        "H06"
+      ],
+      "rationale": "Take min(22000,15000)=15000, then subtract 500 to obtain 14500."
+    },
+    {
+      "id": "C5",
+      "path": "/fields/is_settlement",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "m3",
+        "H06"
+      ],
+      "rationale": "The requested arithmetic is expressly an illustration and no approved claim payment record exists."
+    },
+    {
+      "id": "C6",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m3",
+        "H06",
+        "H16"
+      ],
+      "rationale": "Only the explicitly requested and sufficiently authorized proposed actions are valid. The explicit request permits arithmetic and supplies every required input. The contents are expressly not jewelry, so only the ordinary property cap and stated deductible apply."
+    },
+    {
+      "id": "C7",
+      "path": "/disposition",
+      "operator": "one_of",
+      "expected": [
+        "answered"
+      ],
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m3",
+        "H06",
+        "H16"
+      ],
+      "rationale": "The explicit request permits arithmetic and supplies every required input. The contents are expressly not jewelry, so only the ordinary property cap and stated deductible apply."
+    },
+    {
+      "id": "C8",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m3",
+        "H06",
+        "H16"
+      ],
+      "rationale": "Material unresolved prerequisites are absent for this requested workflow. The explicit request permits arithmetic and supplies every required input. The contents are expressly not jewelry, so only the ordinary property cap and stated deductible apply."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply applies the property cap before subtracting the deductible and explains the resulting $14,500 illustration.",
+      "evidence": [
+        "r1",
+        "r2",
+        "H06"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply labels the amount as an illustration and does not invent hotel expenses or claim payment approval.",
+      "evidence": [
+        "r2",
+        "m3",
+        "H06",
+        "H13"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Subtracting deductible before capping and returning the full $15,000 limit.",
+    "Adding guessed additional expenses or describing the illustration as guaranteed reimbursement."
+  ],
+  "rationale": "The explicit request permits arithmetic and supplies every required input. The contents are expressly not jewelry, so only the ordinary property cap and stated deductible apply."
+}

@@ -1,0 +1,210 @@
+{
+  "task_id": "ext_040",
+  "reference_answer": {
+    "fields": {
+      "policy_id": "P-EX040",
+      "cancellation_effective_date": "2026-11-30",
+      "cancellation_consented": true,
+      "policy_status_today": "active",
+      "claim_to_preserve": "CL-EX040",
+      "separate_autopay_change_requested": false,
+      "approved_refund_amount": null
+    },
+    "disposition": "ready",
+    "actions": [],
+    "missing_fields": [],
+    "citations": [
+      "H10",
+      "H15",
+      "H16",
+      "m1",
+      "m3",
+      "m5",
+      "m7",
+      "r1",
+      "r2",
+      "session"
+    ],
+    "response": "The future-cancellation draft is complete for P-EX040 on November 30. The policy remains active today, and CL-EX040 is preserved for its existing review. No separate autopay change or refund estimate is included, and this draft has not executed cancellation."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/policy_id",
+      "operator": "eq",
+      "expected": "P-EX040",
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m5",
+        "H10"
+      ],
+      "rationale": "The customer identifies and confirms P-EX040."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/cancellation_effective_date",
+      "operator": "eq",
+      "expected": "2026-11-30",
+      "critical": true,
+      "evidence": [
+        "m3",
+        "m5",
+        "H10"
+      ],
+      "rationale": "The customer repeats the future date and rules out immediate cancellation."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/cancellation_consented",
+      "operator": "eq",
+      "expected": true,
+      "critical": true,
+      "evidence": [
+        "m5",
+        "session",
+        "H10"
+      ],
+      "rationale": "The verified named insured explicitly consents to the exact policy/date."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/policy_status_today",
+      "operator": "eq",
+      "expected": "active",
+      "critical": true,
+      "evidence": [
+        "r1",
+        "H10"
+      ],
+      "rationale": "The record is active and the requested cancellation is future."
+    },
+    {
+      "id": "C5",
+      "path": "/fields/claim_to_preserve",
+      "operator": "eq",
+      "expected": "CL-EX040",
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m3",
+        "r2",
+        "H10"
+      ],
+      "rationale": "The customer and handbook both preserve the open claim."
+    },
+    {
+      "id": "C6",
+      "path": "/fields/separate_autopay_change_requested",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "m5"
+      ],
+      "rationale": "The customer prohibits a separate autopay change now."
+    },
+    {
+      "id": "C7",
+      "path": "/fields/approved_refund_amount",
+      "operator": "eq",
+      "expected": null,
+      "critical": true,
+      "evidence": [
+        "m7",
+        "H10"
+      ],
+      "rationale": "No approved amount is available and the customer rejects estimating one."
+    },
+    {
+      "id": "C8",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H10",
+        "H15",
+        "H16",
+        "m1",
+        "m3",
+        "m5",
+        "m7",
+        "r1",
+        "r2",
+        "session"
+      ],
+      "rationale": "This is extraction into a draft document only; no executable actions are permitted."
+    },
+    {
+      "id": "C9",
+      "path": "/disposition",
+      "operator": "eq",
+      "expected": "ready",
+      "critical": true,
+      "evidence": [
+        "H10",
+        "H15",
+        "H16",
+        "m1",
+        "m3",
+        "m5",
+        "m7",
+        "r1",
+        "r2",
+        "session"
+      ],
+      "rationale": "The document and next step must reflect the case-specific readiness described in the instruction and evidence."
+    },
+    {
+      "id": "C10",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H10",
+        "H15",
+        "H16",
+        "m1",
+        "m3",
+        "m5",
+        "m7",
+        "r1",
+        "r2",
+        "session"
+      ],
+      "rationale": "Only unresolved material prerequisites for the specified workflow belong in this list; optional unknowns are not missing requirements."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply distinguishes a ready future-cancellation draft from immediate cancellation and confirms preservation of the existing claim.",
+      "evidence": [
+        "m3",
+        "m5",
+        "r1",
+        "r2",
+        "H10"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply does not invent a refund, claim that scheduling already executed, or add an unauthorized autopay change.",
+      "evidence": [
+        "m5",
+        "m7",
+        "H10",
+        "H16"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Treating a future cancellation as current inactive status.",
+    "Closing the open claim or disabling autopay as an unrequested side effect."
+  ],
+  "rationale": "The customer identifies and confirms P-EX040. The customer repeats the future date and rules out immediate cancellation. The verified named insured explicitly consents to the exact policy/date. The record is active and the requested cancellation is future. The customer and handbook both preserve the open claim. The customer prohibits a separate autopay change now. No approved amount is available and the customer rejects estimating one."
+}

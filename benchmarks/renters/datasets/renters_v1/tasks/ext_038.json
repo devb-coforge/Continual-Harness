@@ -1,0 +1,117 @@
+{
+  "id": "ext_038",
+  "track": "conversation_extraction",
+  "family": "support_handoff",
+  "split": "test",
+  "scenario_group": "same_day_same_cause_distinct_property_incidents",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Complete a duplicate-check handoff for the newly described bicycle theft. Disposition follows readiness of the new incident intake, not whether its reference has already been assigned. Fill exactly the specified document fields from the supplied conversation and records. Normalize dates to ISO YYYY-MM-DD. Copy names, addresses, emails, and identifiers with the spelling supplied. This is an extraction-only task; actions must be empty. In the response distinguish drafting from execution.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-EX038"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "claims_ledger",
+        "data": {
+          "claim_id": "CL-EX038",
+          "policy_id": "P-EX038",
+          "event_date": "2026-10-01",
+          "event_location": "11 Quarry Station, Larkport, US",
+          "reported_cause": "theft",
+          "property": "phone",
+          "status": "submitted"
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "I already have CL-EX038 for a theft on October 1. Can I add my stolen bicycle to that?"
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Was the bicycle taken in the same incident as the phone in the claim ledger?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "No. The phone was taken at 11 Quarry Station that morning. My bicycle was stolen that evening from 48 Basin Park, Larkport, US. They were separate trips and separate thefts."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "Is the bicycle yours, and was any of it part of the phone report?"
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "I own it. It is a green commuter bicycle with a front basket. I reported only the phone before, not the bicycle."
+      },
+      {
+        "id": "m6",
+        "role": "bot",
+        "text": "Should the new report use October 1, 2026, and which contact should staff use?"
+      },
+      {
+        "id": "m7",
+        "role": "customer",
+        "text": "Yes, that same date but the different park incident. Contact jules.ash@post.example. Please do not merge the two just because both happened that day."
+      }
+    ],
+    "form": {
+      "existing_claim_id": {
+        "type": "string",
+        "nullable": true,
+        "description": "Identifier of the earlier supplied phone claim; not the bicycle claim identifier."
+      },
+      "new_incident_event_date": {
+        "type": "string",
+        "nullable": true,
+        "description": "Reported date of the separately described bicycle incident."
+      },
+      "new_incident_location": {
+        "type": "string",
+        "nullable": true,
+        "description": "Location of the bicycle incident, copied exactly."
+      },
+      "incident_relationship": {
+        "type": "string",
+        "nullable": true,
+        "description": "distinct means separate incidents despite shared date/cause; same means clearly one incident; uncertain means unresolved.",
+        "enum": [
+          "distinct",
+          "same",
+          "uncertain"
+        ]
+      },
+      "next_step": {
+        "type": "string",
+        "nullable": true,
+        "description": "prepare_new_intake means a separate complete incident draft; update_existing means same-incident details; clarify_duplicate means ambiguous match.",
+        "enum": [
+          "prepare_new_intake",
+          "update_existing",
+          "clarify_duplicate"
+        ]
+      },
+      "new_claim_id": {
+        "type": "string",
+        "nullable": true,
+        "description": "Authoritative assigned reference for the bicycle incident; null until supplied by a submission record."
+      },
+      "contact_email": {
+        "type": "string",
+        "nullable": true,
+        "description": "Customer contact for the bicycle intake."
+      }
+    },
+    "allowed_actions": []
+  }
+}

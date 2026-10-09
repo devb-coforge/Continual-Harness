@@ -1,0 +1,97 @@
+{
+  "id": "ops_046",
+  "track": "support_ops",
+  "family": "account_changes",
+  "split": "test",
+  "scenario_group": "autopay_instruction_separate_from_insurance_cancellation",
+  "difficulty": "standard",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Assess the requested billing instruction. disable_autopay targets r2 with value {\"enabled\":false}; this changes only that instruction. No premium, balance, refund, or policy change is implied. Do not propose cancellation of insurance unless separately requested with H10 prerequisites.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-46"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "policy",
+        "data": {
+          "policy_id": "P-46",
+          "authority": "issued",
+          "status": "active",
+          "starts_on": "2026-01-01",
+          "ends_on": "2027-01-01",
+          "named_insureds": [
+            "Robin Vale"
+          ],
+          "insured_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "mailing_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "personal_property_limit": 30000,
+          "liability_limit": 100000,
+          "deductible": 500,
+          "valuation": "replacement_cost",
+          "loss_of_use_limit": 6000
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "autopay_instruction",
+        "data": {
+          "policy_id": "P-46",
+          "instruction_id": "AUTO-46",
+          "enabled": true,
+          "payment_reference": "token_on_file_46",
+          "next_scheduled_debit": "2026-10-15"
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "Cancel the automatic payment instruction for P-46, please. I will arrange payments myself."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Do you also want to cancel your renters insurance?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "Definitely not. Keep the insurance active. I confirm disabling only autopay today; please do not ask for my card number."
+      }
+    ],
+    "form": {
+      "autopay_enabled_requested": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Requested enabled state of the existing automatic-payment instruction."
+      },
+      "insurance_cancellation_requested": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Whether the customer requests cancellation of insurance."
+      },
+      "policy_status_today": {
+        "type": "string",
+        "nullable": false,
+        "description": "Status in the issued policy; a billing instruction does not amend it.",
+        "enum": [
+          "active",
+          "canceled"
+        ]
+      },
+      "sensitive_payment_data_needed": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Whether a full card number is required to handle this supplied existing instruction."
+      }
+    },
+    "allowed_actions": [
+      "disable_autopay"
+    ]
+  }
+}

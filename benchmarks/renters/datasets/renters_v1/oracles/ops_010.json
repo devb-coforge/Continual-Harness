@@ -1,0 +1,121 @@
+{
+  "task_id": "ops_010",
+  "reference_answer": {
+    "fields": {
+      "reported_cause": "sudden_internal_supply_escape",
+      "cause_within_base_scope": true,
+      "claim_requested": false
+    },
+    "disposition": "answered",
+    "actions": [],
+    "missing_fields": [],
+    "citations": [
+      "r2",
+      "H05",
+      "m3"
+    ],
+    "response": "The supplied report describes a sudden split in an internal supply pipe, which is an included base cause under this handbook. Water damage is not excluded as a whole. Your own table and the October 7 date also fit the supplied ownership and policy timing facts, but that is not approval of a claim or a payment amount. No claim action is proposed."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/reported_cause",
+      "operator": "eq",
+      "expected": "sudden_internal_supply_escape",
+      "critical": true,
+      "evidence": [
+        "r2"
+      ],
+      "rationale": "The attached report specifically identifies sudden escape from an internal supply pipe."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/cause_within_base_scope",
+      "operator": "eq",
+      "expected": true,
+      "critical": true,
+      "evidence": [
+        "r2",
+        "H05"
+      ],
+      "rationale": "H05 includes sudden accidental escape from an internal supply pipe."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/claim_requested",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "m3"
+      ],
+      "rationale": "The request is informational only."
+    },
+    {
+      "id": "C4",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "r2",
+        "H05",
+        "m3"
+      ],
+      "rationale": "The proposed actions must match the authorized scope, readiness, and supplied action shapes; no action has executed."
+    },
+    {
+      "id": "C5",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "r2",
+        "H05",
+        "m3"
+      ],
+      "rationale": "Only material unresolved prerequisites for this requested workflow belong here."
+    },
+    {
+      "id": "C6",
+      "path": "/disposition",
+      "operator": "eq",
+      "expected": "answered",
+      "critical": true,
+      "evidence": [
+        "r2",
+        "H05",
+        "m3"
+      ],
+      "rationale": "The supplied cause evidence removes cause ambiguity, so no additional causation question is necessary."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "Uses the plumber’s specific internal-supply finding rather than the broad label water or the friend’s blanket exclusion.",
+      "evidence": [
+        "m1",
+        "r2",
+        "H05"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "Does not promise payment or pretend a claim was opened for this explanation-only request.",
+      "evidence": [
+        "m3",
+        "H04",
+        "H16"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Blanket rejection of every water-related incident",
+    "Ignoring a supplied specific cause report in favor of a casual assertion"
+  ],
+  "rationale": "The supplied cause evidence removes cause ambiguity, so no additional causation question is necessary."
+}

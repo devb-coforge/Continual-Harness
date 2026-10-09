@@ -1,0 +1,141 @@
+{
+  "task_id": "ops_019",
+  "reference_answer": {
+    "fields": {
+      "property_owner": "unnamed_roommate",
+      "property_scope": "outside_base_scope",
+      "shared_rent_creates_insured_status": false
+    },
+    "disposition": "answered",
+    "actions": [],
+    "missing_fields": [],
+    "citations": [
+      "m1",
+      "m3",
+      "r1",
+      "H04",
+      "H02",
+      "H11"
+    ],
+    "response": "Under the supplied base rule, the console is outside your personal-property scope because Dev alone owns it and Dev is not a named insured. Sharing the apartment or splitting rent does not add Dev to the issued policy. This is an explanation of the stated scope, not a formal claim denial."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/property_owner",
+      "operator": "eq",
+      "expected": "unnamed_roommate",
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m3",
+        "r1"
+      ],
+      "rationale": "The customer identifies sole roommate ownership and declarations list only Mara."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/property_scope",
+      "operator": "eq",
+      "expected": "outside_base_scope",
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m3",
+        "r1",
+        "H04"
+      ],
+      "rationale": "Base protection does not cover property owned solely by an unnamed roommate."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/shared_rent_creates_insured_status",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "m3",
+        "r1",
+        "H02",
+        "H11"
+      ],
+      "rationale": "A shared home/payment arrangement does not change issued insured status."
+    },
+    {
+      "id": "C4",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m3",
+        "r1",
+        "H04",
+        "H02",
+        "H11"
+      ],
+      "rationale": "The proposed actions must match the authorized scope, readiness, and supplied action shapes; no action has executed."
+    },
+    {
+      "id": "C5",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m3",
+        "r1",
+        "H04",
+        "H02",
+        "H11"
+      ],
+      "rationale": "Only material unresolved prerequisites for this requested workflow belong here."
+    },
+    {
+      "id": "C6",
+      "path": "/disposition",
+      "operator": "eq",
+      "expected": "answered",
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m3",
+        "r1",
+        "H04",
+        "H02",
+        "H11"
+      ],
+      "rationale": "Ownership and named-insured status are explicit, so neither a clarification nor an account change is required."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "Explains that sole ownership by an unnamed roommate is the deciding fact despite the otherwise included fire/smoke cause.",
+      "evidence": [
+        "m1",
+        "m3",
+        "r1",
+        "H04"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "Does not imply shared rent makes Dev insured, issue a denial, or propose adding Dev without a requested quote.",
+      "evidence": [
+        "m3",
+        "H11",
+        "H13"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Assuming household belongings automatically belong to the named insured",
+    "Converting a scope explanation into a formal claim denial"
+  ],
+  "rationale": "Ownership and named-insured status are explicit, so neither a clarification nor an account change is required."
+}

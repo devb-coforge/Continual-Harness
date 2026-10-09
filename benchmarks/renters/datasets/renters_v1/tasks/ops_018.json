@@ -1,0 +1,108 @@
+{
+  "id": "ops_018",
+  "track": "support_ops",
+  "family": "claim_intake",
+  "split": "optimization",
+  "scenario_group": "bot_submission_promise_vs_authoritative_unsent_draft",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Reconcile recorded claim workflow status with the conversation, then handle the customer’s conditional authorization using the actual records. submit_draft targets the supplied claim_draft record with value {} and proposes submission of all its confirmed facts. Do not treat this proposal as an executed tool call.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-118"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "issued_declarations",
+        "data": {
+          "authority": "issued",
+          "policy_id": "P-118",
+          "named_insureds": [
+            "Finn Lake"
+          ],
+          "starts_on": "2026-01-01",
+          "ends_on": "2027-01-01",
+          "status_today": "active",
+          "personal_property_limit": 30000,
+          "deductible": 500,
+          "valuation_basis": "actual_cash_value"
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "claim_draft",
+        "data": {
+          "authority": "saved_workflow_record",
+          "draft_id": "DRAFT-118-B",
+          "policy_id": "P-118",
+          "event_date": "2026-10-02",
+          "event_location": "31 Pine Yard, Apt 2, Riverbend, MD 21018, US",
+          "reported_cause": "fire",
+          "description": "Customer reports their own desk damaged by an accidental small fire; fire extinguished and no active hazard.",
+          "contact_channel": "finn.lake@inbox.example",
+          "status": "draft",
+          "claim_id": null
+        }
+      },
+      {
+        "id": "r3",
+        "kind": "existing_claim_search",
+        "data": {
+          "authority": "account_claim_records",
+          "policy_id": "P-118",
+          "matching_claims": []
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "I completed this desk-fire draft last week. Did it actually go through?"
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Yes, consider it submitted. Someone will definitely call you tomorrow."
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "I cannot find a claim number. Please check the supplied records, not that message. All draft details are accurate; if it is only a draft, I authorize submitting it now. I am not asking you to invent a number or call time."
+      }
+    ],
+    "form": {
+      "recorded_status": {
+        "type": "string",
+        "nullable": false,
+        "description": "Workflow status established by the supplied authoritative record.",
+        "enum": [
+          "draft",
+          "submitted",
+          "unknown"
+        ]
+      },
+      "claim_id": {
+        "type": "string",
+        "nullable": true,
+        "description": "Authoritative submitted claim reference, null when none is supplied."
+      },
+      "intake_ready": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Whether the confirmed saved draft can now be proposed for submission."
+      },
+      "promised_callback_supported": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Whether authoritative records support the earlier bot’s definite callback promise."
+      }
+    },
+    "allowed_actions": [
+      "submit_draft"
+    ]
+  }
+}

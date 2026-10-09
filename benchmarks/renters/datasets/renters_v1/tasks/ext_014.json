@@ -1,0 +1,88 @@
+{
+  "id": "ext_014",
+  "track": "conversation_extraction",
+  "family": "change_request_extraction",
+  "split": "optimization",
+  "scenario_group": "ambiguous_move_date_missing_unit_no_consent",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Complete an incomplete move-request document. Use destination_unit, move_effective_date, and move_confirmation in missing_fields when those move prerequisites remain unresolved. Fill exactly the specified document fields from the supplied conversation and records. Normalize dates to ISO YYYY-MM-DD. Copy names, addresses, emails, and identifiers with the spelling supplied. This is an extraction-only task; actions must be empty. In the response distinguish drafting from execution.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-EX014"
+    },
+    "records": [],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "Can you move the insured address to 46 Birch Terrace, Cedarbridge, US on 11/12?"
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Does Birch Terrace have an apartment number, and which date convention are you using?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "Yes, it is an apartment building. I am waiting for the unit assignment. My agent typed 11/12 and I cannot tell whether that means November 12 or December 11, 2026."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "Should I assume November 12 and use the building address without a unit?"
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "No. Do not assume either. I will approve the move once I know the unit and the exact date."
+      },
+      {
+        "id": "m6",
+        "role": "bot",
+        "text": "Do you want the current policy canceled while you wait?"
+      },
+      {
+        "id": "m7",
+        "role": "customer",
+        "text": "No, keep my current home and mailing address unchanged. For now just save the incomplete move request."
+      }
+    ],
+    "form": {
+      "destination_building": {
+        "type": "string",
+        "nullable": true,
+        "description": "Confirmed building address without a unit; copy supplied spelling."
+      },
+      "destination_unit": {
+        "type": "string",
+        "nullable": true,
+        "description": "Assigned destination apartment unit; null if not yet known."
+      },
+      "move_effective_date": {
+        "type": "string",
+        "nullable": true,
+        "description": "Unambiguous move date; null when numeric date convention is unresolved."
+      },
+      "move_confirmation": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "True for final destination/date approval; false for explicitly withheld approval; null if unstated."
+      },
+      "preserve_current_addresses": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "True only if customer explicitly asks to retain both current mailing and insured addresses."
+      },
+      "cancel_requested": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "True for current cancellation consent; false for explicit refusal."
+      }
+    },
+    "allowed_actions": []
+  }
+}

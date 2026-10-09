@@ -1,0 +1,103 @@
+{
+  "id": "ext_025",
+  "track": "conversation_extraction",
+  "family": "application_filling",
+  "split": "optimization",
+  "scenario_group": "complete_application_without_submission_consent",
+  "difficulty": "standard",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Complete the renters insurance application draft from this chat. Include every declared field. Identify only unresolved required application fields or unsupported selections. Do not submit, bind, or change insurance.",
+    "session": {
+      "verified": false,
+      "role": "visitor",
+      "policy_id": null
+    },
+    "records": [],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "Please fill the form while I read it. I am Jules Voss, jules.voss@example.test, moving to 8 Alder Square, Unit 7, Redbank."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "What dates should the application show?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "Occupancy begins October 18, 2026. Requested insurance start is October 17, 2026."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "And your coverage selections?"
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "I choose $30,000 property, $300,000 liability and $500 deductible."
+      },
+      {
+        "id": "m6",
+        "role": "bot",
+        "text": "I have enough for those entries. Do you consent to submitting the application?"
+      },
+      {
+        "id": "m7",
+        "role": "customer",
+        "text": "What does replacement cost mean on the information page? I want to understand that wording."
+      }
+    ],
+    "form": {
+      "applicant_name": {
+        "type": "string",
+        "nullable": true,
+        "description": "Applicant full name as explicitly given, preserving spelling."
+      },
+      "contact_email": {
+        "type": "string",
+        "nullable": true,
+        "description": "Applicant contact email; do not substitute a landlord or another occupant email."
+      },
+      "insured_address": {
+        "type": "string",
+        "nullable": true,
+        "description": "Complete requested insured dwelling address including unit; null if no single complete address is established. Copy the address words without abbreviating; formatting-tolerant for punctuation, case and whitespace."
+      },
+      "occupancy_start": {
+        "type": "string",
+        "nullable": true,
+        "description": "Date applicant starts occupying the dwelling, ISO YYYY-MM-DD; null if unresolved."
+      },
+      "requested_start": {
+        "type": "string",
+        "nullable": true,
+        "description": "Explicitly requested insurance start date, ISO YYYY-MM-DD; separate from occupancy date."
+      },
+      "personal_property_limit": {
+        "type": "integer",
+        "nullable": true,
+        "description": "Explicit selected personal-property limit in USD; retain unsupported requested numeric options and flag for clarification."
+      },
+      "liability_limit": {
+        "type": "integer",
+        "nullable": true,
+        "description": "Explicit selected liability limit in USD; null when unselected."
+      },
+      "deductible": {
+        "type": "integer",
+        "nullable": true,
+        "description": "Explicit selected deductible in USD; null when unselected."
+      },
+      "consent_to_submit": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "True only for explicit application submission consent, false for explicit decline, otherwise null."
+      }
+    },
+    "allowed_actions": []
+  }
+}

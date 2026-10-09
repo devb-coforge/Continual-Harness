@@ -1,0 +1,203 @@
+{
+  "task_id": "ext_021",
+  "reference_answer": {
+    "fields": {
+      "event_date": "2026-10-05",
+      "event_location": "9 Willow Square, Larkport, US",
+      "customer_owned_items": [
+        "headphones",
+        "bag"
+      ],
+      "employer_owned_items": [
+        "laptop"
+      ],
+      "include_employer_item_in_incident": true,
+      "contact_email": "kai.moss@post.example",
+      "exact_total_value": null
+    },
+    "disposition": "ready",
+    "actions": [],
+    "missing_fields": [],
+    "citations": [
+      "H04",
+      "H12",
+      "H15",
+      "H16",
+      "m1",
+      "m3",
+      "m5",
+      "m7"
+    ],
+    "response": "The handoff is ready for a theft-intake draft describing the laptop, headphones, and bag. It distinguishes the employer-owned laptop from your headphones and bag; base personal-property scope applies only to eligible owned belongings. Exact values and receipts can follow, and no claim approval or payment is implied."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/event_date",
+      "operator": "eq",
+      "expected": "2026-10-05",
+      "critical": true,
+      "evidence": [
+        "m1"
+      ],
+      "rationale": "The customer explicitly dates the theft."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/event_location",
+      "operator": "eq",
+      "expected": "9 Willow Square, Larkport, US",
+      "critical": true,
+      "evidence": [
+        "m1"
+      ],
+      "rationale": "The cafe location is supplied."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/customer_owned_items",
+      "operator": "set_eq",
+      "expected": [
+        "headphones",
+        "bag"
+      ],
+      "critical": true,
+      "evidence": [
+        "m3",
+        "H04",
+        "H15"
+      ],
+      "rationale": "The headphones and bag are customer-owned; everyday use does not confer laptop ownership."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/employer_owned_items",
+      "operator": "set_eq",
+      "expected": [
+        "laptop"
+      ],
+      "critical": true,
+      "evidence": [
+        "m3",
+        "H04"
+      ],
+      "rationale": "The laptop belongs to the employer."
+    },
+    {
+      "id": "C5",
+      "path": "/fields/include_employer_item_in_incident",
+      "operator": "eq",
+      "expected": true,
+      "critical": true,
+      "evidence": [
+        "m5",
+        "H15"
+      ],
+      "rationale": "The customer expressly wants the laptop documented with the correct ownership."
+    },
+    {
+      "id": "C6",
+      "path": "/fields/contact_email",
+      "operator": "eq",
+      "expected": "kai.moss@post.example",
+      "critical": true,
+      "evidence": [
+        "m7"
+      ],
+      "rationale": "The contact channel is explicitly supplied."
+    },
+    {
+      "id": "C7",
+      "path": "/fields/exact_total_value",
+      "operator": "eq",
+      "expected": null,
+      "critical": true,
+      "evidence": [
+        "m7",
+        "H12"
+      ],
+      "rationale": "The customer lacks exact values, which do not block intake."
+    },
+    {
+      "id": "C8",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H04",
+        "H12",
+        "H15",
+        "H16",
+        "m1",
+        "m3",
+        "m5",
+        "m7"
+      ],
+      "rationale": "This is extraction into a draft document only; no executable actions are permitted."
+    },
+    {
+      "id": "C9",
+      "path": "/disposition",
+      "operator": "eq",
+      "expected": "ready",
+      "critical": true,
+      "evidence": [
+        "H04",
+        "H12",
+        "H15",
+        "H16",
+        "m1",
+        "m3",
+        "m5",
+        "m7"
+      ],
+      "rationale": "The document and next step must reflect the case-specific readiness described in the instruction and evidence."
+    },
+    {
+      "id": "C10",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H04",
+        "H12",
+        "H15",
+        "H16",
+        "m1",
+        "m3",
+        "m5",
+        "m7"
+      ],
+      "rationale": "Only unresolved material prerequisites for the specified workflow belong in this list; optional unknowns are not missing requirements."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply retains the laptop in the incident account while correctly separating employer ownership from personal-property coverage scope.",
+      "evidence": [
+        "m3",
+        "m5",
+        "H04",
+        "H15"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply does not reject otherwise complete intake or invent zero values because receipts and exact prices are pending.",
+      "evidence": [
+        "m7",
+        "H12"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Taking possessive everyday language as proof of legal ownership.",
+    "Removing reported employer property from the incident narrative or falsely including it as insured-owned."
+  ],
+  "rationale": "The customer explicitly dates the theft. The cafe location is supplied. The headphones and bag are customer-owned; everyday use does not confer laptop ownership. The laptop belongs to the employer. The customer expressly wants the laptop documented with the correct ownership. The contact channel is explicitly supplied. The customer lacks exact values, which do not block intake."
+}

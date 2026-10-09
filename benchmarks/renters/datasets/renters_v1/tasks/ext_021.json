@@ -1,0 +1,93 @@
+{
+  "id": "ext_021",
+  "track": "conversation_extraction",
+  "family": "support_handoff",
+  "split": "optimization",
+  "scenario_group": "mixed_employer_and_personal_property_theft",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Complete a theft-intake handoff. The listed items are short noun labels rather than free-form summaries. Ready follows H12 intake prerequisites, not possession of receipts or a final coverage decision. Fill exactly the specified document fields from the supplied conversation and records. Normalize dates to ISO YYYY-MM-DD. Copy names, addresses, emails, and identifiers with the spelling supplied. This is an extraction-only task; actions must be empty. In the response distinguish drafting from execution.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-EX028"
+    },
+    "records": [],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "Someone stole my work bag from the cafe at 9 Willow Square, Larkport, US on October 5, 2026. My laptop and headphones were in it."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "When you say your laptop, do you own it, or is it supplied by an employer?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "The laptop belongs to my employer. I bought and own the headphones and the bag. I said my laptop because I use it every day."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "Should the incident report still describe all three items and distinguish ownership?"
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "Yes. Do not leave the laptop out of the incident description, but do not say I own it. My employer is handling its own equipment report."
+      },
+      {
+        "id": "m6",
+        "role": "bot",
+        "text": "Do you have values, and which contact should staff use?"
+      },
+      {
+        "id": "m7",
+        "role": "customer",
+        "text": "No exact values yet. Contact kai.moss@post.example. Please prepare the theft intake now; I will send receipts later."
+      }
+    ],
+    "form": {
+      "event_date": {
+        "type": "string",
+        "nullable": true,
+        "description": "Reported theft date."
+      },
+      "event_location": {
+        "type": "string",
+        "nullable": true,
+        "description": "Reported incident address, copied exactly."
+      },
+      "customer_owned_items": {
+        "type": "array",
+        "nullable": true,
+        "description": "Unordered item names explicitly stated to be owned by the customer; use the short nouns from the chat."
+      },
+      "employer_owned_items": {
+        "type": "array",
+        "nullable": true,
+        "description": "Unordered item names explicitly stated to be owned solely by the employer; use short nouns from the chat."
+      },
+      "include_employer_item_in_incident": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "Whether customer asks to retain employer property in the incident description without claiming personal ownership."
+      },
+      "contact_email": {
+        "type": "string",
+        "nullable": true,
+        "description": "Customer follow-up email."
+      },
+      "exact_total_value": {
+        "type": "number",
+        "nullable": true,
+        "description": "Exact documented total value in USD; null if unknown, not zero."
+      }
+    },
+    "allowed_actions": []
+  }
+}

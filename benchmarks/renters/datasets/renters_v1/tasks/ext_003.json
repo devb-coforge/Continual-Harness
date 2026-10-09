@@ -1,0 +1,122 @@
+{
+  "id": "ext_003",
+  "track": "conversation_extraction",
+  "family": "support_handoff",
+  "split": "optimization",
+  "scenario_group": "duplicate_theft_receipt_pending",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Complete an intake-follow-up handoff. Disposition concerns readiness of the update draft; missing optional valuation evidence is not a blocking field. Fill exactly the specified document fields from the supplied conversation and records. Normalize dates to ISO YYYY-MM-DD. Copy names, addresses, emails, and identifiers with the spelling supplied. This is an extraction-only task; actions must be empty. In the response distinguish drafting from execution.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-EX003"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "claims_ledger",
+        "data": {
+          "policy_id": "P-EX003",
+          "claim_id": "CL-EX003",
+          "event_date": "2026-09-29",
+          "event_location": "12 Bell Court, Morrow, US",
+          "reported_cause": "theft",
+          "property": "silver bicycle with blue rear basket",
+          "status": "submitted",
+          "submitted_on": "2026-09-30"
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "Please file the theft of my silver bicycle from my building rack on September 29, 2026. I think the chat disconnected before the report went through."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Was this the bicycle with a blue rear basket, and where was the rack?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "Yes. The rack was at 12 Bell Court, Morrow, US. I now have the purchase email, but no serial number."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "The supplied claims ledger can establish whether an intake already exists. What contact should staff use?"
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "Do not use my old work email. Use lena.cho@post.example. The bicycle belongs to me."
+      },
+      {
+        "id": "m6",
+        "role": "bot",
+        "text": "Would you like the purchase email attached to the existing incident if it matches?"
+      },
+      {
+        "id": "m7",
+        "role": "customer",
+        "text": "Yes, add that information to the same theft. I have not uploaded the purchase email yet, so mark it pending."
+      }
+    ],
+    "form": {
+      "existing_claim_id": {
+        "type": "string",
+        "nullable": true,
+        "description": "Identifier of the matching submitted claim, or null if no clear match."
+      },
+      "next_step": {
+        "type": "string",
+        "nullable": true,
+        "description": "update_existing_claim means attach new details to a clear existing match; clarify_duplicate means match is uncertain; new_intake means distinct incident.",
+        "enum": [
+          "update_existing_claim",
+          "clarify_duplicate",
+          "new_intake"
+        ]
+      },
+      "event_date": {
+        "type": "string",
+        "nullable": true,
+        "description": "Reported incident date, not submission date."
+      },
+      "contact_email": {
+        "type": "string",
+        "nullable": true,
+        "description": "Latest authorized customer contact email."
+      },
+      "purchase_evidence_status": {
+        "type": "string",
+        "nullable": true,
+        "description": "pending means promised but not uploaded; received means an authoritative attachment exists; unavailable means explicitly cannot supply.",
+        "enum": [
+          "pending",
+          "received",
+          "unavailable"
+        ]
+      },
+      "serial_number": {
+        "type": "string",
+        "nullable": true,
+        "description": "Reported bicycle serial number; null if unknown."
+      },
+      "recorded_submission_status": {
+        "type": "string",
+        "nullable": true,
+        "description": "Status from the supplied authoritative claims ledger.",
+        "enum": [
+          "draft",
+          "submitted"
+        ]
+      }
+    },
+    "allowed_actions": []
+  }
+}

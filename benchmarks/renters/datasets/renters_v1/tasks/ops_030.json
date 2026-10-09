@@ -1,0 +1,102 @@
+{
+  "id": "ops_030",
+  "track": "support_ops",
+  "family": "account_changes",
+  "split": "validation",
+  "scenario_group": "accepted_exact_quote_future_endorsement",
+  "difficulty": "standard",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Assess the requested coverage change. apply_accepted_quote targets r1 with value {\"quote_ref\":\"r2\",\"effective_date\":ISO date,\"premium_delta_usd\":integer}; it is a proposed scheduled change, not evidence of issuance. Fill the current deductible from the issued policy, separately from the requested deductible.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-30"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "policy",
+        "data": {
+          "policy_id": "P-30",
+          "authority": "issued",
+          "status": "active",
+          "starts_on": "2026-01-01",
+          "ends_on": "2027-01-01",
+          "named_insureds": [
+            "Robin Vale"
+          ],
+          "insured_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "mailing_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "personal_property_limit": 30000,
+          "liability_limit": 100000,
+          "deductible": 1000,
+          "valuation": "replacement_cost",
+          "loss_of_use_limit": 6000
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "quote",
+        "data": {
+          "quote_id": "Q-30-A",
+          "policy_id": "P-30",
+          "quoted_change": {
+            "deductible": 500
+          },
+          "effective_date": "2026-11-01",
+          "premium_delta_usd": 24,
+          "status": "available_for_acceptance",
+          "valid_until": "2026-10-20"
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "Please tell me what quote Q-30-A changes before I accept."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "It lowers the deductible from $1,000 to $500 from November 1, 2026, for an additional $24 for the remaining term."
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "I accept that exact quote Q-30-A: $500 deductible, November 1, 2026 effective date, and the additional $24. Please schedule it."
+      }
+    ],
+    "form": {
+      "quote_id": {
+        "type": "string",
+        "nullable": false,
+        "description": "Exact accepted quote identifier."
+      },
+      "current_deductible": {
+        "type": "integer",
+        "nullable": false,
+        "description": "Deductible currently in the issued policy, USD."
+      },
+      "requested_deductible": {
+        "type": "integer",
+        "nullable": false,
+        "description": "Deductible selected in the accepted quote, USD."
+      },
+      "effective_date": {
+        "type": "string",
+        "nullable": false,
+        "description": "Explicit accepted date, ISO YYYY-MM-DD."
+      },
+      "accepted_premium_delta": {
+        "type": "integer",
+        "nullable": false,
+        "description": "Explicit accepted additional premium in USD."
+      }
+    },
+    "allowed_actions": [
+      "apply_accepted_quote"
+    ]
+  }
+}

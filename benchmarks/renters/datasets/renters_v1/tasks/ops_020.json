@@ -1,0 +1,95 @@
+{
+  "id": "ops_020",
+  "track": "support_ops",
+  "family": "account_changes",
+  "split": "optimization",
+  "scenario_group": "explicitly_withdrawn_move_after_bot_confirmation",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Resolve the latest customer intent for the move draft. schedule_move targets r1 with value {\"destination_record\": \"r#\", \"effective_date\": \"YYYY-MM-DD\"}. Output actions only for currently authorized ready operations; do not invent cancellation or draft-deletion tools.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-120"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "issued_declarations",
+        "data": {
+          "authority": "issued",
+          "policy_id": "P-120",
+          "named_insureds": [
+            "Ezra Lane"
+          ],
+          "starts_on": "2026-01-01",
+          "ends_on": "2027-01-01",
+          "status_today": "active",
+          "personal_property_limit": 30000,
+          "deductible": 500,
+          "valuation_basis": "actual_cash_value",
+          "insured_address": "16 Elm Row, Unit 2, Ashford, MA 01018, US"
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "move_draft",
+        "data": {
+          "authority": "draft_not_submitted",
+          "destination": "210 Brook Way, Unit 7, Ashford, MA 01018, US",
+          "effective_date": "2026-11-10",
+          "status": "draft"
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "I was considering moving to Brook Way on November 10. Please look at the draft I started."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Great, I will arrange that move and send a confirmation."
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "Stop: the lease fell through. I withdraw the move request completely. Keep my existing insured apartment, and do not schedule anything. There was never a final approval from me."
+      }
+    ],
+    "form": {
+      "move_intent": {
+        "type": "string",
+        "nullable": false,
+        "description": "Latest customer status of the proposed move.",
+        "enum": [
+          "confirmed",
+          "conditional",
+          "withdrawn"
+        ]
+      },
+      "existing_move_status": {
+        "type": "string",
+        "nullable": false,
+        "description": "Status established by the supplied authoritative workflow record, not by bot promises.",
+        "enum": [
+          "draft",
+          "submitted",
+          "executed",
+          "unknown"
+        ]
+      },
+      "preserve_insured_premises": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Whether the currently insured home should remain unchanged."
+      }
+    },
+    "allowed_actions": [
+      "schedule_move"
+    ]
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "id": "ops_010",
+  "track": "support_ops",
+  "family": "policy_questions",
+  "split": "optimization",
+  "scenario_group": "plumber_identified_internal_supply_burst",
+  "difficulty": "standard",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Answer the customer’s policy question using the supplied records and handbook. Complete the requested fields and provide a concise explanation. This is an informational request; propose no account or claim actions.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-110"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "issued_declarations",
+        "data": {
+          "authority": "issued",
+          "policy_id": "P-110",
+          "named_insureds": [
+            "Owen Pike"
+          ],
+          "starts_on": "2026-01-01",
+          "ends_on": "2027-01-01",
+          "status_today": "active",
+          "personal_property_limit": 30000,
+          "deductible": 500,
+          "valuation_basis": "actual_cash_value"
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "service_report",
+        "data": {
+          "authority": "supplied_service_report",
+          "inspection_date": "2026-10-07",
+          "finding": "A kitchen internal cold-water supply pipe suddenly split; no exterior floodwater or drain backup was observed."
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "Water ruined the table I own yesterday, October 7. My friend says all water damage is excluded. The plumber’s report is attached. Can you explain the rule?"
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Are you asking us to file a claim yet?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "Not yet. I just want to know whether the report describes an excluded cause."
+      }
+    ],
+    "form": {
+      "reported_cause": {
+        "type": "string",
+        "nullable": false,
+        "description": "Canonical cause: sudden_internal_supply_escape for sudden escape from an internal supply pipe; rising_surface_floodwater for exterior rising floodwater; sewer_or_drain_backup for backup through sewer or drain; gradual_leakage for a slow developing leak; unknown when evidence cannot distinguish the source.",
+        "enum": [
+          "sudden_internal_supply_escape",
+          "rising_surface_floodwater",
+          "sewer_or_drain_backup",
+          "gradual_leakage",
+          "unknown"
+        ]
+      },
+      "cause_within_base_scope": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Whether the documented cause is included by base coverage."
+      },
+      "claim_requested": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Whether claim intake is requested in this chat."
+      }
+    },
+    "allowed_actions": []
+  }
+}

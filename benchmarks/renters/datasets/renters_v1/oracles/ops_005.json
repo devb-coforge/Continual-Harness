@@ -1,0 +1,188 @@
+{
+  "task_id": "ops_005",
+  "reference_answer": {
+    "fields": {
+      "effective_date": "2026-11-15",
+      "destination_record": "r2",
+      "change_timing": "pending",
+      "preserve_current_insured_address_today": true,
+      "mailing_change_requested": false
+    },
+    "disposition": "ready",
+    "actions": [
+      {
+        "type": "schedule_move",
+        "target": "r1",
+        "value": {
+          "destination_record": "r2",
+          "effective_date": "2026-11-15"
+        }
+      }
+    ],
+    "missing_fields": [],
+    "citations": [
+      "m1",
+      "m3",
+      "H02",
+      "r2",
+      "as_of",
+      "H08",
+      "H09"
+    ],
+    "response": "The move proposal is ready for the confirmed Juniper Avenue Unit 12 destination effective November 15, 2026. It is a pending future change, so today’s Maple Court insured address stays in place. I have not proposed a mailing change or simultaneous coverage for both homes, and nothing has been executed by this response."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/effective_date",
+      "operator": "eq",
+      "expected": "2026-11-15",
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m3",
+        "H02"
+      ],
+      "rationale": "The explicit final correction supersedes November 1."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/destination_record",
+      "operator": "eq",
+      "expected": "r2",
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m3"
+      ],
+      "rationale": "The complete US destination including unit is confirmed."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/change_timing",
+      "operator": "eq",
+      "expected": "pending",
+      "critical": true,
+      "evidence": [
+        "as_of",
+        "m3",
+        "H08",
+        "H09"
+      ],
+      "rationale": "November 15 is after October 8."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/preserve_current_insured_address_today",
+      "operator": "eq",
+      "expected": true,
+      "critical": true,
+      "evidence": [
+        "as_of",
+        "m3",
+        "H09"
+      ],
+      "rationale": "The move is future-dated."
+    },
+    {
+      "id": "C5",
+      "path": "/fields/mailing_change_requested",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "m3"
+      ],
+      "rationale": "The customer expressly excludes that change."
+    },
+    {
+      "id": "C6",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [
+        {
+          "type": "schedule_move",
+          "target": "r1",
+          "value": {
+            "destination_record": "r2",
+            "effective_date": "2026-11-15"
+          }
+        }
+      ],
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m3",
+        "H02",
+        "r2",
+        "as_of",
+        "H08",
+        "H09"
+      ],
+      "rationale": "The proposed actions must match the authorized scope, readiness, and supplied action shapes; no action has executed."
+    },
+    {
+      "id": "C7",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m3",
+        "H02",
+        "r2",
+        "as_of",
+        "H08",
+        "H09"
+      ],
+      "rationale": "Only material unresolved prerequisites for this requested workflow belong here."
+    },
+    {
+      "id": "C8",
+      "path": "/disposition",
+      "operator": "eq",
+      "expected": "ready",
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m3",
+        "H02",
+        "r2",
+        "as_of",
+        "H08",
+        "H09"
+      ],
+      "rationale": "All move prerequisites are explicitly satisfied, so a single future move proposal is ready."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "Uses the corrected November 15 date and identifies the move as future pending while retaining today’s Maple Court insured premises.",
+      "evidence": [
+        "m3",
+        "as_of",
+        "H02",
+        "H09"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "Does not also change the mailing address, cancel the policy, or claim the move has already taken effect.",
+      "evidence": [
+        "m3",
+        "H09",
+        "H16"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Using the first mentioned move date after explicit correction",
+    "Applying a future insured-address change immediately",
+    "Changing mailing address by inference"
+  ],
+  "rationale": "All move prerequisites are explicitly satisfied, so a single future move proposal is ready."
+}

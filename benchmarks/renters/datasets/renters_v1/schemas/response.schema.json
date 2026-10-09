@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Harborlight response v1",
+  "type": "object",
+  "properties": {
+    "fields": {
+      "type": "object"
+    },
+    "disposition": {
+      "enum": [
+        "answered",
+        "ready",
+        "needs_clarification",
+        "escalate",
+        "partial",
+        "no_action"
+      ]
+    },
+    "actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "minLength": 1
+          },
+          "target": {
+            "type": "string",
+            "minLength": 1
+          },
+          "value": {}
+        },
+        "required": [
+          "type",
+          "target",
+          "value"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 0,
+      "uniqueItems": true
+    },
+    "missing_fields": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0,
+      "uniqueItems": true
+    },
+    "citations": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "response": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "fields",
+    "disposition",
+    "actions",
+    "missing_fields",
+    "citations",
+    "response"
+  ],
+  "additionalProperties": false
+}

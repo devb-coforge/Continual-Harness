@@ -1,0 +1,200 @@
+{
+  "task_id": "ext_028",
+  "reference_answer": {
+    "fields": {
+      "policy_id": "P-EX021",
+      "conflicting_deductibles": [
+        250,
+        1000
+      ],
+      "resolved_deductible": null,
+      "conflicting_record_ids": [
+        "r1",
+        "r2"
+      ],
+      "payment_calculation_requested": false,
+      "contact_email": "sol.fern@post.example"
+    },
+    "disposition": "escalate",
+    "actions": [],
+    "missing_fields": [],
+    "citations": [
+      "H01",
+      "H06",
+      "H15",
+      "H16",
+      "m3",
+      "m5",
+      "m7",
+      "r1",
+      "r2"
+    ],
+    "response": "The handoff asks staff to reconcile r1 and r2, which show $250 and $1,000 deductibles for the same policy interval without a supersession marker. No single deductible can be selected from this evidence. Staff can follow up at sol.fern@post.example; no payment illustration or claim submission is requested."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/policy_id",
+      "operator": "eq",
+      "expected": "P-EX021",
+      "critical": true,
+      "evidence": [
+        "r1",
+        "r2"
+      ],
+      "rationale": "Both issued documents identify P-EX021."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/conflicting_deductibles",
+      "operator": "set_eq",
+      "expected": [
+        250,
+        1000
+      ],
+      "critical": true,
+      "evidence": [
+        "r1",
+        "r2",
+        "H01"
+      ],
+      "rationale": "The supplied declarations disagree between $250 and $1,000."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/resolved_deductible",
+      "operator": "eq",
+      "expected": null,
+      "critical": true,
+      "evidence": [
+        "r1",
+        "r2",
+        "m3",
+        "H01"
+      ],
+      "rationale": "Neither issued record supersedes the other and no endorsement resolves the conflict."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/conflicting_record_ids",
+      "operator": "set_eq",
+      "expected": [
+        "r1",
+        "r2"
+      ],
+      "critical": true,
+      "evidence": [
+        "r1",
+        "r2",
+        "H01"
+      ],
+      "rationale": "Both equally authoritative declarations must be retained for staff."
+    },
+    {
+      "id": "C5",
+      "path": "/fields/payment_calculation_requested",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "m7",
+        "H06"
+      ],
+      "rationale": "The customer expressly rules out a payout calculation."
+    },
+    {
+      "id": "C6",
+      "path": "/fields/contact_email",
+      "operator": "eq",
+      "expected": "sol.fern@post.example",
+      "critical": true,
+      "evidence": [
+        "m7"
+      ],
+      "rationale": "The customer supplies the review contact."
+    },
+    {
+      "id": "C7",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H01",
+        "H06",
+        "H15",
+        "H16",
+        "m3",
+        "m7",
+        "r1",
+        "r2"
+      ],
+      "rationale": "This is extraction into a draft document only; no executable actions are permitted."
+    },
+    {
+      "id": "C8",
+      "path": "/disposition",
+      "operator": "eq",
+      "expected": "escalate",
+      "critical": true,
+      "evidence": [
+        "H01",
+        "H06",
+        "H15",
+        "H16",
+        "m3",
+        "m7",
+        "r1",
+        "r2"
+      ],
+      "rationale": "The document and next step must reflect the case-specific readiness described in the instruction and evidence."
+    },
+    {
+      "id": "C9",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H01",
+        "H06",
+        "H15",
+        "H16",
+        "m3",
+        "m7",
+        "r1",
+        "r2"
+      ],
+      "rationale": "Only unresolved material prerequisites for the specified workflow belong in this list; optional unknowns are not missing requirements."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply treats both applicable declarations as unresolved conflicting authority and does not choose the lower figure by preference or assume the larger one is newer.",
+      "evidence": [
+        "r1",
+        "r2",
+        "m3",
+        "m5",
+        "H01"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply preserves the informational scope and does not calculate payment or invent a new claim.",
+      "evidence": [
+        "m7",
+        "H06",
+        "H16"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Choosing the more customer-friendly deductible without a source hierarchy.",
+    "Assuming document order proves supersession."
+  ],
+  "rationale": "Both issued documents identify P-EX021. The supplied declarations disagree between $250 and $1,000. Neither issued record supersedes the other and no endorsement resolves the conflict. Both equally authoritative declarations must be retained for staff. The customer expressly rules out a payout calculation. The customer supplies the review contact."
+}

@@ -1,0 +1,73 @@
+{
+  "evidence": "offline_integrity_and_regression_checks",
+  "audit": {
+    "valid": true,
+    "task_count": 100,
+    "split_counts": {
+      "optimization": 50,
+      "validation": 20,
+      "test": 30
+    },
+    "family_counts": {
+      "application_filling": 18,
+      "change_request_extraction": 16,
+      "support_handoff": 16,
+      "policy_questions": 18,
+      "account_changes": 16,
+      "claim_intake": 16
+    },
+    "difficulty_counts": {
+      "challenging": 73,
+      "standard": 15,
+      "adversarial": 12
+    },
+    "scenario_groups": 96,
+    "errors": [],
+    "limits": "Offline integrity and reference checks; no empirical model performance or automatic semantic truth guarantee."
+  },
+  "negative_controls": {
+    "reference_structured_passes": 100,
+    "reference_semantic_pending": 100,
+    "empty_rejected": 100,
+    "extra_field_rejected": 100,
+    "unsupported_action_rejected": 100,
+    "bad_citation_rejected": 100,
+    "wrong_field_value_rejected": 593,
+    "missing_field_rejected": 593,
+    "blanket_deferral_rejected": 78
+  },
+  "tests": {
+    "benchmark_suite": {
+      "command": "python -m unittest discover -s benchmarks/renters/tests -q",
+      "passed": 32
+    },
+    "repository_suite": {
+      "command": "python -m unittest discover -s tests -q",
+      "passed": 42,
+      "execution": "Outside sandbox for the existing mocked-provider thread test; no network calls."
+    }
+  },
+  "relocation": {
+    "canonical_root": "benchmarks/renters",
+    "legacy_cli": "python -m renters_benchmark",
+    "legacy_dataset_path": "datasets/renters_v1",
+    "manifest_unchanged": true,
+    "outer_loop_files_unchanged": {
+      "continual_harness/__init__.py": true,
+      "continual_harness/demo.py": true,
+      "continual_harness/metrics.py": true,
+      "continual_harness/__main__.py": true,
+      "continual_harness/prompts.py": true,
+      "continual_harness/config.py": true,
+      "continual_harness/provider.py": true,
+      "continual_harness/engine.py": true,
+      "continual_harness/store.py": true,
+      "tests/test_harness.py": true,
+      "harness.example.toml": true,
+      "docs/architecture.md": true,
+      "docs/plans/2026-10-08-harness-design.md": true
+    }
+  },
+  "dataset_digest": "c54a315ebf49f1c986a9cf7ea5f9f3a33ccba647b692f7f5637f5298e42be4b6",
+  "limits": "Reference checks and content review are not evidence of live model performance, calibrated semantic judgments or prompt improvement."
+}

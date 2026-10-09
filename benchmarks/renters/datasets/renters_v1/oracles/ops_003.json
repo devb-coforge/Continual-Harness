@@ -1,0 +1,252 @@
+{
+  "task_id": "ops_003",
+  "reference_answer": {
+    "fields": {
+      "policy_id": "P-103",
+      "event_date": "2026-10-06",
+      "event_location_record": "r2",
+      "reported_cause": "smoke",
+      "description_message_ids": [
+        "m1"
+      ],
+      "contact_record": "r3",
+      "pending_documents": [
+        "receipt"
+      ],
+      "reported_value": null
+    },
+    "disposition": "ready",
+    "actions": [
+      {
+        "type": "submit_claim",
+        "target": "new_claim",
+        "value": {
+          "policy_id": "P-103",
+          "event_date": "2026-10-06",
+          "event_location_record": "r2",
+          "reported_cause": "smoke",
+          "description_message_ids": [
+            "m1"
+          ],
+          "contact_record": "r3",
+          "pending_documents": [
+            "receipt"
+          ],
+          "reported_value": null
+        }
+      }
+    ],
+    "missing_fields": [],
+    "citations": [
+      "session",
+      "r1",
+      "m1",
+      "m3",
+      "r2",
+      "r3",
+      "H12",
+      "H02"
+    ],
+    "response": "The intake is ready to propose for the October 6 smoke damage to your armchair and curtains at Willow Walk, with the confirmed email contact. I will mark the receipt as pending and the value as unknown; neither requires delaying otherwise complete intake. This is a submission proposal, not a claim approval or confirmation that a claim has already been submitted."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/policy_id",
+      "operator": "eq",
+      "expected": "P-103",
+      "critical": true,
+      "evidence": [
+        "session",
+        "r1"
+      ],
+      "rationale": "The verified session establishes the policy."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/event_date",
+      "operator": "eq",
+      "expected": "2026-10-06",
+      "critical": true,
+      "evidence": [
+        "m1"
+      ],
+      "rationale": "The event date is supplied."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/event_location_record",
+      "operator": "eq",
+      "expected": "r2",
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m3",
+        "r2"
+      ],
+      "rationale": "The customer confirms this address as the event location."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/reported_cause",
+      "operator": "eq",
+      "expected": "smoke",
+      "critical": true,
+      "evidence": [
+        "m1"
+      ],
+      "rationale": "Smoke from an accidental fire is reported."
+    },
+    {
+      "id": "C5",
+      "path": "/fields/description_message_ids",
+      "operator": "set_eq",
+      "expected": [
+        "m1"
+      ],
+      "critical": true,
+      "evidence": [
+        "m1"
+      ],
+      "rationale": "The first message identifies the affected owned armchair and curtains."
+    },
+    {
+      "id": "C6",
+      "path": "/fields/contact_record",
+      "operator": "eq",
+      "expected": "r3",
+      "critical": true,
+      "evidence": [
+        "m3",
+        "r3"
+      ],
+      "rationale": "The email contact is explicitly confirmed."
+    },
+    {
+      "id": "C7",
+      "path": "/fields/pending_documents",
+      "operator": "set_eq",
+      "expected": [
+        "receipt"
+      ],
+      "critical": true,
+      "evidence": [
+        "m3",
+        "H12"
+      ],
+      "rationale": "Receipt absence is optional evidence and does not block complete intake."
+    },
+    {
+      "id": "C8",
+      "path": "/fields/reported_value",
+      "operator": "eq",
+      "expected": null,
+      "critical": true,
+      "evidence": [
+        "m3",
+        "H02"
+      ],
+      "rationale": "The customer says the value is unknown."
+    },
+    {
+      "id": "C9",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [
+        {
+          "type": "submit_claim",
+          "target": "new_claim",
+          "value": {
+            "policy_id": "P-103",
+            "event_date": "2026-10-06",
+            "event_location_record": "r2",
+            "reported_cause": "smoke",
+            "description_message_ids": [
+              "m1"
+            ],
+            "contact_record": "r3",
+            "pending_documents": [
+              "receipt"
+            ],
+            "reported_value": null
+          }
+        }
+      ],
+      "critical": true,
+      "evidence": [
+        "session",
+        "r1",
+        "m1",
+        "m3",
+        "r2",
+        "r3",
+        "H12",
+        "H02"
+      ],
+      "rationale": "The proposed actions must match the authorized scope, readiness, and supplied action shapes; no action has executed."
+    },
+    {
+      "id": "C10",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "session",
+        "r1",
+        "m1",
+        "m3",
+        "r2",
+        "r3",
+        "H12",
+        "H02"
+      ],
+      "rationale": "Only material unresolved prerequisites for this requested workflow belong here."
+    },
+    {
+      "id": "C11",
+      "path": "/disposition",
+      "operator": "eq",
+      "expected": "ready",
+      "critical": true,
+      "evidence": [
+        "session",
+        "r1",
+        "m1",
+        "m3",
+        "r2",
+        "r3",
+        "H12",
+        "H02"
+      ],
+      "rationale": "All mandatory intake facts and verified authority are present; optional supporting evidence can remain pending."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "Permits intake with the explicitly pending receipt and unknown value while preserving those uncertainties.",
+      "evidence": [
+        "m3",
+        "H12"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "Does not deny or approve the claim, invent a reference number, or state the proposed submission has executed.",
+      "evidence": [
+        "r4",
+        "H13",
+        "H16"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Refusing intake until a receipt or valuation is available",
+    "Converting unknown value to zero",
+    "Inventing a claim reference on proposed submission"
+  ],
+  "rationale": "All mandatory intake facts and verified authority are present; optional supporting evidence can remain pending."
+}

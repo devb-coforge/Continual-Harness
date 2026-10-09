@@ -1,0 +1,108 @@
+{
+  "id": "ext_013",
+  "track": "conversation_extraction",
+  "family": "application_filling",
+  "split": "optimization",
+  "scenario_group": "mailing_contact_is_not_insured_unit",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Complete the renters insurance application draft from this chat. Include every declared field. Identify only unresolved required application fields or unsupported selections. Do not submit, bind, or change insurance.",
+    "session": {
+      "verified": false,
+      "role": "visitor",
+      "policy_id": null
+    },
+    "records": [],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "I am Erin Vale, erin.vale@example.test. Mail comes to 5 Orchard Road, Myrrow, my parents home. I am renting in the building at 230 Harbor Street, Myrrow."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Do you know which apartment at Harbor Street?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "Not yet. Management has offered Unit 8 or Unit 11; I have not accepted one. Do not use my parents address as the insured home."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "Can we record dates and coverage choices while the unit is unresolved?"
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "Yes. Occupancy October 30, 2026, requested insurance October 10, 2026. I choose $15,000 property, $100,000 liability, and $500 deductible."
+      },
+      {
+        "id": "m6",
+        "role": "bot",
+        "text": "May I submit the application now using Unit 8 provisionally?"
+      },
+      {
+        "id": "m7",
+        "role": "customer",
+        "text": "No submission yet, and no provisional unit. I will confirm the actual apartment."
+      }
+    ],
+    "form": {
+      "applicant_name": {
+        "type": "string",
+        "nullable": true,
+        "description": "Applicant full name as explicitly given, preserving spelling."
+      },
+      "contact_email": {
+        "type": "string",
+        "nullable": true,
+        "description": "Applicant contact email; do not substitute a landlord or another occupant email."
+      },
+      "insured_address": {
+        "type": "string",
+        "nullable": true,
+        "description": "Complete requested insured dwelling address including unit; null if no single complete address is established."
+      },
+      "occupancy_start": {
+        "type": "string",
+        "nullable": true,
+        "description": "Date applicant starts occupying the dwelling, ISO YYYY-MM-DD; null if unresolved."
+      },
+      "requested_start": {
+        "type": "string",
+        "nullable": true,
+        "description": "Explicitly requested insurance start date, ISO YYYY-MM-DD; separate from occupancy date."
+      },
+      "personal_property_limit": {
+        "type": "integer",
+        "nullable": true,
+        "description": "Explicit selected personal-property limit in USD; retain unsupported requested numeric options and flag for clarification."
+      },
+      "liability_limit": {
+        "type": "integer",
+        "nullable": true,
+        "description": "Explicit selected liability limit in USD; null when unselected."
+      },
+      "deductible": {
+        "type": "integer",
+        "nullable": true,
+        "description": "Explicit selected deductible in USD; null when unselected."
+      },
+      "consent_to_submit": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "True only for explicit application submission consent, false for explicit decline, otherwise null."
+      },
+      "mailing_address": {
+        "type": "string",
+        "nullable": true,
+        "description": "Explicit mailing/contact address, separate from the requested insured dwelling. Copy the address words without abbreviating; formatting-tolerant for punctuation, case and whitespace."
+      }
+    },
+    "allowed_actions": []
+  }
+}

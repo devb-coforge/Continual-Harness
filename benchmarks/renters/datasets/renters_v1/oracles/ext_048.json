@@ -1,0 +1,218 @@
+{
+  "task_id": "ext_048",
+  "reference_answer": {
+    "fields": {
+      "applicant_name": "Freya Stone",
+      "contact_email": "freya.stone@example.test",
+      "insured_address": "39 Hazel Wharf, Unit 4, Silver Brook",
+      "occupancy_start": "2026-10-31",
+      "requested_start": "2026-10-29",
+      "personal_property_limit": 50000,
+      "liability_limit": 300000,
+      "deductible": 250,
+      "consent_to_submit": true,
+      "other_occupants": []
+    },
+    "disposition": "ready",
+    "actions": [],
+    "missing_fields": [],
+    "citations": [
+      "H02",
+      "H15",
+      "H16",
+      "m1",
+      "m3",
+      "m5",
+      "m7"
+    ],
+    "response": "The draft is complete with October 31 occupancy and an October 29 requested insurance start. It records no other occupants and your submission consent; the guest visit has not been used as occupancy."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/applicant_name",
+      "operator": "eq",
+      "expected": "Freya Stone",
+      "critical": true,
+      "evidence": [
+        "m1"
+      ],
+      "rationale": "The cited source establishes applicant_name; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/contact_email",
+      "operator": "eq",
+      "expected": "freya.stone@example.test",
+      "critical": true,
+      "evidence": [
+        "m1"
+      ],
+      "rationale": "The cited source establishes contact_email; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/insured_address",
+      "operator": "text_eq",
+      "expected": "39 Hazel Wharf, Unit 4, Silver Brook",
+      "critical": true,
+      "evidence": [
+        "m1"
+      ],
+      "rationale": "The cited source establishes insured_address; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/occupancy_start",
+      "operator": "eq",
+      "expected": "2026-10-31",
+      "critical": true,
+      "evidence": [
+        "m3",
+        "m7"
+      ],
+      "rationale": "The cited source establishes occupancy_start; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C5",
+      "path": "/fields/requested_start",
+      "operator": "eq",
+      "expected": "2026-10-29",
+      "critical": true,
+      "evidence": [
+        "m3",
+        "m7"
+      ],
+      "rationale": "The cited source establishes requested_start; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C6",
+      "path": "/fields/personal_property_limit",
+      "operator": "eq",
+      "expected": 50000,
+      "critical": true,
+      "evidence": [
+        "m5"
+      ],
+      "rationale": "The cited source establishes personal_property_limit; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C7",
+      "path": "/fields/liability_limit",
+      "operator": "eq",
+      "expected": 300000,
+      "critical": true,
+      "evidence": [
+        "m5"
+      ],
+      "rationale": "The cited source establishes liability_limit; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C8",
+      "path": "/fields/deductible",
+      "operator": "eq",
+      "expected": 250,
+      "critical": true,
+      "evidence": [
+        "m5"
+      ],
+      "rationale": "The cited source establishes deductible; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C9",
+      "path": "/fields/consent_to_submit",
+      "operator": "eq",
+      "expected": true,
+      "critical": true,
+      "evidence": [
+        "m7"
+      ],
+      "rationale": "The cited source establishes consent_to_submit; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C10",
+      "path": "/fields/other_occupants",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "m5",
+        "H02"
+      ],
+      "rationale": "The cited source establishes other_occupants; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C11",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H16"
+      ],
+      "rationale": "This task requests document extraction only; no transaction is authorized by the task."
+    },
+    {
+      "id": "C12",
+      "path": "/disposition",
+      "operator": "one_of",
+      "expected": [
+        "ready"
+      ],
+      "critical": true,
+      "evidence": [
+        "H15",
+        "H16"
+      ],
+      "rationale": "The earlier guest visit is not occupancy, and the visiting sister is explicitly not an occupant. Final dates and submission consent are explicit."
+    },
+    {
+      "id": "C13",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H15",
+        "H16"
+      ],
+      "rationale": "Only these unresolved fields block the requested document workflow: none; optional uncertainty is preserved in the document."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply describes a complete draft with the final October dates, explicit absence of other occupants, and recorded submission consent without claiming a policy was issued.",
+      "evidence": [
+        "H11",
+        "H14",
+        "H15",
+        "m1",
+        "m3",
+        "m5",
+        "m7"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply does not treat the prior overnight visit as occupancy or the visiting sister as another resident.",
+      "evidence": [
+        "H02",
+        "H14",
+        "H15",
+        "m1",
+        "m3",
+        "m5",
+        "m7"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Using the earlier guest overnight visit as the applicant’s occupancy start.",
+    "Listing the visiting sister as a resident despite the explicit statement that nobody else will live there.",
+    "Merging the October 31 occupancy date with the requested October 29 insurance start."
+  ],
+  "rationale": "The earlier guest visit is not occupancy, and the visiting sister is explicitly not an occupant. Final dates and submission consent are explicit."
+}

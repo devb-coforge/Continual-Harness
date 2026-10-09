@@ -1,0 +1,186 @@
+{
+  "task_id": "ext_011",
+  "reference_answer": {
+    "fields": {
+      "recipient_name": "Morrow Grove Management",
+      "recipient_email": "certificates@morrowgrove.example",
+      "recipient_role": "interested_party",
+      "proof_delivery_authorized": true,
+      "coverage_change_requested": false,
+      "retired_email": "office@morrowgrove.example"
+    },
+    "disposition": "ready",
+    "actions": [],
+    "missing_fields": [],
+    "citations": [
+      "H02",
+      "H11",
+      "H15",
+      "H16",
+      "m1",
+      "m3",
+      "m5",
+      "m7"
+    ],
+    "response": "The draft names Morrow Grove Management as an interested party and records permission to send current proof and notices to certificates@morrowgrove.example. The retired office inbox is excluded. Insured people, limits, and dates remain unchanged; delivery has not been performed."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/recipient_name",
+      "operator": "eq",
+      "expected": "Morrow Grove Management",
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m7"
+      ],
+      "rationale": "The customer confirms the company name."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/recipient_email",
+      "operator": "eq",
+      "expected": "certificates@morrowgrove.example",
+      "critical": true,
+      "evidence": [
+        "m5",
+        "m7",
+        "H02"
+      ],
+      "rationale": "The certificates inbox explicitly replaces the retired office inbox."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/recipient_role",
+      "operator": "eq",
+      "expected": "interested_party",
+      "critical": true,
+      "evidence": [
+        "m3",
+        "H11"
+      ],
+      "rationale": "The customer explicitly chooses interested party only."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/proof_delivery_authorized",
+      "operator": "eq",
+      "expected": true,
+      "critical": true,
+      "evidence": [
+        "m5",
+        "m7",
+        "H11"
+      ],
+      "rationale": "The customer confirms the destination for both proof and notices."
+    },
+    {
+      "id": "C5",
+      "path": "/fields/coverage_change_requested",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "m7",
+        "H11"
+      ],
+      "rationale": "The customer expressly preserves all coverage terms."
+    },
+    {
+      "id": "C6",
+      "path": "/fields/retired_email",
+      "operator": "eq",
+      "expected": "office@morrowgrove.example",
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m5",
+        "H02"
+      ],
+      "rationale": "The original office inbox is retired and must not receive the proof."
+    },
+    {
+      "id": "C7",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H02",
+        "H11",
+        "H15",
+        "H16",
+        "m1",
+        "m3",
+        "m5",
+        "m7"
+      ],
+      "rationale": "This is extraction into a draft document only; no executable actions are permitted."
+    },
+    {
+      "id": "C8",
+      "path": "/disposition",
+      "operator": "eq",
+      "expected": "ready",
+      "critical": true,
+      "evidence": [
+        "H02",
+        "H11",
+        "H15",
+        "H16",
+        "m1",
+        "m3",
+        "m5",
+        "m7"
+      ],
+      "rationale": "The document and next step must reflect the case-specific readiness described in the instruction and evidence."
+    },
+    {
+      "id": "C9",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H02",
+        "H11",
+        "H15",
+        "H16",
+        "m1",
+        "m3",
+        "m5",
+        "m7"
+      ],
+      "rationale": "Only unresolved material prerequisites for the specified workflow belong in this list; optional unknowns are not missing requirements."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply identifies the corrected recipient destination and does not send or recommend sending to the retired inbox.",
+      "evidence": [
+        "m5",
+        "m7",
+        "H02"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply preserves interested-party status, unchanged issued coverage, and the difference between authorized delivery and completed delivery.",
+      "evidence": [
+        "m3",
+        "m7",
+        "H11",
+        "H16"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Promoting the landlord from interested party to named insured.",
+    "Sending proof to both the corrected and retired inboxes."
+  ],
+  "rationale": "The customer confirms the company name. The certificates inbox explicitly replaces the retired office inbox. The customer explicitly chooses interested party only. The customer confirms the destination for both proof and notices. The customer expressly preserves all coverage terms. The original office inbox is retired and must not receive the proof."
+}

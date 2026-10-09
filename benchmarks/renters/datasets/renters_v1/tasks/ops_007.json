@@ -1,0 +1,77 @@
+{
+  "id": "ops_007",
+  "track": "support_ops",
+  "family": "policy_questions",
+  "split": "optimization",
+  "scenario_group": "base_jewelry_sublimit_below_contents_limit",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Answer the customer’s policy question using the supplied records and handbook. Complete the requested fields and provide a concise explanation. This is an informational request; propose no account or claim actions.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-107"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "issued_declarations",
+        "data": {
+          "authority": "issued",
+          "policy_id": "P-107",
+          "named_insureds": [
+            "Elena Moss"
+          ],
+          "starts_on": "2026-01-01",
+          "ends_on": "2027-01-01",
+          "status_today": "active",
+          "personal_property_limit": 30000,
+          "deductible": 500,
+          "valuation_basis": "actual_cash_value",
+          "endorsements": []
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "My own necklace and earrings were stolen together from my apartment on October 2. Their combined value is about $2,400. My declarations say $30,000 for belongings, so does that mean the theft limit for my jewelry is $30,000 too?"
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Are you asking for a payment estimate or which limit applies?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "Only the applicable limit. I do not want a payout calculation, and neither item is scheduled."
+      }
+    ],
+    "form": {
+      "personal_property_limit": {
+        "type": "integer",
+        "nullable": false,
+        "description": "Issued total personal-property limit in USD."
+      },
+      "jewelry_theft_sublimit": {
+        "type": "integer",
+        "nullable": false,
+        "description": "Applicable per-occurrence jewelry-theft sublimit in USD."
+      },
+      "sublimit_additional_to_property_limit": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Whether the jewelry sublimit is an additional amount above the total personal-property limit."
+      },
+      "payment_estimate": {
+        "type": "number",
+        "nullable": true,
+        "description": "Payment estimate in USD, or null when not requested or not supported."
+      }
+    },
+    "allowed_actions": []
+  }
+}

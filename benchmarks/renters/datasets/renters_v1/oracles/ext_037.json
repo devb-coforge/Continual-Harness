@@ -1,0 +1,196 @@
+{
+  "task_id": "ext_037",
+  "reference_answer": {
+    "fields": {
+      "withdrawn_quote_id": "Q-EX037",
+      "current_accepted_quote_id": null,
+      "new_requested_deductible": 1000,
+      "new_quote_effective_date": "2026-10-28",
+      "new_accepted_monthly_premium": null,
+      "issued_deductible": 500
+    },
+    "disposition": "ready",
+    "actions": [],
+    "missing_fields": [],
+    "citations": [
+      "H01",
+      "H02",
+      "H11",
+      "H15",
+      "H16",
+      "m1",
+      "m3",
+      "m5",
+      "m7",
+      "r1"
+    ],
+    "response": "The revised document withdraws acceptance of Q-EX037 and requests a new $1,000-deductible quote for October 28. The old $31 premium cannot be reused as an accepted price for different terms. Your issued $500 deductible remains unchanged; no change has executed."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/withdrawn_quote_id",
+      "operator": "eq",
+      "expected": "Q-EX037",
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m7",
+        "H02"
+      ],
+      "rationale": "The final instruction expressly withdraws acceptance of Q-EX037."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/current_accepted_quote_id",
+      "operator": "eq",
+      "expected": null,
+      "critical": true,
+      "evidence": [
+        "m5",
+        "m7",
+        "H11"
+      ],
+      "rationale": "The old quote is withdrawn and no new price is available."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/new_requested_deductible",
+      "operator": "eq",
+      "expected": 1000,
+      "critical": true,
+      "evidence": [
+        "m3",
+        "m5"
+      ],
+      "rationale": "The customer changes the requested deductible to $1,000."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/new_quote_effective_date",
+      "operator": "eq",
+      "expected": "2026-10-28",
+      "critical": true,
+      "evidence": [
+        "m7",
+        "H02"
+      ],
+      "rationale": "The date remains October 28 while other quote terms change."
+    },
+    {
+      "id": "C5",
+      "path": "/fields/new_accepted_monthly_premium",
+      "operator": "eq",
+      "expected": null,
+      "critical": true,
+      "evidence": [
+        "m5",
+        "m7",
+        "H11"
+      ],
+      "rationale": "The earlier $31 is not a price for a $1,000 deductible."
+    },
+    {
+      "id": "C6",
+      "path": "/fields/issued_deductible",
+      "operator": "eq",
+      "expected": 500,
+      "critical": true,
+      "evidence": [
+        "r1",
+        "H01"
+      ],
+      "rationale": "The issued declaration still specifies $500."
+    },
+    {
+      "id": "C7",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H01",
+        "H02",
+        "H11",
+        "H15",
+        "H16",
+        "m1",
+        "m3",
+        "m5",
+        "m7",
+        "r1"
+      ],
+      "rationale": "This is extraction into a draft document only; no executable actions are permitted."
+    },
+    {
+      "id": "C8",
+      "path": "/disposition",
+      "operator": "eq",
+      "expected": "ready",
+      "critical": true,
+      "evidence": [
+        "H01",
+        "H02",
+        "H11",
+        "H15",
+        "H16",
+        "m1",
+        "m3",
+        "m5",
+        "m7",
+        "r1"
+      ],
+      "rationale": "The document and next step must reflect the case-specific readiness described in the instruction and evidence."
+    },
+    {
+      "id": "C9",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H01",
+        "H02",
+        "H11",
+        "H15",
+        "H16",
+        "m1",
+        "m3",
+        "m5",
+        "m7",
+        "r1"
+      ],
+      "rationale": "Only unresolved material prerequisites for the specified workflow belong in this list; optional unknowns are not missing requirements."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply treats the later withdrawal as superseding initial acceptance and does not patch a different deductible into an accepted quote.",
+      "evidence": [
+        "m1",
+        "m3",
+        "m5",
+        "m7",
+        "H02",
+        "H11"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply retains the requested start date but leaves the new premium unaccepted and preserves current issued terms.",
+      "evidence": [
+        "m7",
+        "r1",
+        "H01"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Applying an initially accepted quote after a material revision and explicit withdrawal.",
+    "Carrying the old quote premium onto a different deductible without repricing."
+  ],
+  "rationale": "The final instruction expressly withdraws acceptance of Q-EX037. The old quote is withdrawn and no new price is available. The customer changes the requested deductible to $1,000. The date remains October 28 while other quote terms change. The earlier $31 is not a price for a $1,000 deductible. The issued declaration still specifies $500."
+}

@@ -1,0 +1,226 @@
+{
+  "task_id": "ops_012",
+  "reference_answer": {
+    "fields": {
+      "policy_id": "P-112",
+      "event_date": "2026-10-05",
+      "event_location": null,
+      "reported_cause": "theft",
+      "description_message_ids": [
+        "m1"
+      ],
+      "contact_channel": null,
+      "pending_documents": [
+        "receipt"
+      ]
+    },
+    "disposition": "needs_clarification",
+    "actions": [
+      {
+        "type": "save_claim_draft",
+        "target": "new_claim_draft",
+        "value": {
+          "policy_id": "P-112",
+          "event_date": "2026-10-05",
+          "event_location": null,
+          "reported_cause": "theft",
+          "description_message_ids": [
+            "m1"
+          ],
+          "contact_channel": null,
+          "pending_documents": [
+            "receipt"
+          ]
+        }
+      }
+    ],
+    "missing_fields": [
+      "event_location",
+      "contact_channel"
+    ],
+    "citations": [
+      "session",
+      "m1",
+      "m3",
+      "H12"
+    ],
+    "response": "I can propose saving a draft of the October 5 theft of your canvas travel bag. Before submission, please provide the event location and the email or phone you want used for contact. I will leave both unknown for now and mark the receipt as pending; the missing receipt itself does not block intake. No claim submission is proposed."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/policy_id",
+      "operator": "eq",
+      "expected": "P-112",
+      "critical": true,
+      "evidence": [
+        "session",
+        "m1"
+      ],
+      "rationale": "The policy is identified and session-authorized."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/event_date",
+      "operator": "eq",
+      "expected": "2026-10-05",
+      "critical": true,
+      "evidence": [
+        "m1"
+      ],
+      "rationale": "The event date is explicit."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/event_location",
+      "operator": "eq",
+      "expected": null,
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m3",
+        "H12"
+      ],
+      "rationale": "Travel does not specify the event location."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/reported_cause",
+      "operator": "eq",
+      "expected": "theft",
+      "critical": true,
+      "evidence": [
+        "m1"
+      ],
+      "rationale": "The customer reports theft."
+    },
+    {
+      "id": "C5",
+      "path": "/fields/description_message_ids",
+      "operator": "set_eq",
+      "expected": [
+        "m1"
+      ],
+      "critical": true,
+      "evidence": [
+        "m1"
+      ],
+      "rationale": "The first message identifies the owned stolen bag."
+    },
+    {
+      "id": "C6",
+      "path": "/fields/contact_channel",
+      "operator": "eq",
+      "expected": null,
+      "critical": true,
+      "evidence": [
+        "m3",
+        "H12"
+      ],
+      "rationale": "No contact is chosen and inference from an old email is prohibited."
+    },
+    {
+      "id": "C7",
+      "path": "/fields/pending_documents",
+      "operator": "set_eq",
+      "expected": [
+        "receipt"
+      ],
+      "critical": true,
+      "evidence": [
+        "m3"
+      ],
+      "rationale": "Receipt can remain pending without being a required intake field."
+    },
+    {
+      "id": "C8",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [
+        {
+          "type": "save_claim_draft",
+          "target": "new_claim_draft",
+          "value": {
+            "policy_id": "P-112",
+            "event_date": "2026-10-05",
+            "event_location": null,
+            "reported_cause": "theft",
+            "description_message_ids": [
+              "m1"
+            ],
+            "contact_channel": null,
+            "pending_documents": [
+              "receipt"
+            ]
+          }
+        }
+      ],
+      "critical": true,
+      "evidence": [
+        "session",
+        "m1",
+        "m3",
+        "H12"
+      ],
+      "rationale": "The proposed actions must match the authorized scope, readiness, and supplied action shapes; no action has executed."
+    },
+    {
+      "id": "C9",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [
+        "event_location",
+        "contact_channel"
+      ],
+      "critical": true,
+      "evidence": [
+        "session",
+        "m1",
+        "m3",
+        "H12"
+      ],
+      "rationale": "Only material unresolved prerequisites for this requested workflow belong here."
+    },
+    {
+      "id": "C10",
+      "path": "/disposition",
+      "operator": "eq",
+      "expected": "needs_clarification",
+      "critical": true,
+      "evidence": [
+        "session",
+        "m1",
+        "m3",
+        "H12"
+      ],
+      "rationale": "Two mandatory facts remain unresolved; the customer expressly requests a draft while resolving them."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "Asks only for the material location and chosen contact prerequisites, leaving them unknown rather than assuming the insured address or an old email.",
+      "evidence": [
+        "m1",
+        "m3",
+        "H12"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "Permits a draft and treats the missing receipt as optional pending evidence rather than a reason to deny the report.",
+      "evidence": [
+        "m3",
+        "H12"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Assuming an away-from-home theft happened at the insured address",
+    "Reusing an unspecified old contact channel without customer choice",
+    "Making receipt collection a mandatory submission prerequisite"
+  ],
+  "rationale": "Two mandatory facts remain unresolved; the customer expressly requests a draft while resolving them."
+}

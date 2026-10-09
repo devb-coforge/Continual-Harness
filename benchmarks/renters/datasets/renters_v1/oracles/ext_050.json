@@ -1,0 +1,214 @@
+{
+  "task_id": "ext_050",
+  "reference_answer": {
+    "fields": {
+      "existing_draft_id": "DR-EX050",
+      "recorded_intake_status": "draft",
+      "receipt_upload_status": "received",
+      "assigned_claim_id": null,
+      "contact_email": "june.sato@post.example",
+      "submission_consented": true,
+      "next_step": "complete_existing_draft"
+    },
+    "disposition": "ready",
+    "actions": [],
+    "missing_fields": [],
+    "citations": [
+      "H02",
+      "H12",
+      "H13",
+      "H15",
+      "H16",
+      "m3",
+      "m5",
+      "m7",
+      "r1",
+      "r2"
+    ],
+    "response": "The handoff distinguishes the received receipt from the failed submission. DR-EX050 remains a draft with no claim number. Your email june.sato@post.example supplies the missing contact, and your consent supports completing that draft for submission; this extraction has not submitted it or assigned a reference."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/existing_draft_id",
+      "operator": "eq",
+      "expected": "DR-EX050",
+      "critical": true,
+      "evidence": [
+        "r1"
+      ],
+      "rationale": "The record identifies DR-EX050 as a draft."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/recorded_intake_status",
+      "operator": "eq",
+      "expected": "draft",
+      "critical": true,
+      "evidence": [
+        "r1",
+        "m3",
+        "H15"
+      ],
+      "rationale": "The intake remains a draft after validation failure."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/receipt_upload_status",
+      "operator": "eq",
+      "expected": "received",
+      "critical": true,
+      "evidence": [
+        "r1",
+        "r2",
+        "m3",
+        "H15"
+      ],
+      "rationale": "The record confirms the receipt attachment was received."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/assigned_claim_id",
+      "operator": "eq",
+      "expected": null,
+      "critical": true,
+      "evidence": [
+        "r1",
+        "m7",
+        "H13"
+      ],
+      "rationale": "There is no submitted claim reference."
+    },
+    {
+      "id": "C5",
+      "path": "/fields/contact_email",
+      "operator": "eq",
+      "expected": "june.sato@post.example",
+      "critical": true,
+      "evidence": [
+        "m5",
+        "H02"
+      ],
+      "rationale": "The customer supplies the missing personal contact email."
+    },
+    {
+      "id": "C6",
+      "path": "/fields/submission_consented",
+      "operator": "eq",
+      "expected": true,
+      "critical": true,
+      "evidence": [
+        "m7",
+        "H12"
+      ],
+      "rationale": "The customer authorizes submission with the corrected email."
+    },
+    {
+      "id": "C7",
+      "path": "/fields/next_step",
+      "operator": "eq",
+      "expected": "complete_existing_draft",
+      "critical": true,
+      "evidence": [
+        "r1",
+        "m5",
+        "m7",
+        "H13",
+        "H15"
+      ],
+      "rationale": "The correct continuation is the existing draft, not claiming a submitted record exists."
+    },
+    {
+      "id": "C8",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H02",
+        "H12",
+        "H13",
+        "H15",
+        "H16",
+        "m3",
+        "m5",
+        "m7",
+        "r1",
+        "r2"
+      ],
+      "rationale": "This is extraction into a draft document only; no executable actions are permitted."
+    },
+    {
+      "id": "C9",
+      "path": "/disposition",
+      "operator": "eq",
+      "expected": "ready",
+      "critical": true,
+      "evidence": [
+        "H02",
+        "H12",
+        "H13",
+        "H15",
+        "H16",
+        "m3",
+        "m5",
+        "m7",
+        "r1",
+        "r2"
+      ],
+      "rationale": "The document and next step must reflect the case-specific readiness described in the instruction and evidence."
+    },
+    {
+      "id": "C10",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H02",
+        "H12",
+        "H13",
+        "H15",
+        "H16",
+        "m3",
+        "m5",
+        "m7",
+        "r1",
+        "r2"
+      ],
+      "rationale": "Only unresolved material prerequisites for the specified workflow belong in this list; optional unknowns are not missing requirements."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply separates successful attachment upload from unsuccessful intake submission and does not fabricate a claim reference.",
+      "evidence": [
+        "m3",
+        "m7",
+        "r1",
+        "r2",
+        "H13",
+        "H15"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply uses the explicitly supplied personal email, acknowledges readiness to finish the existing draft, and does not claim that consent itself completed submission.",
+      "evidence": [
+        "m5",
+        "m7",
+        "H02",
+        "H12",
+        "H16"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Equating attachment upload or a submit-button click with authoritative submitted status.",
+    "Copying the merchant email as the claimant contact or assigning a fabricated claim ID."
+  ],
+  "rationale": "The record identifies DR-EX050 as a draft. The intake remains a draft after validation failure. The record confirms the receipt attachment was received. There is no submitted claim reference. The customer supplies the missing personal contact email. The customer authorizes submission with the corrected email. The correct continuation is the existing draft, not claiming a submitted record exists."
+}

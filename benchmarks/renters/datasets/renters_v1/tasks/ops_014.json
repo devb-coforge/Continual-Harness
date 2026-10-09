@@ -1,0 +1,88 @@
+{
+  "id": "ops_014",
+  "track": "support_ops",
+  "family": "account_changes",
+  "split": "optimization",
+  "scenario_group": "confirmed_notice_recipient_does_not_become_insured",
+  "difficulty": "standard",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Prepare only the requested notice/document operation. add_interested_party targets r1 with value {\"recipient_record\": \"r#\"} referencing the supplied name/email. send_proof targets r1 with value {\"recipient_record\": \"r#\"}. Adding an interested party and one-time proof delivery are separate actions.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-114"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "issued_declarations",
+        "data": {
+          "authority": "issued",
+          "policy_id": "P-114",
+          "named_insureds": [
+            "Sofia Beck"
+          ],
+          "starts_on": "2026-01-01",
+          "ends_on": "2027-01-01",
+          "status_today": "active",
+          "personal_property_limit": 30000,
+          "deductible": 500,
+          "valuation_basis": "actual_cash_value",
+          "interested_parties": []
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "recipient",
+        "data": {
+          "name": "Wren Property Office",
+          "email": "notices@wren-property.example"
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "My landlord wants its office listed to receive proof-of-insurance notices. Please add the Wren Property Office contact attached here."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Please confirm the exact name and destination, and whether you intend to add an insured person."
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "I approve Wren Property Office at notices@wren-property.example as the interested party for notices. Do not add an insured person or send any other document right now."
+      }
+    ],
+    "form": {
+      "interested_party_record": {
+        "type": "string",
+        "nullable": false,
+        "description": "Supplied record containing the confirmed interested-party name and email."
+      },
+      "notice_request_ready": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Whether this interested-party notice request meets authority and recipient prerequisites."
+      },
+      "named_insured_change_requested": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Whether adding or changing a named insured is requested."
+      },
+      "proof_delivery_requested": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Whether a separate one-time proof document delivery is requested now."
+      }
+    },
+    "allowed_actions": [
+      "add_interested_party",
+      "send_proof"
+    ]
+  }
+}

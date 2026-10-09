@@ -1,0 +1,136 @@
+{
+  "task_id": "ops_032",
+  "reference_answer": {
+    "fields": {
+      "coverage_scope": "included",
+      "applicable_endorsement_ref": "r2",
+      "cause_specific_limit": 5000
+    },
+    "disposition": "answered",
+    "actions": [],
+    "missing_fields": [],
+    "citations": [
+      "r1",
+      "r2",
+      "r3",
+      "m1",
+      "H01",
+      "H05",
+      "H06",
+      "m3",
+      "H16"
+    ],
+    "response": "The reported sewer backup falls within the supplied active water-backup endorsement, with a $5,000 limit. The maintenance report distinguishes it from rising surface floodwater. This explains coverage scope; it is not claim approval or a promised payment."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/coverage_scope",
+      "operator": "eq",
+      "expected": "included",
+      "critical": true,
+      "evidence": [
+        "r1",
+        "r2",
+        "r3",
+        "m1",
+        "H01",
+        "H05"
+      ],
+      "rationale": "The stated sewer backup is expressly included by an active issued endorsement."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/applicable_endorsement_ref",
+      "operator": "eq",
+      "expected": "r2",
+      "critical": true,
+      "evidence": [
+        "r2",
+        "r3",
+        "H01"
+      ],
+      "rationale": "r2 overrides the base sewer/drain backup exclusion for this cause and event date."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/cause_specific_limit",
+      "operator": "eq",
+      "expected": 5000,
+      "critical": true,
+      "evidence": [
+        "r2",
+        "H06"
+      ],
+      "rationale": "The endorsement supplies a $5,000 cause-specific limit."
+    },
+    {
+      "id": "C4",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "m3",
+        "H16"
+      ],
+      "rationale": "Only the explicitly requested and sufficiently authorized proposed actions are valid. The source establishes both actual sewer backup and an active endorsement explicitly covering it; there is no unresolved cause merely because the event involves water."
+    },
+    {
+      "id": "C5",
+      "path": "/disposition",
+      "operator": "one_of",
+      "expected": [
+        "answered"
+      ],
+      "critical": true,
+      "evidence": [
+        "m3",
+        "H16"
+      ],
+      "rationale": "The source establishes both actual sewer backup and an active endorsement explicitly covering it; there is no unresolved cause merely because the event involves water."
+    },
+    {
+      "id": "C6",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "m3",
+        "H16"
+      ],
+      "rationale": "Material unresolved prerequisites are absent for this requested workflow. The source establishes both actual sewer backup and an active endorsement explicitly covering it; there is no unresolved cause merely because the event involves water."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply applies the active issued backup endorsement to the documented sewer-backup cause rather than the base exclusion alone.",
+      "evidence": [
+        "r2",
+        "r3",
+        "m1",
+        "H01",
+        "H05"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply does not describe the $5,000 limit as a guaranteed payment or treat the neighbor assertion as policy authority.",
+      "evidence": [
+        "m3",
+        "r2",
+        "H01",
+        "H06"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Applying the base backup exclusion while ignoring the issued endorsement.",
+    "Treating every water event as floodwater or paying the full endorsement limit automatically."
+  ],
+  "rationale": "The source establishes both actual sewer backup and an active endorsement explicitly covering it; there is no unresolved cause merely because the event involves water."
+}

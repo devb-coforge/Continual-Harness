@@ -1,0 +1,163 @@
+{
+  "task_id": "ops_014",
+  "reference_answer": {
+    "fields": {
+      "interested_party_record": "r2",
+      "notice_request_ready": true,
+      "named_insured_change_requested": false,
+      "proof_delivery_requested": false
+    },
+    "disposition": "ready",
+    "actions": [
+      {
+        "type": "add_interested_party",
+        "target": "r1",
+        "value": {
+          "recipient_record": "r2"
+        }
+      }
+    ],
+    "missing_fields": [],
+    "citations": [
+      "r2",
+      "m3",
+      "session",
+      "H03",
+      "H11"
+    ],
+    "response": "I can propose adding Wren Property Office at notices@wren-property.example as an interested party for notices. That listing does not make the office a named insured or give it authority to change the policy. I have not proposed a separate proof delivery or made an executed policy update."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/interested_party_record",
+      "operator": "eq",
+      "expected": "r2",
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m3"
+      ],
+      "rationale": "The verified customer confirms the complete recipient."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/notice_request_ready",
+      "operator": "eq",
+      "expected": true,
+      "critical": true,
+      "evidence": [
+        "session",
+        "r2",
+        "m3",
+        "H03",
+        "H11"
+      ],
+      "rationale": "The named insured authorizes the exact name and destination."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/named_insured_change_requested",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "m3",
+        "H11"
+      ],
+      "rationale": "The customer explicitly excludes that operation."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/proof_delivery_requested",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "m3"
+      ],
+      "rationale": "The customer says not to send another document now."
+    },
+    {
+      "id": "C5",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [
+        {
+          "type": "add_interested_party",
+          "target": "r1",
+          "value": {
+            "recipient_record": "r2"
+          }
+        }
+      ],
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m3",
+        "session",
+        "H03",
+        "H11"
+      ],
+      "rationale": "The proposed actions must match the authorized scope, readiness, and supplied action shapes; no action has executed."
+    },
+    {
+      "id": "C6",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m3",
+        "session",
+        "H03",
+        "H11"
+      ],
+      "rationale": "Only material unresolved prerequisites for this requested workflow belong here."
+    },
+    {
+      "id": "C7",
+      "path": "/disposition",
+      "operator": "eq",
+      "expected": "ready",
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m3",
+        "session",
+        "H03",
+        "H11"
+      ],
+      "rationale": "The authorized notice-recipient request supplies name and destination, so the single listing proposal is ready."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "Identifies the precise confirmed recipient and explains that interested-party listing does not confer insured status or change authority.",
+      "evidence": [
+        "r2",
+        "m3",
+        "H11"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "Does not demand separate recipient opt-in or send an extra proof document that the customer did not request.",
+      "evidence": [
+        "m3",
+        "H11",
+        "H16"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Treating an interested party as an insured person",
+    "Inventing an extra recipient-consent requirement",
+    "Sending documents beyond the requested notice listing"
+  ],
+  "rationale": "The authorized notice-recipient request supplies name and destination, so the single listing proposal is ready."
+}

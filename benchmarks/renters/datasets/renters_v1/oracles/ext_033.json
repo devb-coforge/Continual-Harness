@@ -1,0 +1,215 @@
+{
+  "task_id": "ext_033",
+  "reference_answer": {
+    "fields": {
+      "requested_new_named_insured": "Milo Vale",
+      "named_insured_requested_date": "2026-10-20",
+      "named_insured_quote_accepted": false,
+      "interested_party_name": "Mara Vale",
+      "interested_party_email": "mara.vale@leasing.example",
+      "interested_party_request_confirmed": true,
+      "same_person": false
+    },
+    "disposition": "partial",
+    "actions": [],
+    "missing_fields": [
+      "accepted_named_insured_quote"
+    ],
+    "citations": [
+      "H02",
+      "H11",
+      "H15",
+      "H16",
+      "m1",
+      "m3",
+      "m4",
+      "m5",
+      "m7",
+      "session"
+    ],
+    "response": "The interested-party notice draft for Mara Vale at mara.vale@leasing.example is complete. Milo Vale's insured-person addition still requires an exact quote, premium, date, and acceptance; the draft should request that quote for October 20. Mara is not being added as insured, and neither change has executed."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/requested_new_named_insured",
+      "operator": "eq",
+      "expected": "Milo Vale",
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m3",
+        "H02"
+      ],
+      "rationale": "Milo is the roommate requested for insured status."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/named_insured_requested_date",
+      "operator": "eq",
+      "expected": "2026-10-20",
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m4",
+        "m5",
+        "H11"
+      ],
+      "rationale": "The quote should price October 20."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/named_insured_quote_accepted",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "m5",
+        "m7",
+        "H11"
+      ],
+      "rationale": "No quote or premium has been accepted."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/interested_party_name",
+      "operator": "eq",
+      "expected": "Mara Vale",
+      "critical": true,
+      "evidence": [
+        "m3",
+        "m7",
+        "H11"
+      ],
+      "rationale": "Mara is the landlord interested party, not the requested named insured."
+    },
+    {
+      "id": "C5",
+      "path": "/fields/interested_party_email",
+      "operator": "eq",
+      "expected": "mara.vale@leasing.example",
+      "critical": true,
+      "evidence": [
+        "m3",
+        "m7"
+      ],
+      "rationale": "The notice destination is explicitly confirmed."
+    },
+    {
+      "id": "C6",
+      "path": "/fields/interested_party_request_confirmed",
+      "operator": "eq",
+      "expected": true,
+      "critical": true,
+      "evidence": [
+        "m7",
+        "session",
+        "H11"
+      ],
+      "rationale": "The verified named insured separately authorizes this complete notice request."
+    },
+    {
+      "id": "C7",
+      "path": "/fields/same_person",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "m3",
+        "H02"
+      ],
+      "rationale": "The customer expressly states they are different people."
+    },
+    {
+      "id": "C8",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H02",
+        "H11",
+        "H15",
+        "H16",
+        "m1",
+        "m3",
+        "m4",
+        "m5",
+        "m7",
+        "session"
+      ],
+      "rationale": "This is extraction into a draft document only; no executable actions are permitted."
+    },
+    {
+      "id": "C9",
+      "path": "/disposition",
+      "operator": "eq",
+      "expected": "partial",
+      "critical": true,
+      "evidence": [
+        "H02",
+        "H11",
+        "H15",
+        "H16",
+        "m1",
+        "m3",
+        "m4",
+        "m5",
+        "m7",
+        "session"
+      ],
+      "rationale": "The document and next step must reflect the case-specific readiness described in the instruction and evidence."
+    },
+    {
+      "id": "C10",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [
+        "accepted_named_insured_quote"
+      ],
+      "critical": true,
+      "evidence": [
+        "H02",
+        "H11",
+        "H15",
+        "H16",
+        "m1",
+        "m3",
+        "m4",
+        "m5",
+        "m7",
+        "session"
+      ],
+      "rationale": "Only unresolved material prerequisites for the specified workflow belong in this list; optional unknowns are not missing requirements."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply keeps Milo and Mara as distinct people with insured-person and interested-party roles respectively.",
+      "evidence": [
+        "m3",
+        "m7",
+        "H02",
+        "H11"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply separates the ready notice request from the unaccepted insured-person change and does not block the former on the latter quote.",
+      "evidence": [
+        "m5",
+        "m7",
+        "H11",
+        "H16"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Merging different people because they share a surname.",
+    "Treating general desire to add a roommate as acceptance of an unquoted premium."
+  ],
+  "rationale": "Milo is the roommate requested for insured status. The quote should price October 20. No quote or premium has been accepted. Mara is the landlord interested party, not the requested named insured. The notice destination is explicitly confirmed. The verified named insured separately authorizes this complete notice request. The customer expressly states they are different people."
+}

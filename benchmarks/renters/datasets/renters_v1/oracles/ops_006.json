@@ -1,0 +1,191 @@
+{
+  "task_id": "ops_006",
+  "reference_answer": {
+    "fields": {
+      "draft_record": "r2",
+      "reported_loss_amount": 120,
+      "issued_deductible": 500,
+      "intake_ready": true,
+      "payment_estimate": null
+    },
+    "disposition": "ready",
+    "actions": [
+      {
+        "type": "submit_draft",
+        "target": "r2",
+        "value": {}
+      }
+    ],
+    "missing_fields": [],
+    "citations": [
+      "r2",
+      "m1",
+      "r1",
+      "session",
+      "r3",
+      "H04",
+      "H12",
+      "m3",
+      "H06"
+    ],
+    "response": "I can propose submitting the confirmed theft draft even though the reported $120 loss is below the issued $500 deductible. That difference does not prevent intake. I have not calculated a payout, approved a claim, or completed a submission."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/draft_record",
+      "operator": "eq",
+      "expected": "r2",
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m1"
+      ],
+      "rationale": "The supplied draft contains mandatory intake information and is explicitly confirmed."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/reported_loss_amount",
+      "operator": "eq",
+      "expected": 120,
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m1"
+      ],
+      "rationale": "The customer confirms a reported amount of $120."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/issued_deductible",
+      "operator": "eq",
+      "expected": 500,
+      "critical": true,
+      "evidence": [
+        "r1"
+      ],
+      "rationale": "The policy deductible is $500."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/intake_ready",
+      "operator": "eq",
+      "expected": true,
+      "critical": true,
+      "evidence": [
+        "session",
+        "r2",
+        "r3",
+        "m1",
+        "H04",
+        "H12"
+      ],
+      "rationale": "A loss below the deductible is not an intake bar."
+    },
+    {
+      "id": "C5",
+      "path": "/fields/payment_estimate",
+      "operator": "eq",
+      "expected": null,
+      "critical": true,
+      "evidence": [
+        "m3",
+        "H06"
+      ],
+      "rationale": "The customer explicitly does not request an estimate."
+    },
+    {
+      "id": "C6",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [
+        {
+          "type": "submit_draft",
+          "target": "r2",
+          "value": {}
+        }
+      ],
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m1",
+        "r1",
+        "session",
+        "r3",
+        "H04",
+        "H12",
+        "m3",
+        "H06"
+      ],
+      "rationale": "The proposed actions must match the authorized scope, readiness, and supplied action shapes; no action has executed."
+    },
+    {
+      "id": "C7",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m1",
+        "r1",
+        "session",
+        "r3",
+        "H04",
+        "H12",
+        "m3",
+        "H06"
+      ],
+      "rationale": "Only material unresolved prerequisites for this requested workflow belong here."
+    },
+    {
+      "id": "C8",
+      "path": "/disposition",
+      "operator": "eq",
+      "expected": "ready",
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m1",
+        "r1",
+        "session",
+        "r3",
+        "H04",
+        "H12",
+        "m3",
+        "H06"
+      ],
+      "rationale": "The confirmed draft and authority satisfy intake; the deductible changes neither intake completeness nor the no-estimate request."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "Does not refuse or postpone the complete intake solely because the reported loss is lower than the deductible.",
+      "evidence": [
+        "m1",
+        "r1",
+        "r2",
+        "H04",
+        "H12"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "Preserves $120 as a reported amount and avoids an unsolicited payout calculation or claim decision.",
+      "evidence": [
+        "m3",
+        "H06",
+        "H13"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Treating below-deductible loss as ineligible for intake",
+    "Offering a zero-dollar settlement despite an explanation-only payment scope",
+    "Treating a reported amount as verified valuation"
+  ],
+  "rationale": "The confirmed draft and authority satisfy intake; the deductible changes neither intake completeness nor the no-estimate request."
+}

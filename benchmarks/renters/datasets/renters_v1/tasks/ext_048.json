@@ -1,0 +1,108 @@
+{
+  "id": "ext_048",
+  "track": "conversation_extraction",
+  "family": "application_filling",
+  "split": "test",
+  "scenario_group": "guest_stay_does_not_change_occupancy",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Complete the renters insurance application draft from this chat. Include every declared field. Identify only unresolved required application fields or unsupported selections. Do not submit, bind, or change insurance.",
+    "session": {
+      "verified": false,
+      "role": "visitor",
+      "policy_id": null
+    },
+    "records": [],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "I am Freya Stone, freya.stone@example.test, applying for 39 Hazel Wharf, Unit 4, Silver Brook. I visited and stayed overnight there September 28, 2026."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Should September 28 be your occupancy start?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "No. That was a guest visit to the previous tenant. My own tenancy and occupancy begin October 31, 2026; requested insurance start is October 29."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "Please confirm your chosen limits and deductible, and whether anyone else will live there."
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "Choose $50,000 property, $300,000 liability and $250 deductible. Nobody else will live with me. My sister only visits on weekends."
+      },
+      {
+        "id": "m6",
+        "role": "bot",
+        "text": "May I submit the application with the October dates?"
+      },
+      {
+        "id": "m7",
+        "role": "customer",
+        "text": "Yes, submit it with October 31 for occupancy and October 29, 2026 for insurance requested."
+      }
+    ],
+    "form": {
+      "applicant_name": {
+        "type": "string",
+        "nullable": true,
+        "description": "Applicant full name as explicitly given, preserving spelling."
+      },
+      "contact_email": {
+        "type": "string",
+        "nullable": true,
+        "description": "Applicant contact email; do not substitute a landlord or another occupant email."
+      },
+      "insured_address": {
+        "type": "string",
+        "nullable": true,
+        "description": "Complete requested insured dwelling address including unit; null if no single complete address is established. Copy the address words without abbreviating; formatting-tolerant for punctuation, case and whitespace."
+      },
+      "occupancy_start": {
+        "type": "string",
+        "nullable": true,
+        "description": "Date applicant starts occupying the dwelling, ISO YYYY-MM-DD; null if unresolved."
+      },
+      "requested_start": {
+        "type": "string",
+        "nullable": true,
+        "description": "Explicitly requested insurance start date, ISO YYYY-MM-DD; separate from occupancy date."
+      },
+      "personal_property_limit": {
+        "type": "integer",
+        "nullable": true,
+        "description": "Explicit selected personal-property limit in USD; retain unsupported requested numeric options and flag for clarification."
+      },
+      "liability_limit": {
+        "type": "integer",
+        "nullable": true,
+        "description": "Explicit selected liability limit in USD; null when unselected."
+      },
+      "deductible": {
+        "type": "integer",
+        "nullable": true,
+        "description": "Explicit selected deductible in USD; null when unselected."
+      },
+      "consent_to_submit": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "True only for explicit application submission consent, false for explicit decline, otherwise null."
+      },
+      "other_occupants": {
+        "type": "array",
+        "nullable": true,
+        "description": "Explicit other residents; visitors are excluded, [] only for explicit none."
+      }
+    },
+    "allowed_actions": []
+  }
+}

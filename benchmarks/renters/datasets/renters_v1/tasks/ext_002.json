@@ -1,0 +1,98 @@
+{
+  "id": "ext_002",
+  "track": "conversation_extraction",
+  "family": "change_request_extraction",
+  "split": "optimization",
+  "scenario_group": "mailing_now_corrected_future_move",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Complete a combined mailing-and-move change request. Disposition describes whether both requested drafts have their prerequisites. Fill exactly the specified document fields from the supplied conversation and records. Normalize dates to ISO YYYY-MM-DD. Copy names, addresses, emails, and identifiers with the spelling supplied. This is an extraction-only task; actions must be empty. In the response distinguish drafting from execution.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-EX002"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "issued_policy",
+        "data": {
+          "policy_id": "P-EX002",
+          "insured_address": "8 Lantern Row, Unit 2, Morrow, US",
+          "status": "active"
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "I am moving from 8 Lantern Row, Unit 2, Morrow, US to 61 Alder Street, Unit 7, Morrow, US on November 1, 2026. Please send paper mail to the new place starting today."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Is the new mailing destination also where you want the insured premises changed today?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "No. My belongings stay at Lantern Row until the move. Also the mover just confirmed November 15, 2026, not November 1."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "Please confirm the complete destination and the separate effective dates."
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "I confirm 61 Alder Street, Unit 7, Morrow, US for mailing today, October 8, 2026, and for the insured home on November 15, 2026."
+      },
+      {
+        "id": "m6",
+        "role": "bot",
+        "text": "I can prepare a mailing update and a future move request; that does not itself change the policy."
+      },
+      {
+        "id": "m7",
+        "role": "customer",
+        "text": "Yes, draft both. Do not cancel my policy or change the insured address before November 15."
+      }
+    ],
+    "form": {
+      "mailing_address": {
+        "type": "string",
+        "nullable": true,
+        "description": "Confirmed mailing destination, copied exactly."
+      },
+      "mailing_effective_date": {
+        "type": "string",
+        "nullable": true,
+        "description": "Requested mailing change date."
+      },
+      "requested_insured_address": {
+        "type": "string",
+        "nullable": true,
+        "description": "Confirmed move destination, copied exactly."
+      },
+      "move_effective_date": {
+        "type": "string",
+        "nullable": true,
+        "description": "Latest confirmed move effective date."
+      },
+      "insured_address_today": {
+        "type": "string",
+        "nullable": true,
+        "description": "Currently issued insured address; a future request does not amend it today."
+      },
+      "cancel_requested": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "True only if the latest customer intent explicitly requests cancellation; false if expressly ruled out."
+      }
+    },
+    "allowed_actions": []
+  }
+}

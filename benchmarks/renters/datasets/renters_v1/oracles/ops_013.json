@@ -1,0 +1,135 @@
+{
+  "task_id": "ops_013",
+  "reference_answer": {
+    "fields": {
+      "valuation_basis": "actual_cash_value",
+      "depreciation_may_be_considered": true,
+      "change_quote_requested": false
+    },
+    "disposition": "answered",
+    "actions": [],
+    "missing_fields": [],
+    "citations": [
+      "r1",
+      "r2",
+      "m3",
+      "H01",
+      "H06"
+    ],
+    "response": "Your issued declarations specify actual cash value, so depreciation may be considered. The archived advertisement describes an option and does not change your issued policy. I cannot infer a depreciation amount or settlement, and I have not proposed a coverage-change quote."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/valuation_basis",
+      "operator": "eq",
+      "expected": "actual_cash_value",
+      "critical": true,
+      "evidence": [
+        "r1",
+        "r2",
+        "m3",
+        "H01",
+        "H06"
+      ],
+      "rationale": "The issued declarations establish ACV; marketing does not amend them."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/depreciation_may_be_considered",
+      "operator": "eq",
+      "expected": true,
+      "critical": true,
+      "evidence": [
+        "r1",
+        "H06"
+      ],
+      "rationale": "ACV considers depreciation without fixing a particular amount."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/change_quote_requested",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "m3"
+      ],
+      "rationale": "The customer explicitly declines a change quote."
+    },
+    {
+      "id": "C4",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "r1",
+        "r2",
+        "m3",
+        "H01",
+        "H06"
+      ],
+      "rationale": "The proposed actions must match the authorized scope, readiness, and supplied action shapes; no action has executed."
+    },
+    {
+      "id": "C5",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "r1",
+        "r2",
+        "m3",
+        "H01",
+        "H06"
+      ],
+      "rationale": "Only material unresolved prerequisites for this requested workflow belong here."
+    },
+    {
+      "id": "C6",
+      "path": "/disposition",
+      "operator": "eq",
+      "expected": "answered",
+      "critical": true,
+      "evidence": [
+        "r1",
+        "r2",
+        "m3",
+        "H01",
+        "H06"
+      ],
+      "rationale": "The authority ordering resolves the conflict without staff review or a coverage change."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "Clearly gives issued ACV declarations priority over the marketing page and explains that the advertisement is not an endorsement.",
+      "evidence": [
+        "r1",
+        "r2",
+        "m3",
+        "H01"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "Does not invent a depreciation percentage, promise replacement payment, or initiate a quote contrary to the request.",
+      "evidence": [
+        "m3",
+        "H06",
+        "H16"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Treating marketing language as issued coverage",
+    "Inventing a depreciation schedule",
+    "Initiating a coverage change because the customer prefers a different basis"
+  ],
+  "rationale": "The authority ordering resolves the conflict without staff review or a coverage change."
+}

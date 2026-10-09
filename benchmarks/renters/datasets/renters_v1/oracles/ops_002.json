@@ -1,0 +1,173 @@
+{
+  "task_id": "ops_002",
+  "reference_answer": {
+    "fields": {
+      "mailing_destination_record": "r2",
+      "mailing_change_ready": true,
+      "insured_premises_change_requested": false,
+      "cancellation_authorized": false
+    },
+    "disposition": "partial",
+    "actions": [
+      {
+        "type": "update_mailing_address",
+        "target": "r1",
+        "value": {
+          "destination_record": "r2"
+        }
+      }
+    ],
+    "missing_fields": [],
+    "citations": [
+      "r2",
+      "m1",
+      "m3",
+      "session",
+      "H03",
+      "H09",
+      "H10"
+    ],
+    "response": "I can propose the confirmed mailing-only update to the Birch Lane address while leaving the insured Alder Street apartment unchanged. I cannot propose cancellation from the conditional statement; contact us with an explicit cancellation request and date if you decide to cancel. These are proposed actions, not completed changes."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/mailing_destination_record",
+      "operator": "eq",
+      "expected": "r2",
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m1",
+        "m3"
+      ],
+      "rationale": "The customer explicitly approves this stored destination."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/mailing_change_ready",
+      "operator": "eq",
+      "expected": true,
+      "critical": true,
+      "evidence": [
+        "session",
+        "r2",
+        "m3",
+        "H03",
+        "H09"
+      ],
+      "rationale": "A verified named insured confirms the complete mailing-only update."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/insured_premises_change_requested",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "m1",
+        "H09"
+      ],
+      "rationale": "The customer expressly preserves the insured apartment."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/cancellation_authorized",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "m3",
+        "H10"
+      ],
+      "rationale": "Cancellation remains conditional on a future undecided event."
+    },
+    {
+      "id": "C5",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [
+        {
+          "type": "update_mailing_address",
+          "target": "r1",
+          "value": {
+            "destination_record": "r2"
+          }
+        }
+      ],
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m1",
+        "m3",
+        "session",
+        "H03",
+        "H09",
+        "H10"
+      ],
+      "rationale": "The proposed actions must match the authorized scope, readiness, and supplied action shapes; no action has executed."
+    },
+    {
+      "id": "C6",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m1",
+        "m3",
+        "session",
+        "H03",
+        "H09",
+        "H10"
+      ],
+      "rationale": "Only material unresolved prerequisites for this requested workflow belong here."
+    },
+    {
+      "id": "C7",
+      "path": "/disposition",
+      "operator": "eq",
+      "expected": "partial",
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m1",
+        "m3",
+        "session",
+        "H03",
+        "H09",
+        "H10"
+      ],
+      "rationale": "The mailing update is ready while cancellation is explicitly unconfirmed, so the separable request is partial."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "Separates the ready mailing update from the conditional cancellation and states that the insured premises stay unchanged.",
+      "evidence": [
+        "m1",
+        "m3",
+        "H09",
+        "H10"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "Does not say the mailing change has executed or that the policy has been canceled or scheduled for cancellation.",
+      "evidence": [
+        "m3",
+        "H16"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Blocking a ready mailing change because another request is conditional",
+    "Canceling on conditional future intent",
+    "Changing insured premises along with the mailing address"
+  ],
+  "rationale": "The mailing update is ready while cancellation is explicitly unconfirmed, so the separable request is partial."
+}

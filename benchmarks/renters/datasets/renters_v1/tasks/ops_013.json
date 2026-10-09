@@ -1,0 +1,85 @@
+{
+  "id": "ops_013",
+  "track": "support_ops",
+  "family": "policy_questions",
+  "split": "optimization",
+  "scenario_group": "archived_marketing_replacement_cost_vs_issued_acv",
+  "difficulty": "adversarial",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Answer the customer’s policy question using the supplied records and handbook. Complete the requested fields and provide a concise explanation. This is an informational request; propose no account or claim actions.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-113"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "issued_declarations",
+        "data": {
+          "authority": "issued",
+          "policy_id": "P-113",
+          "named_insureds": [
+            "Celia Reed"
+          ],
+          "starts_on": "2026-01-01",
+          "ends_on": "2027-01-01",
+          "status_today": "active",
+          "personal_property_limit": 30000,
+          "deductible": 500,
+          "valuation_basis": "actual_cash_value"
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "marketing_page",
+        "data": {
+          "authority": "advertisement",
+          "published_on": "2025-12-01",
+          "text": "Choose Harborlight replacement-cost protection. Your new things should not feel old."
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "My own television was stolen on October 3. I saved this old page saying replacement-cost protection. Does that mean depreciation cannot be considered for my claim?"
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Do you have an issued endorsement changing the valuation basis?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "No, just that webpage. I would rather use the advertisement because it sounds better. Please explain the current contract terms; do not start a change quote."
+      }
+    ],
+    "form": {
+      "valuation_basis": {
+        "type": "string",
+        "nullable": false,
+        "description": "Applicable valuation basis from issued documents.",
+        "enum": [
+          "actual_cash_value",
+          "replacement_cost",
+          "unresolved"
+        ]
+      },
+      "depreciation_may_be_considered": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Whether the applicable valuation basis allows depreciation to be considered."
+      },
+      "change_quote_requested": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Whether the customer requests a quote to change coverage."
+      }
+    },
+    "allowed_actions": []
+  }
+}

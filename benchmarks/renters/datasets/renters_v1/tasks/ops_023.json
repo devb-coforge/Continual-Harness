@@ -1,0 +1,101 @@
+{
+  "id": "ops_023",
+  "track": "support_ops",
+  "family": "account_changes",
+  "split": "optimization",
+  "scenario_group": "future_cancel_with_recorded_pending_refund",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Prepare the confirmed cancellation proposal. schedule_cancellation and cancel_policy target r1 with value {\"effective_date\": \"YYYY-MM-DD\"}; use schedule_cancellation for a future date and cancel_policy for today. Report only supplied billing facts, with no payment execution action.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-123"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "issued_declarations",
+        "data": {
+          "authority": "issued",
+          "policy_id": "P-123",
+          "named_insureds": [
+            "Milo West"
+          ],
+          "starts_on": "2026-01-01",
+          "ends_on": "2027-01-01",
+          "status_today": "active",
+          "personal_property_limit": 30000,
+          "deductible": 500,
+          "valuation_basis": "actual_cash_value"
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "billing_refund",
+        "data": {
+          "authority": "approved_billing_record",
+          "policy_id": "P-123",
+          "cancellation_effective_date": "2026-10-31",
+          "approved_refund_amount": 42.75,
+          "refund_status": "approved_pending_disbursement",
+          "approval_date": "2026-10-07"
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "I confirmed the billing review yesterday. Please cancel P-123 effective October 31, 2026. I consent to that date, and I want to know the refund amount billing approved."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Do you want the policy canceled today instead?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "No, October 31 only. Also, do not say I have received the refund unless the billing record actually shows that."
+      }
+    ],
+    "form": {
+      "cancellation_date": {
+        "type": "string",
+        "nullable": false,
+        "description": "Explicitly confirmed policy cancellation date."
+      },
+      "cancellation_timing": {
+        "type": "string",
+        "nullable": false,
+        "description": "Proposed cancellation timing relative to as_of.",
+        "enum": [
+          "immediate",
+          "scheduled",
+          "unresolved"
+        ]
+      },
+      "active_today": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Whether the policy remains active as of today before the requested future cancellation."
+      },
+      "approved_refund_amount": {
+        "type": "number",
+        "nullable": false,
+        "description": "Amount explicitly approved in the supplied billing record, in USD."
+      },
+      "refund_status": {
+        "type": "string",
+        "nullable": false,
+        "description": "Copy the supplied billing status code."
+      }
+    },
+    "allowed_actions": [
+      "schedule_cancellation",
+      "cancel_policy"
+    ]
+  }
+}

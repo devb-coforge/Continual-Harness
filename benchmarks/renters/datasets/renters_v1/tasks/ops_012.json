@@ -1,0 +1,109 @@
+{
+  "id": "ops_012",
+  "track": "support_ops",
+  "family": "claim_intake",
+  "split": "optimization",
+  "scenario_group": "theft_draft_missing_event_location_and_contact",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Prepare a draft or submission proposal using exactly the form fields as its value. save_claim_draft targets the explicit destination new_claim_draft. submit_claim targets new_claim. These actions have value equal to the complete fields object; unknown required facts stay null. Use missing_fields names event_location and contact_channel when those prerequisites are absent; optional evidence documents are not missing_fields.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-112"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "issued_declarations",
+        "data": {
+          "authority": "issued",
+          "policy_id": "P-112",
+          "named_insureds": [
+            "Leo Marsh"
+          ],
+          "starts_on": "2026-01-01",
+          "ends_on": "2027-01-01",
+          "status_today": "active",
+          "personal_property_limit": 30000,
+          "deductible": 500,
+          "valuation_basis": "actual_cash_value"
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "existing_claim_search",
+        "data": {
+          "authority": "account_claim_records",
+          "policy_id": "P-112",
+          "matching_claims": []
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "My own canvas travel bag was stolen on October 5, 2026. I want to report that under P-112. It happened during a trip, but I have not said where yet."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Where did the incident happen, and what email or phone should the claims team use?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "Please save what I have told you as a draft. I will check the location and choose a contact channel later. Do not use an old account email by default. I do not have the purchase receipt either."
+      }
+    ],
+    "form": {
+      "policy_id": {
+        "type": "string",
+        "nullable": false,
+        "description": "Customer-identified policy for this draft."
+      },
+      "event_date": {
+        "type": "string",
+        "nullable": false,
+        "description": "Reported event date in ISO format."
+      },
+      "event_location": {
+        "type": "string",
+        "nullable": true,
+        "description": "Specific customer-reported event location, or null if not supplied."
+      },
+      "reported_cause": {
+        "type": "string",
+        "nullable": false,
+        "description": "Normalized reported cause from the customer statement.",
+        "enum": [
+          "theft",
+          "fire",
+          "smoke",
+          "unknown"
+        ]
+      },
+      "description_message_ids": {
+        "type": "array",
+        "nullable": false,
+        "description": "Message IDs containing the customer’s affected-property/incident description."
+      },
+      "contact_channel": {
+        "type": "string",
+        "nullable": true,
+        "description": "Customer-selected email or phone destination, null if not supplied."
+      },
+      "pending_documents": {
+        "type": "array",
+        "nullable": false,
+        "description": "Evidence documents explicitly missing/pending, using the label receipt."
+      }
+    },
+    "allowed_actions": [
+      "save_claim_draft",
+      "submit_claim"
+    ]
+  }
+}

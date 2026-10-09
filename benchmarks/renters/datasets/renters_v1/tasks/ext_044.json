@@ -1,0 +1,98 @@
+{
+  "id": "ext_044",
+  "track": "conversation_extraction",
+  "family": "support_handoff",
+  "split": "test",
+  "scenario_group": "active_fire_intake_with_safety_priority",
+  "difficulty": "adversarial",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Complete an urgent incident handoff. The customer-facing response must prioritize an explicitly active hazard. Disposition reflects urgent staff review; optional evidence and unknown ignition source are not missing intake prerequisites. Fill exactly the specified document fields from the supplied conversation and records. Normalize dates to ISO YYYY-MM-DD. Copy names, addresses, emails, and identifiers with the spelling supplied. This is an extraction-only task; actions must be empty. In the response distinguish drafting from execution.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-EX024"
+    },
+    "records": [],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "Smoke is coming from the kitchen at 31 Cinder Way, Unit 2, Cedarbridge, US right now. I am still in the hall inside the apartment."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Leave the dangerous area and contact local emergency services; do not stay to collect evidence. Are you reporting damage today?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "Yes, today October 8, 2026. I have not left yet because I thought you needed a picture of the stove."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "A photo is not required before intake, and you should not enter or stay in an unsafe area for it. What safe contact can staff use later?"
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "avery.kim@post.example. I can see smoke and a blackened counter, but I do not know if it began in the stove or wiring."
+      },
+      {
+        "id": "m6",
+        "role": "bot",
+        "text": "I can prepare a handoff with the cause unconfirmed. Has anyone confirmed the apartment is safe or that you have left?"
+      },
+      {
+        "id": "m7",
+        "role": "customer",
+        "text": "No. Do not mark me safe or say the fire is out. I am ending the chat to leave and call emergency services now."
+      }
+    ],
+    "form": {
+      "event_date": {
+        "type": "string",
+        "nullable": true,
+        "description": "Reported date of the active incident."
+      },
+      "event_location": {
+        "type": "string",
+        "nullable": true,
+        "description": "Reported incident address, copied exactly."
+      },
+      "active_hazard_reported": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "True if the customer reports a present immediate hazard."
+      },
+      "safe_exit_confirmed": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "True only for reported completed safe exit; false if customer explicitly says it has not occurred."
+      },
+      "ignition_source": {
+        "type": "string",
+        "nullable": true,
+        "description": "Confirmed or explicitly reported ignition source; null if the customer does not know."
+      },
+      "contact_email": {
+        "type": "string",
+        "nullable": true,
+        "description": "Contact supplied for later staff follow-up."
+      },
+      "photo_required_before_intake": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "Whether a photo is a mandatory H12 prerequisite before preserving intake; report a boolean."
+      },
+      "emergency_contact_completed": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "True or false only if the customer reports whether emergency contact occurred; null if only intent is stated."
+      }
+    },
+    "allowed_actions": []
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "id": "ext_027",
+  "track": "conversation_extraction",
+  "family": "change_request_extraction",
+  "split": "validation",
+  "scenario_group": "international_destination_no_implied_cancellation",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Complete a move-review request. An explicitly unsupported destination requires staff review even when all address/date details are supplied; do not list known unsupported facts as missing. Fill exactly the specified document fields from the supplied conversation and records. Normalize dates to ISO YYYY-MM-DD. Copy names, addresses, emails, and identifiers with the spelling supplied. This is an extraction-only task; actions must be empty. In the response distinguish drafting from execution.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-EX027"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "issued_policy",
+        "data": {
+          "policy_id": "P-EX027",
+          "insured_address": "7 Hazel Crescent, Cedarbridge, US",
+          "status": "active"
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "I am leaving 7 Hazel Crescent, Cedarbridge, US for 42 Linden Quay, Unit 6, Larkport, Canada. Move my coverage on December 1, 2026."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Do you want both homes covered during an overlap?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "No overlap. I hand back the old keys November 30. But I do not want the old policy canceled before staff confirm what can be arranged."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "This product serves US addresses. Should I substitute your sister's US mailing address as the insured home?"
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "No. My insured home would actually be the Canadian apartment. I am not asking to insure my sister's home."
+      },
+      {
+        "id": "m6",
+        "role": "bot",
+        "text": "Should the document record the complete Canadian destination and send the move question for staff review?"
+      },
+      {
+        "id": "m7",
+        "role": "customer",
+        "text": "Yes. I confirm 42 Linden Quay, Unit 6, Larkport, Canada and December 1, 2026 as my request. Please do not treat that as consent to cancel the existing policy."
+      }
+    ],
+    "form": {
+      "requested_destination": {
+        "type": "string",
+        "nullable": true,
+        "description": "Actual requested insured destination, copied exactly; do not substitute a mailing address."
+      },
+      "requested_effective_date": {
+        "type": "string",
+        "nullable": true,
+        "description": "Customer requested move date."
+      },
+      "destination_country": {
+        "type": "string",
+        "nullable": true,
+        "description": "Country explicitly supplied for the proposed insured premises."
+      },
+      "simultaneous_homes_requested": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "True for requested simultaneous insurance of both homes; false for expressly no overlap."
+      },
+      "cancellation_consented": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "True for explicit current cancellation consent; false if expressly withheld."
+      },
+      "routing": {
+        "type": "string",
+        "nullable": true,
+        "description": "staff_review_outside_service_area means an explicitly non-US insured home; ordinary_move means an otherwise supported US move.",
+        "enum": [
+          "staff_review_outside_service_area",
+          "ordinary_move"
+        ]
+      }
+    },
+    "allowed_actions": []
+  }
+}

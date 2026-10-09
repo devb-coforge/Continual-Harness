@@ -1,0 +1,204 @@
+{
+  "task_id": "ext_005",
+  "reference_answer": {
+    "fields": {
+      "requested_personal_property_limit": 15000,
+      "quote_effective_date": "2026-10-31",
+      "quote_accepted": false,
+      "cancellation_intent": "withdrawn",
+      "cancellation_date": null,
+      "issued_personal_property_limit": 30000
+    },
+    "disposition": "ready",
+    "actions": [],
+    "missing_fields": [],
+    "citations": [
+      "H01",
+      "H02",
+      "H08",
+      "H10",
+      "H11",
+      "H15",
+      "H16",
+      "m1",
+      "m3",
+      "m5",
+      "m6",
+      "m7",
+      "r1"
+    ],
+    "response": "The document requests a $15,000 belongings-limit quote effective October 31. Your cancellation request is withdrawn, and neither a price nor a coverage change has been accepted; the issued $30,000 limit remains unchanged."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/requested_personal_property_limit",
+      "operator": "eq",
+      "expected": 15000,
+      "critical": true,
+      "evidence": [
+        "m5",
+        "H11"
+      ],
+      "rationale": "The remaining live request is a quote at $15,000."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/quote_effective_date",
+      "operator": "eq",
+      "expected": "2026-10-31",
+      "critical": true,
+      "evidence": [
+        "m6",
+        "m7",
+        "H08"
+      ],
+      "rationale": "The customer accepts the bot question about the quote date."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/quote_accepted",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "m7",
+        "H11"
+      ],
+      "rationale": "The customer expressly says no price or change has been accepted."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/cancellation_intent",
+      "operator": "eq",
+      "expected": "withdrawn",
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m5",
+        "H02"
+      ],
+      "rationale": "The later withdrawal replaces the opening conditional cancellation."
+    },
+    {
+      "id": "C5",
+      "path": "/fields/cancellation_date",
+      "operator": "eq",
+      "expected": null,
+      "critical": true,
+      "evidence": [
+        "m5",
+        "m7",
+        "H10"
+      ],
+      "rationale": "The October 31 date remains a quote date, not an authorized cancellation."
+    },
+    {
+      "id": "C6",
+      "path": "/fields/issued_personal_property_limit",
+      "operator": "eq",
+      "expected": 30000,
+      "critical": true,
+      "evidence": [
+        "r1",
+        "H01"
+      ],
+      "rationale": "A request for a lower-limit quote does not change the issued limit."
+    },
+    {
+      "id": "C7",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H01",
+        "H02",
+        "H08",
+        "H10",
+        "H11",
+        "H15",
+        "H16",
+        "m1",
+        "m5",
+        "m6",
+        "m7",
+        "r1"
+      ],
+      "rationale": "This is extraction into a draft document only; no executable actions are permitted."
+    },
+    {
+      "id": "C8",
+      "path": "/disposition",
+      "operator": "eq",
+      "expected": "ready",
+      "critical": true,
+      "evidence": [
+        "H01",
+        "H02",
+        "H08",
+        "H10",
+        "H11",
+        "H15",
+        "H16",
+        "m1",
+        "m5",
+        "m6",
+        "m7",
+        "r1"
+      ],
+      "rationale": "The document and next step must reflect the case-specific readiness described in the instruction and evidence."
+    },
+    {
+      "id": "C9",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H01",
+        "H02",
+        "H08",
+        "H10",
+        "H11",
+        "H15",
+        "H16",
+        "m1",
+        "m5",
+        "m6",
+        "m7",
+        "r1"
+      ],
+      "rationale": "Only unresolved material prerequisites for the specified workflow belong in this list; optional unknowns are not missing requirements."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply treats cancellation as withdrawn, not as a queued conditional instruction.",
+      "evidence": [
+        "m5",
+        "m7",
+        "H02",
+        "H10"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply distinguishes requesting a lower-limit quote from accepting or issuing the lower limit.",
+      "evidence": [
+        "m3",
+        "m7",
+        "r1",
+        "H11"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Executing the original conditional cancellation after an explicit withdrawal.",
+    "Treating an advertising savings amount as an accepted quote."
+  ],
+  "rationale": "The remaining live request is a quote at $15,000. The customer accepts the bot question about the quote date. The customer expressly says no price or change has been accepted. The later withdrawal replaces the opening conditional cancellation. The October 31 date remains a quote date, not an authorized cancellation. A request for a lower-limit quote does not change the issued limit."
+}

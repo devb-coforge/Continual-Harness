@@ -1,0 +1,128 @@
+{
+  "id": "ext_008",
+  "track": "conversation_extraction",
+  "family": "change_request_extraction",
+  "split": "optimization",
+  "scenario_group": "superseded_quote_exact_premium_acceptance",
+  "difficulty": "adversarial",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Complete a quote-acceptance change request. Ready means exact quote, date, premium, and consent are present; it does not mean the change was issued. Fill exactly the specified document fields from the supplied conversation and records. Normalize dates to ISO YYYY-MM-DD. Copy names, addresses, emails, and identifiers with the spelling supplied. This is an extraction-only task; actions must be empty. In the response distinguish drafting from execution.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-EX008"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "issued_policy",
+        "data": {
+          "policy_id": "P-EX008",
+          "personal_property_limit": 30000,
+          "deductible": 500,
+          "issued_endorsements": []
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "quote_history",
+        "data": {
+          "quotes": [
+            {
+              "quote_id": "Q-18",
+              "personal_property_limit": 50000,
+              "deductible": 500,
+              "monthly_premium": 22,
+              "effective_date": "2026-10-20",
+              "status": "superseded"
+            },
+            {
+              "quote_id": "Q-19",
+              "personal_property_limit": 50000,
+              "deductible": 500,
+              "monthly_premium": 25,
+              "effective_date": "2026-11-02",
+              "status": "current"
+            }
+          ]
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "I asked for $50,000 of belongings coverage. Is Q-18 still the offer at $22 per month?"
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "The quote records include Q-18 and its replacement Q-19. Please check the full terms you want."
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "I see Q-19: $50,000 belongings, $500 deductible, $25 per month, effective November 2, 2026. I can accept the extra $3."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "Should I keep the earlier October 20 start from Q-18?"
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "No, I accept Q-19 exactly, including November 2 and $25 per month. Do not use Q-18."
+      },
+      {
+        "id": "m6",
+        "role": "bot",
+        "text": "A change-request document can record that acceptance. Has an endorsement already been issued?"
+      },
+      {
+        "id": "m7",
+        "role": "customer",
+        "text": "I have only accepted the quote in this chat. Please draft the request; I have not received an issued endorsement."
+      }
+    ],
+    "form": {
+      "accepted_quote_id": {
+        "type": "string",
+        "nullable": true,
+        "description": "Identifier of the exact quote most recently accepted."
+      },
+      "requested_personal_property_limit": {
+        "type": "integer",
+        "nullable": true,
+        "description": "Accepted quoted belongings limit in USD."
+      },
+      "requested_deductible": {
+        "type": "integer",
+        "nullable": true,
+        "description": "Accepted quoted deductible in USD."
+      },
+      "accepted_monthly_premium": {
+        "type": "integer",
+        "nullable": true,
+        "description": "Accepted quoted monthly premium in USD; do not derive it from advertising or other quotes."
+      },
+      "requested_effective_date": {
+        "type": "string",
+        "nullable": true,
+        "description": "Accepted quote effective date."
+      },
+      "quote_acceptance_recorded": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "Whether the chat records explicit acceptance of all material quote terms."
+      },
+      "change_recorded_as_issued": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "True only if supplied records establish issuance; false if records and chat explicitly show it remains a request."
+      }
+    },
+    "allowed_actions": []
+  }
+}

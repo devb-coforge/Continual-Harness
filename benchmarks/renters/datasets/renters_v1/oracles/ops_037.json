@@ -1,0 +1,152 @@
+{
+  "task_id": "ops_037",
+  "reference_answer": {
+    "fields": {
+      "requested_date_text": "11/12/2026",
+      "effective_date": null,
+      "cancel_intent": true,
+      "ready_to_schedule": false
+    },
+    "disposition": "needs_clarification",
+    "actions": [],
+    "missing_fields": [
+      "effective_date"
+    ],
+    "citations": [
+      "m1",
+      "m3",
+      "H08",
+      "H10",
+      "session",
+      "H16"
+    ],
+    "response": "The intended date is still ambiguous: November 12 or December 11, 2026. Please confirm which one you want. Your intent to cancel is recorded, but I cannot propose scheduling it until the effective date is clear."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/requested_date_text",
+      "operator": "eq",
+      "expected": "11/12/2026",
+      "critical": true,
+      "evidence": [
+        "m1"
+      ],
+      "rationale": "Retain the exact date string so the ambiguity is visible."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/effective_date",
+      "operator": "eq",
+      "expected": null,
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m3",
+        "H08"
+      ],
+      "rationale": "Two future dates are plausible and the customer has not selected one."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/cancel_intent",
+      "operator": "eq",
+      "expected": true,
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m3"
+      ],
+      "rationale": "The customer wants cancellation but not a guessed date."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/ready_to_schedule",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "m3",
+        "H10"
+      ],
+      "rationale": "H10 requires an explicit confirmed date as well as general intent."
+    },
+    {
+      "id": "C5",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "session",
+        "m1",
+        "m3",
+        "H08",
+        "H10"
+      ],
+      "rationale": "Only the explicitly requested and sufficiently authorized proposed actions are valid. Identity and policy selection are established, but the two valid future date interpretations remain unresolved. The missing prerequisite is effective_date alone."
+    },
+    {
+      "id": "C6",
+      "path": "/disposition",
+      "operator": "one_of",
+      "expected": [
+        "needs_clarification"
+      ],
+      "critical": true,
+      "evidence": [
+        "session",
+        "m1",
+        "m3",
+        "H08",
+        "H10"
+      ],
+      "rationale": "Identity and policy selection are established, but the two valid future date interpretations remain unresolved. The missing prerequisite is effective_date alone."
+    },
+    {
+      "id": "C7",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [
+        "effective_date"
+      ],
+      "critical": true,
+      "evidence": [
+        "session",
+        "m1",
+        "m3",
+        "H08",
+        "H10"
+      ],
+      "rationale": "Material unresolved prerequisites are effective_date. Identity and policy selection are established, but the two valid future date interpretations remain unresolved. The missing prerequisite is effective_date alone."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply asks for the intended cancellation date without choosing either interpretation from the policy address or locale.",
+      "evidence": [
+        "m1",
+        "m3",
+        "H08",
+        "H10"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply preserves the distinction between cancellation intent and authorization to schedule a specific date.",
+      "evidence": [
+        "m3",
+        "H10",
+        "H16"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Interpreting an ambiguous date using an unstated locale rule.",
+    "Treating general cancellation intent as consent to either possible date."
+  ],
+  "rationale": "Identity and policy selection are established, but the two valid future date interpretations remain unresolved. The missing prerequisite is effective_date alone."
+}

@@ -1,0 +1,110 @@
+{
+  "id": "ops_028",
+  "track": "support_ops",
+  "family": "claim_intake",
+  "split": "validation",
+  "scenario_group": "same_cause_separate_incident_dates",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Prepare the claim-routing decision from the supplied incident and existing claim. allowed action submit_claim_intake targets new_claim_draft with value {\"policy_id\":string,\"incident_ref\":\"r2\",\"contact_email\":string,\"review_reasons\":[]}. The incident_ref incorporates r2 exactly. Do not create an update to the old claim if this is a separate incident.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-28"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "policy",
+        "data": {
+          "policy_id": "P-28",
+          "authority": "issued",
+          "status": "active",
+          "starts_on": "2026-01-01",
+          "ends_on": "2027-01-01",
+          "named_insureds": [
+            "Robin Vale"
+          ],
+          "insured_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "mailing_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "personal_property_limit": 30000,
+          "liability_limit": 100000,
+          "deductible": 500,
+          "valuation": "replacement_cost",
+          "loss_of_use_limit": 6000
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "reported_incident",
+        "data": {
+          "event_date": "2026-10-06",
+          "event_location": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "reported_cause": "theft",
+          "property_description": "Robin Vale-owned bicycle, serial BIKE-SECOND-2",
+          "contact_email": "robin.vale@harbor.example"
+        }
+      },
+      {
+        "id": "r3",
+        "kind": "existing_claim",
+        "data": {
+          "policy_id": "P-28",
+          "claim_id": "CL-2801",
+          "event_date": "2026-09-02",
+          "cause": "theft",
+          "property_description": "Robin Vale-owned bicycle, serial BIKE-FIRST-1",
+          "status": "submitted"
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "I need to report another bicycle theft. The September case was for my old bicycle, BIKE-FIRST-1."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Is the October 6 incident in your new report the same event with a corrected date?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "No. I bought a replacement; BIKE-SECOND-2 was stolen in a separate incident on October 6 at home. Use the report and email I supplied."
+      }
+    ],
+    "form": {
+      "routing": {
+        "type": "string",
+        "nullable": false,
+        "description": "new_intake means a different incident; update_existing means a clear matching incident; clarify_duplicate means the match is uncertain.",
+        "enum": [
+          "new_intake",
+          "update_existing",
+          "clarify_duplicate"
+        ]
+      },
+      "incident_ref": {
+        "type": "string",
+        "nullable": false,
+        "description": "Supplied report record for the requested intake."
+      },
+      "existing_claim_to_update": {
+        "type": "string",
+        "nullable": true,
+        "description": "Existing claim ID to update, or null if none is the same incident."
+      },
+      "review_reasons": {
+        "type": "array",
+        "nullable": false,
+        "description": "Unordered workflow review reason codes; empty when none is established."
+      }
+    },
+    "allowed_actions": [
+      "submit_claim_intake"
+    ]
+  }
+}

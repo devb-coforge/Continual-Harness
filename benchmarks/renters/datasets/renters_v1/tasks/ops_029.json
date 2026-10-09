@@ -1,0 +1,111 @@
+{
+  "id": "ops_029",
+  "track": "support_ops",
+  "family": "policy_questions",
+  "split": "validation",
+  "scenario_group": "equal_authority_conflicting_deductible",
+  "difficulty": "adversarial",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Answer which deductible can be used for the requested illustration. If authoritative records conflict, keep the deductible and illustration unresolved. No claim submission is requested and no actions are allowed. Identify conflicting record IDs as an unordered list.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-29"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "policy",
+        "data": {
+          "policy_id": "P-29",
+          "authority": "issued",
+          "status": "active",
+          "starts_on": "2026-01-01",
+          "ends_on": "2027-01-01",
+          "named_insureds": [
+            "Robin Vale"
+          ],
+          "insured_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "mailing_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "personal_property_limit": 30000,
+          "liability_limit": 100000,
+          "deductible": 500,
+          "valuation": "replacement_cost",
+          "loss_of_use_limit": 6000,
+          "issued_at": "2026-01-01T10:00:00",
+          "revision": "signed-copy-A"
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "policy",
+        "data": {
+          "policy_id": "P-29",
+          "authority": "issued",
+          "status": "active",
+          "starts_on": "2026-01-01",
+          "ends_on": "2027-01-01",
+          "named_insureds": [
+            "Robin Vale"
+          ],
+          "insured_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "mailing_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "personal_property_limit": 30000,
+          "liability_limit": 100000,
+          "deductible": 1000,
+          "valuation": "replacement_cost",
+          "loss_of_use_limit": 6000,
+          "issued_at": "2026-01-01T10:00:00",
+          "revision": "signed-copy-B"
+        }
+      },
+      {
+        "id": "r3",
+        "kind": "document_status",
+        "data": {
+          "applies_to": [
+            "r1",
+            "r2"
+          ],
+          "status": "Both are issued declarations for the same term; neither is marked superseded and no precedence information is available."
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "Please show the illustrative ceiling for $2,000 of documented eligible smoke damage on October 5, 2026."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "The two issued copies show different deductibles."
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "Use $500 because that pays me more. They arrived together and I cannot tell which copy is correct."
+      }
+    ],
+    "form": {
+      "deductible": {
+        "type": "integer",
+        "nullable": true,
+        "description": "Authoritative applicable deductible in USD; null when unresolved."
+      },
+      "illustrative_ceiling": {
+        "type": "integer",
+        "nullable": true,
+        "description": "Requested nonsettlement arithmetic ceiling in USD; null when a required input is unresolved."
+      },
+      "conflicting_records": {
+        "type": "array",
+        "nullable": false,
+        "description": "Unordered record IDs whose equally authoritative values conflict."
+      }
+    },
+    "allowed_actions": []
+  }
+}

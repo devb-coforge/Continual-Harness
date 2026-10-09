@@ -1,0 +1,208 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Harborlight task v1",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^(ops|ext)_[0-9]{3}$"
+    },
+    "track": {
+      "enum": [
+        "support_ops",
+        "conversation_extraction"
+      ]
+    },
+    "family": {
+      "enum": [
+        "policy_questions",
+        "account_changes",
+        "claim_intake",
+        "application_filling",
+        "change_request_extraction",
+        "support_handoff"
+      ]
+    },
+    "split": {
+      "enum": [
+        "optimization",
+        "validation",
+        "test"
+      ]
+    },
+    "scenario_group": {
+      "type": "string",
+      "minLength": 1
+    },
+    "difficulty": {
+      "enum": [
+        "standard",
+        "challenging",
+        "adversarial"
+      ]
+    },
+    "input": {
+      "type": "object",
+      "properties": {
+        "as_of": {
+          "type": "string",
+          "format": "date"
+        },
+        "instruction": {
+          "type": "string",
+          "minLength": 1
+        },
+        "session": {
+          "type": "object",
+          "properties": {
+            "verified": {
+              "type": "boolean"
+            },
+            "role": {
+              "type": "string",
+              "minLength": 1
+            },
+            "policy_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "verified",
+            "role",
+            "policy_id"
+          ]
+        },
+        "records": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^r[0-9]+$"
+              },
+              "kind": {
+                "type": "string",
+                "minLength": 1
+              },
+              "data": {
+                "type": "object"
+              }
+            },
+            "required": [
+              "id",
+              "kind",
+              "data"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 0
+        },
+        "messages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^m[0-9]+$"
+              },
+              "role": {
+                "enum": [
+                  "customer",
+                  "bot",
+                  "agent",
+                  "third_party"
+                ]
+              },
+              "text": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "id",
+              "role",
+              "text"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 2
+        },
+        "form": {
+          "type": "object",
+          "minProperties": 1,
+          "propertyNames": {
+            "pattern": "^[a-z][a-z0-9_]*$"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "string",
+                  "integer",
+                  "number",
+                  "boolean",
+                  "array",
+                  "object"
+                ]
+              },
+              "nullable": {
+                "type": "boolean"
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1
+              },
+              "enum": {
+                "type": "array",
+                "items": {},
+                "minItems": 1,
+                "uniqueItems": true
+              }
+            },
+            "required": [
+              "type",
+              "nullable",
+              "description"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "allowed_actions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "as_of",
+        "instruction",
+        "session",
+        "records",
+        "messages",
+        "form",
+        "allowed_actions"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "id",
+    "track",
+    "family",
+    "split",
+    "scenario_group",
+    "difficulty",
+    "input"
+  ],
+  "additionalProperties": false
+}

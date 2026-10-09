@@ -1,0 +1,140 @@
+{
+  "task_id": "ops_007",
+  "reference_answer": {
+    "fields": {
+      "personal_property_limit": 30000,
+      "jewelry_theft_sublimit": 1500,
+      "sublimit_additional_to_property_limit": false,
+      "payment_estimate": null
+    },
+    "disposition": "answered",
+    "actions": [],
+    "missing_fields": [],
+    "citations": [
+      "r1",
+      "m1",
+      "m3",
+      "H06"
+    ],
+    "response": "The base jewelry-theft sublimit is $1,500 for this occurrence, shared by the necklace and earrings. It is within your $30,000 personal-property limit, not an extra amount or $1,500 per item. That sublimit is not a promised payment; I have not calculated a payout."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/personal_property_limit",
+      "operator": "eq",
+      "expected": 30000,
+      "critical": true,
+      "evidence": [
+        "r1"
+      ],
+      "rationale": "The issued declarations establish this limit."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/jewelry_theft_sublimit",
+      "operator": "eq",
+      "expected": 1500,
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m3",
+        "r1",
+        "H06"
+      ],
+      "rationale": "Both unscheduled jewelry items belong to the same theft occurrence and share the base sublimit."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/sublimit_additional_to_property_limit",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "H06"
+      ],
+      "rationale": "The jewelry limit sits within the personal-property limit."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/payment_estimate",
+      "operator": "eq",
+      "expected": null,
+      "critical": true,
+      "evidence": [
+        "m3",
+        "H06"
+      ],
+      "rationale": "The customer explicitly does not request illustrative arithmetic."
+    },
+    {
+      "id": "C5",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "r1",
+        "m1",
+        "m3",
+        "H06"
+      ],
+      "rationale": "The proposed actions must match the authorized scope, readiness, and supplied action shapes; no action has executed."
+    },
+    {
+      "id": "C6",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "r1",
+        "m1",
+        "m3",
+        "H06"
+      ],
+      "rationale": "Only material unresolved prerequisites for this requested workflow belong here."
+    },
+    {
+      "id": "C7",
+      "path": "/disposition",
+      "operator": "eq",
+      "expected": "answered",
+      "critical": true,
+      "evidence": [
+        "r1",
+        "m1",
+        "m3",
+        "H06"
+      ],
+      "rationale": "The issued total limit and base jewelry sublimit answer the narrow limit question without a payout calculation."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "Explains the $1,500 limit applies to the combined theft occurrence rather than separately to each jewelry item.",
+      "evidence": [
+        "m1",
+        "m3",
+        "H06"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "Does not present the sublimit as guaranteed payment or calculate a settlement after the customer declined an estimate.",
+      "evidence": [
+        "m3",
+        "H06"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Applying the overall contents limit to unscheduled jewelry",
+    "Multiplying the jewelry limit by item count",
+    "Calculating an unsolicited payment from an approximate value"
+  ],
+  "rationale": "The issued total limit and base jewelry sublimit answer the narrow limit question without a payout calculation."
+}

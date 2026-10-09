@@ -1,0 +1,209 @@
+{
+  "task_id": "ext_001",
+  "reference_answer": {
+    "fields": {
+      "applicant_name": "Nia Patel",
+      "contact_email": "nia.patel@example.test",
+      "insured_address": "14 Juniper Lane, Unit 4D, Larkhaven",
+      "occupancy_start": "2026-11-01",
+      "requested_start": "2026-10-30",
+      "personal_property_limit": 30000,
+      "liability_limit": 300000,
+      "deductible": 500,
+      "consent_to_submit": true
+    },
+    "disposition": "ready",
+    "actions": [],
+    "missing_fields": [],
+    "citations": [
+      "H02",
+      "H14",
+      "H15",
+      "H16",
+      "m1",
+      "m3",
+      "m5",
+      "m7"
+    ],
+    "response": "The application draft is complete with Unit 4D, an October 30 requested insurance start, and a November 1 move-in date. Your submission consent is recorded; insurance has not been issued."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/applicant_name",
+      "operator": "eq",
+      "expected": "Nia Patel",
+      "critical": true,
+      "evidence": [
+        "m1"
+      ],
+      "rationale": "The cited source establishes applicant_name; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/contact_email",
+      "operator": "eq",
+      "expected": "nia.patel@example.test",
+      "critical": true,
+      "evidence": [
+        "m1"
+      ],
+      "rationale": "The cited source establishes contact_email; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/insured_address",
+      "operator": "text_eq",
+      "expected": "14 Juniper Lane, Unit 4D, Larkhaven",
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m5",
+        "H02"
+      ],
+      "rationale": "The cited source establishes insured_address; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/occupancy_start",
+      "operator": "eq",
+      "expected": "2026-11-01",
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m5"
+      ],
+      "rationale": "The cited source establishes occupancy_start; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C5",
+      "path": "/fields/requested_start",
+      "operator": "eq",
+      "expected": "2026-10-30",
+      "critical": true,
+      "evidence": [
+        "m3",
+        "m5"
+      ],
+      "rationale": "The cited source establishes requested_start; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C6",
+      "path": "/fields/personal_property_limit",
+      "operator": "eq",
+      "expected": 30000,
+      "critical": true,
+      "evidence": [
+        "m3"
+      ],
+      "rationale": "The cited source establishes personal_property_limit; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C7",
+      "path": "/fields/liability_limit",
+      "operator": "eq",
+      "expected": 300000,
+      "critical": true,
+      "evidence": [
+        "m3"
+      ],
+      "rationale": "The cited source establishes liability_limit; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C8",
+      "path": "/fields/deductible",
+      "operator": "eq",
+      "expected": 500,
+      "critical": true,
+      "evidence": [
+        "m3"
+      ],
+      "rationale": "The cited source establishes deductible; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C9",
+      "path": "/fields/consent_to_submit",
+      "operator": "eq",
+      "expected": true,
+      "critical": true,
+      "evidence": [
+        "m7",
+        "H14"
+      ],
+      "rationale": "The cited source establishes consent_to_submit; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C10",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H16"
+      ],
+      "rationale": "This task requests document extraction only; no transaction is authorized by the task."
+    },
+    {
+      "id": "C11",
+      "path": "/disposition",
+      "operator": "one_of",
+      "expected": [
+        "ready"
+      ],
+      "critical": true,
+      "evidence": [
+        "H15",
+        "H16"
+      ],
+      "rationale": "The final unit correction governs the requested premises. Occupancy and desired start are separately confirmed, and explicit application consent is present."
+    },
+    {
+      "id": "C12",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H15",
+        "H16"
+      ],
+      "rationale": "Only these unresolved fields block the requested document workflow: none; optional uncertainty is preserved in the document."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply describes a complete application using the corrected Unit 4D and recorded submission consent, without claiming that insurance has been issued.",
+      "evidence": [
+        "H11",
+        "H14",
+        "H15",
+        "m1",
+        "m3",
+        "m5",
+        "m7"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply preserves the corrected Unit 4D and does not merge occupancy and requested insurance start.",
+      "evidence": [
+        "H02",
+        "H14",
+        "H15",
+        "m1",
+        "m3",
+        "m5",
+        "m7"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Retaining the earlier Unit 4B after the applicant corrects it to Unit 4D.",
+    "Merging the November 1 occupancy date with the October 30 requested insurance start.",
+    "Treating application-submission consent as an issued policy."
+  ],
+  "rationale": "The final unit correction governs the requested premises. Occupancy and desired start are separately confirmed, and explicit application consent is present."
+}

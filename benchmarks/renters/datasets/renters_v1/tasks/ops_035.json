@@ -1,0 +1,105 @@
+{
+  "id": "ops_035",
+  "track": "support_ops",
+  "family": "policy_questions",
+  "split": "validation",
+  "scenario_group": "loss_of_use_habitability_not_established",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Answer the loss-of-use eligibility question from the supplied facts. For eligibility use established, not_established, or unresolved. missing_fields must name only missing material prerequisites from this form; no application or claim submission is requested.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-35"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "policy",
+        "data": {
+          "policy_id": "P-35",
+          "authority": "issued",
+          "status": "active",
+          "starts_on": "2026-01-01",
+          "ends_on": "2027-01-01",
+          "named_insureds": [
+            "Robin Vale"
+          ],
+          "insured_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "mailing_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "personal_property_limit": 30000,
+          "liability_limit": 100000,
+          "deductible": 500,
+          "valuation": "replacement_cost",
+          "loss_of_use_limit": 6000
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "incident_report",
+        "data": {
+          "event_date": "2026-10-06",
+          "reported_cause": "accidental_fire",
+          "owned_property_affected": "Robin Vale-owned sofa",
+          "building_access": "Inspection pending; no finding on habitability supplied."
+        }
+      },
+      {
+        "id": "r3",
+        "kind": "expense",
+        "data": {
+          "category": "hotel",
+          "amount_usd": 260,
+          "additional_to_normal_expenses": true,
+          "status": "receipt_supplied"
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "A small accidental fire damaged my sofa two days ago. I paid $260 to stay at a hotel while the inspection is pending."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Has anyone established that the apartment is uninhabitable?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "I do not know yet. The inspector has not decided. Does having the hotel receipt mean my loss-of-use payment is certain?"
+      }
+    ],
+    "form": {
+      "covered_cause_reported": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Whether the stated cause falls within supplied base coverage; this does not approve the claim."
+      },
+      "home_uninhabitable": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "Whether uninhabitability is established true, explicitly ruled out false, or unknown null."
+      },
+      "eligibility": {
+        "type": "string",
+        "nullable": false,
+        "description": "established means supplied prerequisites hold; not_established means one is explicitly false; unresolved means a material prerequisite is unknown.",
+        "enum": [
+          "established",
+          "not_established",
+          "unresolved"
+        ]
+      },
+      "documented_additional_expense": {
+        "type": "integer",
+        "nullable": false,
+        "description": "Documented additional expense supplied in USD, without assuming eligibility."
+      }
+    },
+    "allowed_actions": []
+  }
+}

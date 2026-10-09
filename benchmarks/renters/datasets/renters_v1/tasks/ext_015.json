@@ -1,0 +1,119 @@
+{
+  "id": "ext_015",
+  "track": "conversation_extraction",
+  "family": "support_handoff",
+  "split": "optimization",
+  "scenario_group": "approved_refund_unpaid_amount_disputed",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Complete a disputed-refund handoff for billing staff. Disposition reflects staff review of the disputed amount; do not calculate a new amount. Fill exactly the specified document fields from the supplied conversation and records. Normalize dates to ISO YYYY-MM-DD. Copy names, addresses, emails, and identifiers with the spelling supplied. This is an extraction-only task; actions must be empty. In the response distinguish drafting from execution.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-EX015"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "billing",
+        "data": {
+          "policy_id": "P-EX015",
+          "approved_refund": 89.4,
+          "currency": "USD",
+          "payment_status": "pending",
+          "payment_date": null
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "issued_policy",
+        "data": {
+          "policy_id": "P-EX015",
+          "status": "canceled",
+          "canceled_on": "2026-10-01"
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "I canceled last week and expected $120 back. The chatbot said a refund was approved, so why has $120 not arrived?"
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Can you distinguish the amount you expected from the amount on the billing record?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "The billing screen says $89.40 approved, payment pending. I think that amount is wrong because I paid for a full month."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "Would you like a review of the amount or a status check only?"
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "Review the amount. Please keep the existing cancellation in place; I am not asking to reinstate."
+      },
+      {
+        "id": "m6",
+        "role": "bot",
+        "text": "What contact should billing use, and did anyone give an authoritative payment date?"
+      },
+      {
+        "id": "m7",
+        "role": "customer",
+        "text": "Use zuri.lake@post.example. No payment date is shown. A previous bot guessed Friday, but nobody from billing confirmed it."
+      }
+    ],
+    "form": {
+      "customer_expected_refund": {
+        "type": "integer",
+        "nullable": true,
+        "description": "Refund amount the customer says they expected, in USD; not an approved amount."
+      },
+      "recorded_approved_refund": {
+        "type": "number",
+        "nullable": true,
+        "description": "Approved refund amount from the authoritative billing record, in USD."
+      },
+      "recorded_payment_status": {
+        "type": "string",
+        "nullable": true,
+        "description": "Billing status copied from the supplied record.",
+        "enum": [
+          "pending",
+          "paid",
+          "rejected"
+        ]
+      },
+      "payment_date": {
+        "type": "string",
+        "nullable": true,
+        "description": "Authoritative recorded payment date; null if none."
+      },
+      "refund_amount_disputed": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "True when the customer expressly challenges the recorded refund amount."
+      },
+      "reinstatement_requested": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "True for current reinstatement request; false when expressly declined."
+      },
+      "contact_email": {
+        "type": "string",
+        "nullable": true,
+        "description": "Billing-review contact email supplied by the customer."
+      }
+    },
+    "allowed_actions": []
+  }
+}

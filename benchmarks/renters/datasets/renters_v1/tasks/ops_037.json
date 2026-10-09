@@ -1,0 +1,82 @@
+{
+  "id": "ops_037",
+  "track": "support_ops",
+  "family": "account_changes",
+  "split": "test",
+  "scenario_group": "ambiguous_numeric_cancellation_date",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Assess whether cancellation can be proposed. schedule_cancellation would target r1 with value {\"effective_date\":ISO date} only when the date is resolved and confirmed. Preserve the customer-entered date string in requested_date_text; use null for unresolved ISO date. Do not select a locale from the property address.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-37"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "policy",
+        "data": {
+          "policy_id": "P-37",
+          "authority": "issued",
+          "status": "active",
+          "starts_on": "2026-01-01",
+          "ends_on": "2027-01-01",
+          "named_insureds": [
+            "Robin Vale"
+          ],
+          "insured_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "mailing_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "personal_property_limit": 30000,
+          "liability_limit": 100000,
+          "deductible": 500,
+          "valuation": "replacement_cost",
+          "loss_of_use_limit": 6000
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "Please cancel P-37 on 11/12/2026."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Do you mean November 12 or December 11?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "I copied it from my travel reminder and cannot tell which format it used. I do want to cancel, but please get the intended date clear before scheduling anything."
+      }
+    ],
+    "form": {
+      "requested_date_text": {
+        "type": "string",
+        "nullable": false,
+        "description": "Copy the unresolved entered date string exactly."
+      },
+      "effective_date": {
+        "type": "string",
+        "nullable": true,
+        "description": "Confirmed cancellation date normalized to ISO, or null if ambiguous."
+      },
+      "cancel_intent": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Whether the customer expresses intent to cancel, independent of date completeness."
+      },
+      "ready_to_schedule": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Whether all cancellation prerequisites are satisfied."
+      }
+    },
+    "allowed_actions": [
+      "schedule_cancellation"
+    ]
+  }
+}

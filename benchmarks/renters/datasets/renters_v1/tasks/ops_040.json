@@ -1,0 +1,95 @@
+{
+  "id": "ops_040",
+  "track": "support_ops",
+  "family": "account_changes",
+  "split": "test",
+  "scenario_group": "move_requires_missing_unit_in_multiunit_destination",
+  "difficulty": "standard",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Assess the move request. schedule_move would target r1 with value {\"destination_ref\":\"r2\",\"unit\":string,\"effective_date\":ISO date} when the unit and destination/date consent are complete. r2 expressly represents a multiunit building. Do not infer a unit from the current insured address.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-40"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "policy",
+        "data": {
+          "policy_id": "P-40",
+          "authority": "issued",
+          "status": "active",
+          "starts_on": "2026-01-01",
+          "ends_on": "2027-01-01",
+          "named_insureds": [
+            "Robin Vale"
+          ],
+          "insured_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "mailing_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "personal_property_limit": 30000,
+          "liability_limit": 100000,
+          "deductible": 500,
+          "valuation": "replacement_cost",
+          "loss_of_use_limit": 6000
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "address",
+        "data": {
+          "street": "280 Heron Court",
+          "unit": null,
+          "city": "Alderport",
+          "state": "MA",
+          "postal_code": "01014",
+          "country": "US",
+          "building_type": "multiunit"
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "I approve moving my coverage to 280 Heron Court, Alderport, MA 01014, US on October 20, 2026."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Which apartment unit will you occupy there?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "It is definitely a multiunit building, but the landlord has not assigned my unit yet. My present Unit 4 number does not carry over."
+      }
+    ],
+    "form": {
+      "destination_ref": {
+        "type": "string",
+        "nullable": false,
+        "description": "Record containing the proposed new building address."
+      },
+      "unit": {
+        "type": "string",
+        "nullable": true,
+        "description": "Assigned destination apartment unit, or null when unresolved."
+      },
+      "effective_date": {
+        "type": "string",
+        "nullable": false,
+        "description": "Explicit requested move date, ISO YYYY-MM-DD."
+      },
+      "ready_to_schedule": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Whether the complete approved destination and date required by H09 are present."
+      }
+    },
+    "allowed_actions": [
+      "schedule_move"
+    ]
+  }
+}

@@ -1,0 +1,203 @@
+{
+  "task_id": "ext_038",
+  "reference_answer": {
+    "fields": {
+      "existing_claim_id": "CL-EX038",
+      "new_incident_event_date": "2026-10-01",
+      "new_incident_location": "48 Basin Park, Larkport, US",
+      "incident_relationship": "distinct",
+      "next_step": "prepare_new_intake",
+      "new_claim_id": null,
+      "contact_email": "jules.ash@post.example"
+    },
+    "disposition": "ready",
+    "actions": [],
+    "missing_fields": [],
+    "citations": [
+      "H13",
+      "H15",
+      "H16",
+      "m1",
+      "m3",
+      "m5",
+      "m6",
+      "m7",
+      "r1"
+    ],
+    "response": "The handoff prepares a separate bicycle-theft intake for October 1 at Basin Park. CL-EX038 concerns the morning phone theft at Quarry Station and should not be reused or merged. The bicycle report has no assigned claim reference yet; the draft uses jules.ash@post.example."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/existing_claim_id",
+      "operator": "eq",
+      "expected": "CL-EX038",
+      "critical": true,
+      "evidence": [
+        "r1",
+        "m1"
+      ],
+      "rationale": "The earlier reference belongs to the phone incident."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/new_incident_event_date",
+      "operator": "eq",
+      "expected": "2026-10-01",
+      "critical": true,
+      "evidence": [
+        "m6",
+        "m7"
+      ],
+      "rationale": "The customer confirms the same date for the second incident."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/new_incident_location",
+      "operator": "eq",
+      "expected": "48 Basin Park, Larkport, US",
+      "critical": true,
+      "evidence": [
+        "m3"
+      ],
+      "rationale": "The bicycle was taken from the park, not the station."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/incident_relationship",
+      "operator": "eq",
+      "expected": "distinct",
+      "critical": true,
+      "evidence": [
+        "m3",
+        "m5",
+        "m7",
+        "H13"
+      ],
+      "rationale": "The customer explicitly distinguishes trips, locations and stolen property."
+    },
+    {
+      "id": "C5",
+      "path": "/fields/next_step",
+      "operator": "eq",
+      "expected": "prepare_new_intake",
+      "critical": true,
+      "evidence": [
+        "m3",
+        "m5",
+        "H13"
+      ],
+      "rationale": "A distinct bicycle incident requires a new intake, not updating the phone claim."
+    },
+    {
+      "id": "C6",
+      "path": "/fields/new_claim_id",
+      "operator": "eq",
+      "expected": null,
+      "critical": true,
+      "evidence": [
+        "m5",
+        "r1",
+        "H13"
+      ],
+      "rationale": "The only supplied claim reference is for the phone."
+    },
+    {
+      "id": "C7",
+      "path": "/fields/contact_email",
+      "operator": "eq",
+      "expected": "jules.ash@post.example",
+      "critical": true,
+      "evidence": [
+        "m7"
+      ],
+      "rationale": "The contact channel is explicitly supplied."
+    },
+    {
+      "id": "C8",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H13",
+        "H15",
+        "H16",
+        "m1",
+        "m3",
+        "m5",
+        "m6",
+        "m7",
+        "r1"
+      ],
+      "rationale": "This is extraction into a draft document only; no executable actions are permitted."
+    },
+    {
+      "id": "C9",
+      "path": "/disposition",
+      "operator": "eq",
+      "expected": "ready",
+      "critical": true,
+      "evidence": [
+        "H13",
+        "H15",
+        "H16",
+        "m1",
+        "m3",
+        "m5",
+        "m6",
+        "m7",
+        "r1"
+      ],
+      "rationale": "The document and next step must reflect the case-specific readiness described in the instruction and evidence."
+    },
+    {
+      "id": "C10",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H13",
+        "H15",
+        "H16",
+        "m1",
+        "m3",
+        "m5",
+        "m6",
+        "m7",
+        "r1"
+      ],
+      "rationale": "Only unresolved material prerequisites for the specified workflow belong in this list; optional unknowns are not missing requirements."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply recognizes separate incidents from location/property/context despite the matching date and theft cause.",
+      "evidence": [
+        "m3",
+        "m5",
+        "m7",
+        "r1",
+        "H13"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply preserves the old claim reference for the phone and does not invent or reuse it as an assigned bicycle claim ID.",
+      "evidence": [
+        "r1",
+        "m5",
+        "H13"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Collapsing distinct losses into one claim because date and cause match.",
+    "Reusing an existing phone claim ID for a different bicycle theft."
+  ],
+  "rationale": "The earlier reference belongs to the phone incident. The customer confirms the same date for the second incident. The bicycle was taken from the park, not the station. The customer explicitly distinguishes trips, locations and stolen property. A distinct bicycle incident requires a new intake, not updating the phone claim. The only supplied claim reference is for the phone. The contact channel is explicitly supplied."
+}

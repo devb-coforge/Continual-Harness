@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Harborlight judgments v1",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string",
+        "minLength": 1
+      },
+      "passed": {
+        "type": "boolean"
+      },
+      "reason": {
+        "type": "string",
+        "minLength": 1
+      },
+      "evidence": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "minLength": 1
+        },
+        "minItems": 1,
+        "uniqueItems": true
+      }
+    },
+    "required": [
+      "id",
+      "passed",
+      "reason",
+      "evidence"
+    ],
+    "additionalProperties": false
+  },
+  "minItems": 1
+}

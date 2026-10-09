@@ -1,0 +1,196 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Harborlight oracle v1",
+  "type": "object",
+  "properties": {
+    "task_id": {
+      "type": "string",
+      "pattern": "^(ops|ext)_[0-9]{3}$"
+    },
+    "reference_answer": {
+      "type": "object",
+      "properties": {
+        "fields": {
+          "type": "object"
+        },
+        "disposition": {
+          "enum": [
+            "answered",
+            "ready",
+            "needs_clarification",
+            "escalate",
+            "partial",
+            "no_action"
+          ]
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "minLength": 1
+              },
+              "target": {
+                "type": "string",
+                "minLength": 1
+              },
+              "value": {}
+            },
+            "required": [
+              "type",
+              "target",
+              "value"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "missing_fields": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "citations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "response": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "fields",
+        "disposition",
+        "actions",
+        "missing_fields",
+        "citations",
+        "response"
+      ],
+      "additionalProperties": false
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string",
+            "pattern": "^/"
+          },
+          "operator": {
+            "enum": [
+              "eq",
+              "one_of",
+              "set_eq",
+              "contains",
+              "not_contains",
+              "text_eq"
+            ]
+          },
+          "expected": {},
+          "critical": {
+            "type": "boolean"
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 1,
+            "uniqueItems": true
+          },
+          "rationale": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "id",
+          "path",
+          "operator",
+          "expected",
+          "critical",
+          "evidence",
+          "rationale"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 4
+    },
+    "rubric": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "criterion": {
+            "type": "string",
+            "minLength": 1
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 1,
+            "uniqueItems": true
+          },
+          "critical": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "criterion",
+          "evidence",
+          "critical"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 2
+    },
+    "failure_modes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 2
+    },
+    "rationale": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "task_id",
+    "reference_answer",
+    "checks",
+    "rubric",
+    "failure_modes",
+    "rationale"
+  ],
+  "additionalProperties": false
+}

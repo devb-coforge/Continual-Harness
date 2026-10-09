@@ -1,0 +1,198 @@
+{
+  "task_id": "ext_041",
+  "reference_answer": {
+    "fields": {
+      "event_date": "2026-10-04",
+      "report_copy_received_date": "2026-10-06",
+      "event_location": "70 Beacon Station, Larkport, US",
+      "within_policy_interval": true,
+      "policy_status_today": "canceled",
+      "reinstatement_requested": false,
+      "contact_email": "nel.ward@post.example"
+    },
+    "disposition": "ready",
+    "actions": [],
+    "missing_fields": [],
+    "citations": [
+      "H02",
+      "H08",
+      "H12",
+      "H13",
+      "H15",
+      "H16",
+      "m3",
+      "m5",
+      "m7",
+      "r1"
+    ],
+    "response": "The handoff uses the corrected October 4 theft date and records October 6 only as the report-copy receipt date. October 4 falls within the supplied policy interval even though the policy is canceled today. The intake draft can proceed using nel.ward@post.example, without reinstatement or a payment promise."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/event_date",
+      "operator": "eq",
+      "expected": "2026-10-04",
+      "critical": true,
+      "evidence": [
+        "m3",
+        "H02"
+      ],
+      "rationale": "The station-report check explicitly corrects the incident date to October 4."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/report_copy_received_date",
+      "operator": "eq",
+      "expected": "2026-10-06",
+      "critical": true,
+      "evidence": [
+        "m3",
+        "H15"
+      ],
+      "rationale": "October 6 is a document-receipt date only."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/event_location",
+      "operator": "eq",
+      "expected": "70 Beacon Station, Larkport, US",
+      "critical": true,
+      "evidence": [
+        "m3"
+      ],
+      "rationale": "The station address is explicitly supplied."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/within_policy_interval",
+      "operator": "eq",
+      "expected": true,
+      "critical": true,
+      "evidence": [
+        "r1",
+        "m3",
+        "H08"
+      ],
+      "rationale": "October 4 precedes the exclusive October 5 end and follows September 1 start."
+    },
+    {
+      "id": "C5",
+      "path": "/fields/policy_status_today",
+      "operator": "eq",
+      "expected": "canceled",
+      "critical": true,
+      "evidence": [
+        "r1",
+        "H08"
+      ],
+      "rationale": "The policy is canceled as of October 8."
+    },
+    {
+      "id": "C6",
+      "path": "/fields/reinstatement_requested",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "m7",
+        "H02"
+      ],
+      "rationale": "The customer wants the existing cancellation preserved."
+    },
+    {
+      "id": "C7",
+      "path": "/fields/contact_email",
+      "operator": "eq",
+      "expected": "nel.ward@post.example",
+      "critical": true,
+      "evidence": [
+        "m5"
+      ],
+      "rationale": "The customer supplies the follow-up channel."
+    },
+    {
+      "id": "C8",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H02",
+        "H08",
+        "H15",
+        "H16",
+        "m3",
+        "m5",
+        "m7",
+        "r1"
+      ],
+      "rationale": "This is extraction into a draft document only; no executable actions are permitted."
+    },
+    {
+      "id": "C9",
+      "path": "/disposition",
+      "operator": "eq",
+      "expected": "ready",
+      "critical": true,
+      "evidence": [
+        "H02",
+        "H08",
+        "H15",
+        "H16",
+        "m3",
+        "m5",
+        "m7",
+        "r1"
+      ],
+      "rationale": "The document and next step must reflect the case-specific readiness described in the instruction and evidence."
+    },
+    {
+      "id": "C10",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H02",
+        "H08",
+        "H15",
+        "H16",
+        "m3",
+        "m5",
+        "m7",
+        "r1"
+      ],
+      "rationale": "Only unresolved material prerequisites for the specified workflow belong in this list; optional unknowns are not missing requirements."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply uses the corrected incident date and applies the historical policy interval instead of denying intake based on current cancellation.",
+      "evidence": [
+        "m3",
+        "r1",
+        "H08",
+        "H12"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply preserves cancellation and separates intake readiness from reinstatement and claim approval.",
+      "evidence": [
+        "m5",
+        "m7",
+        "H13",
+        "H16"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Using the report receipt date as the loss date after explicit correction.",
+    "Rejecting historical-loss intake solely because the policy is canceled today."
+  ],
+  "rationale": "The station-report check explicitly corrects the incident date to October 4. October 6 is a document-receipt date only. The station address is explicitly supplied. October 4 precedes the exclusive October 5 end and follows September 1 start. The policy is canceled as of October 8. The customer wants the existing cancellation preserved. The customer supplies the follow-up channel."
+}

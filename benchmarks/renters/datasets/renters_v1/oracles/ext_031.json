@@ -1,0 +1,210 @@
+{
+  "task_id": "ext_031",
+  "reference_answer": {
+    "fields": {
+      "documented_hotel_expense": 180,
+      "ordinary_monthly_rent": 1000,
+      "proposed_future_hotel_estimate": 270,
+      "habitability_confirmed": null,
+      "loss_of_use_limit": 3000,
+      "reimbursement_approved": false,
+      "contact_email": "ren.snow@post.example"
+    },
+    "disposition": "escalate",
+    "actions": [],
+    "missing_fields": [],
+    "citations": [
+      "H01",
+      "H07",
+      "H13",
+      "H15",
+      "H16",
+      "m3",
+      "m5",
+      "m7",
+      "r1",
+      "r2",
+      "r3"
+    ],
+    "response": "The handoff separates the documented $180 hotel stay, ordinary $1,000 rent, and unbooked $270 future estimate. Staff must establish whether displacement resulted from covered uninhabitability; the $3,000 limit is not approval. No reimbursement is promised, and the proposed future stay is not recorded as incurred."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/documented_hotel_expense",
+      "operator": "eq",
+      "expected": 180,
+      "critical": true,
+      "evidence": [
+        "m5",
+        "r2",
+        "H07"
+      ],
+      "rationale": "The supplied receipt documents $180 for two nights."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/ordinary_monthly_rent",
+      "operator": "eq",
+      "expected": 1000,
+      "critical": true,
+      "evidence": [
+        "m5",
+        "H07"
+      ],
+      "rationale": "The $1,000 is ordinary rent, not documented additional displacement expense."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/proposed_future_hotel_estimate",
+      "operator": "eq",
+      "expected": 270,
+      "critical": true,
+      "evidence": [
+        "m5",
+        "H15"
+      ],
+      "rationale": "The $270 is hypothetical future spending, not incurred expense."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/habitability_confirmed",
+      "operator": "eq",
+      "expected": null,
+      "critical": true,
+      "evidence": [
+        "m3",
+        "H07"
+      ],
+      "rationale": "The customer does not know the habitability finding."
+    },
+    {
+      "id": "C5",
+      "path": "/fields/loss_of_use_limit",
+      "operator": "eq",
+      "expected": 3000,
+      "critical": true,
+      "evidence": [
+        "r1",
+        "H01"
+      ],
+      "rationale": "The declaration supplies the applicable limit."
+    },
+    {
+      "id": "C6",
+      "path": "/fields/reimbursement_approved",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "r3",
+        "H13"
+      ],
+      "rationale": "The claim ledger records no reimbursement decision."
+    },
+    {
+      "id": "C7",
+      "path": "/fields/contact_email",
+      "operator": "eq",
+      "expected": "ren.snow@post.example",
+      "critical": true,
+      "evidence": [
+        "m7"
+      ],
+      "rationale": "The requested email is explicit."
+    },
+    {
+      "id": "C8",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H01",
+        "H07",
+        "H13",
+        "H15",
+        "H16",
+        "m3",
+        "m5",
+        "m7",
+        "r1",
+        "r2",
+        "r3"
+      ],
+      "rationale": "This is extraction into a draft document only; no executable actions are permitted."
+    },
+    {
+      "id": "C9",
+      "path": "/disposition",
+      "operator": "eq",
+      "expected": "escalate",
+      "critical": true,
+      "evidence": [
+        "H01",
+        "H07",
+        "H13",
+        "H15",
+        "H16",
+        "m3",
+        "m5",
+        "m7",
+        "r1",
+        "r2",
+        "r3"
+      ],
+      "rationale": "The document and next step must reflect the case-specific readiness described in the instruction and evidence."
+    },
+    {
+      "id": "C10",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H01",
+        "H07",
+        "H13",
+        "H15",
+        "H16",
+        "m3",
+        "m5",
+        "m7",
+        "r1",
+        "r2",
+        "r3"
+      ],
+      "rationale": "Only unresolved material prerequisites for the specified workflow belong in this list; optional unknowns are not missing requirements."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply does not treat ordinary rent or an unbooked estimated hotel extension as documented additional expenses.",
+      "evidence": [
+        "m5",
+        "r2",
+        "H07",
+        "H15"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply preserves unresolved habitability and no approval rather than making hotel choice or the loss-of-use limit sufficient for reimbursement.",
+      "evidence": [
+        "m3",
+        "r1",
+        "r3",
+        "H07",
+        "H13"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Summing ordinary rent and hypothetical nights into an approved loss-of-use claim.",
+    "Inferring uninhabitability solely because the customer chose a hotel."
+  ],
+  "rationale": "The supplied receipt documents $180 for two nights. The $1,000 is ordinary rent, not documented additional displacement expense. The $270 is hypothetical future spending, not incurred expense. The customer does not know the habitability finding. The declaration supplies the applicable limit. The claim ledger records no reimbursement decision. The requested email is explicit."
+}

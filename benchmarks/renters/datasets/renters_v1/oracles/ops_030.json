@@ -1,0 +1,189 @@
+{
+  "task_id": "ops_030",
+  "reference_answer": {
+    "fields": {
+      "quote_id": "Q-30-A",
+      "current_deductible": 1000,
+      "requested_deductible": 500,
+      "effective_date": "2026-11-01",
+      "accepted_premium_delta": 24
+    },
+    "disposition": "ready",
+    "actions": [
+      {
+        "type": "apply_accepted_quote",
+        "target": "r1",
+        "value": {
+          "quote_ref": "r2",
+          "effective_date": "2026-11-01",
+          "premium_delta_usd": 24
+        }
+      }
+    ],
+    "missing_fields": [],
+    "citations": [
+      "r2",
+      "m3",
+      "r1",
+      "H01",
+      "H08",
+      "H11",
+      "session",
+      "H16"
+    ],
+    "response": "Your exact acceptance supports proposing the $500 deductible change for November 1 with the quoted additional $24. The currently issued deductible remains $1,000 until the change is effective; this response does not confirm issuance."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/quote_id",
+      "operator": "eq",
+      "expected": "Q-30-A",
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m3"
+      ],
+      "rationale": "The customer names and accepts this exact available quote."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/current_deductible",
+      "operator": "eq",
+      "expected": 1000,
+      "critical": true,
+      "evidence": [
+        "r1",
+        "H01"
+      ],
+      "rationale": "Future acceptance has not changed the issued current deductible."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/requested_deductible",
+      "operator": "eq",
+      "expected": 500,
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m3"
+      ],
+      "rationale": "The selected quote has a $500 deductible."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/effective_date",
+      "operator": "eq",
+      "expected": "2026-11-01",
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m3",
+        "H08"
+      ],
+      "rationale": "The quote and explicit acceptance both name November 1."
+    },
+    {
+      "id": "C5",
+      "path": "/fields/accepted_premium_delta",
+      "operator": "eq",
+      "expected": 24,
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m3",
+        "H11"
+      ],
+      "rationale": "The additional $24 is explicitly accepted, not inferred."
+    },
+    {
+      "id": "C6",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [
+        {
+          "type": "apply_accepted_quote",
+          "target": "r1",
+          "value": {
+            "quote_ref": "r2",
+            "effective_date": "2026-11-01",
+            "premium_delta_usd": 24
+          }
+        }
+      ],
+      "critical": true,
+      "evidence": [
+        "session",
+        "r1",
+        "r2",
+        "m3",
+        "H11",
+        "H16"
+      ],
+      "rationale": "Only the explicitly requested and sufficiently authorized proposed actions are valid. The verified named insured explicitly accepts all quoted terms and requests scheduling; no additional acceptance is missing."
+    },
+    {
+      "id": "C7",
+      "path": "/disposition",
+      "operator": "one_of",
+      "expected": [
+        "ready"
+      ],
+      "critical": true,
+      "evidence": [
+        "session",
+        "r1",
+        "r2",
+        "m3",
+        "H11",
+        "H16"
+      ],
+      "rationale": "The verified named insured explicitly accepts all quoted terms and requests scheduling; no additional acceptance is missing."
+    },
+    {
+      "id": "C8",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "session",
+        "r1",
+        "r2",
+        "m3",
+        "H11",
+        "H16"
+      ],
+      "rationale": "Material unresolved prerequisites are absent for this requested workflow. The verified named insured explicitly accepts all quoted terms and requests scheduling; no additional acceptance is missing."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply distinguishes the currently issued deductible from the accepted future change.",
+      "evidence": [
+        "r1",
+        "r2",
+        "m3",
+        "H01",
+        "H11"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply recognizes complete quote/date/premium acceptance without asking for it again or falsely claiming the change executed.",
+      "evidence": [
+        "m3",
+        "H11",
+        "H16"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Deferring a fully accepted exact quote as though no consent exists.",
+    "Applying a future deductible to current coverage immediately."
+  ],
+  "rationale": "The verified named insured explicitly accepts all quoted terms and requests scheduling; no additional acceptance is missing."
+}

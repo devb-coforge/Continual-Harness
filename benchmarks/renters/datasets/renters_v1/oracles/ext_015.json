@@ -1,0 +1,207 @@
+{
+  "task_id": "ext_015",
+  "reference_answer": {
+    "fields": {
+      "customer_expected_refund": 120,
+      "recorded_approved_refund": 89.4,
+      "recorded_payment_status": "pending",
+      "payment_date": null,
+      "refund_amount_disputed": true,
+      "reinstatement_requested": false,
+      "contact_email": "zuri.lake@post.example"
+    },
+    "disposition": "escalate",
+    "actions": [],
+    "missing_fields": [],
+    "citations": [
+      "H02",
+      "H10",
+      "H13",
+      "H15",
+      "H16",
+      "m1",
+      "m3",
+      "m5",
+      "m7",
+      "r1"
+    ],
+    "response": "The handoff asks billing to review your $120 expectation against the recorded $89.40 approved refund. Payment is still pending with no recorded payment date. Your cancellation should remain in place; this draft does not issue a refund or request reinstatement."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/customer_expected_refund",
+      "operator": "eq",
+      "expected": 120,
+      "critical": true,
+      "evidence": [
+        "m1",
+        "H15"
+      ],
+      "rationale": "The customer expectation is $120."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/recorded_approved_refund",
+      "operator": "eq",
+      "expected": 89.4,
+      "critical": true,
+      "evidence": [
+        "r1",
+        "m3",
+        "H10"
+      ],
+      "rationale": "The record approves $89.40, not the amount demanded."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/recorded_payment_status",
+      "operator": "eq",
+      "expected": "pending",
+      "critical": true,
+      "evidence": [
+        "r1",
+        "H13"
+      ],
+      "rationale": "Approval has not resulted in completed payment."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/payment_date",
+      "operator": "eq",
+      "expected": null,
+      "critical": true,
+      "evidence": [
+        "r1",
+        "m7",
+        "H13"
+      ],
+      "rationale": "There is no recorded payment date and the bot guess is not authority."
+    },
+    {
+      "id": "C5",
+      "path": "/fields/refund_amount_disputed",
+      "operator": "eq",
+      "expected": true,
+      "critical": true,
+      "evidence": [
+        "m3",
+        "m5",
+        "H10"
+      ],
+      "rationale": "The customer requests review of the approved amount."
+    },
+    {
+      "id": "C6",
+      "path": "/fields/reinstatement_requested",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "m5",
+        "H02"
+      ],
+      "rationale": "The customer expressly wants the cancellation preserved."
+    },
+    {
+      "id": "C7",
+      "path": "/fields/contact_email",
+      "operator": "eq",
+      "expected": "zuri.lake@post.example",
+      "critical": true,
+      "evidence": [
+        "m7"
+      ],
+      "rationale": "The customer identifies this follow-up channel."
+    },
+    {
+      "id": "C8",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H02",
+        "H10",
+        "H13",
+        "H15",
+        "H16",
+        "m1",
+        "m3",
+        "m5",
+        "m7",
+        "r1"
+      ],
+      "rationale": "This is extraction into a draft document only; no executable actions are permitted."
+    },
+    {
+      "id": "C9",
+      "path": "/disposition",
+      "operator": "eq",
+      "expected": "escalate",
+      "critical": true,
+      "evidence": [
+        "H02",
+        "H10",
+        "H13",
+        "H15",
+        "H16",
+        "m1",
+        "m3",
+        "m5",
+        "m7",
+        "r1"
+      ],
+      "rationale": "The document and next step must reflect the case-specific readiness described in the instruction and evidence."
+    },
+    {
+      "id": "C10",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H02",
+        "H10",
+        "H13",
+        "H15",
+        "H16",
+        "m1",
+        "m3",
+        "m5",
+        "m7",
+        "r1"
+      ],
+      "rationale": "Only unresolved material prerequisites for the specified workflow belong in this list; optional unknowns are not missing requirements."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply separates the customer demand, approved amount, and pending payment status without recalculating a refund.",
+      "evidence": [
+        "m1",
+        "m3",
+        "r1",
+        "H10"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply does not repeat the guessed Friday deadline, claim payment completed, or request reinstatement.",
+      "evidence": [
+        "m5",
+        "m7",
+        "r1",
+        "H13"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Substituting the demanded refund for the approved billing amount.",
+    "Treating refund approval as completed payment and guessing an arrival date."
+  ],
+  "rationale": "The customer expectation is $120. The record approves $89.40, not the amount demanded. Approval has not resulted in completed payment. There is no recorded payment date and the bot guess is not authority. The customer requests review of the approved amount. The customer expressly wants the cancellation preserved. The customer identifies this follow-up channel."
+}

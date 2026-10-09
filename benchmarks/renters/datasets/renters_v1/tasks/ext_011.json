@@ -1,0 +1,93 @@
+{
+  "id": "ext_011",
+  "track": "conversation_extraction",
+  "family": "change_request_extraction",
+  "split": "optimization",
+  "scenario_group": "interested_party_destination_corrected_not_insured",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Complete an interested-party and proof-delivery request. Ready requires confirmed name, email, and delivery authorization. Fill exactly the specified document fields from the supplied conversation and records. Normalize dates to ISO YYYY-MM-DD. Copy names, addresses, emails, and identifiers with the spelling supplied. This is an extraction-only task; actions must be empty. In the response distinguish drafting from execution.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-EX011"
+    },
+    "records": [],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "My landlord is Morrow Grove Management. Add them so they get proof notices. Their old sheet says office@morrowgrove.example."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Do you want to add them as an insured person or an interested party?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "Interested party only. They own the building, not my belongings. Please send a copy of the current proof too."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "Which destination do you authorize for that copy and future notices?"
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "The new address is certificates@morrowgrove.example. Use that for both. The office address is retired; do not send there."
+      },
+      {
+        "id": "m6",
+        "role": "bot",
+        "text": "Please confirm the recipient name and that the issued coverage should remain unchanged."
+      },
+      {
+        "id": "m7",
+        "role": "customer",
+        "text": "I confirm Morrow Grove Management at certificates@morrowgrove.example for the proof and notices. Keep all insured people, limits, and dates as they are."
+      }
+    ],
+    "form": {
+      "recipient_name": {
+        "type": "string",
+        "nullable": true,
+        "description": "Confirmed interested-party name, copied exactly."
+      },
+      "recipient_email": {
+        "type": "string",
+        "nullable": true,
+        "description": "Latest confirmed destination email for proof/notices."
+      },
+      "recipient_role": {
+        "type": "string",
+        "nullable": true,
+        "description": "interested_party receives notices; named_insured is a covered person; unresolved means role unclear.",
+        "enum": [
+          "interested_party",
+          "named_insured",
+          "unresolved"
+        ]
+      },
+      "proof_delivery_authorized": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "True only for explicit approval of the specific recipient and destination."
+      },
+      "coverage_change_requested": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "True for a requested change to issued insureds/limits/dates; false for explicit preservation."
+      },
+      "retired_email": {
+        "type": "string",
+        "nullable": true,
+        "description": "Previously supplied email explicitly withdrawn from use; null if none."
+      }
+    },
+    "allowed_actions": []
+  }
+}

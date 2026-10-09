@@ -1,0 +1,217 @@
+{
+  "task_id": "ext_020",
+  "reference_answer": {
+    "fields": {
+      "clarified_cancellation_target": "autopay",
+      "autopay_recorded_enabled": false,
+      "autopay_disabled_on": "2026-10-07",
+      "policy_cancellation_requested": false,
+      "new_billing_action_requested": false,
+      "recorded_amount_due": 34,
+      "recorded_policy_status": "active"
+    },
+    "disposition": "no_action",
+    "actions": [],
+    "missing_fields": [],
+    "citations": [
+      "H01",
+      "H02",
+      "H10",
+      "H15",
+      "H16",
+      "m1",
+      "m3",
+      "m5",
+      "m7",
+      "r1",
+      "r2",
+      "r3"
+    ],
+    "response": "The correction documents that “cancel it” meant autopay only. Billing records show autopay was disabled October 7; the policy remains active and $34 is still due. No duplicate billing change, policy cancellation, or bill adjustment is requested."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/clarified_cancellation_target",
+      "operator": "eq",
+      "expected": "autopay",
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m3",
+        "H10"
+      ],
+      "rationale": "The customer explicitly distinguishes autopay from insurance."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/autopay_recorded_enabled",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "r1",
+        "H15"
+      ],
+      "rationale": "The billing event records completed disabling of autopay."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/autopay_disabled_on",
+      "operator": "eq",
+      "expected": "2026-10-07",
+      "critical": true,
+      "evidence": [
+        "r1"
+      ],
+      "rationale": "The billing ledger supplies the date."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/policy_cancellation_requested",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "m3",
+        "m7",
+        "H10"
+      ],
+      "rationale": "The customer explicitly asks to keep insurance active."
+    },
+    {
+      "id": "C5",
+      "path": "/fields/new_billing_action_requested",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "m5",
+        "m7",
+        "H02"
+      ],
+      "rationale": "The already completed billing action requires no duplicate request."
+    },
+    {
+      "id": "C6",
+      "path": "/fields/recorded_amount_due",
+      "operator": "eq",
+      "expected": 34,
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m5",
+        "H15"
+      ],
+      "rationale": "Disabling autopay has not paid the $34 bill."
+    },
+    {
+      "id": "C7",
+      "path": "/fields/recorded_policy_status",
+      "operator": "eq",
+      "expected": "active",
+      "critical": true,
+      "evidence": [
+        "r3",
+        "H01"
+      ],
+      "rationale": "The authoritative policy remains active."
+    },
+    {
+      "id": "C8",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H01",
+        "H02",
+        "H10",
+        "H15",
+        "H16",
+        "m1",
+        "m3",
+        "m5",
+        "m7",
+        "r1",
+        "r2",
+        "r3"
+      ],
+      "rationale": "This is extraction into a draft document only; no executable actions are permitted."
+    },
+    {
+      "id": "C9",
+      "path": "/disposition",
+      "operator": "eq",
+      "expected": "no_action",
+      "critical": true,
+      "evidence": [
+        "H01",
+        "H02",
+        "H10",
+        "H15",
+        "H16",
+        "m1",
+        "m3",
+        "m5",
+        "m7",
+        "r1",
+        "r2",
+        "r3"
+      ],
+      "rationale": "The document and next step must reflect the case-specific readiness described in the instruction and evidence."
+    },
+    {
+      "id": "C10",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H01",
+        "H02",
+        "H10",
+        "H15",
+        "H16",
+        "m1",
+        "m3",
+        "m5",
+        "m7",
+        "r1",
+        "r2",
+        "r3"
+      ],
+      "rationale": "Only unresolved material prerequisites for the specified workflow belong in this list; optional unknowns are not missing requirements."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply separates completed autopay disabling from policy cancellation and preserves active insurance.",
+      "evidence": [
+        "m1",
+        "m3",
+        "r1",
+        "r3",
+        "H10"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply does not treat autopay disabling as payment, debt forgiveness, or a request to repeat the transaction.",
+      "evidence": [
+        "m5",
+        "m7",
+        "r2",
+        "H15"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Canceling the insurance based on an ambiguous historical cancel utterance.",
+    "Recording the outstanding bill as paid because autopay was disabled."
+  ],
+  "rationale": "The customer explicitly distinguishes autopay from insurance. The billing event records completed disabling of autopay. The billing ledger supplies the date. The customer explicitly asks to keep insurance active. The already completed billing action requires no duplicate request. Disabling autopay has not paid the $34 bill. The authoritative policy remains active."
+}

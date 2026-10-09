@@ -1,0 +1,103 @@
+{
+  "id": "ext_001",
+  "track": "conversation_extraction",
+  "family": "application_filling",
+  "split": "optimization",
+  "scenario_group": "corrected_unit_and_separate_start",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Complete the renters insurance application draft from this chat. Include every declared field. Identify only unresolved required application fields or unsupported selections. Do not submit, bind, or change insurance.",
+    "session": {
+      "verified": false,
+      "role": "visitor",
+      "policy_id": null
+    },
+    "records": [],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "I am Nia Patel, nia.patel@example.test. I signed for 14 Juniper Lane, Unit 4B, Larkhaven. I move in November 1, 2026."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Do you want insurance on the move-in day, and have you selected coverage?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "Insurance should start October 30, 2026 for the boxes arriving early. I choose $30,000 belongings, $300,000 liability, and a $500 deductible."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "I have Unit 4B and an October 30 insurance start in the draft. Is that correct?"
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "The lease scan has a smudge: it is Unit 4D, not 4B. November 1 is still move-in. October 30 is still the insurance date."
+      },
+      {
+        "id": "m6",
+        "role": "bot",
+        "text": "Should I save this as a draft or submit the application?"
+      },
+      {
+        "id": "m7",
+        "role": "customer",
+        "text": "Please submit the application with the corrected unit. I understand this chat does not issue the policy."
+      }
+    ],
+    "form": {
+      "applicant_name": {
+        "type": "string",
+        "nullable": true,
+        "description": "Applicant full name as explicitly given, preserving spelling."
+      },
+      "contact_email": {
+        "type": "string",
+        "nullable": true,
+        "description": "Applicant contact email; do not substitute a landlord or another occupant email."
+      },
+      "insured_address": {
+        "type": "string",
+        "nullable": true,
+        "description": "Complete requested insured dwelling address including unit; null if no single complete address is established. Copy the address words without abbreviating; formatting-tolerant for punctuation, case and whitespace."
+      },
+      "occupancy_start": {
+        "type": "string",
+        "nullable": true,
+        "description": "Date applicant starts occupying the dwelling, ISO YYYY-MM-DD; null if unresolved."
+      },
+      "requested_start": {
+        "type": "string",
+        "nullable": true,
+        "description": "Explicitly requested insurance start date, ISO YYYY-MM-DD; separate from occupancy date."
+      },
+      "personal_property_limit": {
+        "type": "integer",
+        "nullable": true,
+        "description": "Explicit selected personal-property limit in USD; retain unsupported requested numeric options and flag for clarification."
+      },
+      "liability_limit": {
+        "type": "integer",
+        "nullable": true,
+        "description": "Explicit selected liability limit in USD; null when unselected."
+      },
+      "deductible": {
+        "type": "integer",
+        "nullable": true,
+        "description": "Explicit selected deductible in USD; null when unselected."
+      },
+      "consent_to_submit": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "True only for explicit application submission consent, false for explicit decline, otherwise null."
+      }
+    },
+    "allowed_actions": []
+  }
+}

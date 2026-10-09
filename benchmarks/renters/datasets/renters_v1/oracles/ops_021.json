@@ -1,0 +1,175 @@
+{
+  "task_id": "ops_021",
+  "reference_answer": {
+    "fields": {
+      "reported_cause": "wear_and_tear",
+      "base_scope": "excluded",
+      "intake_ready": true,
+      "draft_record": "r2"
+    },
+    "disposition": "ready",
+    "actions": [
+      {
+        "type": "submit_draft",
+        "target": "r2",
+        "value": {}
+      }
+    ],
+    "missing_fields": [],
+    "citations": [
+      "r2",
+      "m1",
+      "m3",
+      "H05",
+      "session",
+      "r3",
+      "H12",
+      "H13"
+    ],
+    "response": "The handbook’s base terms exclude wear and tear, and I will preserve that reported cause rather than relabeling it. Your confirmed draft still supplies the required intake facts, so I can propose submitting it for review as requested. This is not a formal denial, approval, or payment promise, and no submission has executed here."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/reported_cause",
+      "operator": "eq",
+      "expected": "wear_and_tear",
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m1",
+        "m3"
+      ],
+      "rationale": "The customer explicitly confirms ordinary wear and rejects a different label."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/base_scope",
+      "operator": "eq",
+      "expected": "excluded",
+      "critical": true,
+      "evidence": [
+        "r2",
+        "H05"
+      ],
+      "rationale": "Base terms expressly exclude wear and tear."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/intake_ready",
+      "operator": "eq",
+      "expected": true,
+      "critical": true,
+      "evidence": [
+        "session",
+        "r2",
+        "r3",
+        "m3",
+        "H12",
+        "H13"
+      ],
+      "rationale": "The bot may explain the exclusion but may not deny a claim or suppress otherwise permissible intake."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/draft_record",
+      "operator": "eq",
+      "expected": "r2",
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m1",
+        "m3"
+      ],
+      "rationale": "The customer confirms this complete draft."
+    },
+    {
+      "id": "C5",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [
+        {
+          "type": "submit_draft",
+          "target": "r2",
+          "value": {}
+        }
+      ],
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m1",
+        "m3",
+        "H05",
+        "session",
+        "r3",
+        "H12",
+        "H13"
+      ],
+      "rationale": "The proposed actions must match the authorized scope, readiness, and supplied action shapes; no action has executed."
+    },
+    {
+      "id": "C6",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m1",
+        "m3",
+        "H05",
+        "session",
+        "r3",
+        "H12",
+        "H13"
+      ],
+      "rationale": "Only material unresolved prerequisites for this requested workflow belong here."
+    },
+    {
+      "id": "C7",
+      "path": "/disposition",
+      "operator": "eq",
+      "expected": "ready",
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m1",
+        "m3",
+        "H05",
+        "session",
+        "r3",
+        "H12",
+        "H13"
+      ],
+      "rationale": "Coverage scope and intake permission are separate: the reported cause is excluded by base terms, but the complete authorized intake can be proposed."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "Accurately explains the wear-and-tear exclusion while preserving the customer’s cause rather than rewriting it to obtain coverage.",
+      "evidence": [
+        "m3",
+        "H02",
+        "H05"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "Allows otherwise complete authorized intake and does not issue a formal claim denial or misrepresent scope explanation as adjudication.",
+      "evidence": [
+        "r2",
+        "H12",
+        "H13"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Denying a claim or refusing all intake based solely on a base exclusion",
+    "Changing reported cause to an included event",
+    "Promising coverage because intake is allowed"
+  ],
+  "rationale": "Coverage scope and intake permission are separate: the reported cause is excluded by base terms, but the complete authorized intake can be proposed."
+}

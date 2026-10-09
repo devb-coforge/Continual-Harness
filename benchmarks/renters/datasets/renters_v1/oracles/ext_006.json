@@ -1,0 +1,199 @@
+{
+  "task_id": "ext_006",
+  "reference_answer": {
+    "fields": {
+      "event_date": "2026-10-07",
+      "event_location": "23 Fern Walk, Unit 5, Morrow, US",
+      "reported_cause": "unknown",
+      "property_owner": "customer",
+      "contact_email": "omar.hill@post.example",
+      "photos_status": "pending",
+      "intake_readiness": "ready_with_cause_review"
+    },
+    "disposition": "ready",
+    "actions": [],
+    "missing_fields": [],
+    "citations": [
+      "H05",
+      "H12",
+      "H13",
+      "H15",
+      "H16",
+      "m1",
+      "m3",
+      "m5",
+      "m7",
+      "session"
+    ],
+    "response": "The handoff can support a sofa-damage intake for October 7 at Fern Walk, with cause explicitly unknown and photos pending. Staff should review the cause; neither flood exclusion nor pipe coverage can be determined from the current report. Intake has not been submitted by this extraction."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/event_date",
+      "operator": "eq",
+      "expected": "2026-10-07",
+      "critical": true,
+      "evidence": [
+        "m5"
+      ],
+      "rationale": "The customer explicitly confirms the date."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/event_location",
+      "operator": "eq",
+      "expected": "23 Fern Walk, Unit 5, Morrow, US",
+      "critical": true,
+      "evidence": [
+        "m5"
+      ],
+      "rationale": "The location is explicitly supplied."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/reported_cause",
+      "operator": "eq",
+      "expected": "unknown",
+      "critical": true,
+      "evidence": [
+        "m3",
+        "m7",
+        "H05"
+      ],
+      "rationale": "The initial flood label is corrected to unknown; the manager has not inspected."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/property_owner",
+      "operator": "eq",
+      "expected": "customer",
+      "critical": true,
+      "evidence": [
+        "m5",
+        "H15"
+      ],
+      "rationale": "The customer reports ownership without independent verification."
+    },
+    {
+      "id": "C5",
+      "path": "/fields/contact_email",
+      "operator": "eq",
+      "expected": "omar.hill@post.example",
+      "critical": true,
+      "evidence": [
+        "m5"
+      ],
+      "rationale": "The customer directly supplies the contact channel."
+    },
+    {
+      "id": "C6",
+      "path": "/fields/photos_status",
+      "operator": "eq",
+      "expected": "pending",
+      "critical": true,
+      "evidence": [
+        "m7",
+        "H15"
+      ],
+      "rationale": "The photos are promised but not sent."
+    },
+    {
+      "id": "C7",
+      "path": "/fields/intake_readiness",
+      "operator": "eq",
+      "expected": "ready_with_cause_review",
+      "critical": true,
+      "evidence": [
+        "session",
+        "m5",
+        "m7",
+        "H12"
+      ],
+      "rationale": "Policy, date, location, sofa description and contact are supplied; unknown cause is permissible."
+    },
+    {
+      "id": "C8",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H05",
+        "H12",
+        "H15",
+        "H16",
+        "m3",
+        "m5",
+        "m7",
+        "session"
+      ],
+      "rationale": "This is extraction into a draft document only; no executable actions are permitted."
+    },
+    {
+      "id": "C9",
+      "path": "/disposition",
+      "operator": "eq",
+      "expected": "ready",
+      "critical": true,
+      "evidence": [
+        "H05",
+        "H12",
+        "H15",
+        "H16",
+        "m3",
+        "m5",
+        "m7",
+        "session"
+      ],
+      "rationale": "The document and next step must reflect the case-specific readiness described in the instruction and evidence."
+    },
+    {
+      "id": "C10",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H05",
+        "H12",
+        "H15",
+        "H16",
+        "m3",
+        "m5",
+        "m7",
+        "session"
+      ],
+      "rationale": "Only unresolved material prerequisites for the specified workflow belong in this list; optional unknowns are not missing requirements."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply preserves cause uncertainty and does not infer either flood or pipe coverage from the label or manager speculation.",
+      "evidence": [
+        "m1",
+        "m3",
+        "m7",
+        "H05"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply allows otherwise complete intake with an unknown cause and does not claim photos were received or payment approved.",
+      "evidence": [
+        "m5",
+        "m7",
+        "H12",
+        "H13"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Rejecting intake solely because the customer initially typed flood.",
+    "Treating a possible pipe explanation as established cause."
+  ],
+  "rationale": "The customer explicitly confirms the date. The location is explicitly supplied. The initial flood label is corrected to unknown; the manager has not inspected. The customer reports ownership without independent verification. The customer directly supplies the contact channel. The photos are promised but not sent. Policy, date, location, sofa description and contact are supplied; unknown cause is permissible."
+}

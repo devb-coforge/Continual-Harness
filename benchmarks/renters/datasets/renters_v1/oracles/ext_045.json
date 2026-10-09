@@ -1,0 +1,210 @@
+{
+  "task_id": "ext_045",
+  "reference_answer": {
+    "fields": {
+      "applicant_name": "Nolan Avery",
+      "contact_email": "nolan.avery@example.test",
+      "insured_address": "16 Bracken Close, Unit 3, Northwater",
+      "occupancy_start": "2026-11-12",
+      "requested_start": null,
+      "personal_property_limit": 15000,
+      "liability_limit": 100000,
+      "deductible": 1000,
+      "consent_to_submit": false
+    },
+    "disposition": "needs_clarification",
+    "actions": [],
+    "missing_fields": [
+      "requested_start"
+    ],
+    "citations": [
+      "H08",
+      "H15",
+      "H16",
+      "m1",
+      "m3",
+      "m5",
+      "m7"
+    ],
+    "response": "The draft records the November 12 occupancy date, but the requested insurance start remains unresolved. Please confirm whether you intend November 12 or December 11; submission remains declined."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/applicant_name",
+      "operator": "eq",
+      "expected": "Nolan Avery",
+      "critical": true,
+      "evidence": [
+        "m1"
+      ],
+      "rationale": "The cited source establishes applicant_name; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/contact_email",
+      "operator": "eq",
+      "expected": "nolan.avery@example.test",
+      "critical": true,
+      "evidence": [
+        "m1"
+      ],
+      "rationale": "The cited source establishes contact_email; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/insured_address",
+      "operator": "text_eq",
+      "expected": "16 Bracken Close, Unit 3, Northwater",
+      "critical": true,
+      "evidence": [
+        "m1"
+      ],
+      "rationale": "The cited source establishes insured_address; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/occupancy_start",
+      "operator": "eq",
+      "expected": "2026-11-12",
+      "critical": true,
+      "evidence": [
+        "m1"
+      ],
+      "rationale": "The cited source establishes occupancy_start; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C5",
+      "path": "/fields/requested_start",
+      "operator": "eq",
+      "expected": null,
+      "critical": true,
+      "evidence": [
+        "m3",
+        "m5",
+        "m7",
+        "H08"
+      ],
+      "rationale": "The cited source establishes requested_start; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C6",
+      "path": "/fields/personal_property_limit",
+      "operator": "eq",
+      "expected": 15000,
+      "critical": true,
+      "evidence": [
+        "m5"
+      ],
+      "rationale": "The cited source establishes personal_property_limit; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C7",
+      "path": "/fields/liability_limit",
+      "operator": "eq",
+      "expected": 100000,
+      "critical": true,
+      "evidence": [
+        "m5"
+      ],
+      "rationale": "The cited source establishes liability_limit; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C8",
+      "path": "/fields/deductible",
+      "operator": "eq",
+      "expected": 1000,
+      "critical": true,
+      "evidence": [
+        "m5"
+      ],
+      "rationale": "The cited source establishes deductible; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C9",
+      "path": "/fields/consent_to_submit",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "m7"
+      ],
+      "rationale": "The cited source establishes consent_to_submit; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C10",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H16"
+      ],
+      "rationale": "This task requests document extraction only; no transaction is authorized by the task."
+    },
+    {
+      "id": "C11",
+      "path": "/disposition",
+      "operator": "one_of",
+      "expected": [
+        "needs_clarification"
+      ],
+      "critical": true,
+      "evidence": [
+        "H15",
+        "H16"
+      ],
+      "rationale": "The customer expressly identifies the ambiguous numeric format and has not chosen an interpretation. A clear occupancy date does not resolve the desired insurance start."
+    },
+    {
+      "id": "C12",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [
+        "requested_start"
+      ],
+      "critical": true,
+      "evidence": [
+        "H15",
+        "H16"
+      ],
+      "rationale": "Only these unresolved fields block the requested document workflow: requested_start"
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply describes an incomplete draft awaiting the requested insurance start and preserves the applicant’s explicit refusal to submit before resolving that date.",
+      "evidence": [
+        "H11",
+        "H14",
+        "H15",
+        "m1",
+        "m3",
+        "m5",
+        "m7"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply preserves the ambiguity rather than assuming the requested insurance starts on occupancy or applying a locale default.",
+      "evidence": [
+        "H02",
+        "H14",
+        "H15",
+        "m1",
+        "m3",
+        "m5",
+        "m7"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Applying a locale default to the explicitly ambiguous 11/12 date.",
+    "Using the clear November 12 occupancy date as implied insurance-start consent.",
+    "Choosing December 11 or November 12 despite the applicant asking to leave the meaning unresolved."
+  ],
+  "rationale": "The customer expressly identifies the ambiguous numeric format and has not chosen an interpretation. A clear occupancy date does not resolve the desired insurance start."
+}

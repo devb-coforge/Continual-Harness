@@ -1,0 +1,139 @@
+{
+  "task_id": "ops_044",
+  "reference_answer": {
+    "fields": {
+      "routing": "clarify_duplicate",
+      "possible_existing_claim": "CL-4401",
+      "incident_identity_resolved": false
+    },
+    "disposition": "needs_clarification",
+    "actions": [],
+    "missing_fields": [
+      "incident_identity"
+    ],
+    "citations": [
+      "r2",
+      "r3",
+      "m3",
+      "H13",
+      "m2",
+      "H16"
+    ],
+    "response": "CL-4401 may concern the same sofa smoke damage, but the date difference is unresolved. Please confirm whether there was one event or two and whether October 3 was only discovery. I will not propose a new intake or an update until that is clear."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/routing",
+      "operator": "eq",
+      "expected": "clarify_duplicate",
+      "critical": true,
+      "evidence": [
+        "r2",
+        "r3",
+        "m3",
+        "H13"
+      ],
+      "rationale": "Matching cause and property suggest duplication but conflicting dates and customer uncertainty prevent a clear match."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/possible_existing_claim",
+      "operator": "eq",
+      "expected": "CL-4401",
+      "critical": true,
+      "evidence": [
+        "r3",
+        "m2"
+      ],
+      "rationale": "CL-4401 is the supplied candidate, not a newly invented reference."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/incident_identity_resolved",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "m3",
+        "H13"
+      ],
+      "rationale": "The customer expressly cannot distinguish event date from discovery date or confirm event count."
+    },
+    {
+      "id": "C4",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "r2",
+        "r3",
+        "m3",
+        "H13"
+      ],
+      "rationale": "Only the explicitly requested and sufficiently authorized proposed actions are valid. This is explicitly an uncertain duplicate, not a confirmed different incident. The missing information is the identity relationship between the two reports, not already supplied location or contact."
+    },
+    {
+      "id": "C5",
+      "path": "/disposition",
+      "operator": "one_of",
+      "expected": [
+        "needs_clarification"
+      ],
+      "critical": true,
+      "evidence": [
+        "r2",
+        "r3",
+        "m3",
+        "H13"
+      ],
+      "rationale": "This is explicitly an uncertain duplicate, not a confirmed different incident. The missing information is the identity relationship between the two reports, not already supplied location or contact."
+    },
+    {
+      "id": "C6",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [
+        "incident_identity"
+      ],
+      "critical": true,
+      "evidence": [
+        "r2",
+        "r3",
+        "m3",
+        "H13"
+      ],
+      "rationale": "Material unresolved prerequisites are incident_identity. This is explicitly an uncertain duplicate, not a confirmed different incident. The missing information is the identity relationship between the two reports, not already supplied location or contact."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply names the supplied possible duplicate and asks for incident identity/date clarification without deciding that there were one or two events.",
+      "evidence": [
+        "r2",
+        "r3",
+        "m3",
+        "H13"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply does not submit a duplicate, overwrite the existing incident date, or invent another claim reference.",
+      "evidence": [
+        "r3",
+        "m3",
+        "H13",
+        "H16"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Creating a second claim whenever reported dates differ.",
+    "Merging reports solely because the cause and general property description match."
+  ],
+  "rationale": "This is explicitly an uncertain duplicate, not a confirmed different incident. The missing information is the identity relationship between the two reports, not already supplied location or contact."
+}

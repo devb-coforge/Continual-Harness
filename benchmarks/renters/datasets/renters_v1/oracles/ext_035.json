@@ -1,0 +1,211 @@
+{
+  "task_id": "ext_035",
+  "reference_answer": {
+    "fields": {
+      "applicant_name": "Mateo Quinn",
+      "contact_email": "mateo.quinn@example.test",
+      "insured_address": "115 Fern Row, Unit 1, Larch Bay",
+      "occupancy_start": "2026-10-28",
+      "requested_start": "2026-10-27",
+      "personal_property_limit": null,
+      "liability_limit": 100000,
+      "deductible": 500,
+      "consent_to_submit": false
+    },
+    "disposition": "needs_clarification",
+    "actions": [],
+    "missing_fields": [
+      "personal_property_limit"
+    ],
+    "citations": [
+      "H08",
+      "H14",
+      "H15",
+      "H16",
+      "m1",
+      "m3",
+      "m5",
+      "m7"
+    ],
+    "response": "The draft keeps the property limit unselected while you separate the inventory. The $30,000 estimate has not been turned into a coverage selection; submission remains declined."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/applicant_name",
+      "operator": "eq",
+      "expected": "Mateo Quinn",
+      "critical": true,
+      "evidence": [
+        "m1"
+      ],
+      "rationale": "The cited source establishes applicant_name; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/contact_email",
+      "operator": "eq",
+      "expected": "mateo.quinn@example.test",
+      "critical": true,
+      "evidence": [
+        "m1"
+      ],
+      "rationale": "The cited source establishes contact_email; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/insured_address",
+      "operator": "text_eq",
+      "expected": "115 Fern Row, Unit 1, Larch Bay",
+      "critical": true,
+      "evidence": [
+        "m1"
+      ],
+      "rationale": "The cited source establishes insured_address; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/occupancy_start",
+      "operator": "eq",
+      "expected": "2026-10-28",
+      "critical": true,
+      "evidence": [
+        "m1"
+      ],
+      "rationale": "The cited source establishes occupancy_start; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C5",
+      "path": "/fields/requested_start",
+      "operator": "eq",
+      "expected": "2026-10-27",
+      "critical": true,
+      "evidence": [
+        "m1",
+        "H08"
+      ],
+      "rationale": "The cited source establishes requested_start; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C6",
+      "path": "/fields/personal_property_limit",
+      "operator": "eq",
+      "expected": null,
+      "critical": true,
+      "evidence": [
+        "m3",
+        "m5",
+        "H14"
+      ],
+      "rationale": "The cited source establishes personal_property_limit; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C7",
+      "path": "/fields/liability_limit",
+      "operator": "eq",
+      "expected": 100000,
+      "critical": true,
+      "evidence": [
+        "m5"
+      ],
+      "rationale": "The cited source establishes liability_limit; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C8",
+      "path": "/fields/deductible",
+      "operator": "eq",
+      "expected": 500,
+      "critical": true,
+      "evidence": [
+        "m5"
+      ],
+      "rationale": "The cited source establishes deductible; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C9",
+      "path": "/fields/consent_to_submit",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "m7"
+      ],
+      "rationale": "The cited source establishes consent_to_submit; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C10",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H16"
+      ],
+      "rationale": "This task requests document extraction only; no transaction is authorized by the task."
+    },
+    {
+      "id": "C11",
+      "path": "/disposition",
+      "operator": "one_of",
+      "expected": [
+        "needs_clarification"
+      ],
+      "critical": true,
+      "evidence": [
+        "H15",
+        "H16"
+      ],
+      "rationale": "A household inventory estimate does not select a policy limit, especially when ownership is mixed. The October 27 statement is in the explicit 2026 October context."
+    },
+    {
+      "id": "C12",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [
+        "personal_property_limit"
+      ],
+      "critical": true,
+      "evidence": [
+        "H15",
+        "H16"
+      ],
+      "rationale": "Only these unresolved fields block the requested document workflow: personal_property_limit"
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply leaves the property selection unresolved while preserving the selected liability and deductible and the applicant’s instruction to hold submission.",
+      "evidence": [
+        "H11",
+        "H14",
+        "H15",
+        "m1",
+        "m3",
+        "m5",
+        "m7"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply distinguishes the approximate mixed-ownership inventory amount from a selected personal-property limit.",
+      "evidence": [
+        "H02",
+        "H14",
+        "H15",
+        "m1",
+        "m3",
+        "m5",
+        "m7"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Using an approximate inventory total as an explicitly selected property limit.",
+    "Treating a mixed-ownership inventory estimate as a verified valuation of the applicant’s belongings.",
+    "Following the bot’s proposed $30,000 selection despite the customer’s correction."
+  ],
+  "rationale": "A household inventory estimate does not select a policy limit, especially when ownership is mixed. The October 27 statement is in the explicit 2026 October context."
+}

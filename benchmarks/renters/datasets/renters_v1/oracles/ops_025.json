@@ -1,0 +1,144 @@
+{
+  "task_id": "ops_025",
+  "reference_answer": {
+    "fields": {
+      "items_within_personal_property_scope": [
+        "sofa"
+      ],
+      "items_outside_personal_property_scope": [
+        "kitchen_cabinets"
+      ],
+      "liability_allegation_present": false
+    },
+    "disposition": "answered",
+    "actions": [],
+    "missing_fields": [],
+    "citations": [
+      "m1",
+      "r1",
+      "H04",
+      "H08",
+      "m3",
+      "H07"
+    ],
+    "response": "Your own sofa fits the stated personal-property scope for this fire, subject to the policy terms. The built-in cabinets are part of the landlord’s building and do not belong under your personal-property coverage. You have not described a liability allegation, so I would not invent one or promise that liability coverage pays for the cabinets. This is not a claim approval."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/items_within_personal_property_scope",
+      "operator": "set_eq",
+      "expected": [
+        "sofa"
+      ],
+      "critical": true,
+      "evidence": [
+        "m1",
+        "r1",
+        "H04",
+        "H08"
+      ],
+      "rationale": "The sofa is owned by the named insured and damaged by fire within the policy interval."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/items_outside_personal_property_scope",
+      "operator": "set_eq",
+      "expected": [
+        "kitchen_cabinets"
+      ],
+      "critical": true,
+      "evidence": [
+        "m1",
+        "H04"
+      ],
+      "rationale": "The cabinets belong to the landlord’s building, which personal-property coverage does not cover."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/liability_allegation_present",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "m3",
+        "H07"
+      ],
+      "rationale": "The customer explicitly says there is no allegation or demand."
+    },
+    {
+      "id": "C4",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "m1",
+        "r1",
+        "H04",
+        "H08",
+        "m3",
+        "H07"
+      ],
+      "rationale": "The proposed actions must match the authorized scope, readiness, and supplied action shapes; no action has executed."
+    },
+    {
+      "id": "C5",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "m1",
+        "r1",
+        "H04",
+        "H08",
+        "m3",
+        "H07"
+      ],
+      "rationale": "Only material unresolved prerequisites for this requested workflow belong here."
+    },
+    {
+      "id": "C6",
+      "path": "/disposition",
+      "operator": "eq",
+      "expected": "answered",
+      "critical": true,
+      "evidence": [
+        "m1",
+        "r1",
+        "H04",
+        "H08",
+        "m3",
+        "H07"
+      ],
+      "rationale": "The two ownership categories are explicit; an informational separation is sufficient."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "Separately classifies the named insured’s sofa and the landlord’s built-in cabinets instead of treating all fire damage alike.",
+      "evidence": [
+        "m1",
+        "H04"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "Does not invent fault or a liability claim/payment route where the customer expressly reports no allegation.",
+      "evidence": [
+        "m3",
+        "H07",
+        "H13"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Treating built-in building fixtures as the tenant’s personal property",
+    "Inventing a liability allegation to cover building repairs"
+  ],
+  "rationale": "The two ownership categories are explicit; an informational separation is sufficient."
+}

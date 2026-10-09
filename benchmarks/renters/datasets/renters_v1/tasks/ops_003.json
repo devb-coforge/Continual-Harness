@@ -1,0 +1,129 @@
+{
+  "id": "ops_003",
+  "track": "support_ops",
+  "family": "claim_intake",
+  "split": "optimization",
+  "scenario_group": "complete_smoke_intake_receipt_pending",
+  "difficulty": "standard",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Prepare this claim intake using the supplied canonical records and message IDs. submit_claim targets the explicit new destination new_claim and its value is exactly the complete fields object specified by this form. Existing-claim search results are supplied. Do not execute the proposal or invent a claim ID.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-103"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "issued_declarations",
+        "data": {
+          "authority": "issued",
+          "policy_id": "P-103",
+          "named_insureds": [
+            "Ava Flint"
+          ],
+          "starts_on": "2026-01-01",
+          "ends_on": "2027-01-01",
+          "status_today": "active",
+          "personal_property_limit": 30000,
+          "deductible": 500,
+          "valuation_basis": "actual_cash_value",
+          "insured_address": "66 Willow Walk, Apt 9, Stonebridge, VT 05018, US"
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "customer_event_location",
+        "data": {
+          "address": "66 Willow Walk, Apt 9, Stonebridge, VT 05018, US"
+        }
+      },
+      {
+        "id": "r3",
+        "kind": "customer_contact",
+        "data": {
+          "channel": "email",
+          "destination": "ava.flint@inbox.example"
+        }
+      },
+      {
+        "id": "r4",
+        "kind": "existing_claim_search",
+        "data": {
+          "authority": "account_claim_records",
+          "policy_id": "P-103",
+          "matching_claims": []
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "Please report smoke damage to my own armchair and curtains after an accidental fire in the adjacent apartment on October 6, 2026. It happened in my insured apartment at Willow Walk. The building has been cleared safe and I am not in danger."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Do you want to submit intake using the Willow Walk event address and ava.flint@inbox.example contact shown here? Do you have purchase receipts?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "Yes, submit the intake with that address and email. I cannot find the receipt yet and do not know the value. Please list the receipt as pending instead of waiting for it."
+      }
+    ],
+    "form": {
+      "policy_id": {
+        "type": "string",
+        "nullable": false,
+        "description": "Policy identifier for the proposed claim intake."
+      },
+      "event_date": {
+        "type": "string",
+        "nullable": true,
+        "description": "Reported date in ISO format, or null if explicitly unknown."
+      },
+      "event_location_record": {
+        "type": "string",
+        "nullable": false,
+        "description": "Supplied record ID for the confirmed event location."
+      },
+      "reported_cause": {
+        "type": "string",
+        "nullable": false,
+        "description": "Normalize the customer-reported cause using the task vocabulary.",
+        "enum": [
+          "smoke",
+          "fire",
+          "theft",
+          "unknown"
+        ]
+      },
+      "description_message_ids": {
+        "type": "array",
+        "nullable": false,
+        "description": "Message IDs containing the customer’s affected-property/incident description, excluding logistics-only messages."
+      },
+      "contact_record": {
+        "type": "string",
+        "nullable": false,
+        "description": "Supplied record ID for the confirmed contact channel."
+      },
+      "pending_documents": {
+        "type": "array",
+        "nullable": false,
+        "description": "Documents explicitly described as pending; use document labels receipt, police_report, serial_number."
+      },
+      "reported_value": {
+        "type": "number",
+        "nullable": true,
+        "description": "Customer-reported monetary value in USD, null when unknown; never estimate it."
+      }
+    },
+    "allowed_actions": [
+      "submit_claim"
+    ]
+  }
+}

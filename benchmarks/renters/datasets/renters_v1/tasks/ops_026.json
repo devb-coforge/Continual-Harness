@@ -1,0 +1,111 @@
+{
+  "id": "ops_026",
+  "track": "support_ops",
+  "family": "policy_questions",
+  "split": "validation",
+  "scenario_group": "scheduled_item_scope_without_blanket_jewelry_extension",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Answer the coverage-limit question for the two listed jewelry items. This is informational only; do not calculate a payment or create claim intake. In fields use item IDs from r3 and list only the item IDs whose theft limit is changed by the issued endorsement.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-26"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "policy",
+        "data": {
+          "policy_id": "P-26",
+          "authority": "issued",
+          "status": "active",
+          "starts_on": "2026-01-01",
+          "ends_on": "2027-01-01",
+          "named_insureds": [
+            "Robin Vale"
+          ],
+          "insured_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "mailing_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "personal_property_limit": 30000,
+          "liability_limit": 100000,
+          "deductible": 250,
+          "valuation": "replacement_cost",
+          "loss_of_use_limit": 6000
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "endorsement",
+        "data": {
+          "authority": "issued",
+          "policy_id": "P-26",
+          "starts_on": "2026-02-01",
+          "ends_on": "2027-01-01",
+          "scheduled_item_id": "J-NECKLACE",
+          "theft_limit": 6000,
+          "scope": "This $6,000 limit replaces the base jewelry theft sublimit only for item J-NECKLACE. It does not extend to other jewelry."
+        }
+      },
+      {
+        "id": "r3",
+        "kind": "inventory",
+        "data": {
+          "items": [
+            {
+              "item_id": "J-NECKLACE",
+              "description": "opal necklace",
+              "owner": "Robin Vale"
+            },
+            {
+              "item_id": "J-RING",
+              "description": "plain gold ring",
+              "owner": "Robin Vale"
+            }
+          ]
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "Both my opal necklace and gold ring were stolen from home on October 6, 2026. I own both. The necklace was scheduled, so do both pieces get the $6,000 limit?"
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Are you asking for limits or for a payout calculation?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "Just explain which item the higher limit belongs to; I have not supplied values yet."
+      }
+    ],
+    "form": {
+      "scheduled_item_ids": {
+        "type": "array",
+        "nullable": false,
+        "description": "Unordered IDs from r3 to which the issued scheduled-item limit applies."
+      },
+      "scheduled_limit": {
+        "type": "integer",
+        "nullable": false,
+        "description": "Issued theft limit in USD for the scheduled item."
+      },
+      "other_jewelry_sublimit": {
+        "type": "integer",
+        "nullable": false,
+        "description": "Base jewelry theft sublimit in USD for jewelry outside that endorsement."
+      },
+      "payment_determined": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Whether these records establish a final claim payment."
+      }
+    },
+    "allowed_actions": []
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "id": "ext_033",
+  "track": "conversation_extraction",
+  "family": "change_request_extraction",
+  "split": "validation",
+  "scenario_group": "roommate_named_insured_landlord_notices_partial",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Complete a two-part change request. Disposition reflects readiness to add the insured person versus register the interested party. Use accepted_named_insured_quote in missing_fields while exact quote/date/premium acceptance required for the insured change is absent; the notice request is independent. Fill exactly the specified document fields from the supplied conversation and records. Normalize dates to ISO YYYY-MM-DD. Copy names, addresses, emails, and identifiers with the spelling supplied. This is an extraction-only task; actions must be empty. In the response distinguish drafting from execution.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-EX033"
+    },
+    "records": [],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "Please add Milo Vale, my roommate, as an insured person on October 20, 2026. Also add our landlord Mara Vale for proof notices."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Milo and Mara share a surname. Are they the same person or should both be insured?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "Different people. Only Milo should become an insured person. Mara is the landlord and should just receive notices at mara.vale@leasing.example."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "Have you received and accepted a quote that includes Milo, the October 20 date, and a premium?"
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "No quote yet. I want Milo added, but I cannot accept an unknown premium. Get me the quote first."
+      },
+      {
+        "id": "m6",
+        "role": "bot",
+        "text": "Should the landlord-notice request wait for that quote, or do you authorize it separately?"
+      },
+      {
+        "id": "m7",
+        "role": "customer",
+        "text": "Handle the notices separately. I confirm Mara Vale at mara.vale@leasing.example for interested-party notices. Do not make her insured or treat this as acceptance of Milo's quote."
+      }
+    ],
+    "form": {
+      "requested_new_named_insured": {
+        "type": "string",
+        "nullable": true,
+        "description": "Person requested for a quoted named-insured addition, copied exactly."
+      },
+      "named_insured_requested_date": {
+        "type": "string",
+        "nullable": true,
+        "description": "Requested effective date for the insured-person quote."
+      },
+      "named_insured_quote_accepted": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "True for exact quote/date/premium acceptance; false if expressly not accepted."
+      },
+      "interested_party_name": {
+        "type": "string",
+        "nullable": true,
+        "description": "Person confirmed for notices only, copied exactly."
+      },
+      "interested_party_email": {
+        "type": "string",
+        "nullable": true,
+        "description": "Confirmed email destination for interested-party notices."
+      },
+      "interested_party_request_confirmed": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "Whether name, destination, and independent notice request are explicitly confirmed by the authorized customer."
+      },
+      "same_person": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "True only if the conversation establishes the two names refer to one person; false if explicitly different."
+      }
+    },
+    "allowed_actions": []
+  }
+}

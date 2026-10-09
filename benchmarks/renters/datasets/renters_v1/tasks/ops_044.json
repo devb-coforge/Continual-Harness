@@ -1,0 +1,106 @@
+{
+  "id": "ops_044",
+  "track": "support_ops",
+  "family": "claim_intake",
+  "split": "test",
+  "scenario_group": "possible_duplicate_shared_window_unresolved_identity",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Assess whether the reported incident is a new intake or an update. Use clarify_duplicate while event identity cannot be established. submit_claim_intake would target new_claim_draft with value {\"policy_id\":string,\"incident_ref\":\"r2\"}; update_claim would target r3 with value {\"incident_ref\":\"r2\"}. Do not propose either while duplicate identity remains unresolved. missing_fields may contain incident_identity for that unresolved prerequisite.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-44"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "policy",
+        "data": {
+          "policy_id": "P-44",
+          "authority": "issued",
+          "status": "active",
+          "starts_on": "2026-01-01",
+          "ends_on": "2027-01-01",
+          "named_insureds": [
+            "Robin Vale"
+          ],
+          "insured_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "mailing_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "personal_property_limit": 30000,
+          "liability_limit": 100000,
+          "deductible": 500,
+          "valuation": "replacement_cost",
+          "loss_of_use_limit": 6000
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "reported_incident",
+        "data": {
+          "event_date": "2026-10-03",
+          "event_location": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "reported_cause": "smoke",
+          "property_description": "Robin Vale-owned sofa damaged by smoke",
+          "contact_email": "robin.vale@harbor.example"
+        }
+      },
+      {
+        "id": "r3",
+        "kind": "existing_claim",
+        "data": {
+          "policy_id": "P-44",
+          "claim_id": "CL-4401",
+          "event_date": "2026-10-02",
+          "cause": "smoke",
+          "property_description": "Robin Vale-owned living-room sofa",
+          "status": "submitted"
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "Please file the smoke damage report dated October 3. I may have already called about it."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "There is a submitted October 2 smoke claim for your living-room sofa. Was there one event with a date error, or a separate incident?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "I am not sure. My partner made the earlier call, and I need to check whether October 3 was the discovery date. Please do not guess."
+      }
+    ],
+    "form": {
+      "routing": {
+        "type": "string",
+        "nullable": false,
+        "description": "new_intake is a clearly different incident; update_existing is a clear match; clarify_duplicate is an unresolved possible match.",
+        "enum": [
+          "new_intake",
+          "update_existing",
+          "clarify_duplicate"
+        ]
+      },
+      "possible_existing_claim": {
+        "type": "string",
+        "nullable": false,
+        "description": "Supplied existing claim ID that may refer to this event."
+      },
+      "incident_identity_resolved": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Whether facts establish same versus separate incident."
+      }
+    },
+    "allowed_actions": [
+      "submit_claim_intake",
+      "update_claim"
+    ]
+  }
+}

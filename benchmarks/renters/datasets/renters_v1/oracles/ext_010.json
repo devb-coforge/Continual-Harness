@@ -1,0 +1,232 @@
+{
+  "task_id": "ext_010",
+  "reference_answer": {
+    "fields": {
+      "applicant_name": "Dev Malik",
+      "contact_email": "dev.malik@example.test",
+      "insured_address": "61 Lantern Court, Unit 6, Pine Harbor",
+      "occupancy_start": "2026-11-03",
+      "requested_start": "2026-11-03",
+      "personal_property_limit": 30000,
+      "liability_limit": 300000,
+      "deductible": 250,
+      "consent_to_submit": true,
+      "interested_party_name": "Crescent Homes",
+      "interested_party_email": "leasing@crescent.example.test"
+    },
+    "disposition": "ready",
+    "actions": [],
+    "missing_fields": [],
+    "citations": [
+      "H11",
+      "H15",
+      "H16",
+      "m1",
+      "m3",
+      "m5",
+      "m7"
+    ],
+    "response": "The draft records your $300,000 liability selection and your contact email. Crescent Homes is listed for notices at the authorized email, not as an insured. No coverage has been issued."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/applicant_name",
+      "operator": "eq",
+      "expected": "Dev Malik",
+      "critical": true,
+      "evidence": [
+        "m1"
+      ],
+      "rationale": "The cited source establishes applicant_name; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/contact_email",
+      "operator": "eq",
+      "expected": "dev.malik@example.test",
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m5"
+      ],
+      "rationale": "The cited source establishes contact_email; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/insured_address",
+      "operator": "text_eq",
+      "expected": "61 Lantern Court, Unit 6, Pine Harbor",
+      "critical": true,
+      "evidence": [
+        "m1"
+      ],
+      "rationale": "The cited source establishes insured_address; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/occupancy_start",
+      "operator": "eq",
+      "expected": "2026-11-03",
+      "critical": true,
+      "evidence": [
+        "m5"
+      ],
+      "rationale": "The cited source establishes occupancy_start; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C5",
+      "path": "/fields/requested_start",
+      "operator": "eq",
+      "expected": "2026-11-03",
+      "critical": true,
+      "evidence": [
+        "m5"
+      ],
+      "rationale": "The cited source establishes requested_start; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C6",
+      "path": "/fields/personal_property_limit",
+      "operator": "eq",
+      "expected": 30000,
+      "critical": true,
+      "evidence": [
+        "m3"
+      ],
+      "rationale": "The cited source establishes personal_property_limit; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C7",
+      "path": "/fields/liability_limit",
+      "operator": "eq",
+      "expected": 300000,
+      "critical": true,
+      "evidence": [
+        "m3"
+      ],
+      "rationale": "The cited source establishes liability_limit; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C8",
+      "path": "/fields/deductible",
+      "operator": "eq",
+      "expected": 250,
+      "critical": true,
+      "evidence": [
+        "m3"
+      ],
+      "rationale": "The cited source establishes deductible; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C9",
+      "path": "/fields/consent_to_submit",
+      "operator": "eq",
+      "expected": true,
+      "critical": true,
+      "evidence": [
+        "m7"
+      ],
+      "rationale": "The cited source establishes consent_to_submit; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C10",
+      "path": "/fields/interested_party_name",
+      "operator": "eq",
+      "expected": "Crescent Homes",
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m5",
+        "H11"
+      ],
+      "rationale": "The cited source establishes interested_party_name; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C11",
+      "path": "/fields/interested_party_email",
+      "operator": "eq",
+      "expected": "leasing@crescent.example.test",
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m7",
+        "H11"
+      ],
+      "rationale": "The cited source establishes interested_party_email; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C12",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H16"
+      ],
+      "rationale": "This task requests document extraction only; no transaction is authorized by the task."
+    },
+    {
+      "id": "C13",
+      "path": "/disposition",
+      "operator": "one_of",
+      "expected": [
+        "ready"
+      ],
+      "critical": true,
+      "evidence": [
+        "H15",
+        "H16"
+      ],
+      "rationale": "The lease requirement is a minimum, not the selected limit. The applicant and interested-party contact are distinct and third-party delivery consent is explicit."
+    },
+    {
+      "id": "C14",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H15",
+        "H16"
+      ],
+      "rationale": "Only these unresolved fields block the requested document workflow: none; optional uncertainty is preserved in the document."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply keeps the applicant contact email separate from the landlord’s authorized notice destination and describes the resulting application as a draft, not issued insurance.",
+      "evidence": [
+        "H11",
+        "H14",
+        "H15",
+        "m1",
+        "m3",
+        "m5",
+        "m7"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply does not replace the selected liability amount with the lease minimum or identify Crescent Homes as an insured.",
+      "evidence": [
+        "H02",
+        "H14",
+        "H15",
+        "m1",
+        "m3",
+        "m5",
+        "m7"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Replacing the applicant’s $300,000 liability selection with the landlord’s $100,000 minimum.",
+    "Using the leasing office email as the applicant contact.",
+    "Treating the landlord interested party as an insured person."
+  ],
+  "rationale": "The lease requirement is a minimum, not the selected limit. The applicant and interested-party contact are distinct and third-party delivery consent is explicit."
+}

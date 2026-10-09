@@ -1,0 +1,103 @@
+{
+  "id": "ext_032",
+  "track": "conversation_extraction",
+  "family": "application_filling",
+  "split": "validation",
+  "scenario_group": "corrected_email_not_contact_permission",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Complete the renters insurance application draft from this chat. Include every declared field. Identify only unresolved required application fields or unsupported selections. Do not submit, bind, or change insurance.",
+    "session": {
+      "verified": false,
+      "role": "visitor",
+      "policy_id": null
+    },
+    "records": [],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "My application name is Rowan DArcy, spelled R-o-w-a-n, D apostrophe A-r-c-y. Use rowan.old@example.test for now. Rental: 6 Copper Rise, Flat 2, Willow Reach."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "I entered Rowan DArcy with that email. What should the dates be?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "Please preserve the apostrophe: Rowan D'Arcy. Occupancy and requested coverage start October 22, 2026. Choose $50,000 property, $100,000 liability, $1,000 deductible."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "May we use your current account email for this application?"
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "Replace the email with rowan.new@example.test. The old inbox is closed. Email is fine for application contact, but that is not permission to submit yet."
+      },
+      {
+        "id": "m6",
+        "role": "bot",
+        "text": "Would you like to leave submission for later?"
+      },
+      {
+        "id": "m7",
+        "role": "customer",
+        "text": "Yes, do not submit. I only need the draft to check the spelling and email."
+      }
+    ],
+    "form": {
+      "applicant_name": {
+        "type": "string",
+        "nullable": true,
+        "description": "Applicant full name as explicitly given, preserving spelling."
+      },
+      "contact_email": {
+        "type": "string",
+        "nullable": true,
+        "description": "Applicant contact email; do not substitute a landlord or another occupant email."
+      },
+      "insured_address": {
+        "type": "string",
+        "nullable": true,
+        "description": "Complete requested insured dwelling address including unit; null if no single complete address is established. Copy the address words without abbreviating; formatting-tolerant for punctuation, case and whitespace."
+      },
+      "occupancy_start": {
+        "type": "string",
+        "nullable": true,
+        "description": "Date applicant starts occupying the dwelling, ISO YYYY-MM-DD; null if unresolved."
+      },
+      "requested_start": {
+        "type": "string",
+        "nullable": true,
+        "description": "Explicitly requested insurance start date, ISO YYYY-MM-DD; separate from occupancy date."
+      },
+      "personal_property_limit": {
+        "type": "integer",
+        "nullable": true,
+        "description": "Explicit selected personal-property limit in USD; retain unsupported requested numeric options and flag for clarification."
+      },
+      "liability_limit": {
+        "type": "integer",
+        "nullable": true,
+        "description": "Explicit selected liability limit in USD; null when unselected."
+      },
+      "deductible": {
+        "type": "integer",
+        "nullable": true,
+        "description": "Explicit selected deductible in USD; null when unselected."
+      },
+      "consent_to_submit": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "True only for explicit application submission consent, false for explicit decline, otherwise null."
+      }
+    },
+    "allowed_actions": []
+  }
+}

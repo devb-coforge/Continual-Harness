@@ -1,0 +1,151 @@
+{
+  "task_id": "ops_042",
+  "reference_answer": {
+    "fields": {
+      "reported_cause": "gradual_leakage",
+      "endorsement_active": true,
+      "endorsement_applies": false,
+      "coverage_scope": "excluded"
+    },
+    "disposition": "answered",
+    "actions": [],
+    "missing_fields": [],
+    "citations": [
+      "r3",
+      "m3",
+      "H05",
+      "r2",
+      "H08",
+      "H01",
+      "H16"
+    ],
+    "response": "The report describes gradual leakage, which the base policy excludes. Your backup endorsement is active, but it covers sewer or drain backup and does not change that exclusion. This explains the supplied scope; it is not a formal claim denial."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/reported_cause",
+      "operator": "eq",
+      "expected": "gradual_leakage",
+      "critical": true,
+      "evidence": [
+        "r3",
+        "m3",
+        "H05"
+      ],
+      "rationale": "The report describes slow leakage over months and explicitly rules out sudden rupture and backup."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/endorsement_active",
+      "operator": "eq",
+      "expected": true,
+      "critical": true,
+      "evidence": [
+        "r2",
+        "r3",
+        "H08"
+      ],
+      "rationale": "The October report date lies in the issued endorsement interval."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/endorsement_applies",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "r2",
+        "r3",
+        "H01",
+        "H05"
+      ],
+      "rationale": "Active status does not broaden backup-only scope to gradual leaks."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/coverage_scope",
+      "operator": "eq",
+      "expected": "excluded",
+      "critical": true,
+      "evidence": [
+        "r2",
+        "r3",
+        "H05"
+      ],
+      "rationale": "The base gradual-leakage exclusion remains unchanged by this endorsement."
+    },
+    {
+      "id": "C5",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "m3",
+        "r3",
+        "H05",
+        "H16"
+      ],
+      "rationale": "Only the explicitly requested and sufficiently authorized proposed actions are valid. The endorsement’s temporal validity is established, but its cause scope is narrower than water damage generally. The specific excluded gradual mechanism is supplied rather than inferred."
+    },
+    {
+      "id": "C6",
+      "path": "/disposition",
+      "operator": "one_of",
+      "expected": [
+        "answered"
+      ],
+      "critical": true,
+      "evidence": [
+        "m3",
+        "r3",
+        "H05",
+        "H16"
+      ],
+      "rationale": "The endorsement’s temporal validity is established, but its cause scope is narrower than water damage generally. The specific excluded gradual mechanism is supplied rather than inferred."
+    },
+    {
+      "id": "C7",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "m3",
+        "r3",
+        "H05",
+        "H16"
+      ],
+      "rationale": "Material unresolved prerequisites are absent for this requested workflow. The endorsement’s temporal validity is established, but its cause scope is narrower than water damage generally. The specific excluded gradual mechanism is supplied rather than inferred."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply distinguishes an active endorsement from an endorsement applicable to the established cause.",
+      "evidence": [
+        "r2",
+        "r3",
+        "H01",
+        "H05"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply does not reclassify months of slow dripping as sudden pipe escape or sewer backup merely because an add-on exists.",
+      "evidence": [
+        "r3",
+        "m3",
+        "H05"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Treating any active water endorsement as covering every type of water damage.",
+    "Ignoring the explicit gradual-cause finding and choosing a favorable sudden-event label."
+  ],
+  "rationale": "The endorsement’s temporal validity is established, but its cause scope is narrower than water damage generally. The specific excluded gradual mechanism is supplied rather than inferred."
+}

@@ -1,0 +1,156 @@
+{
+  "task_id": "ops_029",
+  "reference_answer": {
+    "fields": {
+      "deductible": null,
+      "illustrative_ceiling": null,
+      "conflicting_records": [
+        "r1",
+        "r2"
+      ]
+    },
+    "disposition": "escalate",
+    "actions": [],
+    "missing_fields": [
+      "deductible"
+    ],
+    "citations": [
+      "r1",
+      "r2",
+      "r3",
+      "H01",
+      "m1",
+      "H06",
+      "m3",
+      "H16"
+    ],
+    "response": "The two issued declarations conflict: r1 shows a $500 deductible and r2 shows $1,000, and neither is identified as superseded. Staff must resolve that conflict before I can calculate the illustration; your preference cannot select an issued deductible."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/deductible",
+      "operator": "eq",
+      "expected": null,
+      "critical": true,
+      "evidence": [
+        "r1",
+        "r2",
+        "r3",
+        "H01"
+      ],
+      "rationale": "Both issued declarations apply and no record outranks the other."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/illustrative_ceiling",
+      "operator": "eq",
+      "expected": null,
+      "critical": true,
+      "evidence": [
+        "m1",
+        "r1",
+        "r2",
+        "H06"
+      ],
+      "rationale": "The requested subtraction depends on the unresolved deductible."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/conflicting_records",
+      "operator": "set_eq",
+      "expected": [
+        "r1",
+        "r2"
+      ],
+      "critical": true,
+      "evidence": [
+        "r1",
+        "r2",
+        "r3"
+      ],
+      "rationale": "The conflicting values occur in these two issued declarations, not in the status note."
+    },
+    {
+      "id": "C4",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "r1",
+        "r2",
+        "r3",
+        "m3",
+        "H01",
+        "H06"
+      ],
+      "rationale": "Only the explicitly requested and sufficiently authorized proposed actions are valid. The task supplies no source-precedence rule that resolves the conflicting issued records. Staff resolution is necessary rather than a guessed calculation."
+    },
+    {
+      "id": "C5",
+      "path": "/disposition",
+      "operator": "one_of",
+      "expected": [
+        "escalate",
+        "needs_clarification"
+      ],
+      "critical": true,
+      "evidence": [
+        "r1",
+        "r2",
+        "r3",
+        "m3",
+        "H01",
+        "H06"
+      ],
+      "rationale": "The task supplies no source-precedence rule that resolves the conflicting issued records. Staff resolution is necessary rather than a guessed calculation."
+    },
+    {
+      "id": "C6",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [
+        "deductible"
+      ],
+      "critical": true,
+      "evidence": [
+        "r1",
+        "r2",
+        "r3",
+        "m3",
+        "H01",
+        "H06"
+      ],
+      "rationale": "Material unresolved prerequisites are deductible. The task supplies no source-precedence rule that resolves the conflicting issued records. Staff resolution is necessary rather than a guessed calculation."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply identifies the unresolved $500 versus $1,000 issued-deductible conflict and the need for staff review.",
+      "evidence": [
+        "r1",
+        "r2",
+        "r3",
+        "H01"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply does not use the favorable customer-selected deductible or state either possible arithmetic result as authoritative.",
+      "evidence": [
+        "m3",
+        "H01",
+        "H06"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Treating the customer preference as an amendment to issued coverage.",
+    "Silently preferring the first or last record when authority and term are equal."
+  ],
+  "rationale": "The task supplies no source-precedence rule that resolves the conflicting issued records. Staff resolution is necessary rather than a guessed calculation."
+}

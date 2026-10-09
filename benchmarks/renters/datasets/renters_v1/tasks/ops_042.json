@@ -1,0 +1,112 @@
+{
+  "id": "ops_042",
+  "track": "support_ops",
+  "family": "policy_questions",
+  "split": "test",
+  "scenario_group": "gradual_leak_not_within_backup_endorsement_scope",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Explain the scope for the documented damage. coverage_scope is included, excluded, or unresolved under issued documents for the reported cause. endorsement_applies asks whether the supplied endorsement covers that cause, not merely whether it is active. No payment or claim action is requested.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-42"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "policy",
+        "data": {
+          "policy_id": "P-42",
+          "authority": "issued",
+          "status": "active",
+          "starts_on": "2026-01-01",
+          "ends_on": "2027-01-01",
+          "named_insureds": [
+            "Robin Vale"
+          ],
+          "insured_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "mailing_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "personal_property_limit": 30000,
+          "liability_limit": 100000,
+          "deductible": 500,
+          "valuation": "replacement_cost",
+          "loss_of_use_limit": 6000
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "endorsement",
+        "data": {
+          "authority": "issued",
+          "policy_id": "P-42",
+          "starts_on": "2026-01-01",
+          "ends_on": "2027-01-01",
+          "coverage": "water_backup",
+          "scope": "Includes sewer or drain backup only. Other base exclusions remain unchanged.",
+          "limit_usd": 5000
+        }
+      },
+      {
+        "id": "r3",
+        "kind": "maintenance_report",
+        "data": {
+          "dated": "2026-10-07",
+          "finding": "A loose supply-pipe joint dripped slowly over several months. No sudden pipe rupture, sewer backup, or drain backup was found."
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "My own cabinet was damaged by water. I have the backup add-on, so is any pipe leak included?"
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "What did the maintenance inspection find about the cause?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "The report says months of slow dripping, not a sudden rupture or backed-up drain. Please use that finding in the coverage explanation."
+      }
+    ],
+    "form": {
+      "reported_cause": {
+        "type": "string",
+        "nullable": false,
+        "description": "Canonical cause classification established by the report.",
+        "enum": [
+          "gradual_leakage",
+          "sudden_supply_pipe_escape",
+          "sewer_or_drain_backup",
+          "unknown"
+        ]
+      },
+      "endorsement_active": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Whether the endorsement interval includes the supplied inspection/report date."
+      },
+      "endorsement_applies": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Whether the endorsement scope includes the established damage cause."
+      },
+      "coverage_scope": {
+        "type": "string",
+        "nullable": false,
+        "description": "Coverage scope for the reported facts, separate from a formal claim decision.",
+        "enum": [
+          "included",
+          "excluded",
+          "unresolved"
+        ]
+      }
+    },
+    "allowed_actions": []
+  }
+}

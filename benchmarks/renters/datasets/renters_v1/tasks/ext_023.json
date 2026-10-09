@@ -1,0 +1,92 @@
+{
+  "id": "ext_023",
+  "track": "conversation_extraction",
+  "family": "change_request_extraction",
+  "split": "optimization",
+  "scenario_group": "backdated_cancel_request_refund_unsupported",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Complete a cancellation-review request. Preserve an explicitly requested unsupported date in the form; staff review is the disposition, not an invitation to substitute another date. Fill exactly the specified document fields from the supplied conversation and records. Normalize dates to ISO YYYY-MM-DD. Copy names, addresses, emails, and identifiers with the spelling supplied. This is an extraction-only task; actions must be empty. In the response distinguish drafting from execution.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-EX023"
+    },
+    "records": [],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "I moved out on September 30, 2026. Please cancel the policy as of that day and refund everything since then."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Today is October 8. Are you confirming September 30, or would you accept cancellation today?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "September 30 is the date I want reviewed. Do not silently replace it with today; I may need the policy until staff resolve the dates."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "Do you have an approved refund amount from billing?"
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "No, I only calculated my own estimate of $12. That is not an approval."
+      },
+      {
+        "id": "m6",
+        "role": "bot",
+        "text": "Should the form authorize an immediate cancellation as an alternative?"
+      },
+      {
+        "id": "m7",
+        "role": "customer",
+        "text": "No. Send the requested September 30 date to staff for review. Do not cancel anything today or promise the $12."
+      }
+    ],
+    "form": {
+      "requested_cancellation_date": {
+        "type": "string",
+        "nullable": true,
+        "description": "Exact cancellation date the customer wants reviewed, even if unavailable through the bot."
+      },
+      "requested_date_is_backdated": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "True if requested cancellation precedes as_of."
+      },
+      "alternative_today_cancellation_consented": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "True only if customer approves an alternative immediate cancellation; false if expressly declined."
+      },
+      "customer_refund_estimate": {
+        "type": "integer",
+        "nullable": true,
+        "description": "Customer stated refund estimate in USD; not approved billing amount."
+      },
+      "approved_refund_amount": {
+        "type": "number",
+        "nullable": true,
+        "description": "Refund amount only from supplied billing approval; null if none."
+      },
+      "requested_next_step": {
+        "type": "string",
+        "nullable": true,
+        "description": "staff_review means staff must decide a request unavailable through the bot; prepare_cancellation means ordinary prerequisites met.",
+        "enum": [
+          "staff_review",
+          "prepare_cancellation"
+        ]
+      }
+    },
+    "allowed_actions": []
+  }
+}

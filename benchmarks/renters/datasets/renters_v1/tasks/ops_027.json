@@ -1,0 +1,97 @@
+{
+  "id": "ops_027",
+  "track": "support_ops",
+  "family": "account_changes",
+  "split": "validation",
+  "scenario_group": "foreign_destination_with_independent_mailing_request",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Assess both requested changes. Actions may use update_mailing_address targeting r1 with value {\"mailing_address_ref\":\"r2\"}; or refer_move_review targeting r1 with value {\"destination_ref\":\"r3\",\"effective_date\":ISO date,\"reason\":\"outside_us\"}. Address references mean copy exactly the address in that record. Propose each eligible action once; do not cancel coverage.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-27"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "policy",
+        "data": {
+          "policy_id": "P-27",
+          "authority": "issued",
+          "status": "active",
+          "starts_on": "2026-01-01",
+          "ends_on": "2027-01-01",
+          "named_insureds": [
+            "Robin Vale"
+          ],
+          "insured_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "mailing_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "personal_property_limit": 30000,
+          "liability_limit": 100000,
+          "deductible": 500,
+          "valuation": "replacement_cost",
+          "loss_of_use_limit": 6000
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "address",
+        "data": {
+          "address": "8 Lantern Road, Unit 2, Alderport, MA 01014, US"
+        }
+      },
+      {
+        "id": "r3",
+        "kind": "address",
+        "data": {
+          "address": "41 Maple Quay, Unit 9, Harborwick, ON A1A 1A1, Canada"
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "I am moving to the Canadian address in r3 on November 1, 2026. Please transfer my renters coverage there."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Should the mailing address move to Canada as well?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "No. Change only my mail to the US address in r2 today; I confirm that separately. Keep my current insurance until the relocation is reviewed."
+      }
+    ],
+    "form": {
+      "mailing_destination_ref": {
+        "type": "string",
+        "nullable": false,
+        "description": "Record ID containing the separately confirmed mailing destination."
+      },
+      "move_destination_ref": {
+        "type": "string",
+        "nullable": false,
+        "description": "Record ID containing the requested insured destination."
+      },
+      "move_effective_date": {
+        "type": "string",
+        "nullable": false,
+        "description": "Requested insured move date, ISO YYYY-MM-DD."
+      },
+      "insured_address_changes_today": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Whether an executable insured-address change may be proposed for today."
+      }
+    },
+    "allowed_actions": [
+      "update_mailing_address",
+      "refer_move_review"
+    ]
+  }
+}

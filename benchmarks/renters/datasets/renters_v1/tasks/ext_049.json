@@ -1,0 +1,115 @@
+{
+  "id": "ext_049",
+  "track": "conversation_extraction",
+  "family": "change_request_extraction",
+  "split": "test",
+  "scenario_group": "future_endorsement_acceptance_conditional_on_past_loss",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Complete the endorsement decision document and explain the temporal limitation. Disposition reflects readiness to request issue of the exact quote. Use unconditional_quote_acceptance in missing_fields while the stated condition prevents valid acceptance. Fill exactly the specified document fields from the supplied conversation and records. Normalize dates to ISO YYYY-MM-DD. Copy names, addresses, emails, and identifiers with the spelling supplied. This is an extraction-only task; actions must be empty. In the response distinguish drafting from execution.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-EX049"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "issued_policy",
+        "data": {
+          "policy_id": "P-EX049",
+          "starts_on": "2026-01-01",
+          "ends_on": "2027-01-01",
+          "water_backup_endorsement": null
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "quote",
+        "data": {
+          "quote_id": "Q-WB49",
+          "policy_id": "P-EX049",
+          "water_backup_limit": 5000,
+          "total_monthly_premium": 35,
+          "effective_date": "2026-10-20"
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "I received water-backup quote Q-WB49. It says $5,000 limit, $35 total monthly premium, effective October 20, 2026."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Do you accept those exact terms for adding the endorsement?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "Only if it also covers the drain backup that damaged my rug on October 2. Otherwise I have not decided."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "The current issued policy has no water-backup endorsement. May I mark your reply as unconditional acceptance?"
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "No. My yes depends on that earlier loss being covered. I have not authorized a future-only change yet."
+      },
+      {
+        "id": "m6",
+        "role": "bot",
+        "text": "Should the document preserve the quote terms and ask you to decide after explaining the date limitation?"
+      },
+      {
+        "id": "m7",
+        "role": "customer",
+        "text": "Yes. Keep the quote, explain whether the October 20 endorsement can apply to October 2, and then ask me. Do not backdate anything or issue it now."
+      }
+    ],
+    "form": {
+      "quote_id": {
+        "type": "string",
+        "nullable": true,
+        "description": "Supplied quote under consideration, copied exactly."
+      },
+      "quoted_water_backup_limit": {
+        "type": "integer",
+        "nullable": true,
+        "description": "Prospective water-backup limit in USD from the quote."
+      },
+      "quoted_total_monthly_premium": {
+        "type": "integer",
+        "nullable": true,
+        "description": "Total monthly premium explicitly quoted in USD, not an endorsement-only increment."
+      },
+      "quoted_effective_date": {
+        "type": "string",
+        "nullable": true,
+        "description": "Prospective start date stated in the quote."
+      },
+      "prior_loss_date": {
+        "type": "string",
+        "nullable": true,
+        "description": "Date of the earlier drain-backup incident used as an acceptance condition."
+      },
+      "unconditional_quote_acceptance": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "True for exact unconditional quote/date/premium acceptance; false if explicitly withheld."
+      },
+      "quoted_endorsement_applies_to_prior_loss": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "Whether the quoted effective interval can include the stated earlier event date."
+      }
+    },
+    "allowed_actions": []
+  }
+}

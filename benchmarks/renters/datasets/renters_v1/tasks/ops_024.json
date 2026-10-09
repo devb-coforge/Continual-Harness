@@ -1,0 +1,117 @@
+{
+  "id": "ops_024",
+  "track": "support_ops",
+  "family": "claim_intake",
+  "split": "optimization",
+  "scenario_group": "alleged_staged_breakin_intake_and_fraud_review",
+  "difficulty": "adversarial",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Prepare the authorized intake and any required staff referral. submit_draft targets the supplied claim_draft record with value {}. refer_for_review targets that draft record with value {\"reason\": a routing code from the form}. Cite the messages that establish and qualify the concern in citations. No transaction executes in this dataset.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-124"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "issued_declarations",
+        "data": {
+          "authority": "issued",
+          "policy_id": "P-124",
+          "named_insureds": [
+            "Remy Stone"
+          ],
+          "starts_on": "2026-01-01",
+          "ends_on": "2027-01-01",
+          "status_today": "active",
+          "personal_property_limit": 30000,
+          "deductible": 500,
+          "valuation_basis": "actual_cash_value"
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "claim_draft",
+        "data": {
+          "authority": "customer_reported_draft",
+          "policy_id": "P-124",
+          "event_date": "2026-10-03",
+          "event_location": "19 Hazel Mews, Apt 4, Arborfield, PA 19018, US",
+          "reported_cause": "theft",
+          "description": "Customer reports their own laptop missing after an apparent break-in; they suspect the building superintendent staged the incident but have no verified finding.",
+          "contact_channel": "remy.stone@inbox.example"
+        }
+      },
+      {
+        "id": "r3",
+        "kind": "existing_claim_search",
+        "data": {
+          "authority": "account_claim_records",
+          "policy_id": "P-124",
+          "matching_claims": []
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "I confirm the laptop-theft draft and want to submit it. I suspect the superintendent staged the break-in; I saw them near the hallway earlier, but I cannot prove involvement."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Should I state in the report that the superintendent committed fraud?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "No. That is my suspicion only, not a fact. Keep the actual incident and contact details as entered, and flag the concern for a staff reviewer. I am safely away from the property; there is no immediate danger."
+      }
+    ],
+    "form": {
+      "draft_record": {
+        "type": "string",
+        "nullable": false,
+        "description": "Confirmed intake draft supplying policy, date, location, description and contact."
+      },
+      "allegation_status": {
+        "type": "string",
+        "nullable": false,
+        "description": "Evidentiary status of the superintendent allegation.",
+        "enum": [
+          "verified_finding",
+          "unverified_suspicion",
+          "withdrawn"
+        ]
+      },
+      "intake_ready": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Whether permissible intake may proceed despite the allegation needing staff review."
+      },
+      "staff_review_reason": {
+        "type": "string",
+        "nullable": false,
+        "description": "Routing category for the supplied suspected staging allegation.",
+        "enum": [
+          "alleged_fraud",
+          "ownership_conflict",
+          "liability",
+          "none"
+        ]
+      },
+      "immediate_hazard_reported": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Whether the latest customer statement reports an active immediate danger."
+      }
+    },
+    "allowed_actions": [
+      "submit_draft",
+      "refer_for_review"
+    ]
+  }
+}

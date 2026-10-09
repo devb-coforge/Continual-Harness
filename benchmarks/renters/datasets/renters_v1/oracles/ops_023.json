@@ -1,0 +1,182 @@
+{
+  "task_id": "ops_023",
+  "reference_answer": {
+    "fields": {
+      "cancellation_date": "2026-10-31",
+      "cancellation_timing": "scheduled",
+      "active_today": true,
+      "approved_refund_amount": 42.75,
+      "refund_status": "approved_pending_disbursement"
+    },
+    "disposition": "ready",
+    "actions": [
+      {
+        "type": "schedule_cancellation",
+        "target": "r1",
+        "value": {
+          "effective_date": "2026-10-31"
+        }
+      }
+    ],
+    "missing_fields": [],
+    "citations": [
+      "m1",
+      "m3",
+      "as_of",
+      "H10",
+      "r1",
+      "r2"
+    ],
+    "response": "I can propose scheduling cancellation for October 31, 2026; the policy remains active today. Billing records an approved refund of $42.75 for that date with status approved pending disbursement. That does not show you have received it, and I cannot promise a payment date. The cancellation itself is only proposed here."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/cancellation_date",
+      "operator": "eq",
+      "expected": "2026-10-31",
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m3"
+      ],
+      "rationale": "The customer rejects immediate cancellation and confirms the future date."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/cancellation_timing",
+      "operator": "eq",
+      "expected": "scheduled",
+      "critical": true,
+      "evidence": [
+        "as_of",
+        "m3",
+        "H10"
+      ],
+      "rationale": "October 31 is in the future."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/active_today",
+      "operator": "eq",
+      "expected": true,
+      "critical": true,
+      "evidence": [
+        "r1",
+        "as_of",
+        "m3",
+        "H10"
+      ],
+      "rationale": "The current policy is active and the proposal has a future effective date."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/approved_refund_amount",
+      "operator": "eq",
+      "expected": 42.75,
+      "critical": true,
+      "evidence": [
+        "r2",
+        "H10"
+      ],
+      "rationale": "The amount is recorded and requires no inferred proration."
+    },
+    {
+      "id": "C5",
+      "path": "/fields/refund_status",
+      "operator": "eq",
+      "expected": "approved_pending_disbursement",
+      "critical": true,
+      "evidence": [
+        "r2"
+      ],
+      "rationale": "Approval is distinct from actual disbursement."
+    },
+    {
+      "id": "C6",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [
+        {
+          "type": "schedule_cancellation",
+          "target": "r1",
+          "value": {
+            "effective_date": "2026-10-31"
+          }
+        }
+      ],
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m3",
+        "as_of",
+        "H10",
+        "r1",
+        "r2"
+      ],
+      "rationale": "The proposed actions must match the authorized scope, readiness, and supplied action shapes; no action has executed."
+    },
+    {
+      "id": "C7",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m3",
+        "as_of",
+        "H10",
+        "r1",
+        "r2"
+      ],
+      "rationale": "Only material unresolved prerequisites for this requested workflow belong here."
+    },
+    {
+      "id": "C8",
+      "path": "/disposition",
+      "operator": "eq",
+      "expected": "ready",
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m3",
+        "as_of",
+        "H10",
+        "r1",
+        "r2"
+      ],
+      "rationale": "The authorized customer confirms the future date, and the matching approved billing record supports reporting only the recorded amount and status."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "Keeps the policy active today while using October 31 for the cancellation proposal, despite the bot’s immediate-cancellation suggestion.",
+      "evidence": [
+        "m2",
+        "m3",
+        "r1",
+        "H10"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "Reports exactly the recorded $42.75 approved-pending status without recalculating it, saying it was paid, or promising a disbursement date.",
+      "evidence": [
+        "r2",
+        "m3",
+        "H10",
+        "H13"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Executing future cancellation immediately",
+    "Confusing approved refund with paid refund",
+    "Calculating a new refund when an approved amount is supplied"
+  ],
+  "rationale": "The authorized customer confirms the future date, and the matching approved billing record supports reporting only the recorded amount and status."
+}

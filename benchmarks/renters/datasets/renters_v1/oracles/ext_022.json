@@ -1,0 +1,211 @@
+{
+  "task_id": "ext_022",
+  "reference_answer": {
+    "fields": {
+      "applicant_name": "Tessa Boone",
+      "contact_email": "tessa.boone@example.test",
+      "insured_address": "43 Cobalt Way, Unit 5, Fairhaven",
+      "occupancy_start": "2026-10-16",
+      "requested_start": "2026-10-16",
+      "personal_property_limit": 42000,
+      "liability_limit": 300000,
+      "deductible": 1000,
+      "consent_to_submit": true
+    },
+    "disposition": "escalate",
+    "actions": [],
+    "missing_fields": [
+      "personal_property_limit"
+    ],
+    "citations": [
+      "H14",
+      "H15",
+      "H16",
+      "m1",
+      "m3",
+      "m5",
+      "m7"
+    ],
+    "response": "The draft records your exact $42,000 property request and application-submission consent. That amount is outside the listed options and needs staff quote review; it has not been rounded or issued."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/applicant_name",
+      "operator": "eq",
+      "expected": "Tessa Boone",
+      "critical": true,
+      "evidence": [
+        "m1"
+      ],
+      "rationale": "The cited source establishes applicant_name; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/contact_email",
+      "operator": "eq",
+      "expected": "tessa.boone@example.test",
+      "critical": true,
+      "evidence": [
+        "m1"
+      ],
+      "rationale": "The cited source establishes contact_email; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/insured_address",
+      "operator": "text_eq",
+      "expected": "43 Cobalt Way, Unit 5, Fairhaven",
+      "critical": true,
+      "evidence": [
+        "m1"
+      ],
+      "rationale": "The cited source establishes insured_address; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/occupancy_start",
+      "operator": "eq",
+      "expected": "2026-10-16",
+      "critical": true,
+      "evidence": [
+        "m1"
+      ],
+      "rationale": "The cited source establishes occupancy_start; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C5",
+      "path": "/fields/requested_start",
+      "operator": "eq",
+      "expected": "2026-10-16",
+      "critical": true,
+      "evidence": [
+        "m1"
+      ],
+      "rationale": "The cited source establishes requested_start; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C6",
+      "path": "/fields/personal_property_limit",
+      "operator": "eq",
+      "expected": 42000,
+      "critical": true,
+      "evidence": [
+        "m3",
+        "m5",
+        "m7",
+        "H14"
+      ],
+      "rationale": "The cited source establishes personal_property_limit; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C7",
+      "path": "/fields/liability_limit",
+      "operator": "eq",
+      "expected": 300000,
+      "critical": true,
+      "evidence": [
+        "m5"
+      ],
+      "rationale": "The cited source establishes liability_limit; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C8",
+      "path": "/fields/deductible",
+      "operator": "eq",
+      "expected": 1000,
+      "critical": true,
+      "evidence": [
+        "m5"
+      ],
+      "rationale": "The cited source establishes deductible; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C9",
+      "path": "/fields/consent_to_submit",
+      "operator": "eq",
+      "expected": true,
+      "critical": true,
+      "evidence": [
+        "m7"
+      ],
+      "rationale": "The cited source establishes consent_to_submit; preserve the stated value and uncertainty under H15."
+    },
+    {
+      "id": "C10",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H16"
+      ],
+      "rationale": "This task requests document extraction only; no transaction is authorized by the task."
+    },
+    {
+      "id": "C11",
+      "path": "/disposition",
+      "operator": "one_of",
+      "expected": [
+        "escalate",
+        "needs_clarification"
+      ],
+      "critical": true,
+      "evidence": [
+        "H15",
+        "H16"
+      ],
+      "rationale": "The requested amount is explicit but unsupported by available options. Preserve it in the draft and flag that field for staff quote review or supported-option clarification; never round it."
+    },
+    {
+      "id": "C12",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [
+        "personal_property_limit"
+      ],
+      "critical": true,
+      "evidence": [
+        "H15",
+        "H16"
+      ],
+      "rationale": "Only these unresolved fields block the requested document workflow: personal_property_limit"
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply preserves application-submission consent while identifying the exact $42,000 property request as unsupported and needing staff quote review, without claiming issued coverage.",
+      "evidence": [
+        "H11",
+        "H14",
+        "H15",
+        "m1",
+        "m3",
+        "m5",
+        "m7"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply explains the unsupported $42,000 selection without silently replacing it with $30,000 or $50,000.",
+      "evidence": [
+        "H02",
+        "H14",
+        "H15",
+        "m1",
+        "m3",
+        "m5",
+        "m7"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Rounding the explicitly requested $42,000 property amount to $50,000 or $30,000.",
+    "Erasing the known requested amount as null instead of retaining it for review.",
+    "Treating consent to submit for review as acceptance or issuance of unavailable coverage."
+  ],
+  "rationale": "The requested amount is explicit but unsupported by available options. Preserve it in the draft and flag that field for staff quote review or supported-option clarification; never round it."
+}

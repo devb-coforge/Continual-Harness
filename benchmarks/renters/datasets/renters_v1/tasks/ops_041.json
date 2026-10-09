@@ -1,0 +1,115 @@
+{
+  "id": "ops_041",
+  "track": "support_ops",
+  "family": "claim_intake",
+  "split": "test",
+  "scenario_group": "conflicting_ownership_preserved_with_review",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Assess intake of the reported theft while preserving conflicting ownership evidence. submit_claim_intake targets new_claim_draft with value {\"policy_id\":string,\"incident_ref\":\"r2\",\"contact_email\":string,\"review_reasons\":[reason codes]}; ownership_conflict means ownership assertions conflict and staff must resolve them. The incident_ref incorporates the disputed assertions in r2 without choosing an owner.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-41"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "policy",
+        "data": {
+          "policy_id": "P-41",
+          "authority": "issued",
+          "status": "active",
+          "starts_on": "2026-01-01",
+          "ends_on": "2027-01-01",
+          "named_insureds": [
+            "Robin Vale"
+          ],
+          "insured_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "mailing_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "personal_property_limit": 30000,
+          "liability_limit": 100000,
+          "deductible": 500,
+          "valuation": "replacement_cost",
+          "loss_of_use_limit": 6000
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "reported_incident",
+        "data": {
+          "event_date": "2026-10-06",
+          "event_location": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "reported_cause": "theft",
+          "property_description": "Camera CAM-41 missing after a reported break-in; ownership disputed between Robin Vale and roommate Jules Finch.",
+          "ownership_assertions": [
+            {
+              "speaker": "Robin Vale",
+              "claim": "I bought and own the camera."
+            },
+            {
+              "speaker": "Jules Finch",
+              "claim": "It is my camera, loaned to Robin."
+            }
+          ],
+          "contact_email": "robin.vale@harbor.example"
+        }
+      },
+      {
+        "id": "r3",
+        "kind": "existing_claims",
+        "data": {
+          "claims": []
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "I want intake for the camera theft in my report. I say I own it, but my roommate says they own it."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Do you have a receipt or another document resolving who owns it?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "Not available today. Record both statements honestly and send the ownership question for review; do not pick one just to finish the form."
+      }
+    ],
+    "form": {
+      "ownership_status": {
+        "type": "string",
+        "nullable": false,
+        "description": "confirmed_insured means ownership by a named insured is established; disputed means supplied assertions conflict; unknown means no assertion establishes ownership.",
+        "enum": [
+          "confirmed_insured",
+          "disputed",
+          "unknown"
+        ]
+      },
+      "intake_ready": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Whether H12 permits intake while flagged issues await staff review."
+      },
+      "review_reasons": {
+        "type": "array",
+        "nullable": false,
+        "description": "Unordered review reason codes; ownership_conflict denotes contradictory ownership assertions."
+      },
+      "coverage_determined": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Whether the supplied facts resolve ownership-dependent coverage."
+      }
+    },
+    "allowed_actions": [
+      "submit_claim_intake"
+    ]
+  }
+}

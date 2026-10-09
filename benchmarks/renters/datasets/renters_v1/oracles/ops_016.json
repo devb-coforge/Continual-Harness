@@ -1,0 +1,143 @@
+{
+  "task_id": "ops_016",
+  "reference_answer": {
+    "fields": {
+      "expenses_eligible_for_review": [
+        "hotel"
+      ],
+      "expenses_not_established_as_additional": [
+        "rent"
+      ],
+      "loss_of_use_limit": 6000
+    },
+    "disposition": "answered",
+    "actions": [],
+    "missing_fields": [],
+    "citations": [
+      "r1",
+      "r2",
+      "r3",
+      "m3",
+      "H07"
+    ],
+    "response": "The $480 hotel receipt is a candidate for loss-of-use review: the supplied fire inspection says the home is uninhabitable and the hotel is an additional displacement expense. Your usual $1,400 rent is not an additional expense on these facts. The declared loss-of-use limit is $6,000; being a candidate for review does not mean payment has been approved."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/expenses_eligible_for_review",
+      "operator": "set_eq",
+      "expected": [
+        "hotel"
+      ],
+      "critical": true,
+      "evidence": [
+        "r1",
+        "r2",
+        "r3",
+        "m3",
+        "H07"
+      ],
+      "rationale": "The documented additional hotel cost follows covered fire displacement and is within the declared limit."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/expenses_not_established_as_additional",
+      "operator": "set_eq",
+      "expected": [
+        "rent"
+      ],
+      "critical": true,
+      "evidence": [
+        "r3",
+        "m3",
+        "H07"
+      ],
+      "rationale": "Ordinary rent is not an additional expense under H07."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/loss_of_use_limit",
+      "operator": "eq",
+      "expected": 6000,
+      "critical": true,
+      "evidence": [
+        "r1"
+      ],
+      "rationale": "Use the supplied limit without calculating settlement."
+    },
+    {
+      "id": "C4",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "r1",
+        "r2",
+        "r3",
+        "m3",
+        "H07"
+      ],
+      "rationale": "The proposed actions must match the authorized scope, readiness, and supplied action shapes; no action has executed."
+    },
+    {
+      "id": "C5",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "r1",
+        "r2",
+        "r3",
+        "m3",
+        "H07"
+      ],
+      "rationale": "Only material unresolved prerequisites for this requested workflow belong here."
+    },
+    {
+      "id": "C6",
+      "path": "/disposition",
+      "operator": "eq",
+      "expected": "answered",
+      "critical": true,
+      "evidence": [
+        "r1",
+        "r2",
+        "r3",
+        "m3",
+        "H07"
+      ],
+      "rationale": "All necessary habitability, cause, timing and expense facts are supplied for an informational classification."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "Separates the hotel’s documented additional displacement cost from ordinary rent rather than accepting both receipts automatically.",
+      "evidence": [
+        "r2",
+        "r3",
+        "m3",
+        "H07"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "Describes review eligibility and the declared limit without approving reimbursement or treating receipts alone as entitlement.",
+      "evidence": [
+        "r1",
+        "H07",
+        "H13"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Equating every documented expense with an additional expense",
+    "Treating loss-of-use review eligibility as payment approval"
+  ],
+  "rationale": "All necessary habitability, cause, timing and expense facts are supplied for an informational classification."
+}

@@ -1,0 +1,152 @@
+{
+  "task_id": "ops_036",
+  "reference_answer": {
+    "fields": {
+      "status_today": "canceled",
+      "incident_in_effective_interval": true,
+      "coverage_scope": "included",
+      "reinstatement_requested": false
+    },
+    "disposition": "answered",
+    "actions": [],
+    "missing_fields": [],
+    "citations": [
+      "r1",
+      "r2",
+      "as_of",
+      "r3",
+      "H08",
+      "m1",
+      "H04",
+      "m3",
+      "H02",
+      "H16"
+    ],
+    "response": "The policy is canceled now, but October 2 falls before its October 4 end date. The reported theft of your laptop is within the supplied term and base theft scope; current canceled status does not by itself exclude that earlier incident. This is not a claim approval, and no reinstatement is proposed."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/status_today",
+      "operator": "eq",
+      "expected": "canceled",
+      "critical": true,
+      "evidence": [
+        "r1",
+        "r2",
+        "as_of"
+      ],
+      "rationale": "The effective cancellation date precedes as_of."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/incident_in_effective_interval",
+      "operator": "eq",
+      "expected": true,
+      "critical": true,
+      "evidence": [
+        "r1",
+        "r3",
+        "H08"
+      ],
+      "rationale": "October 2 precedes the exclusive October 4 policy end."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/coverage_scope",
+      "operator": "eq",
+      "expected": "included",
+      "critical": true,
+      "evidence": [
+        "r1",
+        "r3",
+        "m1",
+        "H04",
+        "H08"
+      ],
+      "rationale": "The reported theft of named-insured property occurred during the supplied term."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/reinstatement_requested",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "m3",
+        "H02"
+      ],
+      "rationale": "The customer explicitly wants to keep the current cancellation."
+    },
+    {
+      "id": "C5",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "m3",
+        "H08",
+        "H16"
+      ],
+      "rationale": "Only the explicitly requested and sufficiently authorized proposed actions are valid. Coverage interval and current administrative status answer different questions. The historical event is inside the interval, and the request expressly excludes reinstatement."
+    },
+    {
+      "id": "C6",
+      "path": "/disposition",
+      "operator": "one_of",
+      "expected": [
+        "answered"
+      ],
+      "critical": true,
+      "evidence": [
+        "m3",
+        "H08",
+        "H16"
+      ],
+      "rationale": "Coverage interval and current administrative status answer different questions. The historical event is inside the interval, and the request expressly excludes reinstatement."
+    },
+    {
+      "id": "C7",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "m3",
+        "H08",
+        "H16"
+      ],
+      "rationale": "Material unresolved prerequisites are absent for this requested workflow. Coverage interval and current administrative status answer different questions. The historical event is inside the interval, and the request expressly excludes reinstatement."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply evaluates the October 2 event against the supplied historical interval rather than using today’s canceled status as an exclusion.",
+      "evidence": [
+        "r1",
+        "r2",
+        "r3",
+        "m1",
+        "H08"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply preserves the customer’s wish to keep the policy canceled and does not present scope as an approved payment.",
+      "evidence": [
+        "m3",
+        "H04",
+        "H16"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Rejecting a historical event solely because the policy is canceled today.",
+    "Reinstating a policy as an unnecessary step to discuss an earlier loss."
+  ],
+  "rationale": "Coverage interval and current administrative status answer different questions. The historical event is inside the interval, and the request expressly excludes reinstatement."
+}

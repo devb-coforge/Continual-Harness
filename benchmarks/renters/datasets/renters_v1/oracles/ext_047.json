@@ -1,0 +1,226 @@
+{
+  "task_id": "ext_047",
+  "reference_answer": {
+    "fields": {
+      "event_date": null,
+      "last_seen_date": "2026-10-03",
+      "discovered_missing_date": "2026-10-07",
+      "policy_start_date": "2026-10-05",
+      "event_within_policy_interval": null,
+      "reported_cause": "theft",
+      "contact_email": "ari.river@post.example",
+      "timing_review_required": true
+    },
+    "disposition": "ready",
+    "actions": [],
+    "missing_fields": [],
+    "citations": [
+      "H05",
+      "H08",
+      "H12",
+      "H13",
+      "H15",
+      "H16",
+      "m1",
+      "m3",
+      "m5",
+      "m7",
+      "r1"
+    ],
+    "response": "The intake draft can record theft with an explicitly unknown event date and timing review. October 3 is last seen, October 7 is discovery, and the policy starts October 5; those facts do not establish whether the theft occurred during coverage. No incident date, coverage decision, or payment is invented."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/event_date",
+      "operator": "eq",
+      "expected": null,
+      "critical": true,
+      "evidence": [
+        "m3",
+        "m7",
+        "H08",
+        "H12"
+      ],
+      "rationale": "The customer explicitly cannot determine the incident date."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/last_seen_date",
+      "operator": "eq",
+      "expected": "2026-10-03",
+      "critical": true,
+      "evidence": [
+        "m1",
+        "H15"
+      ],
+      "rationale": "October 3 is the reported last-seen date."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/discovered_missing_date",
+      "operator": "eq",
+      "expected": "2026-10-07",
+      "critical": true,
+      "evidence": [
+        "m1",
+        "H15"
+      ],
+      "rationale": "October 7 is discovery, not proof of theft timing."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/policy_start_date",
+      "operator": "eq",
+      "expected": "2026-10-05",
+      "critical": true,
+      "evidence": [
+        "r1",
+        "H08"
+      ],
+      "rationale": "Coverage begins on October 5."
+    },
+    {
+      "id": "C5",
+      "path": "/fields/event_within_policy_interval",
+      "operator": "eq",
+      "expected": null,
+      "critical": true,
+      "evidence": [
+        "r1",
+        "m7",
+        "H08"
+      ],
+      "rationale": "The possible theft window straddles the policy start."
+    },
+    {
+      "id": "C6",
+      "path": "/fields/reported_cause",
+      "operator": "eq",
+      "expected": "theft",
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m5",
+        "H05"
+      ],
+      "rationale": "The forced lock supports a reported theft allegation without verifying its exact date."
+    },
+    {
+      "id": "C7",
+      "path": "/fields/contact_email",
+      "operator": "eq",
+      "expected": "ari.river@post.example",
+      "critical": true,
+      "evidence": [
+        "m5"
+      ],
+      "rationale": "A valid contact channel is provided."
+    },
+    {
+      "id": "C8",
+      "path": "/fields/timing_review_required",
+      "operator": "eq",
+      "expected": true,
+      "critical": true,
+      "evidence": [
+        "m7",
+        "r1",
+        "H08",
+        "H12"
+      ],
+      "rationale": "The customer expressly requests review of unresolved timing."
+    },
+    {
+      "id": "C9",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H05",
+        "H08",
+        "H12",
+        "H15",
+        "H16",
+        "m1",
+        "m3",
+        "m5",
+        "m7",
+        "r1"
+      ],
+      "rationale": "This is extraction into a draft document only; no executable actions are permitted."
+    },
+    {
+      "id": "C10",
+      "path": "/disposition",
+      "operator": "eq",
+      "expected": "ready",
+      "critical": true,
+      "evidence": [
+        "H05",
+        "H08",
+        "H12",
+        "H15",
+        "H16",
+        "m1",
+        "m3",
+        "m5",
+        "m7",
+        "r1"
+      ],
+      "rationale": "The document and next step must reflect the case-specific readiness described in the instruction and evidence."
+    },
+    {
+      "id": "C11",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H05",
+        "H08",
+        "H12",
+        "H15",
+        "H16",
+        "m1",
+        "m3",
+        "m5",
+        "m7",
+        "r1"
+      ],
+      "rationale": "Only unresolved material prerequisites for the specified workflow belong in this list; optional unknowns are not missing requirements."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply preserves last-seen, discovery, and policy-start dates separately and does not substitute discovery or a midpoint as the theft date.",
+      "evidence": [
+        "m1",
+        "m3",
+        "m7",
+        "r1",
+        "H08",
+        "H15"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply permits otherwise complete intake with explicitly unknown timing and flags review without declaring the event covered or excluded.",
+      "evidence": [
+        "m5",
+        "m7",
+        "H12",
+        "H13"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Choosing a convenient incident date to fit the coverage interval.",
+    "Refusing intake because an exact theft date is explicitly unknown."
+  ],
+  "rationale": "The customer explicitly cannot determine the incident date. October 3 is the reported last-seen date. October 7 is discovery, not proof of theft timing. Coverage begins on October 5. The possible theft window straddles the policy start. The forced lock supports a reported theft allegation without verifying its exact date. A valid contact channel is provided. The customer expressly requests review of unresolved timing."
+}

@@ -1,0 +1,107 @@
+{
+  "id": "ops_006",
+  "track": "support_ops",
+  "family": "claim_intake",
+  "split": "optimization",
+  "scenario_group": "small_theft_intake_below_deductible",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Assess the confirmed claim draft and propose the requested submission if ready. submit_draft targets the supplied claim_draft record and has value {}; all incident and contact values remain those in that referenced draft. Populate the requested operational checklist. Do not calculate a payment unless expressly requested.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-106"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "issued_declarations",
+        "data": {
+          "authority": "issued",
+          "policy_id": "P-106",
+          "named_insureds": [
+            "Ben Alder"
+          ],
+          "starts_on": "2026-01-01",
+          "ends_on": "2027-01-01",
+          "status_today": "active",
+          "personal_property_limit": 30000,
+          "deductible": 500,
+          "valuation_basis": "actual_cash_value"
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "claim_draft",
+        "data": {
+          "authority": "customer_confirmed_draft",
+          "policy_id": "P-106",
+          "event_date": "2026-10-07",
+          "event_location": "4 Cedar Path, Apt 1, Portfield, NH 03018, US",
+          "reported_cause": "theft",
+          "description": "Named insured reports their own headphones stolen from their desk after an intruder entered the apartment.",
+          "contact_channel": "ben.alder@contact.example",
+          "reported_loss_amount": 120,
+          "documents_pending": []
+        }
+      },
+      {
+        "id": "r3",
+        "kind": "existing_claim_search",
+        "data": {
+          "authority": "account_claim_records",
+          "policy_id": "P-106",
+          "matching_claims": []
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "The draft accurately describes my headphones theft yesterday, October 7. I confirm the address, contact email and $120 reported loss. I want to submit it even though I know my deductible is higher."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Do you want a payout estimate or just to make the report?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "Just submit the report. I understand I am not asking for a payment promise. I am not missing any of the intake details in that draft."
+      }
+    ],
+    "form": {
+      "draft_record": {
+        "type": "string",
+        "nullable": false,
+        "description": "Complete customer-confirmed draft record to use for this incident."
+      },
+      "reported_loss_amount": {
+        "type": "integer",
+        "nullable": false,
+        "description": "Customer-reported loss amount in USD; not a verified settlement."
+      },
+      "issued_deductible": {
+        "type": "integer",
+        "nullable": false,
+        "description": "Deductible in USD from the issued policy."
+      },
+      "intake_ready": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Whether verified authority and mandatory intake facts permit a submission proposal."
+      },
+      "payment_estimate": {
+        "type": "number",
+        "nullable": true,
+        "description": "Illustrative payout amount if expressly requested; otherwise null."
+      }
+    },
+    "allowed_actions": [
+      "submit_draft"
+    ]
+  }
+}

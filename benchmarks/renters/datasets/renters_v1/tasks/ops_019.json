@@ -1,0 +1,82 @@
+{
+  "id": "ops_019",
+  "track": "support_ops",
+  "family": "policy_questions",
+  "split": "optimization",
+  "scenario_group": "sole_unnamed_roommate_property",
+  "difficulty": "standard",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Answer the customer’s policy question using the supplied records and handbook. Complete the requested fields and provide a concise explanation. This is an informational request; propose no account or claim actions.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-119"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "issued_declarations",
+        "data": {
+          "authority": "issued",
+          "policy_id": "P-119",
+          "named_insureds": [
+            "Mara Lin"
+          ],
+          "starts_on": "2026-01-01",
+          "ends_on": "2027-01-01",
+          "status_today": "active",
+          "personal_property_limit": 30000,
+          "deductible": 500,
+          "valuation_basis": "actual_cash_value"
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "There was smoke from an accidental kitchen fire on October 1. My roommate Dev’s game console was damaged. It belongs entirely to Dev; I did not buy any part of it. Does my renters policy cover it because we share the apartment?"
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Is Dev listed as a named insured on an issued policy document?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "No. We split the rent, but only I am listed on this policy. I am only asking about that console."
+      }
+    ],
+    "form": {
+      "property_owner": {
+        "type": "string",
+        "nullable": false,
+        "description": "Ownership category: named_insured for an owner listed in issued declarations, unnamed_roommate for a roommate owner not listed there, landlord for the building owner, or unknown when the relationship is unresolved.",
+        "enum": [
+          "named_insured",
+          "unnamed_roommate",
+          "landlord",
+          "unknown"
+        ]
+      },
+      "property_scope": {
+        "type": "string",
+        "nullable": false,
+        "description": "Scope conclusion for this particular item under the supplied ownership rule.",
+        "enum": [
+          "within_base_scope",
+          "outside_base_scope",
+          "unresolved"
+        ]
+      },
+      "shared_rent_creates_insured_status": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Whether sharing rent itself makes the roommate a named insured."
+      }
+    },
+    "allowed_actions": []
+  }
+}

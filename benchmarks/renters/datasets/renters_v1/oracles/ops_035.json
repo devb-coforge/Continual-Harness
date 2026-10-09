@@ -1,0 +1,159 @@
+{
+  "task_id": "ops_035",
+  "reference_answer": {
+    "fields": {
+      "covered_cause_reported": true,
+      "home_uninhabitable": null,
+      "eligibility": "unresolved",
+      "documented_additional_expense": 260
+    },
+    "disposition": "needs_clarification",
+    "actions": [],
+    "missing_fields": [
+      "home_uninhabitable"
+    ],
+    "citations": [
+      "r1",
+      "r2",
+      "m1",
+      "H04",
+      "m3",
+      "H07",
+      "r3",
+      "H16",
+      "H02"
+    ],
+    "response": "The receipt documents $260 of additional hotel expense, but eligibility remains unresolved until it is established whether the covered fire made the apartment uninhabitable. A receipt alone does not make payment certain; please provide the habitability finding when available."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/covered_cause_reported",
+      "operator": "eq",
+      "expected": true,
+      "critical": true,
+      "evidence": [
+        "r1",
+        "r2",
+        "m1",
+        "H04"
+      ],
+      "rationale": "Accidental fire to owned property during the policy term is in base scope."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/home_uninhabitable",
+      "operator": "eq",
+      "expected": null,
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m3",
+        "H07"
+      ],
+      "rationale": "The inspection is pending, not an affirmative or negative habitability finding."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/eligibility",
+      "operator": "eq",
+      "expected": "unresolved",
+      "critical": true,
+      "evidence": [
+        "r2",
+        "r3",
+        "m3",
+        "H07"
+      ],
+      "rationale": "A hotel receipt establishes an expense but not required uninhabitability."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/documented_additional_expense",
+      "operator": "eq",
+      "expected": 260,
+      "critical": true,
+      "evidence": [
+        "r3"
+      ],
+      "rationale": "The receipt amount is supplied and expressly additional, although eligibility remains unresolved."
+    },
+    {
+      "id": "C5",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "r2",
+        "r3",
+        "m3",
+        "H07",
+        "H16"
+      ],
+      "rationale": "Only the explicitly requested and sufficiently authorized proposed actions are valid. The covered cause and additional expense are supplied; habitability alone remains unresolved. It is therefore not justified to approve or definitively exclude assistance."
+    },
+    {
+      "id": "C6",
+      "path": "/disposition",
+      "operator": "one_of",
+      "expected": [
+        "needs_clarification"
+      ],
+      "critical": true,
+      "evidence": [
+        "r2",
+        "r3",
+        "m3",
+        "H07",
+        "H16"
+      ],
+      "rationale": "The covered cause and additional expense are supplied; habitability alone remains unresolved. It is therefore not justified to approve or definitively exclude assistance."
+    },
+    {
+      "id": "C7",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [
+        "home_uninhabitable"
+      ],
+      "critical": true,
+      "evidence": [
+        "r2",
+        "r3",
+        "m3",
+        "H07",
+        "H16"
+      ],
+      "rationale": "Material unresolved prerequisites are home_uninhabitable. The covered cause and additional expense are supplied; habitability alone remains unresolved. It is therefore not justified to approve or definitively exclude assistance."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply distinguishes the documented hotel expense from the unresolved habitability prerequisite.",
+      "evidence": [
+        "r2",
+        "r3",
+        "m3",
+        "H07"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply neither guarantees reimbursement nor labels the pending inspection as proof that the home is habitable or uninhabitable.",
+      "evidence": [
+        "m3",
+        "H02",
+        "H07"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Inferring uninhabitability from a hotel receipt or pending inspection.",
+    "Converting unknown habitability to false and definitively rejecting the expense."
+  ],
+  "rationale": "The covered cause and additional expense are supplied; habitability alone remains unresolved. It is therefore not justified to approve or definitively exclude assistance."
+}

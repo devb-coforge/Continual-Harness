@@ -1,0 +1,216 @@
+{
+  "task_id": "ext_008",
+  "reference_answer": {
+    "fields": {
+      "accepted_quote_id": "Q-19",
+      "requested_personal_property_limit": 50000,
+      "requested_deductible": 500,
+      "accepted_monthly_premium": 25,
+      "requested_effective_date": "2026-11-02",
+      "quote_acceptance_recorded": true,
+      "change_recorded_as_issued": false
+    },
+    "disposition": "ready",
+    "actions": [],
+    "missing_fields": [],
+    "citations": [
+      "H01",
+      "H02",
+      "H06",
+      "H11",
+      "H15",
+      "H16",
+      "m3",
+      "m5",
+      "m7",
+      "r1",
+      "r2"
+    ],
+    "response": "The draft records acceptance of Q-19: $50,000 belongings, $500 deductible, $25 monthly, effective November 2. Q-18 and its earlier date are superseded. This is an accepted quote in a change request, not an issued endorsement."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/accepted_quote_id",
+      "operator": "eq",
+      "expected": "Q-19",
+      "critical": true,
+      "evidence": [
+        "m5",
+        "r2",
+        "H11"
+      ],
+      "rationale": "The customer explicitly accepts the replacement quote and excludes Q-18."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/requested_personal_property_limit",
+      "operator": "eq",
+      "expected": 50000,
+      "critical": true,
+      "evidence": [
+        "m3",
+        "r2"
+      ],
+      "rationale": "Q-19 specifies $50,000."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/requested_deductible",
+      "operator": "eq",
+      "expected": 500,
+      "critical": true,
+      "evidence": [
+        "m3",
+        "r2"
+      ],
+      "rationale": "The accepted quote retains the $500 deductible."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/accepted_monthly_premium",
+      "operator": "eq",
+      "expected": 25,
+      "critical": true,
+      "evidence": [
+        "m3",
+        "m5",
+        "r2",
+        "H06"
+      ],
+      "rationale": "The customer accepts the exact $25 monthly premium."
+    },
+    {
+      "id": "C5",
+      "path": "/fields/requested_effective_date",
+      "operator": "eq",
+      "expected": "2026-11-02",
+      "critical": true,
+      "evidence": [
+        "m5",
+        "r2",
+        "H02"
+      ],
+      "rationale": "The customer rejects Q-18 date and confirms November 2."
+    },
+    {
+      "id": "C6",
+      "path": "/fields/quote_acceptance_recorded",
+      "operator": "eq",
+      "expected": true,
+      "critical": true,
+      "evidence": [
+        "m5",
+        "H11"
+      ],
+      "rationale": "All exact quote terms are explicitly accepted."
+    },
+    {
+      "id": "C7",
+      "path": "/fields/change_recorded_as_issued",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "r1",
+        "r2",
+        "m7",
+        "H01",
+        "H15"
+      ],
+      "rationale": "The issued declaration is unchanged; Q-19 is accepted but no issued endorsement exists."
+    },
+    {
+      "id": "C8",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H01",
+        "H02",
+        "H06",
+        "H11",
+        "H15",
+        "H16",
+        "m3",
+        "m5",
+        "m7",
+        "r1",
+        "r2"
+      ],
+      "rationale": "This is extraction into a draft document only; no executable actions are permitted."
+    },
+    {
+      "id": "C9",
+      "path": "/disposition",
+      "operator": "eq",
+      "expected": "ready",
+      "critical": true,
+      "evidence": [
+        "H01",
+        "H02",
+        "H06",
+        "H11",
+        "H15",
+        "H16",
+        "m3",
+        "m5",
+        "m7",
+        "r1",
+        "r2"
+      ],
+      "rationale": "The document and next step must reflect the case-specific readiness described in the instruction and evidence."
+    },
+    {
+      "id": "C10",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H01",
+        "H02",
+        "H06",
+        "H11",
+        "H15",
+        "H16",
+        "m3",
+        "m5",
+        "m7",
+        "r1",
+        "r2"
+      ],
+      "rationale": "Only unresolved material prerequisites for the specified workflow belong in this list; optional unknowns are not missing requirements."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply preserves the replacement quote premium and date rather than combining terms from Q-18 and Q-19.",
+      "evidence": [
+        "m3",
+        "m5",
+        "r2",
+        "H11"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply records consent without claiming coverage has already changed or an endorsement has issued.",
+      "evidence": [
+        "m7",
+        "r1",
+        "H01",
+        "H16"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Combining the old quote price with the new quote limit.",
+    "Treating quote acceptance as evidence of issued coverage."
+  ],
+  "rationale": "The customer explicitly accepts the replacement quote and excludes Q-18. Q-19 specifies $50,000. The accepted quote retains the $500 deductible. The customer accepts the exact $25 monthly premium. The customer rejects Q-18 date and confirms November 2. All exact quote terms are explicitly accepted. The issued declaration is unchanged; Q-19 is accepted but no issued endorsement exists."
+}

@@ -1,0 +1,108 @@
+{
+  "id": "ext_037",
+  "track": "conversation_extraction",
+  "family": "change_request_extraction",
+  "split": "test",
+  "scenario_group": "accepted_quote_then_material_term_revised",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Complete a revised quote-request document from the full conversation. Ready means the new quote request is specified, not that an old withdrawn quote may be issued. Fill exactly the specified document fields from the supplied conversation and records. Normalize dates to ISO YYYY-MM-DD. Copy names, addresses, emails, and identifiers with the spelling supplied. This is an extraction-only task; actions must be empty. In the response distinguish drafting from execution.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-EX037"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "issued_policy",
+        "data": {
+          "policy_id": "P-EX037",
+          "deductible": 500
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "quote",
+        "data": {
+          "policy_id": "P-EX037",
+          "quote_id": "Q-EX037",
+          "deductible": 250,
+          "monthly_premium": 31,
+          "effective_date": "2026-10-28"
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "I accept quote Q-EX037: $250 deductible, $31 per month, starting October 28, 2026."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "I can record acceptance of those exact terms in a change request."
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "Before you do, I checked my budget. Change the deductible choice to $1,000 instead. I assume that will be cheaper."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "Would you like me to keep Q-EX037 and simply replace its deductible field?"
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "No, get a fresh price for the $1,000 deductible. The old quote was specifically for $250."
+      },
+      {
+        "id": "m6",
+        "role": "bot",
+        "text": "Should the old acceptance remain active while a new quote is requested?"
+      },
+      {
+        "id": "m7",
+        "role": "customer",
+        "text": "Withdraw my Q-EX037 acceptance. Keep the October 28 requested start for the new quote, but I need to review its premium before any change."
+      }
+    ],
+    "form": {
+      "withdrawn_quote_id": {
+        "type": "string",
+        "nullable": true,
+        "description": "Previously accepted quote whose acceptance was explicitly withdrawn."
+      },
+      "current_accepted_quote_id": {
+        "type": "string",
+        "nullable": true,
+        "description": "Quote whose exact terms currently have active acceptance; null if none."
+      },
+      "new_requested_deductible": {
+        "type": "integer",
+        "nullable": true,
+        "description": "Deductible for the newly requested quote, in USD."
+      },
+      "new_quote_effective_date": {
+        "type": "string",
+        "nullable": true,
+        "description": "Date retained for the new quote request."
+      },
+      "new_accepted_monthly_premium": {
+        "type": "number",
+        "nullable": true,
+        "description": "Premium explicitly accepted for the newly requested deductible; null if not quoted/accepted."
+      },
+      "issued_deductible": {
+        "type": "integer",
+        "nullable": true,
+        "description": "Current issued deductible in USD, unaffected by quote requests."
+      }
+    },
+    "allowed_actions": []
+  }
+}

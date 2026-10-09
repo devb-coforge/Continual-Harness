@@ -1,0 +1,181 @@
+{
+  "task_id": "ops_028",
+  "reference_answer": {
+    "fields": {
+      "routing": "new_intake",
+      "incident_ref": "r2",
+      "existing_claim_to_update": null,
+      "review_reasons": []
+    },
+    "disposition": "ready",
+    "actions": [
+      {
+        "type": "submit_claim_intake",
+        "target": "new_claim_draft",
+        "value": {
+          "policy_id": "P-28",
+          "incident_ref": "r2",
+          "contact_email": "robin.vale@harbor.example",
+          "review_reasons": []
+        }
+      }
+    ],
+    "missing_fields": [],
+    "citations": [
+      "r2",
+      "r3",
+      "m1",
+      "m3",
+      "H13",
+      "H12",
+      "session",
+      "H16"
+    ],
+    "response": "This is a separate October 6 theft of your replacement bicycle, so a new intake can be proposed using your report and email. The September claim stays separate. This does not mean a claim has already been filed or approved."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/routing",
+      "operator": "eq",
+      "expected": "new_intake",
+      "critical": true,
+      "evidence": [
+        "r2",
+        "r3",
+        "m1",
+        "m3",
+        "H13"
+      ],
+      "rationale": "The customer explicitly distinguishes two incidents, dates, and property serials."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/incident_ref",
+      "operator": "eq",
+      "expected": "r2",
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m3"
+      ],
+      "rationale": "r2 contains the latest complete incident."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/existing_claim_to_update",
+      "operator": "eq",
+      "expected": null,
+      "critical": true,
+      "evidence": [
+        "r3",
+        "m3",
+        "H13"
+      ],
+      "rationale": "The September claim concerns a different bicycle and event."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/review_reasons",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m3",
+        "H12",
+        "H13"
+      ],
+      "rationale": "No unresolved date, cause, ownership, or duplicate concern remains."
+    },
+    {
+      "id": "C5",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [
+        {
+          "type": "submit_claim_intake",
+          "target": "new_claim_draft",
+          "value": {
+            "policy_id": "P-28",
+            "incident_ref": "r2",
+            "contact_email": "robin.vale@harbor.example",
+            "review_reasons": []
+          }
+        }
+      ],
+      "critical": true,
+      "evidence": [
+        "session",
+        "r2",
+        "r3",
+        "m3",
+        "H12",
+        "H13"
+      ],
+      "rationale": "Only the explicitly requested and sufficiently authorized proposed actions are valid. A shared cause does not establish duplicate identity. Two explicit dates and distinct serials, confirmed as separate incidents, support new intake with all H12 prerequisites."
+    },
+    {
+      "id": "C6",
+      "path": "/disposition",
+      "operator": "one_of",
+      "expected": [
+        "ready"
+      ],
+      "critical": true,
+      "evidence": [
+        "session",
+        "r2",
+        "r3",
+        "m3",
+        "H12",
+        "H13"
+      ],
+      "rationale": "A shared cause does not establish duplicate identity. Two explicit dates and distinct serials, confirmed as separate incidents, support new intake with all H12 prerequisites."
+    },
+    {
+      "id": "C7",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "session",
+        "r2",
+        "r3",
+        "m3",
+        "H12",
+        "H13"
+      ],
+      "rationale": "Material unresolved prerequisites are absent for this requested workflow. A shared cause does not establish duplicate identity. Two explicit dates and distinct serials, confirmed as separate incidents, support new intake with all H12 prerequisites."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply treats the October replacement-bike incident as distinct from the September theft.",
+      "evidence": [
+        "r2",
+        "r3",
+        "m3",
+        "H13"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply does not merge the incidents, invent a new claim reference, or claim approval.",
+      "evidence": [
+        "r3",
+        "H13",
+        "H16"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Deduplicating all theft reports merely because their cause and broad property category match.",
+    "Overwriting the prior incident date or serial number with the new loss."
+  ],
+  "rationale": "A shared cause does not establish duplicate identity. Two explicit dates and distinct serials, confirmed as separate incidents, support new intake with all H12 prerequisites."
+}

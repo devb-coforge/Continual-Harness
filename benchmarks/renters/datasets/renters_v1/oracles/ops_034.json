@@ -1,0 +1,198 @@
+{
+  "task_id": "ops_034",
+  "reference_answer": {
+    "fields": {
+      "event_date": "2026-10-07",
+      "intake_ready": true,
+      "review_reasons": [
+        "liability_review"
+      ],
+      "liability_determined": false
+    },
+    "disposition": "ready",
+    "actions": [
+      {
+        "type": "submit_claim_intake",
+        "target": "new_claim_draft",
+        "value": {
+          "policy_id": "P-34",
+          "incident_ref": "r2",
+          "contact_email": "robin.vale@harbor.example",
+          "review_reasons": [
+            "liability_review"
+          ]
+        }
+      }
+    ],
+    "missing_fields": [],
+    "citations": [
+      "r2",
+      "m1",
+      "as_of",
+      "H08",
+      "session",
+      "r3",
+      "m3",
+      "H12",
+      "H07",
+      "H13",
+      "H16"
+    ],
+    "response": "The supplied report supports proposing intake for liability review. The guest’s injury and account will remain reported allegations, and your disagreement about responsibility will be preserved. No admission of fault, defense, or payment is promised."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/event_date",
+      "operator": "eq",
+      "expected": "2026-10-07",
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m1",
+        "as_of",
+        "H08"
+      ],
+      "rationale": "The fixed date makes yesterday October 7, matching the report."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/intake_ready",
+      "operator": "eq",
+      "expected": true,
+      "critical": true,
+      "evidence": [
+        "session",
+        "r2",
+        "r3",
+        "m3",
+        "H12"
+      ],
+      "rationale": "Policy, location, date, incident description, contact, authority, and explicit request are present."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/review_reasons",
+      "operator": "set_eq",
+      "expected": [
+        "liability_review"
+      ],
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m1",
+        "H07",
+        "H13"
+      ],
+      "rationale": "The guest injury allegation belongs in liability review."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/liability_determined",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m3",
+        "H07"
+      ],
+      "rationale": "An allegation plus disputed responsibility is not a determination."
+    },
+    {
+      "id": "C5",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [
+        {
+          "type": "submit_claim_intake",
+          "target": "new_claim_draft",
+          "value": {
+            "policy_id": "P-34",
+            "incident_ref": "r2",
+            "contact_email": "robin.vale@harbor.example",
+            "review_reasons": [
+              "liability_review"
+            ]
+          }
+        }
+      ],
+      "critical": true,
+      "evidence": [
+        "session",
+        "r2",
+        "r3",
+        "m3",
+        "H07",
+        "H12",
+        "H13"
+      ],
+      "rationale": "Only the explicitly requested and sufficiently authorized proposed actions are valid. Third-party injury calls for review, but H13 explicitly preserves permissible intake. The complete proposed intake therefore carries a liability flag without adjudicating fault."
+    },
+    {
+      "id": "C6",
+      "path": "/disposition",
+      "operator": "one_of",
+      "expected": [
+        "ready"
+      ],
+      "critical": true,
+      "evidence": [
+        "session",
+        "r2",
+        "r3",
+        "m3",
+        "H07",
+        "H12",
+        "H13"
+      ],
+      "rationale": "Third-party injury calls for review, but H13 explicitly preserves permissible intake. The complete proposed intake therefore carries a liability flag without adjudicating fault."
+    },
+    {
+      "id": "C7",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "session",
+        "r2",
+        "r3",
+        "m3",
+        "H07",
+        "H12",
+        "H13"
+      ],
+      "rationale": "Material unresolved prerequisites are absent for this requested workflow. Third-party injury calls for review, but H13 explicitly preserves permissible intake. The complete proposed intake therefore carries a liability flag without adjudicating fault."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply allows the sufficiently complete intake and routes the guest injury to liability review.",
+      "evidence": [
+        "r2",
+        "m3",
+        "H07",
+        "H12",
+        "H13"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply does not admit the customer caused the injury or promise defense, coverage approval, or payment.",
+      "evidence": [
+        "m1",
+        "m3",
+        "H07"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Treating intake consent as an admission of negligence.",
+    "Refusing intake because legal responsibility has not yet been decided."
+  ],
+  "rationale": "Third-party injury calls for review, but H13 explicitly preserves permissible intake. The complete proposed intake therefore carries a liability flag without adjudicating fault."
+}

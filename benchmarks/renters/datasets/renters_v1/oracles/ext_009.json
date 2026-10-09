@@ -1,0 +1,210 @@
+{
+  "task_id": "ext_009",
+  "reference_answer": {
+    "fields": {
+      "incident_date": "2026-10-06",
+      "incident_location": "18 Harbor Steps, Morrow, US",
+      "injury_alleged": true,
+      "ownership_status": "disputed",
+      "estimated_medical_amount": 600,
+      "medical_amount_verified": false,
+      "contact_email": "imani.reed@post.example",
+      "direct_neighbor_contact_authorized": false
+    },
+    "disposition": "escalate",
+    "actions": [],
+    "missing_fields": [],
+    "citations": [
+      "H02",
+      "H07",
+      "H13",
+      "H15",
+      "H16",
+      "m1",
+      "m3",
+      "m5",
+      "m7"
+    ],
+    "response": "The handoff requests liability review of the October 6 injury allegation and disputed pot ownership. The roughly $600 clinic amount is an unverified estimate, with no finding of fault. Staff should contact you at imani.reed@post.example; this does not promise payment or authorize contacting the neighbor."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/incident_date",
+      "operator": "eq",
+      "expected": "2026-10-06",
+      "critical": true,
+      "evidence": [
+        "m1"
+      ],
+      "rationale": "The neighbor allegation identifies October 6."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/incident_location",
+      "operator": "eq",
+      "expected": "18 Harbor Steps, Morrow, US",
+      "critical": true,
+      "evidence": [
+        "m3"
+      ],
+      "rationale": "The photo is described as showing this location."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/injury_alleged",
+      "operator": "eq",
+      "expected": true,
+      "critical": true,
+      "evidence": [
+        "m1",
+        "H07"
+      ],
+      "rationale": "The customer reports the neighbor alleged an arm injury."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/ownership_status",
+      "operator": "eq",
+      "expected": "disputed",
+      "critical": true,
+      "evidence": [
+        "m3",
+        "H13"
+      ],
+      "rationale": "The customer expressly contests the ownership implication."
+    },
+    {
+      "id": "C5",
+      "path": "/fields/estimated_medical_amount",
+      "operator": "eq",
+      "expected": 600,
+      "critical": true,
+      "evidence": [
+        "m7",
+        "H15"
+      ],
+      "rationale": "The $600 figure is relayed as an unverified neighbor estimate."
+    },
+    {
+      "id": "C6",
+      "path": "/fields/medical_amount_verified",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "m7",
+        "H15"
+      ],
+      "rationale": "The customer has not seen a bill."
+    },
+    {
+      "id": "C7",
+      "path": "/fields/contact_email",
+      "operator": "eq",
+      "expected": "imani.reed@post.example",
+      "critical": true,
+      "evidence": [
+        "m5"
+      ],
+      "rationale": "Only the customer contact is authorized."
+    },
+    {
+      "id": "C8",
+      "path": "/fields/direct_neighbor_contact_authorized",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "m5",
+        "H02"
+      ],
+      "rationale": "The customer specifically says not to contact the neighbor yet."
+    },
+    {
+      "id": "C9",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H02",
+        "H07",
+        "H13",
+        "H15",
+        "H16",
+        "m1",
+        "m3",
+        "m5",
+        "m7"
+      ],
+      "rationale": "This is extraction into a draft document only; no executable actions are permitted."
+    },
+    {
+      "id": "C10",
+      "path": "/disposition",
+      "operator": "eq",
+      "expected": "escalate",
+      "critical": true,
+      "evidence": [
+        "H02",
+        "H07",
+        "H13",
+        "H15",
+        "H16",
+        "m1",
+        "m3",
+        "m5",
+        "m7"
+      ],
+      "rationale": "The document and next step must reflect the case-specific readiness described in the instruction and evidence."
+    },
+    {
+      "id": "C11",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H02",
+        "H07",
+        "H13",
+        "H15",
+        "H16",
+        "m1",
+        "m3",
+        "m5",
+        "m7"
+      ],
+      "rationale": "Only unresolved material prerequisites for the specified workflow belong in this list; optional unknowns are not missing requirements."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply presents injury, ownership, and medical amount with their allegation/dispute/estimate status intact.",
+      "evidence": [
+        "m1",
+        "m3",
+        "m7",
+        "H15"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply routes liability to staff without admitting fault, promising payment, or authorizing neighbor contact.",
+      "evidence": [
+        "m5",
+        "m7",
+        "H07"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Turning an alleged injury into an established liability finding.",
+    "Treating an approximate clinic amount as an approved reimbursement."
+  ],
+  "rationale": "The neighbor allegation identifies October 6. The photo is described as showing this location. The customer reports the neighbor alleged an arm injury. The customer expressly contests the ownership implication. The $600 figure is relayed as an unverified neighbor estimate. The customer has not seen a bill. Only the customer contact is authorized. The customer specifically says not to contact the neighbor yet."
+}

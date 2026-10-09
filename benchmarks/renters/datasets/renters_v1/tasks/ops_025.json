@@ -1,0 +1,71 @@
+{
+  "id": "ops_025",
+  "track": "support_ops",
+  "family": "policy_questions",
+  "split": "optimization",
+  "scenario_group": "landlord_building_repair_separate_from_owned_contents",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Answer the customer’s policy question using the supplied records and handbook. Complete the requested fields and provide a concise explanation. This is an informational request; propose no account or claim actions.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-125"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "issued_declarations",
+        "data": {
+          "authority": "issued",
+          "policy_id": "P-125",
+          "named_insureds": [
+            "Jules Hart"
+          ],
+          "starts_on": "2026-01-01",
+          "ends_on": "2027-01-01",
+          "status_today": "active",
+          "personal_property_limit": 30000,
+          "deductible": 500,
+          "valuation_basis": "actual_cash_value"
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "An accidental fire on October 6 damaged my sofa and the apartment’s built-in kitchen cabinets. I own the sofa. The cabinets are part of the landlord’s building. Can I put both under my belongings coverage?"
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Has anyone said you caused the fire or asked you to pay for the cabinets?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "No allegation against me and no demand. I only want to know which category belongs under my personal-property coverage."
+      }
+    ],
+    "form": {
+      "items_within_personal_property_scope": {
+        "type": "array",
+        "nullable": false,
+        "description": "Item names among sofa and kitchen_cabinets within personal-property ownership/cause/date scope; not claim approval."
+      },
+      "items_outside_personal_property_scope": {
+        "type": "array",
+        "nullable": false,
+        "description": "Item names among sofa and kitchen_cabinets outside personal-property scope."
+      },
+      "liability_allegation_present": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Whether the supplied facts contain an allegation of third-party liability."
+      }
+    },
+    "allowed_actions": []
+  }
+}

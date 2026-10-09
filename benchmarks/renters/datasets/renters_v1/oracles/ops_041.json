@@ -1,0 +1,195 @@
+{
+  "task_id": "ops_041",
+  "reference_answer": {
+    "fields": {
+      "ownership_status": "disputed",
+      "intake_ready": true,
+      "review_reasons": [
+        "ownership_conflict"
+      ],
+      "coverage_determined": false
+    },
+    "disposition": "ready",
+    "actions": [
+      {
+        "type": "submit_claim_intake",
+        "target": "new_claim_draft",
+        "value": {
+          "policy_id": "P-41",
+          "incident_ref": "r2",
+          "contact_email": "robin.vale@harbor.example",
+          "review_reasons": [
+            "ownership_conflict"
+          ]
+        }
+      }
+    ],
+    "missing_fields": [],
+    "citations": [
+      "r2",
+      "m1",
+      "m3",
+      "H02",
+      "session",
+      "r3",
+      "H12",
+      "H13",
+      "H04",
+      "H16"
+    ],
+    "response": "I can propose intake with both ownership statements preserved and an ownership-conflict review flag. The missing receipt does not block intake, but coverage cannot be resolved by choosing one account without review."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/ownership_status",
+      "operator": "eq",
+      "expected": "disputed",
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m1",
+        "m3",
+        "H02"
+      ],
+      "rationale": "Two explicit contradictory assertions exist, so this is disputed rather than missing all ownership information."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/intake_ready",
+      "operator": "eq",
+      "expected": true,
+      "critical": true,
+      "evidence": [
+        "session",
+        "r2",
+        "r3",
+        "m3",
+        "H12",
+        "H13"
+      ],
+      "rationale": "The minimum intake data are supplied; H13 says ownership conflict must not suppress permissible intake."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/review_reasons",
+      "operator": "set_eq",
+      "expected": [
+        "ownership_conflict"
+      ],
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m3",
+        "H13"
+      ],
+      "rationale": "The conflicting assertions require staff ownership review."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/coverage_determined",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "r2",
+        "H04",
+        "H13"
+      ],
+      "rationale": "Named-insured ownership is a coverage requirement that remains contested."
+    },
+    {
+      "id": "C5",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [
+        {
+          "type": "submit_claim_intake",
+          "target": "new_claim_draft",
+          "value": {
+            "policy_id": "P-41",
+            "incident_ref": "r2",
+            "contact_email": "robin.vale@harbor.example",
+            "review_reasons": [
+              "ownership_conflict"
+            ]
+          }
+        }
+      ],
+      "critical": true,
+      "evidence": [
+        "session",
+        "r2",
+        "r3",
+        "m3",
+        "H12",
+        "H13"
+      ],
+      "rationale": "Only the explicitly requested and sufficiently authorized proposed actions are valid. Verification gives intake authority, not factual priority over a competing ownership assertion. H13 requires review while preserving the complete intake pathway."
+    },
+    {
+      "id": "C6",
+      "path": "/disposition",
+      "operator": "one_of",
+      "expected": [
+        "ready"
+      ],
+      "critical": true,
+      "evidence": [
+        "session",
+        "r2",
+        "r3",
+        "m3",
+        "H12",
+        "H13"
+      ],
+      "rationale": "Verification gives intake authority, not factual priority over a competing ownership assertion. H13 requires review while preserving the complete intake pathway."
+    },
+    {
+      "id": "C7",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "session",
+        "r2",
+        "r3",
+        "m3",
+        "H12",
+        "H13"
+      ],
+      "rationale": "Material unresolved prerequisites are absent for this requested workflow. Verification gives intake authority, not factual priority over a competing ownership assertion. H13 requires review while preserving the complete intake pathway."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply retains both conflicting ownership claims without converting either into an established fact.",
+      "evidence": [
+        "r2",
+        "m1",
+        "m3",
+        "H02",
+        "H13"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply allows otherwise complete intake with review and does not deny it for lack of a receipt or approve ownership-dependent coverage.",
+      "evidence": [
+        "m3",
+        "H04",
+        "H12",
+        "H13"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Treating the verified customer’s ownership allegation as an adjudicated fact.",
+    "Refusing intake until contested ownership is resolved or receipts are produced."
+  ],
+  "rationale": "Verification gives intake authority, not factual priority over a competing ownership assertion. H13 requires review while preserving the complete intake pathway."
+}

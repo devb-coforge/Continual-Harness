@@ -1,0 +1,101 @@
+{
+  "id": "ops_031",
+  "track": "support_ops",
+  "family": "claim_intake",
+  "split": "validation",
+  "scenario_group": "explicit_unknown_event_date_complete_intake",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Assess intake readiness from the incident report. submit_claim_intake targets new_claim_draft with value {\"policy_id\":string,\"incident_ref\":\"r2\",\"contact_email\":string,\"review_reasons\":[reason codes]}. Use unknown_event_date when the customer explicitly cannot establish the event date; do not replace it with the discovery date. Incident reference incorporates r2, retaining date uncertainty.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-31"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "policy",
+        "data": {
+          "policy_id": "P-31",
+          "authority": "issued",
+          "status": "active",
+          "starts_on": "2026-01-01",
+          "ends_on": "2027-01-01",
+          "named_insureds": [
+            "Robin Vale"
+          ],
+          "insured_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "mailing_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "personal_property_limit": 30000,
+          "liability_limit": 100000,
+          "deductible": 500,
+          "valuation": "replacement_cost",
+          "loss_of_use_limit": 6000
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "reported_incident",
+        "data": {
+          "event_date": null,
+          "discovered_on": "2026-10-07",
+          "event_location": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "reported_cause": "theft",
+          "property_description": "Robin Vale-owned tool chest removed from locked storage; broken lock observed",
+          "contact_email": "robin.vale@harbor.example"
+        }
+      },
+      {
+        "id": "r3",
+        "kind": "existing_claims",
+        "data": {
+          "claims": []
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "Yesterday I found my locked storage broken into and my tool chest gone. I had not visited for several weeks."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Do you know the date it was stolen, rather than the date you discovered it?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "No, I cannot determine the theft date. Please record it as unknown, with October 7 only as discovery, and proceed with my intake report."
+      }
+    ],
+    "form": {
+      "event_date": {
+        "type": "string",
+        "nullable": true,
+        "description": "Established incident date, ISO YYYY-MM-DD, or null if explicitly unknown."
+      },
+      "discovered_on": {
+        "type": "string",
+        "nullable": false,
+        "description": "Discovery date in ISO format, kept separate from event date."
+      },
+      "intake_ready": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Whether H12 permits submitting the intake with the supplied information."
+      },
+      "review_reasons": {
+        "type": "array",
+        "nullable": false,
+        "description": "Unordered reason codes; use unknown_event_date for an explicitly unknown event date."
+      }
+    },
+    "allowed_actions": [
+      "submit_claim_intake"
+    ]
+  }
+}

@@ -1,0 +1,163 @@
+{
+  "task_id": "ops_011",
+  "reference_answer": {
+    "fields": {
+      "requested_deductible": 250,
+      "requested_effective_date": "2026-11-01",
+      "issued_deductible": 500,
+      "quote_accepted": false
+    },
+    "disposition": "ready",
+    "actions": [
+      {
+        "type": "request_quote",
+        "target": "r1",
+        "value": {
+          "deductible": 250,
+          "effective_date": "2026-11-01"
+        }
+      }
+    ],
+    "missing_fields": [],
+    "citations": [
+      "m1",
+      "m3",
+      "r1",
+      "H01",
+      "H11"
+    ],
+    "response": "I can prepare a quote request for a $250 deductible effective November 1, 2026. Your issued deductible remains $500. No premium has been supplied, so I cannot quote a price or treat this as acceptance of a coverage change."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/requested_deductible",
+      "operator": "eq",
+      "expected": 250,
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m3"
+      ],
+      "rationale": "The customer explicitly selects $250 for a quote."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/requested_effective_date",
+      "operator": "eq",
+      "expected": "2026-11-01",
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m3"
+      ],
+      "rationale": "The quote should use the requested November date."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/issued_deductible",
+      "operator": "eq",
+      "expected": 500,
+      "critical": true,
+      "evidence": [
+        "r1",
+        "H01"
+      ],
+      "rationale": "The preference has not amended issued coverage."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/quote_accepted",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "m3",
+        "H11"
+      ],
+      "rationale": "The customer has no quote and reserves the decision."
+    },
+    {
+      "id": "C5",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [
+        {
+          "type": "request_quote",
+          "target": "r1",
+          "value": {
+            "deductible": 250,
+            "effective_date": "2026-11-01"
+          }
+        }
+      ],
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m3",
+        "r1",
+        "H01",
+        "H11"
+      ],
+      "rationale": "The proposed actions must match the authorized scope, readiness, and supplied action shapes; no action has executed."
+    },
+    {
+      "id": "C6",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m3",
+        "r1",
+        "H01",
+        "H11"
+      ],
+      "rationale": "Only material unresolved prerequisites for this requested workflow belong here."
+    },
+    {
+      "id": "C7",
+      "path": "/disposition",
+      "operator": "eq",
+      "expected": "ready",
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m3",
+        "r1",
+        "H01",
+        "H11"
+      ],
+      "rationale": "A quote request is complete even though an issued change is not authorized; the requested quote workflow is ready."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "Distinguishes a ready quote request from issuing a lower deductible and preserves the currently issued $500 deductible.",
+      "evidence": [
+        "r1",
+        "m3",
+        "H11"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "Does not invent a premium or ask for quote acceptance as a prerequisite to merely requesting the quote.",
+      "evidence": [
+        "m1",
+        "m3",
+        "H11"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Treating a coverage preference as an accepted issued change",
+    "Inventing a premium",
+    "Blocking a complete quote request because no quote exists yet"
+  ],
+  "rationale": "A quote request is complete even though an issued change is not authorized; the requested quote workflow is ready."
+}

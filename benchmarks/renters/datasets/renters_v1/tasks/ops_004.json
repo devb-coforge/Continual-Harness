@@ -1,0 +1,76 @@
+{
+  "id": "ops_004",
+  "track": "support_ops",
+  "family": "policy_questions",
+  "split": "optimization",
+  "scenario_group": "ambiguous_shared_projector_ownership",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Answer the customer’s policy question using the supplied records and handbook. Complete the requested fields and provide a concise explanation. This is an informational request; propose no account or claim actions. If named-insured ownership remains unresolved, use property_ownership in missing_fields; it means clarify whether the named insured owns the item alone or jointly, rather than inferring ownership from shared use or payments.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-104"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "issued_declarations",
+        "data": {
+          "authority": "issued",
+          "policy_id": "P-104",
+          "named_insureds": [
+            "Ravi Sen"
+          ],
+          "starts_on": "2026-01-01",
+          "ends_on": "2027-01-01",
+          "status_today": "active",
+          "personal_property_limit": 30000,
+          "deductible": 500,
+          "valuation_basis": "actual_cash_value"
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "There was a fire in our apartment on October 5. The projector we use for film nights burned. Can I include it under my personal-property coverage?"
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "Who owns the projector?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "It has always been in our shared living room. My roommate arranged to get it, and I paid them money around that time, but I do not remember whether that was my share of buying it or just rent."
+      }
+    ],
+    "form": {
+      "event_date": {
+        "type": "string",
+        "nullable": false,
+        "description": "Reported event date in ISO format."
+      },
+      "owned_by_named_insured": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "True if named-insured ownership is established, false if explicitly absent, otherwise null."
+      },
+      "property_scope": {
+        "type": "string",
+        "nullable": false,
+        "description": "Scope conclusion for the projector from supplied evidence.",
+        "enum": [
+          "within_base_scope",
+          "outside_base_scope",
+          "unresolved"
+        ]
+      }
+    },
+    "allowed_actions": []
+  }
+}

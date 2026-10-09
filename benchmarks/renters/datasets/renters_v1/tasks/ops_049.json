@@ -1,0 +1,118 @@
+{
+  "id": "ops_049",
+  "track": "support_ops",
+  "family": "account_changes",
+  "split": "test",
+  "scenario_group": "superseding_quote_not_accepted_by_prior_consent",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Assess the current limit-change request across quote revisions. request_quote_acceptance targets r1 with value {\"quote_ref\":\"r3\"}; it requests acceptance of the current available quote and does not issue coverage. apply_accepted_quote, if justified, would target r1 with value {\"quote_ref\":record ID,\"effective_date\":ISO date,\"premium_delta_usd\":integer}. Record the accepted historical quote separately from any currently accepted quote.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-49"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "policy",
+        "data": {
+          "policy_id": "P-49",
+          "authority": "issued",
+          "status": "active",
+          "starts_on": "2026-01-01",
+          "ends_on": "2027-01-01",
+          "named_insureds": [
+            "Robin Vale"
+          ],
+          "insured_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "mailing_address": "14 Kestrel Street, Unit 4, Alderport, MA 01014, US",
+          "personal_property_limit": 15000,
+          "liability_limit": 100000,
+          "deductible": 500,
+          "valuation": "replacement_cost",
+          "loss_of_use_limit": 6000
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "quote",
+        "data": {
+          "quote_id": "Q-49-A",
+          "policy_id": "P-49",
+          "quoted_change": {
+            "personal_property_limit": 30000
+          },
+          "effective_date": "2026-11-01",
+          "premium_delta_usd": 18,
+          "status": "superseded",
+          "superseded_by": "Q-49-B"
+        }
+      },
+      {
+        "id": "r3",
+        "kind": "quote",
+        "data": {
+          "quote_id": "Q-49-B",
+          "policy_id": "P-49",
+          "quoted_change": {
+            "personal_property_limit": 30000
+          },
+          "effective_date": "2026-11-01",
+          "premium_delta_usd": 31,
+          "status": "available_for_acceptance",
+          "supersedes": "Q-49-A"
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "Earlier I accepted Q-49-A: $30,000 property coverage from November 1 for an extra $18."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "That quote was superseded. Q-49-B keeps the same limit and date but adds $31 for the remaining term."
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "I still want the higher limit, but I have not accepted $31. Please ask for the new quote acceptance before any change; my earlier yes was only for $18."
+      }
+    ],
+    "form": {
+      "issued_property_limit": {
+        "type": "integer",
+        "nullable": false,
+        "description": "Currently issued property limit in USD."
+      },
+      "historically_accepted_quote": {
+        "type": "string",
+        "nullable": false,
+        "description": "Quote ID explicitly accepted earlier, even if now superseded."
+      },
+      "current_quote_id": {
+        "type": "string",
+        "nullable": false,
+        "description": "Identifier of the available replacement quote."
+      },
+      "current_quote_accepted": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Whether the exact replacement quote, date, and premium have customer acceptance."
+      },
+      "ready_to_issue_change": {
+        "type": "boolean",
+        "nullable": false,
+        "description": "Whether current quote acceptance supports proposing issuance."
+      }
+    },
+    "allowed_actions": [
+      "request_quote_acceptance",
+      "apply_accepted_quote"
+    ]
+  }
+}

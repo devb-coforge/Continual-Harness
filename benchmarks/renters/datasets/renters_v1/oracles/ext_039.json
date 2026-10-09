@@ -1,0 +1,258 @@
+{
+  "task_id": "ext_039",
+  "reference_answer": {
+    "fields": {
+      "application_reference": "APP-HARBOR-14",
+      "applicant_name": "Priya Hart",
+      "contact_email": "priya.hart@example.test",
+      "insured_address": "11 Harbor Rise, Unit 6, Westmere",
+      "occupancy_start": "2026-11-12",
+      "requested_start": "2026-11-11",
+      "personal_property_limit": 50000,
+      "liability_limit": 300000,
+      "deductible": 1000,
+      "consent_to_submit": true
+    },
+    "disposition": "ready",
+    "actions": [],
+    "missing_fields": [],
+    "citations": [
+      "r1",
+      "r2",
+      "m1",
+      "m3",
+      "m5",
+      "m7",
+      "H01",
+      "H02",
+      "H14"
+    ],
+    "response": "The draft uses APP-HARBOR-14 throughout: Unit 6, November 12 occupancy and a November 11 requested start. Your consent applies to that application only; no policy has been issued."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/application_reference",
+      "operator": "eq",
+      "expected": "APP-HARBOR-14",
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m1",
+        "m3",
+        "m5",
+        "H01"
+      ],
+      "rationale": "The customer selects APP-HARBOR-14 and adopts its supplied application_reference; the later-opened Pearl tab is expressly rejected."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/applicant_name",
+      "operator": "eq",
+      "expected": "Priya Hart",
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m1",
+        "m3",
+        "m5",
+        "H01"
+      ],
+      "rationale": "The customer selects APP-HARBOR-14 and adopts its supplied applicant_name; the later-opened Pearl tab is expressly rejected."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/contact_email",
+      "operator": "eq",
+      "expected": "priya.hart@example.test",
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m1",
+        "m3",
+        "m5",
+        "H01"
+      ],
+      "rationale": "The customer selects APP-HARBOR-14 and adopts its supplied contact_email; the later-opened Pearl tab is expressly rejected."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/insured_address",
+      "operator": "text_eq",
+      "expected": "11 Harbor Rise, Unit 6, Westmere",
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m1",
+        "m3",
+        "m5",
+        "H01"
+      ],
+      "rationale": "The customer selects APP-HARBOR-14 and adopts its supplied insured_address; the later-opened Pearl tab is expressly rejected."
+    },
+    {
+      "id": "C5",
+      "path": "/fields/occupancy_start",
+      "operator": "eq",
+      "expected": "2026-11-12",
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m1",
+        "m3",
+        "m5",
+        "H01"
+      ],
+      "rationale": "The customer selects APP-HARBOR-14 and adopts its supplied occupancy_start; the later-opened Pearl tab is expressly rejected."
+    },
+    {
+      "id": "C6",
+      "path": "/fields/requested_start",
+      "operator": "eq",
+      "expected": "2026-11-11",
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m1",
+        "m3",
+        "m5",
+        "H01"
+      ],
+      "rationale": "The customer selects APP-HARBOR-14 and adopts its supplied requested_start; the later-opened Pearl tab is expressly rejected."
+    },
+    {
+      "id": "C7",
+      "path": "/fields/personal_property_limit",
+      "operator": "eq",
+      "expected": 50000,
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m1",
+        "m3",
+        "m5",
+        "H01"
+      ],
+      "rationale": "The customer selects APP-HARBOR-14 and adopts its supplied personal_property_limit; the later-opened Pearl tab is expressly rejected."
+    },
+    {
+      "id": "C8",
+      "path": "/fields/liability_limit",
+      "operator": "eq",
+      "expected": 300000,
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m1",
+        "m3",
+        "m5",
+        "H01"
+      ],
+      "rationale": "The customer selects APP-HARBOR-14 and adopts its supplied liability_limit; the later-opened Pearl tab is expressly rejected."
+    },
+    {
+      "id": "C9",
+      "path": "/fields/deductible",
+      "operator": "eq",
+      "expected": 1000,
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m1",
+        "m3",
+        "m5",
+        "H01"
+      ],
+      "rationale": "The customer selects APP-HARBOR-14 and adopts its supplied deductible; the later-opened Pearl tab is expressly rejected."
+    },
+    {
+      "id": "C10",
+      "path": "/fields/consent_to_submit",
+      "operator": "eq",
+      "expected": true,
+      "critical": true,
+      "evidence": [
+        "m7",
+        "H14"
+      ],
+      "rationale": "The applicant explicitly authorizes submission of APP-HARBOR-14 in m7."
+    },
+    {
+      "id": "C11",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "m3",
+        "m7",
+        "H14",
+        "H16"
+      ],
+      "rationale": "All required draft fields are present and adopted, submission consent is explicit, and this extraction-only task proposes no operation."
+    },
+    {
+      "id": "C12",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "m3",
+        "m7",
+        "H14",
+        "H16"
+      ],
+      "rationale": "All required draft fields are present and adopted, submission consent is explicit, and this extraction-only task proposes no operation."
+    },
+    {
+      "id": "C13",
+      "path": "/disposition",
+      "operator": "one_of",
+      "expected": [
+        "ready"
+      ],
+      "critical": true,
+      "evidence": [
+        "m3",
+        "m7",
+        "H14",
+        "H16"
+      ],
+      "rationale": "All required draft fields are present and adopted, submission consent is explicit, and this extraction-only task proposes no operation."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply attributes all draft information and submission consent to APP-HARBOR-14, with no claim that a policy has been issued.",
+      "evidence": [
+        "r2",
+        "m1",
+        "m3",
+        "m7",
+        "H14"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply does not merge the Pearl address, Unit 2, old email, dates or selected amounts into the Harbor application, and does not claim both drafts were submitted.",
+      "evidence": [
+        "r1",
+        "r2",
+        "m3",
+        "m5",
+        "m7",
+        "H15"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Taking fields from the most recently opened tab instead of the selected application",
+    "Combining property/unit/email/limit values across independent applications",
+    "Treating consent to one application as submission of both"
+  ],
+  "rationale": "APP-HARBOR-14 is identified by exact reference and its full record is explicitly adopted. APP-PEARL-09 is a different unselected draft; recency of a UI tab is not a customer correction. Every required application field is available in r2 and submission consent is explicit in m7."
+}

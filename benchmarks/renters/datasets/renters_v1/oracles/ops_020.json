@@ -1,0 +1,140 @@
+{
+  "task_id": "ops_020",
+  "reference_answer": {
+    "fields": {
+      "move_intent": "withdrawn",
+      "existing_move_status": "draft",
+      "preserve_insured_premises": true
+    },
+    "disposition": "no_action",
+    "actions": [],
+    "missing_fields": [],
+    "citations": [
+      "m3",
+      "H02",
+      "H09",
+      "r2",
+      "m2",
+      "r1"
+    ],
+    "response": "I have recorded your latest instruction in this response: the move request is withdrawn and the insured apartment should stay unchanged. The supplied move record is only a draft; the earlier bot statement is not evidence that a change was submitted or completed. No move or cancellation action is proposed."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/move_intent",
+      "operator": "eq",
+      "expected": "withdrawn",
+      "critical": true,
+      "evidence": [
+        "m3",
+        "H02",
+        "H09"
+      ],
+      "rationale": "The customer explicitly withdraws the request."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/existing_move_status",
+      "operator": "eq",
+      "expected": "draft",
+      "critical": true,
+      "evidence": [
+        "r2",
+        "m2",
+        "H02"
+      ],
+      "rationale": "Only a draft exists; the bot’s future promise is not proof of execution."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/preserve_insured_premises",
+      "operator": "eq",
+      "expected": true,
+      "critical": true,
+      "evidence": [
+        "m3",
+        "r1",
+        "H09"
+      ],
+      "rationale": "The customer expressly asks to preserve it."
+    },
+    {
+      "id": "C4",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "m3",
+        "H02",
+        "H09",
+        "r2",
+        "m2",
+        "r1"
+      ],
+      "rationale": "The proposed actions must match the authorized scope, readiness, and supplied action shapes; no action has executed."
+    },
+    {
+      "id": "C5",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "m3",
+        "H02",
+        "H09",
+        "r2",
+        "m2",
+        "r1"
+      ],
+      "rationale": "Only material unresolved prerequisites for this requested workflow belong here."
+    },
+    {
+      "id": "C6",
+      "path": "/disposition",
+      "operator": "eq",
+      "expected": "no_action",
+      "critical": true,
+      "evidence": [
+        "m3",
+        "H02",
+        "H09",
+        "r2",
+        "m2",
+        "r1"
+      ],
+      "rationale": "The customer withdraws the only requested operation and asks to preserve state, so no_action with no proposed actions is correct."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "Follows the explicit withdrawal and keeps the currently insured apartment unchanged rather than completing the earlier draft.",
+      "evidence": [
+        "m3",
+        "H02",
+        "H09"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "Does not assert that the earlier bot promise executed a move or that a submitted operation has now been reversed.",
+      "evidence": [
+        "m2",
+        "r2",
+        "H02",
+        "H16"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Following a bot promise instead of the customer’s final withdrawal",
+    "Inventing a completed move and reversal",
+    "Canceling insurance because a lease fell through"
+  ],
+  "rationale": "The customer withdraws the only requested operation and asks to preserve state, so no_action with no proposed actions is correct."
+}

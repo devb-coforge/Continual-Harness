@@ -1,0 +1,120 @@
+{
+  "id": "ext_030",
+  "track": "conversation_extraction",
+  "family": "change_request_extraction",
+  "split": "validation",
+  "scenario_group": "proof_today_future_issued_endorsement",
+  "difficulty": "challenging",
+  "input": {
+    "as_of": "2026-10-08",
+    "instruction": "Complete a current-proof delivery request plus a separate future-limit note. Ready concerns accurate proof and recipient authorization; it does not make the future endorsement effective today. Fill exactly the specified document fields from the supplied conversation and records. Normalize dates to ISO YYYY-MM-DD. Copy names, addresses, emails, and identifiers with the spelling supplied. This is an extraction-only task; actions must be empty. In the response distinguish drafting from execution.",
+    "session": {
+      "verified": true,
+      "role": "named_insured",
+      "policy_id": "P-EX030"
+    },
+    "records": [
+      {
+        "id": "r1",
+        "kind": "issued_policy",
+        "data": {
+          "policy_id": "P-EX030",
+          "starts_on": "2026-01-01",
+          "ends_on": "2027-01-01",
+          "liability_limit": 100000
+        }
+      },
+      {
+        "id": "r2",
+        "kind": "issued_endorsement",
+        "data": {
+          "policy_id": "P-EX030",
+          "endorsement_id": "EN-EX030",
+          "starts_on": "2026-11-01",
+          "ends_on": "2027-01-01",
+          "liability_limit": 300000
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "m1",
+        "role": "customer",
+        "text": "My new landlord wants proof showing $300,000 liability. I have an issued endorsement for that limit, so email proof today to Dune House Rentals at proof@dunehouse.example."
+      },
+      {
+        "id": "m2",
+        "role": "bot",
+        "text": "The endorsement has a future start date. Does the landlord need proof of today's coverage or of the later coverage?"
+      },
+      {
+        "id": "m3",
+        "role": "customer",
+        "text": "The form they requested says coverage in force today, October 8, 2026. I wish the higher limit started already."
+      },
+      {
+        "id": "m4",
+        "role": "bot",
+        "text": "Should I change the endorsement date on the proof so it passes their check?"
+      },
+      {
+        "id": "m5",
+        "role": "customer",
+        "text": "No, keep it accurate. The issued endorsement starts November 1, 2026. Show whatever is actually in force today and note the later issued change separately."
+      },
+      {
+        "id": "m6",
+        "role": "bot",
+        "text": "Do you confirm delivery to Dune House Rentals at proof@dunehouse.example, even if today's limit is lower?"
+      },
+      {
+        "id": "m7",
+        "role": "customer",
+        "text": "Yes. I authorize that exact recipient and email. Do not backdate or issue another change on my behalf."
+      }
+    ],
+    "form": {
+      "proof_as_of": {
+        "type": "string",
+        "nullable": true,
+        "description": "Date whose in-force coverage the requested proof must represent."
+      },
+      "in_force_liability_limit": {
+        "type": "integer",
+        "nullable": true,
+        "description": "Liability limit actually effective on proof_as_of, in USD."
+      },
+      "future_issued_liability_limit": {
+        "type": "integer",
+        "nullable": true,
+        "description": "Liability limit on the supplied future issued endorsement, in USD."
+      },
+      "future_limit_effective_date": {
+        "type": "string",
+        "nullable": true,
+        "description": "Start date of the issued future liability endorsement."
+      },
+      "recipient_name": {
+        "type": "string",
+        "nullable": true,
+        "description": "Authorized proof recipient, copied exactly."
+      },
+      "recipient_email": {
+        "type": "string",
+        "nullable": true,
+        "description": "Authorized proof delivery email."
+      },
+      "proof_delivery_authorized": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "True only for explicit authorization to the recipient/destination in the document."
+      },
+      "backdating_requested": {
+        "type": "boolean",
+        "nullable": true,
+        "description": "True for current request to alter effective dates backward; false for explicit refusal."
+      }
+    },
+    "allowed_actions": []
+  }
+}

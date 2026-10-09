@@ -1,0 +1,201 @@
+{
+  "task_id": "ext_014",
+  "reference_answer": {
+    "fields": {
+      "destination_building": "46 Birch Terrace, Cedarbridge, US",
+      "destination_unit": null,
+      "move_effective_date": null,
+      "move_confirmation": false,
+      "preserve_current_addresses": true,
+      "cancel_requested": false
+    },
+    "disposition": "needs_clarification",
+    "actions": [],
+    "missing_fields": [
+      "destination_unit",
+      "move_effective_date",
+      "move_confirmation"
+    ],
+    "citations": [
+      "H02",
+      "H08",
+      "H09",
+      "H10",
+      "H15",
+      "H16",
+      "m1",
+      "m3",
+      "m5",
+      "m7"
+    ],
+    "response": "The incomplete draft records Birch Terrace, but the unit, the exact date behind 11/12, and final move approval are still needed. Both current addresses remain unchanged, and no cancellation is requested or performed."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/destination_building",
+      "operator": "eq",
+      "expected": "46 Birch Terrace, Cedarbridge, US",
+      "critical": true,
+      "evidence": [
+        "m1",
+        "m3"
+      ],
+      "rationale": "Only the building portion is established."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/destination_unit",
+      "operator": "eq",
+      "expected": null,
+      "critical": true,
+      "evidence": [
+        "m3",
+        "H09"
+      ],
+      "rationale": "The customer is waiting for the unit assignment."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/move_effective_date",
+      "operator": "eq",
+      "expected": null,
+      "critical": true,
+      "evidence": [
+        "m3",
+        "m5",
+        "H08"
+      ],
+      "rationale": "Both November 12 and December 11 remain possible."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/move_confirmation",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "m5",
+        "H02",
+        "H09"
+      ],
+      "rationale": "The customer explicitly withholds move approval until details are known."
+    },
+    {
+      "id": "C5",
+      "path": "/fields/preserve_current_addresses",
+      "operator": "eq",
+      "expected": true,
+      "critical": true,
+      "evidence": [
+        "m7"
+      ],
+      "rationale": "The customer explicitly preserves both addresses."
+    },
+    {
+      "id": "C6",
+      "path": "/fields/cancel_requested",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "m7",
+        "H10"
+      ],
+      "rationale": "The customer expressly declines cancellation."
+    },
+    {
+      "id": "C7",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H02",
+        "H08",
+        "H09",
+        "H10",
+        "H15",
+        "H16",
+        "m1",
+        "m3",
+        "m5",
+        "m7"
+      ],
+      "rationale": "This is extraction into a draft document only; no executable actions are permitted."
+    },
+    {
+      "id": "C8",
+      "path": "/disposition",
+      "operator": "eq",
+      "expected": "needs_clarification",
+      "critical": true,
+      "evidence": [
+        "H02",
+        "H08",
+        "H09",
+        "H10",
+        "H15",
+        "H16",
+        "m1",
+        "m3",
+        "m5",
+        "m7"
+      ],
+      "rationale": "The document and next step must reflect the case-specific readiness described in the instruction and evidence."
+    },
+    {
+      "id": "C9",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [
+        "destination_unit",
+        "move_effective_date",
+        "move_confirmation"
+      ],
+      "critical": true,
+      "evidence": [
+        "H02",
+        "H08",
+        "H09",
+        "H10",
+        "H15",
+        "H16",
+        "m1",
+        "m3",
+        "m5",
+        "m7"
+      ],
+      "rationale": "Only unresolved material prerequisites for the specified workflow belong in this list; optional unknowns are not missing requirements."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply requests the unit and an unambiguous date without choosing a numeric-date interpretation.",
+      "evidence": [
+        "m3",
+        "m5",
+        "H08",
+        "H09"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply preserves the explicit hold on the move and cancellation rather than treating saving a draft as consent.",
+      "evidence": [
+        "m5",
+        "m7",
+        "H02",
+        "H16"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Guessing November 12 from an ambiguous numeric date.",
+    "Treating permission to save a draft as permission to submit an incomplete move."
+  ],
+  "rationale": "Only the building portion is established. The customer is waiting for the unit assignment. Both November 12 and December 11 remain possible. The customer explicitly withholds move approval until details are known. The customer explicitly preserves both addresses. The customer expressly declines cancellation."
+}

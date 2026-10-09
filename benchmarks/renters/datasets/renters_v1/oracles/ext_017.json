@@ -1,0 +1,214 @@
+{
+  "task_id": "ext_017",
+  "reference_answer": {
+    "fields": {
+      "issued_deductible": 500,
+      "requested_quote_deductible": 1000,
+      "quote_effective_date": "2026-11-20",
+      "accepted_monthly_premium": null,
+      "quote_accepted": false,
+      "other_limit_changes_requested": false,
+      "issued_change_evidenced": false
+    },
+    "disposition": "ready",
+    "actions": [],
+    "missing_fields": [],
+    "citations": [
+      "H01",
+      "H02",
+      "H08",
+      "H11",
+      "H15",
+      "H16",
+      "m2",
+      "m3",
+      "m4",
+      "m5",
+      "m7",
+      "r1"
+    ],
+    "response": "The draft asks for pricing on a $1,000 deductible from November 20 with other limits unchanged. No quote or premium has been accepted. The issued deductible remains $500; the earlier bot claim does not establish a completed change."
+  },
+  "checks": [
+    {
+      "id": "C1",
+      "path": "/fields/issued_deductible",
+      "operator": "eq",
+      "expected": 500,
+      "critical": true,
+      "evidence": [
+        "r1",
+        "H01"
+      ],
+      "rationale": "The declaration remains the authority despite the bot statement."
+    },
+    {
+      "id": "C2",
+      "path": "/fields/requested_quote_deductible",
+      "operator": "eq",
+      "expected": 1000,
+      "critical": true,
+      "evidence": [
+        "m5",
+        "H11"
+      ],
+      "rationale": "The customer requests a $1,000 deductible quote."
+    },
+    {
+      "id": "C3",
+      "path": "/fields/quote_effective_date",
+      "operator": "eq",
+      "expected": "2026-11-20",
+      "critical": true,
+      "evidence": [
+        "m5",
+        "H08"
+      ],
+      "rationale": "The customer provides an unambiguous future date."
+    },
+    {
+      "id": "C4",
+      "path": "/fields/accepted_monthly_premium",
+      "operator": "eq",
+      "expected": null,
+      "critical": true,
+      "evidence": [
+        "m4",
+        "m5",
+        "m7",
+        "H11"
+      ],
+      "rationale": "No quote exists and the customer needs the price before deciding."
+    },
+    {
+      "id": "C5",
+      "path": "/fields/quote_accepted",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "m3",
+        "m7",
+        "H02"
+      ],
+      "rationale": "The customer twice disclaims acceptance."
+    },
+    {
+      "id": "C6",
+      "path": "/fields/other_limit_changes_requested",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "m5"
+      ],
+      "rationale": "The customer asks to keep all other limits unchanged."
+    },
+    {
+      "id": "C7",
+      "path": "/fields/issued_change_evidenced",
+      "operator": "eq",
+      "expected": false,
+      "critical": true,
+      "evidence": [
+        "r1",
+        "m7",
+        "H01",
+        "H15"
+      ],
+      "rationale": "No issued change exists and a bot assertion cannot amend the declaration."
+    },
+    {
+      "id": "C8",
+      "path": "/actions",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H01",
+        "H02",
+        "H08",
+        "H11",
+        "H15",
+        "H16",
+        "m3",
+        "m4",
+        "m5",
+        "m7",
+        "r1"
+      ],
+      "rationale": "This is extraction into a draft document only; no executable actions are permitted."
+    },
+    {
+      "id": "C9",
+      "path": "/disposition",
+      "operator": "eq",
+      "expected": "ready",
+      "critical": true,
+      "evidence": [
+        "H01",
+        "H02",
+        "H08",
+        "H11",
+        "H15",
+        "H16",
+        "m3",
+        "m4",
+        "m5",
+        "m7",
+        "r1"
+      ],
+      "rationale": "The document and next step must reflect the case-specific readiness described in the instruction and evidence."
+    },
+    {
+      "id": "C10",
+      "path": "/missing_fields",
+      "operator": "set_eq",
+      "expected": [],
+      "critical": true,
+      "evidence": [
+        "H01",
+        "H02",
+        "H08",
+        "H11",
+        "H15",
+        "H16",
+        "m3",
+        "m4",
+        "m5",
+        "m7",
+        "r1"
+      ],
+      "rationale": "Only unresolved material prerequisites for the specified workflow belong in this list; optional unknowns are not missing requirements."
+    }
+  ],
+  "rubric": [
+    {
+      "id": "R1",
+      "criterion": "The reply corrects the unsupported bot completion claim using the issued $500 deductible.",
+      "evidence": [
+        "m2",
+        "m3",
+        "r1",
+        "H01",
+        "H15"
+      ],
+      "critical": true
+    },
+    {
+      "id": "R2",
+      "criterion": "The reply prepares only a quote request and does not require accepting an unknown price to save that request.",
+      "evidence": [
+        "m5",
+        "m7",
+        "H11"
+      ],
+      "critical": true
+    }
+  ],
+  "failure_modes": [
+    "Inferring acceptance from a bot claim of completed work.",
+    "Overwriting issued deductible with the amount merely requested for pricing."
+  ],
+  "rationale": "The declaration remains the authority despite the bot statement. The customer requests a $1,000 deductible quote. The customer provides an unambiguous future date. No quote exists and the customer needs the price before deciding. The customer twice disclaims acceptance. The customer asks to keep all other limits unchanged. No issued change exists and a bot assertion cannot amend the declaration."
+}
