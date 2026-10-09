@@ -7,7 +7,7 @@ import uuid
 from pathlib import Path
 from typing import Any
 
-from renters_benchmark.core import canonical, read_json
+from benchmarks.renters.renters_benchmark.core import canonical, read_json
 
 
 class Store:

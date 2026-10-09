@@ -58,11 +58,9 @@ python -m benchmarks.renters export-sqlite /tmp/harborlight-renters.sqlite3
 
 The export refuses to overwrite existing files and includes private answer keys. Separate tables do not provide an actor access-control boundary. JSON files are canonical; SQLite is an optional dataset index, not an account transaction engine.
 
-## Outer-loop integration and compatibility
+## Outer-loop integration
 
-The existing `renters_benchmark.core` API forwards to this folder's implementation. `DATASET` now points to `benchmarks/renters/datasets/renters_v1`. The top-level `python -m renters_benchmark` entry point forwards to the same CLI. The repository's test loader includes these benchmark tests in `python -m unittest discover -s tests -q` alongside the outer-loop tests.
-
-The old `datasets/renters_v1` path remains a symlink to the bundled data, preserving access for previously saved experiments. Manifest paths are dataset-relative, so moving the bundle preserves every task/oracle checksum and the dataset digest. The outer-loop implementation, its tests/configuration, and existing experiment artifacts are retained.
+The harness imports `benchmarks.renters.renters_benchmark.core`. `DATASET` points to `benchmarks/renters/datasets/renters_v1`. The repository test loader includes these benchmark tests in `python -m unittest discover -s tests -q` alongside the outer-loop tests.
 
 For checkout-based or editable use, defaults locate the bundled data. A non-editable installation must supply the checkout dataset explicitly to commands that accept `--dataset`; the package discovery includes the benchmark namespace, but dataset assets are not promised as wheel contents.
 

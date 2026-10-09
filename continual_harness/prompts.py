@@ -3,7 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
-from renters_benchmark.core import canonical, render
+from benchmarks.renters.renters_benchmark.core import canonical, render
 
 BASELINE = (
     "Handle the customer's request accurately using the supplied company rules and evidence. "

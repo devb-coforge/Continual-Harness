@@ -9,7 +9,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from renters_benchmark.core import DATASET, ROOT, audit, grade, load_pair, read_json, render
+from benchmarks.renters.renters_benchmark.core import DATASET, ROOT, audit, grade, load_pair, read_json, render
 
 
 class DatasetTests(unittest.TestCase):
@@ -116,7 +116,7 @@ class DatasetTests(unittest.TestCase):
     def test_sqlite_export_integrity_balance_and_no_overwrite(self):
         with tempfile.TemporaryDirectory() as temporary:
             output = Path(temporary) / "dataset.sqlite3"
-            command = [sys.executable, "-m", "renters_benchmark", "export-sqlite", str(output)]
+            command = [sys.executable, "-m", "benchmarks.renters", "export-sqlite", str(output)]
             result = subprocess.run(command, cwd=ROOT, capture_output=True, text=True)
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
             with sqlite3.connect(output) as connection:

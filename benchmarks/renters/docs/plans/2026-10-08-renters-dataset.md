@@ -15,6 +15,6 @@ The immutable policy and task inputs define truth. The outer loop optimizes only
 
 ## Bundle integration
 
-Dataset, offline implementation, tests, and this creation plan are isolated under `benchmarks/renters/`. The public `renters_benchmark` imports and CLI forward to this implementation, and the former `datasets/renters_v1` path remains a compatibility symlink for saved experiments. The dataset-relative manifest remains byte-for-byte unchanged by the move.
+Dataset, offline implementation, tests, and this creation plan are isolated under `benchmarks/renters/`. The dataset-relative manifest remains byte-for-byte unchanged by the move.
 
 The outer-loop source, its test file, configuration example and architecture/design docs retain their original hashes. Repository package discovery includes the benchmark namespace and repository test discovery includes the relocated benchmark suite. See the [bundle README](../../README.md) for commands and the [verification record](../../datasets/renters_v1/reviews/verification.json) for the final checks.

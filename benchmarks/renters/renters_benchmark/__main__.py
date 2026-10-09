@@ -1,4 +1,4 @@
-"""Run with python -m renters_benchmark after activating .venv."""
+"""Run with python -m benchmarks.renters after activating .venv."""
 
 import argparse
 import json

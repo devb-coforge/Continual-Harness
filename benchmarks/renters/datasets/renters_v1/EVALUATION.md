@@ -2,7 +2,7 @@
 
 ## Input boundary
 
-Render via `python -m renters_benchmark render ID`. It emits a `system` string (strategy + fixed handbook + fixed response contract) and a `user` string containing only the task input. Pass these messages to the chosen actor model using a future runner. Never include oracle, difficulty, scenario-group or split metadata. The renderer works without access to the oracles directory.
+Render via `python -m benchmarks.renters render ID`. It emits a `system` string (strategy + fixed handbook + fixed response contract) and a `user` string containing only the task input. Pass these messages to the chosen actor model using a future runner. Never include oracle, difficulty, scenario-group or split metadata. The renderer works without access to the oracles directory.
 
 Optimization may use the 50 optimization task outputs and feedback; selection may use the 20 validation outcomes. The 30 test inputs, answers and feedback are withheld from the optimizer. Freeze the final prompt before the paired baseline/final test evaluation. Reviewing test artifacts during dataset construction does not authorize sending them to a future optimizer.
 

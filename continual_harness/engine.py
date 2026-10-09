@@ -8,7 +8,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from renters_benchmark.core import audit, canonical, grade, load_pair, make_manifest, read_json
+from benchmarks.renters.renters_benchmark.core import audit, canonical, grade, load_pair, make_manifest, read_json
 from .config import Config
 from .metrics import compare, summary
 from .prompts import actor_messages, judge_messages, optimizer_messages

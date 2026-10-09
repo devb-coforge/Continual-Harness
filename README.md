@@ -40,6 +40,6 @@ python -m benchmarks.renters validate
 python -m unittest discover -s tests -q
 ```
 
-See the [task catalog](benchmarks/renters/datasets/renters_v1/CATALOG.md), [dataset card](benchmarks/renters/datasets/renters_v1/DATASET_CARD.md), and [evaluation protocol](benchmarks/renters/datasets/renters_v1/EVALUATION.md). The existing `renters_benchmark` imports and CLI remain compatible. `datasets/renters_v1` is a compatibility symlink for experiments that stored the previous dataset path; new runs use the bundled dataset by default.
+See the [task catalog](benchmarks/renters/datasets/renters_v1/CATALOG.md), [dataset card](benchmarks/renters/datasets/renters_v1/DATASET_CARD.md), and [evaluation protocol](benchmarks/renters/datasets/renters_v1/EVALUATION.md).
 
 Offline checks and the synthetic demo do not establish live model improvement. No real insurance transaction is performed. Task difficulty labels are author estimates, not measured model performance.

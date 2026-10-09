@@ -49,8 +49,7 @@
   },
   "relocation": {
     "canonical_root": "benchmarks/renters",
-    "legacy_cli": "python -m renters_benchmark",
-    "legacy_dataset_path": "datasets/renters_v1",
+    "cli": "python -m benchmarks.renters",
     "manifest_unchanged": true,
     "outer_loop_files_unchanged": {
       "continual_harness/__init__.py": true,

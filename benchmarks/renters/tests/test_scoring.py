@@ -4,7 +4,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from renters_benchmark.core import answer_errors, evaluate_check, grade, read_json, render, typed_equal, validate_task
+from benchmarks.renters.renters_benchmark.core import answer_errors, evaluate_check, grade, read_json, render, typed_equal, validate_task
 
 
 def fixture():

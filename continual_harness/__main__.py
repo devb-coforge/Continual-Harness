@@ -6,7 +6,7 @@ import json
 import sqlite3
 from pathlib import Path
 
-from renters_benchmark.core import DATASET
+from benchmarks.renters.renters_benchmark.core import DATASET
 from .config import Config
 from .demo import DemoClient, demo_config
 from .engine import Harness, initialize

@@ -10,7 +10,7 @@ from pathlib import Path
 from dataclasses import replace
 from unittest.mock import patch
 
-from renters_benchmark.core import DATASET, canonical, load_pair
+from benchmarks.renters.renters_benchmark.core import DATASET, canonical, load_pair
 from continual_harness.config import Config, ModelSettings
 from continual_harness.demo import DEMO_STRATEGY, DemoClient, demo_config
 from continual_harness.engine import Harness, initialize

@@ -4,7 +4,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from renters_benchmark.core import canonical, load_pair, read_json
+from benchmarks.renters.renters_benchmark.core import canonical, load_pair, read_json
 from .config import Config, ModelSettings
 from .provider import Completion
 

@@ -9,7 +9,7 @@ import urllib.request
 from dataclasses import dataclass
 from typing import Any, Protocol
 
-from renters_benchmark.core import canonical
+from benchmarks.renters.renters_benchmark.core import canonical
 from .config import ModelSettings
 
 
