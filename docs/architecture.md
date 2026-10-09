@@ -23,6 +23,15 @@ flowchart LR
 
 `prompts.py` controls information boundaries. The actor sees only the existing public renderer output. The judge sees the fixed rules, public input, answer and rubric, without strategy/version or optimization history. The optimizer receives a deterministic family-diverse sample of valid optimization failures and successes, with reference answers and evaluation feedback. It never receives validation or test cases. API failures and invalid judgments are not optimization lessons. Strategy changes cannot edit benchmark files; every evaluation checks the frozen manifest.
 
+With `actor_memory = true`, `memory.py` replaces the actor's initial full context
+with current chat/session/form plus two tools. Handbook sections and case
+records are reachable through deterministic, read-only search/read memory.
+The engine replays native tool messages in a bounded loop, persists tool results
+and inference usage, and restricts memory citations to documents read. The judge
+receives the trace alongside original sources; optimization examples include
+traces only for the optimization split. Configuration and tool-definition drift
+are checked alongside the dataset. See [actor memory](actor-memory.md).
+
 `engine.py` orchestrates execution, evaluation, proposal, paired validation, selection and freezing. `metrics.py` keeps intended cohorts, actor completions, valid judgments and full-case successes distinct. Reported success rates use all intended cases as denominator, including infrastructure failures; they should be interpreted alongside coverage. Exhausted actor/judge calls have status `model_failure`, an explicit failure stage/reason, and `complete_success: false`. They are resolved cases for coverage and count in paired improvements/regressions. Quality observations count only graded cases. Exhausted optimizer calls retain the incumbent and record a proposal failure, allowing freezing/testing to proceed. If no graded optimization failures are available to learn from, the incumbent freezes without a proposal. Missing evidence never becomes a pass.
 
 The promotion rule requires full coverage in both arms, a strict gain above `min_gain` (fraction, not percent), and no more than `max_regressions` task/repetition regressions. A gain with zero allowed regressions is the default. Repetitions and paired outcomes are retained; this rule does not establish statistical significance. Repeated validation selection can still overfit the selection set. Only the final held-out comparison measures transfer.
@@ -33,6 +42,6 @@ The promotion rule requires full coverage in both arms, a strict gain above `min
 
 ## Evidence limits
 
-The demo deliberately obtains answers from private reference files and returns scripted judgments. It validates orchestration only. The harness proposes decisions/documents; it does not execute insurance transactions or provide a simulated account tool environment. Live model quality, provider eligibility and substantive judge correctness need live runs and manual calibration. Actor/judge/optimizer model selection is explicit in configuration; no paid calls run during setup or offline tests.
+The demo deliberately obtains answers from private reference files and returns scripted judgments. It validates orchestration only. The harness proposes decisions/documents; its optional memory tools retrieve evidence and do not execute insurance transactions. Live model quality, provider eligibility and substantive judge correctness need live runs and manual calibration. Actor/judge/optimizer model selection is explicit in configuration; no paid calls run during setup or offline tests.
 
 The OpenRouter request follows the official [chat completion API](https://openrouter.ai/docs/api/api-reference/chat/send-chat-completion-request) and [provider routing](https://openrouter.ai/docs/guides/routing/provider-selection). JSON output is still validated locally. No model or price recommendations are baked in.

@@ -38,12 +38,16 @@ class Config:
     feedback_successes: int = 3
     max_attempts: int = 4
     retry_delay_seconds: float = 1.0
+    actor_memory: bool = False
+    max_tool_calls: int = 12
 
     def __post_init__(self) -> None:
-        for name in ("iterations", "repetitions", "concurrency", "timeout_seconds", "max_strategy_chars", "feedback_failures", "feedback_successes", "max_attempts"):
+        for name in ("iterations", "repetitions", "concurrency", "timeout_seconds", "max_strategy_chars", "feedback_failures", "feedback_successes", "max_attempts", "max_tool_calls"):
             value = getattr(self, name)
             if type(value) is not int or value < 1:
                 raise ValueError(f"{name} must be a positive integer")
+        if type(self.actor_memory) is not bool:
+            raise ValueError("actor_memory must be boolean")
         if type(self.max_regressions) is not int or self.max_regressions < 0:
             raise ValueError("max_regressions must be a nonnegative integer")
         if type(self.min_gain) not in (int, float) or not math.isfinite(self.min_gain) or not 0 <= self.min_gain <= 1:

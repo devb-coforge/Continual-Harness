@@ -4,6 +4,7 @@ import argparse
 import asyncio
 import json
 import sqlite3
+from dataclasses import replace
 from pathlib import Path
 
 from benchmarks.renters.renters_benchmark.core import DATASET
@@ -18,6 +19,8 @@ from .store import Store
 async def run(args: argparse.Namespace) -> dict:
     if args.command in {"optimize", "demo"}:
         config = demo_config() if args.command == "demo" else Config.load(args.config)
+        if args.command == "demo" and args.actor_memory:
+            config = replace(config, actor_memory=True)
         client = DemoClient(args.dataset) if args.command == "demo" else OpenRouterClient(config.timeout_seconds)
         strategy = args.strategy_file.read_text() if args.strategy_file else BASELINE
         if not strategy.strip() or len(strategy) > config.max_strategy_chars:
@@ -35,7 +38,9 @@ async def run(args: argparse.Namespace) -> dict:
     store = Store(args.experiment)
     try:
         if args.command == "report":
-            result = {"status": store.get("status"), "evidence": store.get("evidence"), "usage": store.usage()}
+            config = Config.from_dict(store.get("config"))
+            result = {"status": store.get("status"), "evidence": store.get("evidence"), "usage": store.usage(),
+                      "variant": "renters_memory_v1" if config.actor_memory else "renters_v1"}
             result["comparisons"] = {phase: json.loads(value) for phase, value in
                                      store.db.execute("SELECT phase, result FROM comparisons ORDER BY phase")}
             return result
@@ -58,6 +63,8 @@ def main() -> int:
         command.add_argument("--strategy-file", type=Path)
         if name == "optimize":
             command.add_argument("--config", type=Path, required=True)
+        else:
+            command.add_argument("--actor-memory", action="store_true", help="Exercise the retrieval variant with scripted tools")
     for name in ("test", "report"):
         command = sub.add_parser(name, help="One-shot frozen baseline/final test" if name == "test" else "Read stored results and usage")
         command.add_argument("experiment", type=Path)

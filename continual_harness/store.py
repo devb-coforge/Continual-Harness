@@ -79,6 +79,15 @@ class Store:
             self.db.execute("INSERT INTO evaluations VALUES (?, ?, ?, ?, ?)",
                             (phase, prompt_id, result["task_id"], result["repetition"], canonical(result)))
 
+    def tool_trace(self, phase: str, prompt_id: str, task_id: str, repetition: int,
+                   trace: list[dict[str, Any]]) -> None:
+        digest = hashlib.sha256(canonical([phase, prompt_id, task_id, repetition]).encode()).hexdigest()
+        directory = self.directory / "tools"
+        directory.mkdir(exist_ok=True)
+        (directory / f"{digest}.json").write_text(canonical({
+            "phase": phase, "prompt_id": prompt_id, "task_id": task_id,
+            "repetition": repetition, "trace": trace}) + "\n")
+
     def comparison(self, phase: str, result: dict[str, Any]) -> None:
         with self.db:
             self.db.execute("INSERT INTO comparisons VALUES (?, ?)", (phase, canonical(result)))
