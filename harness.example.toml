@@ -11,6 +11,9 @@ max_regressions = 0
 max_strategy_chars = 12000
 feedback_failures = 6
 feedback_successes = 3
+# Enable the renters_memory_v1 variant: handbook and case records require retrieval.
+actor_memory = false
+max_tool_calls = 12
 
 [actor]
 model = "REPLACE_WITH_ACTOR_MODEL"

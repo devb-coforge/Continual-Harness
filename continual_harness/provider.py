@@ -16,7 +16,30 @@ from .config import ModelSettings
 @dataclass(frozen=True)
 class Completion:
     raw: dict[str, Any]
-    content: str
+    content: str | None
+    message: dict[str, Any] | None = None
+
+
+@dataclass(frozen=True)
+class ToolTurn:
+    message: dict[str, Any]
+
+
+def validate_tool_message(message: dict[str, Any]) -> None:
+    calls = message.get("tool_calls")
+    if (not isinstance(calls, list) or not calls or len(calls) > 32
+            or message.get("content") is not None and not isinstance(message["content"], str)):
+        raise ValueError("Invalid tool-call message")
+    ids = set()
+    for call in calls:
+        if (not isinstance(call, dict) or not isinstance(call.get("id"), str) or not call["id"]
+                or call["id"] in ids or call.get("type") != "function"
+                or not isinstance(call.get("function"), dict)
+                or not isinstance(call["function"].get("name"), str)
+                or not call["function"]["name"]
+                or not isinstance(call["function"].get("arguments"), str)):
+            raise ValueError("Invalid or duplicate tool call")
+        ids.add(call["id"])
 
 
 class ProviderError(Exception):
@@ -27,10 +50,12 @@ class ProviderError(Exception):
 
 class Client(Protocol):
     async def complete(self, role: str, settings: ModelSettings,
-                       messages: list[dict[str, str]]) -> Completion: ...
+                       messages: list[dict[str, Any]], *, tools: list[dict[str, Any]] | None = None,
+                       tool_choice: str = "auto") -> Completion: ...
 
 
-def request_body(settings: ModelSettings, messages: list[dict[str, str]]) -> dict[str, Any]:
+def request_body(settings: ModelSettings, messages: list[dict[str, Any]], *,
+                 tools: list[dict[str, Any]] | None = None, tool_choice: str = "auto") -> dict[str, Any]:
     body: dict[str, Any] = {
         "model": settings.model,
         "messages": messages,
@@ -40,6 +65,11 @@ def request_body(settings: ModelSettings, messages: list[dict[str, str]]) -> dic
     }
     if settings.max_tokens is not None:
         body["max_tokens"] = settings.max_tokens
+    if tools is not None:
+        body.update(tools=tools, tool_choice=tool_choice)
+        # Allow native tool calls; request JSON-object output for the final-only turn.
+        if tool_choice != "none":
+            body.pop("response_format")
     return body
 
 
@@ -51,13 +81,15 @@ class OpenRouterClient:
         self.timeout = timeout_seconds
 
     async def complete(self, role: str, settings: ModelSettings,
-                       messages: list[dict[str, str]]) -> Completion:
-        return await asyncio.to_thread(self._send, settings, messages)
+                       messages: list[dict[str, Any]], *, tools: list[dict[str, Any]] | None = None,
+                       tool_choice: str = "auto") -> Completion:
+        return await asyncio.to_thread(self._send, settings, messages, tools, tool_choice)
 
-    def _send(self, settings: ModelSettings, messages: list[dict[str, str]]) -> Completion:
+    def _send(self, settings: ModelSettings, messages: list[dict[str, Any]],
+              tools: list[dict[str, Any]] | None = None, tool_choice: str = "auto") -> Completion:
         request = urllib.request.Request(
             "https://openrouter.ai/api/v1/chat/completions",
-            data=canonical(request_body(settings, messages)).encode(),
+            data=canonical(request_body(settings, messages, tools=tools, tool_choice=tool_choice)).encode(),
             headers={"Authorization": f"Bearer {self.api_key}", "Content-Type": "application/json"},
             method="POST")
         try:
@@ -72,12 +104,18 @@ class OpenRouterClient:
             raise ProviderError("OpenRouter error envelope", raw)
         try:
             choice = raw["choices"][0]
-            content = choice["message"]["content"]
-            if choice.get("finish_reason") != "stop" or not isinstance(content, str) or not content.strip():
+            message = choice["message"]
+            if not isinstance(message, dict):
+                raise ValueError("Invalid completion message")
+            content = message.get("content")
+            if choice.get("finish_reason") == "tool_calls" and tools is not None and tool_choice != "none":
+                validate_tool_message(message)
+            elif (choice.get("finish_reason") != "stop" or message.get("tool_calls")
+                  or not isinstance(content, str) or not content.strip()):
                 raise ValueError("Incomplete completion")
         except (KeyError, IndexError, TypeError, ValueError) as exc:
             raise ProviderError("OpenRouter missing or incomplete completion", raw) from exc
-        return Completion(raw, content)
+        return Completion(raw, content, message)
 
 
 def parse_object(content: str) -> dict[str, Any]:

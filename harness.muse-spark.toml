@@ -9,9 +9,11 @@ max_regressions = 5
 max_strategy_chars = 12000
 feedback_failures = 6
 feedback_successes = 3
+actor_memory = true
+max_tool_calls = 12
 
 [actor]
-model = "~deepseek/deepseek-v4-flash-latest"
+model = "inception/mercury-2.5"
 temperature = 0.2
 
 [judge]

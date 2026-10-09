@@ -11,8 +11,9 @@ from typing import Any
 from benchmarks.renters.renters_benchmark.core import audit, canonical, grade, load_pair, make_manifest, read_json
 from .config import Config
 from .metrics import compare, summary
+from .memory import CaseMemory, TOOLS, VARIANT, memory_messages
 from .prompts import actor_messages, judge_messages, optimizer_messages
-from .provider import Client, ProviderError, parse_object, request_body
+from .provider import Client, ProviderError, ToolTurn, parse_object, request_body, validate_tool_message
 from .store import Store
 
 
@@ -29,6 +30,12 @@ class Harness:
         digest = hashlib.sha256(canonical(manifest).encode()).hexdigest()
         if digest != self.store.get("dataset_digest"):
             raise ValueError("Dataset changed since experiment initialization")
+        if self.config != Config.from_dict(self.store.get("config")):
+            raise ValueError("Configuration changed since experiment initialization")
+        if self.config.actor_memory and (
+                self.store.get("variant") != VARIANT
+                or self.store.get("memory_tools_digest") != hashlib.sha256(canonical(TOOLS).encode()).hexdigest()):
+            raise ValueError("Memory variant or tool definitions changed since experiment initialization")
         return manifest
 
     def tasks(self, split: str) -> list[dict[str, Any]]:
@@ -36,13 +43,16 @@ class Harness:
         return [read_json(self.dataset / "tasks" / f"{task_id}.json")
                 for task_id in manifest["splits"][split]]
 
-    async def call(self, role: str, messages: list[dict[str, str]], phase: str,
+    async def call(self, role: str, messages: list[dict[str, Any]], phase: str,
                    prompt_id: str, task_id: str | None = None,
                    repetition: int | None = None,
-                   validator: Callable[[dict[str, Any]], None] | None = None) -> tuple[Any, str | None]:
+                   validator: Callable[[dict[str, Any]], None] | None = None, *,
+                   tools: list[dict[str, Any]] | None = None, tool_choice: str = "auto",
+                   turn: int | None = None) -> tuple[Any, str | None]:
         for attempt in range(1, self.config.max_attempts + 1):
             result, error = await self.call_attempt(
-                role, messages, phase, prompt_id, task_id, repetition, attempt, validator)
+                role, messages, phase, prompt_id, task_id, repetition, attempt, validator,
+                tools=tools, tool_choice=tool_choice, turn=turn)
             if error is None:
                 return result, None
             if attempt < self.config.max_attempts:
@@ -50,20 +60,33 @@ class Harness:
                 await asyncio.sleep(delay + random.uniform(0, delay / 4))
         return None, error
 
-    async def call_attempt(self, role: str, messages: list[dict[str, str]], phase: str,
+    async def call_attempt(self, role: str, messages: list[dict[str, Any]], phase: str,
                            prompt_id: str, task_id: str | None, repetition: int | None,
-                           attempt: int, validator: Callable[[dict[str, Any]], None] | None) -> tuple[Any, str | None]:
+                           attempt: int, validator: Callable[[dict[str, Any]], None] | None, *,
+                           tools: list[dict[str, Any]] | None = None, tool_choice: str = "auto",
+                           turn: int | None = None) -> tuple[Any, str | None]:
         settings = getattr(self.config, role)
         artifact: dict[str, Any] = {
-            "request": request_body(settings, messages), "status": "started",
+            "request": request_body(settings, messages, tools=tools, tool_choice=tool_choice), "status": "started",
             "started_at": datetime.now(timezone.utc).isoformat(), "raw": None,
             "attempt": attempt, "max_attempts": self.config.max_attempts}
+        if turn is not None:
+            artifact["turn"] = turn
         try:
             async with self.semaphore:
-                reply = await self.client.complete(role, settings, messages)
+                if tools is None:
+                    reply = await self.client.complete(role, settings, messages)
+                else:
+                    reply = await self.client.complete(role, settings, messages, tools=tools, tool_choice=tool_choice)
             artifact["raw"] = reply.raw
             artifact["content"] = reply.content
-            result = parse_object(reply.content)
+            if tools is not None and reply.message and reply.message.get("tool_calls"):
+                validate_tool_message(reply.message)
+                if tool_choice == "none":
+                    raise ValueError("Tools disabled on final-answer turn")
+                result = ToolTurn(reply.message)
+            else:
+                result = parse_object(reply.content)
             if validator:
                 validator(result)
             artifact["status"] = "completed"
@@ -78,14 +101,55 @@ class Harness:
             artifact["finished_at"] = datetime.now(timezone.utc).isoformat()
             self.store.call(role, phase, prompt_id, task_id, repetition, artifact)
 
+    async def actor_case(self, task: dict[str, Any], prompt_id: str, phase: str,
+                         repetition: int) -> tuple[Any, str | None, list[dict[str, Any]], set[str] | None]:
+        strategy = self.store.strategy(prompt_id)
+        if not self.config.actor_memory:
+            answer, error = await self.call("actor", actor_messages(task, self.dataset, strategy),
+                                            phase, prompt_id, task["id"], repetition)
+            return answer, error, [], None
+        memory = CaseMemory(task, self.dataset)
+        messages = memory_messages(task, self.dataset, strategy)
+        trace: list[dict[str, Any]] = []
+        used, turn = 0, 0
+        while True:
+            turn += 1
+            choice = "none" if used >= self.config.max_tool_calls else "auto"
+            result, error = await self.call("actor", messages, phase, prompt_id, task["id"], repetition,
+                                            tools=TOOLS, tool_choice=choice, turn=turn)
+            if error or not isinstance(result, ToolTurn):
+                visible = {"session", "as_of", *(m["id"] for m in task["input"]["messages"]), *memory.read_ids}
+                return result, error, trace, visible
+            # Preserve provider reasoning metadata on assistant messages for history replay.
+            assistant = dict(result.message)
+            assistant["role"] = "assistant"
+            messages.append(assistant)
+            for call in assistant["tool_calls"]:
+                function = call["function"]
+                if used >= self.config.max_tool_calls:
+                    output = {"error": "tool_budget_exhausted"}
+                else:
+                    used += 1
+                    try:
+                        arguments = parse_object(function["arguments"])
+                        output = memory.execute(function["name"], arguments)
+                    except (ValueError, TypeError):
+                        output = {"error": "invalid_arguments", "detail": "Arguments must be a strict JSON object."}
+                item = {"tool_call": call, "result": output}
+                trace.append(item)
+                messages.append({"role": "tool", "tool_call_id": call["id"], "content": canonical(output)})
+            # Persist results immediately, even if the next inference fails or is interrupted.
+            self.store.tool_trace(phase, prompt_id, task["id"], repetition, trace)
+
     async def evaluate_case(self, task: dict[str, Any], prompt_id: str, phase: str,
                             repetition: int) -> dict[str, Any]:
         _, oracle = load_pair(task["id"], self.dataset)
-        answer, error = await self.call("actor", actor_messages(task, self.dataset, self.store.strategy(prompt_id)),
-                                        phase, prompt_id, task["id"], repetition)
+        answer, error, trace, visible = await self.actor_case(task, prompt_id, phase, repetition)
         result: dict[str, Any] = {"task_id": task["id"], "family": task["family"],
                                   "track": task["track"], "repetition": repetition,
                                   "answer": answer, "complete_success": None}
+        if self.config.actor_memory:
+            result.update(variant=VARIANT, tool_trace=trace, retrieved_sources=sorted(visible - {"session", "as_of", *(m["id"] for m in task["input"]["messages"])}))
         if error:
             result.update(status="model_failure", complete_success=False,
                           failure_stage="actor", failure_reason=error)
@@ -95,11 +159,16 @@ class Harness:
                 if grade(task, oracle, answer, entries)["semantic_status"] == "invalid":
                     raise ValueError("Judge response violates the rubric contract")
 
-            judgments, judge_error = await self.call("judge", judge_messages(task, oracle, answer, self.dataset),
+            judgments, judge_error = await self.call("judge", judge_messages(task, oracle, answer, self.dataset, trace if self.config.actor_memory else None),
                                                       phase, prompt_id, task["id"], repetition,
                                                       validator=validate_judgments)
             entries = judgments.get("judgments") if isinstance(judgments, dict) and set(judgments) == {"judgments"} else {}
             score = grade(task, oracle, answer, entries)
+            if visible is not None and isinstance(answer, dict) and isinstance(answer.get("citations"), list):
+                unseen = [c for c in answer["citations"] if isinstance(c, str) and c not in visible]
+                if unseen:
+                    score["response_errors"].append(f"Citations require reading memory documents first: {unseen}")
+                    score.update(response_valid=False, structured_correct=False, complete_success=False)
             result.update(score, judgments=judgments)
             if judge_error or score["semantic_status"] == "invalid":
                 result.update(status="model_failure", complete_success=False,
@@ -166,6 +235,8 @@ class Harness:
                              "checks": oracle["checks"], "rubric": oracle["rubric"],
                              "evaluation": {key: result[key] for key in (
                                  "checks", "response_errors", "judgments", "complete_success")}})
+            if self.config.actor_memory:
+                examples[-1].update(variant=VARIANT, tool_trace=result["tool_trace"])
         return examples
 
     async def optimize(self, baseline: str) -> dict[str, Any]:
@@ -216,6 +287,7 @@ class Harness:
         self.store.put("frozen_at", datetime.now(timezone.utc).isoformat())
         (self.store.directory / "final_strategy.txt").write_text(self.store.strategy(incumbent) + "\n")
         report = {"evidence": self.store.get("evidence"), "status": "frozen",
+                  "variant": VARIANT if self.config.actor_memory else "renters_v1",
                   "baseline_prompt": baseline, "final_prompt": incumbent,
                   "comparisons": comparisons, "proposal_failures": proposal_failures,
                   "optimization": summary(records), "usage": self.store.usage()}
@@ -232,7 +304,8 @@ class Harness:
         # Test evidence is reported, never used for promotion.
         result.pop("promote")
         result["reason"] = "held_out_report_only"
-        result.update(evidence=self.store.get("evidence"), usage=self.store.usage())
+        result.update(evidence=self.store.get("evidence"), usage=self.store.usage(),
+                      variant=VARIANT if self.config.actor_memory else "renters_v1")
         self.store.comparison("test", result)
         (self.store.directory / "test_report.json").write_text(canonical(result) + "\n")
         return result
@@ -245,5 +318,8 @@ def initialize(store: Store, dataset: Path, config: Config, evidence: str) -> No
     store.put("dataset", str(dataset.resolve()))
     store.put("dataset_digest", hashlib.sha256(canonical(make_manifest(dataset)).encode()).hexdigest())
     store.put("config", config.to_dict())
+    store.put("variant", VARIANT if config.actor_memory else "renters_v1")
+    if config.actor_memory:
+        store.put("memory_tools_digest", hashlib.sha256(canonical(TOOLS).encode()).hexdigest())
     store.put("evidence", evidence)
     store.put("status", "initialized")

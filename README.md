@@ -18,6 +18,14 @@ python -m continual_harness report artifacts/demo-001
 
 The demo uses private reference answers and scripted judgments. Its scores are **synthetic orchestration evidence**, not model performance.
 
+The actor can also use two read-only tools, `search_memory` and `read_memory`.
+Set `actor_memory = true` in your TOML config to select `renters_memory_v1`:
+handbook rules and case records then require retrieval, including the existing
+stale and misleading sources. `max_tool_calls` bounds the tool loop (default 12).
+The original full-context mode stays the default. See [actor memory](docs/actor-memory.md)
+for source boundaries, grading and artifacts. Run its scripted offline demo with
+`python -m continual_harness demo --actor-memory --output artifacts/memory-demo-001`.
+
 For live use, copy `harness.example.toml` to a config file and choose each role's OpenRouter model id. Set `OPENROUTER_API_KEY` in your shell environment; the CLI does not read or modify `.env` files. OpenRouter picks the backend; each role's model must support temperature and JSON-object output.
 
 ```bash

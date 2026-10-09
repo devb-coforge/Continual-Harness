@@ -21,16 +21,36 @@ class DemoClient:
         self.dataset = dataset
         self.by_input = {canonical(read_json(path)["input"]): path.stem
                          for path in (dataset / "tasks").glob("*.json")}
+        self.by_memory_input = {canonical({key: value for key, value in read_json(path)["input"].items()
+                                           if key != "records"}): path.stem
+                                for path in (dataset / "tasks").glob("*.json")}
 
     async def complete(self, role: str, settings: ModelSettings,
-                       messages: list[dict[str, str]]) -> Completion:
+                       messages: list[dict], *, tools: list[dict] | None = None,
+                       tool_choice: str = "auto") -> Completion:
         data = json.loads(messages[1]["content"])
         if role == "optimizer":
             answer = {"strategy": DEMO_STRATEGY, "rationale": "Scripted fixture to verify promotion only."}
         else:
-            task_id = self.by_input[canonical(data if role == "actor" else data["task_input"])]
+            index = self.by_memory_input if role == "actor" and tools is not None else self.by_input
+            task_id = index[canonical(data if role == "actor" else data["task_input"])]
             _, oracle = load_pair(task_id, self.dataset)
             if role == "actor":
+                if tools is not None and tool_choice != "none":
+                    tool_results = [json.loads(m["content"]) for m in messages if m["role"] == "tool"]
+                    read_ids = {r["document_id"] for r in tool_results if "document_id" in r and "error" not in r}
+                    needed = [c for c in oracle["reference_answer"]["citations"]
+                              if c.startswith(("H", "r")) and c not in read_ids]
+                    if not tool_results:
+                        functions = [{"name": "search_memory", "arguments": canonical({"query": "policy"})}]
+                    else:
+                        functions = [{"name": "read_memory", "arguments": canonical({"document_id": c})}
+                                     for c in needed]
+                    if functions:
+                        message = {"role": "assistant", "content": None, "tool_calls": [
+                            {"id": f"fixture_{len(tool_results)}_{i}", "type": "function", "function": function}
+                            for i, function in enumerate(functions)]}
+                        return Completion({"choices": [{"message": message, "finish_reason": "tool_calls"}]}, None, message)
                 answer = json.loads(canonical(oracle["reference_answer"]))
                 if DEMO_STRATEGY not in messages[0]["content"] and int(task_id[-3:]) % 3 == 1:
                     # An observed response-contract failure, not an infrastructure failure.
