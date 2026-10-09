@@ -11,12 +11,12 @@ from typing import Any
 class ModelSettings:
     model: str
     temperature: float = 0.0
-    max_tokens: int = 4096
+    max_tokens: int | None = None
 
     def __post_init__(self) -> None:
         if not isinstance(self.model, str) or not self.model.strip():
             raise ValueError("Each role needs a model")
-        if type(self.max_tokens) is not int or self.max_tokens < 1:
+        if self.max_tokens is not None and (type(self.max_tokens) is not int or self.max_tokens < 1):
             raise ValueError("max_tokens must be a positive integer")
         if type(self.temperature) not in (int, float) or not math.isfinite(self.temperature) or not 0 <= self.temperature <= 2:
             raise ValueError("temperature must be finite and between 0 and 2")

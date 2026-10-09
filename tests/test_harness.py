@@ -268,6 +268,7 @@ class ProviderTests(unittest.TestCase):
             request = opened.call_args.args[0]
             body = json.loads(request.data)
             self.assertNotIn("provider", body)
+            self.assertNotIn("max_tokens", body)
             self.assertNotIn("secret-fixture", canonical(body))
         for envelope in ({"error": {"message": "fixture"}},
                          {**raw, "choices": []},

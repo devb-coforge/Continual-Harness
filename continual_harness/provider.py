@@ -31,9 +31,16 @@ class Client(Protocol):
 
 
 def request_body(settings: ModelSettings, messages: list[dict[str, str]]) -> dict[str, Any]:
-    return {"model": settings.model, "messages": messages, "temperature": settings.temperature,
-            "max_tokens": settings.max_tokens, "stream": False,
-            "response_format": {"type": "json_object"}}
+    body: dict[str, Any] = {
+        "model": settings.model,
+        "messages": messages,
+        "temperature": settings.temperature,
+        "stream": False,
+        "response_format": {"type": "json_object"},
+    }
+    if settings.max_tokens is not None:
+        body["max_tokens"] = settings.max_tokens
+    return body
 
 
 class OpenRouterClient:
