@@ -1,19 +1,19 @@
-iterations = 2
-repetitions = 2
-concurrency = 8
+iterations = 3
+repetitions = 1
+concurrency = 10
 timeout_seconds = 180
 max_attempts = 4
 retry_delay_seconds = 1.0
 min_gain = 0.0
 max_regressions = 5
 max_strategy_chars = 12000
-feedback_failures = 6
+feedback_failures = 10
 feedback_successes = 3
 actor_memory = true
 max_tool_calls = 12
 
 [actor]
-model = "inception/mercury-2.5"
+model = "anthropic/claude-haiku-5.5"
 temperature = 0.2
 
 [judge]

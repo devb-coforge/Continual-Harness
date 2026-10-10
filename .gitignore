@@ -6,3 +6,5 @@ __pycache__/
 artifacts/
 *.sqlite3
 continual_harness.egg-info/
+frontend/node_modules/
+frontend/dist/
